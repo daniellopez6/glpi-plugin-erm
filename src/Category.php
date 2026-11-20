@@ -103,24 +103,19 @@ class Category extends CommonTreeDropdown
     }
 
     /**
-     * Effective appetite and tolerance: inherited from the parent category when not defined.
+     * Effective appetite and tolerance of a category for an entity: entity overrides (inherited from parent
+     * entities) take precedence over the category defaults; missing values are inherited from parent categories.
      *
      * @return array{0:string,1:string}
      */
-    public static function effectiveAppetite(int $id): array
+    public static function effectiveAppetite(int $id, int $entityId = 0): array
     {
-        $appetite = $tolerance = '';
-        $cat = new self();
-        $guard = 0;
-        while ($id > 0 && $guard++ < 10 && $cat->getFromDB($id)) {
-            $appetite  = $appetite ?: (string) $cat->fields['appetite_level'];
-            $tolerance = $tolerance ?: (string) $cat->fields['tolerance_level'];
-            if ($appetite && $tolerance) {
-                break;
-            }
-            $id = (int) $cat->fields['plugin_erm_categories_id'];
-        }
-        return [$appetite, $tolerance];
+        return AppetiteResolver::resolve(
+            EntityConfig::categoryChain($id),
+            EntityConfig::entityChain($entityId),
+            EntityConfig::overrides(),
+            EntityConfig::categories()
+        );
     }
 
     /**

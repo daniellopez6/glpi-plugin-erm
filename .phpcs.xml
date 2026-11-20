@@ -5,6 +5,7 @@
     <file>front</file>
     <file>setup.php</file>
     <file>hook.php</file>
+    <file>tests</file>
     <arg name="extensions" value="php" />
     <rule ref="PSR12">
         <!-- Long translated strings and SQL column definitions -->
@@ -15,6 +16,7 @@
         <exclude-pattern>front/*</exclude-pattern>
         <exclude-pattern>setup.php</exclude-pattern>
         <exclude-pattern>hook.php</exclude-pattern>
+        <exclude-pattern>tests/bootstrap.php</exclude-pattern>
     </rule>
     <!-- GLPI naming conventions: relation classes (Item_Type) and framework hooks (post_addItem, ...) -->
     <rule ref="Squiz.Classes.ValidClassName">

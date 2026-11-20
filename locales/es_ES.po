@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-20 16:54+0000\n"
+"POT-Creation-Date: 2026-11-20 17:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_ES\n"
@@ -15,7 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: setup.php:62
+#: front/entityconfig.form.php:30
+msgid "ERM settings saved."
+msgstr "Configuración ERM guardada."
+
+#: setup.php:64
 msgid "ERM - Enterprise Risk Management"
 msgstr "ERM - Gestión de Riesgos Corporativos"
 
@@ -33,31 +37,31 @@ msgstr "Plan de tratamiento"
 msgid "The action must have a description."
 msgstr "La acción debe tener una descripción."
 
-#: src/Category.php:132
+#: src/Category.php:127
 msgid "Strategic"
 msgstr "Estratégico"
 
-#: src/Category.php:133
+#: src/Category.php:128
 msgid "Moderate risks are accepted to pursue growth, without compromising solvency."
 msgstr "Se aceptan riesgos moderados para crecer, sin comprometer la solvencia."
 
-#: src/Category.php:134
+#: src/Category.php:129
 msgid "Business model and competition"
 msgstr "Modelo de negocio y competencia"
 
-#: src/Category.php:134
+#: src/Category.php:129
 msgid "Strategic projects and initiatives"
 msgstr "Proyectos e iniciativas estratégicas"
 
-#: src/Category.php:134
+#: src/Category.php:129
 msgid "Corporate governance"
 msgstr "Gobierno corporativo"
 
-#: src/Category.php:135
+#: src/Category.php:130
 msgid "Financial"
 msgstr "Financiero"
 
-#: src/Category.php:136
+#: src/Category.php:131
 msgid ""
 "Moderate financial risks consistent with the business are accepted; no risk may compromise minimum liquidity or "
 "regulatory capital."
@@ -65,115 +69,115 @@ msgstr ""
 "Se aceptan riesgos financieros moderados acordes al negocio; ningún riesgo puede comprometer la liquidez mínima ni el"
 " capital regulatorio."
 
-#: src/Category.php:137
+#: src/Category.php:132
 msgid "Credit and counterparty"
 msgstr "Crédito y contraparte"
 
-#: src/Category.php:137
+#: src/Category.php:132
 msgid "Liquidity and funding"
 msgstr "Liquidez y fondeo"
 
-#: src/Category.php:137
+#: src/Category.php:132
 msgid "Market (interest and exchange rates)"
 msgstr "Mercado (tasa y tipo de cambio)"
 
-#: src/Category.php:137
+#: src/Category.php:132
 msgid "Capital and solvency"
 msgstr "Capital y solvencia"
 
-#: src/Category.php:138
+#: src/Category.php:133
 msgid "Operational"
 msgstr "Operacional"
 
-#: src/Category.php:139
+#: src/Category.php:134
 msgid "Minor operational failures are tolerated when recovered within the agreed recovery time."
 msgstr "Se toleran fallas operativas menores recuperadas dentro del tiempo de recuperación acordado."
 
-#: src/Category.php:140
+#: src/Category.php:135
 msgid "Processes"
 msgstr "Procesos"
 
-#: src/Category.php:140
+#: src/Category.php:135
 msgid "People"
 msgstr "Personas"
 
-#: src/Category.php:140
+#: src/Category.php:135
 msgid "Technology and information security"
 msgstr "Tecnología y seguridad de la información"
 
-#: src/Category.php:140
+#: src/Category.php:135
 msgid "Third parties and suppliers"
 msgstr "Terceros y proveedores"
 
-#: src/Category.php:140
+#: src/Category.php:135
 msgid "Business continuity"
 msgstr "Continuidad del negocio"
 
-#: src/Category.php:141
+#: src/Category.php:136
 msgid "Compliance and legal"
 msgstr "Cumplimiento y legal"
 
-#: src/Category.php:142
+#: src/Category.php:137
 msgid "Minimal tolerance: regulatory or legal breaches are corrected as a priority and never accepted deliberately."
 msgstr ""
 "Tolerancia mínima: los incumplimientos regulatorios o legales se corrigen con prioridad y nunca se aceptan de forma "
 "deliberada."
 
-#: src/Category.php:143
+#: src/Category.php:138
 msgid "Regulatory"
 msgstr "Regulatorio"
 
-#: src/Category.php:143
+#: src/Category.php:138
 msgid "Anti-money laundering (AML/CFT)"
 msgstr "Prevención de lavado de activos (PLA/FT)"
 
-#: src/Category.php:143
+#: src/Category.php:138
 msgid "Consumer protection"
 msgstr "Protección del consumidor"
 
-#: src/Category.php:143
+#: src/Category.php:138
 msgid "Litigation and contracts"
 msgstr "Litigios y contratos"
 
-#: src/Category.php:144
+#: src/Category.php:139
 msgid "Fraud"
 msgstr "Fraude"
 
-#: src/Category.php:145
+#: src/Category.php:140
 msgid "Zero tolerance for internal fraud; external fraud is kept limited by preventive controls."
 msgstr "Cero tolerancia al fraude interno; el fraude externo se mantiene acotado con controles preventivos."
 
-#: src/Category.php:146
+#: src/Category.php:141
 msgid "Internal fraud"
 msgstr "Fraude interno"
 
-#: src/Category.php:146
+#: src/Category.php:141
 msgid "External fraud"
 msgstr "Fraude externo"
 
-#: src/Category.php:147
+#: src/Category.php:142
 msgid "Reputational"
 msgstr "Reputacional"
 
-#: src/Category.php:148
+#: src/Category.php:143
 msgid "The trust of customers, regulators and investors is protected; events with public exposure are escalated to the Board."
 msgstr ""
 "Se protege la confianza de clientes, reguladores e inversores; los eventos con exposición pública se escalan al "
 "Directorio."
 
-#: src/Category.php:150
+#: src/Category.php:145
 msgid "ESG and climate"
 msgstr "ESG y climático"
 
-#: src/Category.php:151
+#: src/Category.php:146
 msgid "Environmental, social and climate risks are managed progressively."
 msgstr "Los riesgos ambientales, sociales y climáticos se gestionan de forma progresiva."
 
-#: src/Category.php:152
+#: src/Category.php:147
 msgid "Climate (physical and transition)"
 msgstr "Climático (físico y de transición)"
 
-#: src/Category.php:152
+#: src/Category.php:147
 msgid "Social"
 msgstr "Social"
 
@@ -195,7 +199,7 @@ msgstr "Apetito de riesgo (nivel residual máximo deseado)"
 msgid "Risk tolerance (maximum acceptable residual level)"
 msgstr "Tolerancia (nivel residual máximo admisible)"
 
-#: src/Category.php:61 src/Category.php:79
+#: src/Category.php:61 src/Category.php:79 templates/entity_config.html.twig:40
 msgid "Appetite statement"
 msgstr "Declaración de apetito"
 
@@ -203,11 +207,11 @@ msgstr "Declaración de apetito"
 msgid "Inherited from parent category"
 msgstr "Hereda de la categoría superior"
 
-#: src/Category.php:77
+#: src/Category.php:77 templates/entity_config.html.twig:39
 msgid "Appetite"
 msgstr "Apetito"
 
-#: src/Category.php:78
+#: src/Category.php:78 templates/entity_config.html.twig:39
 msgid "Tolerance"
 msgstr "Tolerancia"
 
@@ -215,13 +219,17 @@ msgstr "Tolerancia"
 msgid "Corporate risks"
 msgstr "Riesgos corporativos"
 
-#: src/Dashboard.php:38 src/Profile.php:35 templates/profile_rights.html.twig:20
+#: src/Dashboard.php:38 src/EntityConfig.php:52 src/Profile.php:35 templates/profile_rights.html.twig:20
 msgid "Corporate risks (ERM)"
 msgstr "Riesgos corporativos (ERM)"
 
 #: src/Dashboard.php:96
 msgid "Uncategorized"
 msgstr "Sin categoría"
+
+#: src/EntityConfig.php:41
+msgid "ERM settings"
+msgstr "Configuración ERM"
 
 #: src/Indicator.php:115
 msgid "The indicator must have a name."
@@ -351,100 +359,105 @@ msgstr "Aceptar o revocar la aceptación de un riesgo (nunca el propio)"
 msgid "The risk must have a name."
 msgstr "El riesgo debe tener un nombre."
 
-#: src/Risk.php:181
+#: src/Risk.php:184
 msgid "You are not allowed to accept risks: this is done by the Risk Committee or the Board."
 msgstr "No tienes permiso para aceptar riesgos: lo hace el Comité de riesgos o el Directorio."
 
-#: src/Risk.php:182
+#: src/Risk.php:185
 msgid "You are not allowed to revoke the acceptance of a risk."
 msgstr "No tienes permiso para revocar la aceptación de un riesgo."
 
-#: src/Risk.php:186
+#: src/Risk.php:189
 msgid "To accept the risk, the treatment decision must be \"Accept\"."
 msgstr "Para aceptar el riesgo, la decisión de tratamiento debe ser \"Aceptar\"."
 
-#: src/Risk.php:190
+#: src/Risk.php:193
 msgid "The risk owner cannot accept their own risk (segregation of duties)."
 msgstr "El dueño del riesgo no puede aceptar su propio riesgo (segregación de funciones)."
 
-#: src/Risk.php:220
+#: src/Risk.php:229
+#, python-format
+msgid "The code %s is already used in this entity."
+msgstr "El código %s ya se usa en esta entidad."
+
+#: src/Risk.php:260
 msgid "A mitigated or transferred risk cannot be closed without a treatment plan."
 msgstr "No se puede cerrar un riesgo mitigado o transferido sin plan de tratamiento."
 
-#: src/Risk.php:244 templates/dashboard.html.twig:87 templates/dashboard.html.twig:103 templates/risk_form.html.twig:26
+#: src/Risk.php:284 templates/dashboard.html.twig:116 templates/dashboard.html.twig:132 templates/risk_form.html.twig:26
 msgid "Risk"
 msgstr "Riesgo"
 
-#: src/Risk.php:246 templates/dashboard.html.twig:87 templates/dashboard.html.twig:103 templates/items_tab.html.twig:18
+#: src/Risk.php:286 templates/dashboard.html.twig:116 templates/dashboard.html.twig:132 templates/items_tab.html.twig:18
 #: templates/risk_form.html.twig:25
 msgid "Code"
 msgstr "Código"
 
-#: src/Risk.php:247 templates/dashboard.html.twig:87 templates/risk_form.html.twig:27
+#: src/Risk.php:287 templates/dashboard.html.twig:116 templates/entity_config.html.twig:38 templates/risk_form.html.twig:27
 msgid "Category"
 msgstr "Categoría"
 
-#: src/Risk.php:248 templates/risk_form.html.twig:28
+#: src/Risk.php:288 templates/risk_form.html.twig:28
 msgid "Risk owner"
 msgstr "Dueño del riesgo"
 
-#: src/Risk.php:249
+#: src/Risk.php:289
 msgid "Group"
 msgstr "Área"
 
-#: src/Risk.php:250 templates/risk_form.html.twig:37
+#: src/Risk.php:290 templates/risk_form.html.twig:37
 msgid "Inherent level"
 msgstr "Nivel inherente"
 
-#: src/Risk.php:251 templates/risk_form.html.twig:48
+#: src/Risk.php:291 templates/risk_form.html.twig:48
 msgid "Residual level"
 msgstr "Nivel residual"
 
-#: src/Risk.php:252
+#: src/Risk.php:292
 msgid "Inherent score"
 msgstr "Puntaje inherente"
 
-#: src/Risk.php:253
+#: src/Risk.php:293
 msgid "Residual score"
 msgstr "Puntaje residual"
 
-#: src/Risk.php:254
+#: src/Risk.php:294
 msgid "Treatment"
 msgstr "Tratamiento"
 
-#: src/Risk.php:255 templates/actions_tab.html.twig:19 templates/risk_form.html.twig:56
+#: src/Risk.php:295 templates/actions_tab.html.twig:19 templates/risk_form.html.twig:56
 msgid "Status"
 msgstr "Estado"
 
-#: src/Risk.php:256 templates/risk_form.html.twig:40
+#: src/Risk.php:296 templates/risk_form.html.twig:40
 msgid "Maximum economic impact"
 msgstr "Impacto económico máximo"
 
-#: src/Risk.php:257 templates/risk_form.html.twig:39
+#: src/Risk.php:297 templates/risk_form.html.twig:39
 msgid "Minimum economic impact"
 msgstr "Impacto económico mínimo"
 
-#: src/Risk.php:258 templates/risk_form.html.twig:38
+#: src/Risk.php:298 templates/risk_form.html.twig:38
 msgid "Velocity"
 msgstr "Velocidad de materialización"
 
-#: src/Risk.php:259 templates/risk_form.html.twig:45
+#: src/Risk.php:299 templates/risk_form.html.twig:45
 msgid "Trend"
 msgstr "Tendencia"
 
-#: src/Risk.php:260 templates/risk_form.html.twig:63
+#: src/Risk.php:300 templates/risk_form.html.twig:63
 msgid "Next review"
 msgstr "Próxima revisión"
 
-#: src/Risk.php:261 templates/risk_form.html.twig:44
+#: src/Risk.php:301 templates/risk_form.html.twig:44
 msgid "Control effectiveness"
 msgstr "Eficacia de los controles"
 
-#: src/Risk.php:262
+#: src/Risk.php:302
 msgid "Description"
 msgstr "Descripción"
 
-#: src/Risk.php:308
+#: src/Risk.php:348
 msgid "Pending"
 msgstr "Pendiente"
 
@@ -685,7 +698,7 @@ msgstr "Realizada el"
 msgid "overdue"
 msgstr "vencida"
 
-#: templates/actions_tab.html.twig:36
+#: templates/actions_tab.html.twig:36 templates/entity_config.html.twig:66
 msgid "Save"
 msgstr "Guardar"
 
@@ -705,39 +718,58 @@ msgstr "Nueva acción"
 msgid "Add"
 msgstr "Agregar"
 
-#: templates/dashboard.html.twig:101
+#: templates/dashboard.html.twig:102
+#, python-format
+msgid "%d risk"
+msgid_plural "%d risks"
+msgstr[0] "%d riesgo"
+msgstr[1] "%d riesgos"
+
+#: templates/dashboard.html.twig:108
+msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
+msgstr "El largo de cada barra es proporcional a la exposición máxima de la categoría; los colores, al nivel residual."
+
+#: templates/dashboard.html.twig:114
+msgid "Outside risk appetite"
+msgstr "Fuera del apetito de riesgo"
+
+#: templates/dashboard.html.twig:116
+msgid "Position"
+msgstr "Posición"
+
+#: templates/dashboard.html.twig:121
+msgid "All residual risks are within appetite."
+msgstr "Todos los riesgos residuales están dentro del apetito."
+
+#: templates/dashboard.html.twig:130
 msgid "Top 10 residual risks"
 msgstr "Top 10 riesgos residuales"
 
-#: templates/dashboard.html.twig:101
+#: templates/dashboard.html.twig:130
 msgid "See full register"
 msgstr "Ver registro completo"
 
-#: templates/dashboard.html.twig:103
+#: templates/dashboard.html.twig:132
 msgid "Inherent"
 msgstr "Inherente"
 
-#: templates/dashboard.html.twig:103
+#: templates/dashboard.html.twig:132
 msgid "Residual"
 msgstr "Residual"
 
-#: templates/dashboard.html.twig:103
+#: templates/dashboard.html.twig:132
 msgid "Max. impact"
 msgstr "Impacto máx."
 
-#: templates/dashboard.html.twig:116
+#: templates/dashboard.html.twig:145
 msgid "Overdue treatment actions"
 msgstr "Acciones de tratamiento vencidas"
 
-#: templates/dashboard.html.twig:121
+#: templates/dashboard.html.twig:150
 msgid "No overdue actions."
 msgstr "Sin acciones vencidas."
 
-#: templates/dashboard.html.twig:125
-msgid "KRIs in alert"
-msgstr "KRI en alerta"
-
-#: templates/dashboard.html.twig:131
+#: templates/dashboard.html.twig:160
 msgid "No KRI in alert."
 msgstr "Ningún KRI en alerta."
 
@@ -773,7 +805,7 @@ msgstr ""
 "Vista restringida: se muestran sólo los riesgos de los que eres dueño, los de tus grupos y aquellos donde tienes "
 "acciones o indicadores asignados."
 
-#: templates/dashboard.html.twig:54
+#: templates/dashboard.html.twig:54 templates/dashboard.html.twig:66
 msgid "Active risks"
 msgstr "Riesgos activos"
 
@@ -782,44 +814,80 @@ msgstr "Riesgos activos"
 msgid "Residual %s"
 msgstr "Residual %s"
 
-#: templates/dashboard.html.twig:58
+#: templates/dashboard.html.twig:58 templates/dashboard.html.twig:69
 msgid "Maximum economic exposure"
 msgstr "Exposición económica máxima"
 
-#: templates/dashboard.html.twig:62
+#: templates/dashboard.html.twig:63
+msgid "Risks by entity"
+msgstr "Riesgos por entidad"
+
+#: templates/dashboard.html.twig:66
+msgid "Entity"
+msgstr "Entidad"
+
+#: templates/dashboard.html.twig:68
+msgid "Outside appetite"
+msgstr "Fuera del apetito"
+
+#: templates/dashboard.html.twig:68
+msgid "Overdue actions"
+msgstr "Acciones vencidas"
+
+#: templates/dashboard.html.twig:69 templates/dashboard.html.twig:154
+msgid "KRIs in alert"
+msgstr "KRI en alerta"
+
+#: templates/dashboard.html.twig:91
 msgid "Heat map - inherent risk"
 msgstr "Mapa de calor - riesgo inherente"
 
-#: templates/dashboard.html.twig:63
+#: templates/dashboard.html.twig:92
 msgid "Heat map - residual risk"
 msgstr "Mapa de calor - riesgo residual"
 
-#: templates/dashboard.html.twig:69
+#: templates/dashboard.html.twig:98
 msgid "Risks and exposure by category"
 msgstr "Riesgos y exposición por categoría"
 
-#: templates/dashboard.html.twig:73
+#: templates/entity_config.html.twig:19
+msgid "Risk numbering"
+msgstr "Numeración de riesgos"
+
+#: templates/entity_config.html.twig:22
+msgid "Code prefix"
+msgstr "Prefijo del código"
+
+#: templates/entity_config.html.twig:26
 #, python-format
-msgid "%d risk"
-msgid_plural "%d risks"
-msgstr[0] "%d riesgo"
-msgstr[1] "%d riesgos"
+msgid "New risks of this entity are numbered %s-001, %s-002... Leave empty to inherit the prefix of the parent entity."
+msgstr ""
+"Los riesgos nuevos de esta entidad se numeran %s-001, %s-002... Déjalo vacío para heredar el prefijo de la entidad "
+"superior."
 
-#: templates/dashboard.html.twig:79
-msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
-msgstr "El largo de cada barra es proporcional a la exposición máxima de la categoría; los colores, al nivel residual."
+#: templates/entity_config.html.twig:31
+msgid "Risk appetite of this entity"
+msgstr "Apetito de riesgo de esta entidad"
 
-#: templates/dashboard.html.twig:85
-msgid "Outside risk appetite"
-msgstr "Fuera del apetito de riesgo"
+#: templates/entity_config.html.twig:33
+msgid ""
+"Override the appetite and tolerance of each category for this entity (and its sub-entities). Empty values are "
+"inherited from the parent entity or from the category defaults."
+msgstr ""
+"Ajusta el apetito y la tolerancia de cada categoría para esta entidad (y sus sub-entidades). Los valores vacíos se "
+"heredan de la entidad superior o de los valores por defecto de la categoría."
 
-#: templates/dashboard.html.twig:87
-msgid "Position"
-msgstr "Posición"
+#: templates/entity_config.html.twig:38
+msgid "Default"
+msgstr "Por defecto"
 
-#: templates/dashboard.html.twig:92
-msgid "All residual risks are within appetite."
-msgstr "Todos los riesgos residuales están dentro del apetito."
+#: templates/entity_config.html.twig:40
+msgid "Effective"
+msgstr "Vigente"
+
+#: templates/entity_config.html.twig:51
+msgid "Inherited"
+msgstr "Heredado"
 
 #: templates/indicators_tab.html.twig:16
 msgid "Normal"

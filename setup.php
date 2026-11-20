@@ -25,12 +25,13 @@ use Glpi\Plugin\Hooks;
 use GlpiPlugin\Erm\Action;
 use GlpiPlugin\Erm\Category;
 use GlpiPlugin\Erm\Dashboard;
+use GlpiPlugin\Erm\EntityConfig;
 use GlpiPlugin\Erm\Indicator;
 use GlpiPlugin\Erm\Profile;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '1.2.0');
+define('PLUGIN_ERM_VERSION', '1.3.0');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -49,6 +50,7 @@ function plugin_init_erm(): void
     Plugin::registerClass(Indicator::class, ['addtabon' => [Risk::class]]);
     Plugin::registerClass(Risk_Item::class, ['addtabon' => array_merge([Risk::class], Risk_Item::getLinkableItemtypes())]);
     Plugin::registerClass(Risk::class, ['document_types' => true]);
+    Plugin::registerClass(EntityConfig::class, ['addtabon' => ['Entity']]);
     $CFG_GLPI['document_types'][] = Risk::class;
 
     // Same menu sector as GRC Manager when active; otherwise "Management".

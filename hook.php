@@ -135,6 +135,25 @@ function plugin_erm_install(): bool
             `date_creation` timestamp NULL DEFAULT NULL,
             PRIMARY KEY (`id`),
             KEY `plugin_erm_indicators_id` (`plugin_erm_indicators_id`)",
+        'glpi_plugin_erm_entityconfigs' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `code_prefix` varchar(16) NOT NULL DEFAULT '',
+            `date_creation` timestamp NULL DEFAULT NULL,
+            `date_mod` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `entities_id` (`entities_id`)",
+        'glpi_plugin_erm_appetites' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `plugin_erm_categories_id` int {$sign} NOT NULL DEFAULT '0',
+            `appetite_level` varchar(16) NOT NULL DEFAULT '',
+            `tolerance_level` varchar(16) NOT NULL DEFAULT '',
+            `appetite_statement` text,
+            `date_mod` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `unicity` (`entities_id`,`plugin_erm_categories_id`),
+            KEY `plugin_erm_categories_id` (`plugin_erm_categories_id`)",
         'glpi_plugin_erm_risks_items' => "
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
@@ -193,7 +212,8 @@ function plugin_erm_uninstall(): bool
 
     foreach (
         ['glpi_plugin_erm_categories', 'glpi_plugin_erm_risks', 'glpi_plugin_erm_actions', 'glpi_plugin_erm_indicators',
-              'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items'] as $table
+              'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items',
+              'glpi_plugin_erm_entityconfigs', 'glpi_plugin_erm_appetites'] as $table
     ) {
         $DB->dropTable($table, true);
     }

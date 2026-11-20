@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.2.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 1.3.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -60,11 +60,29 @@ Valores que asigna la instalación a los perfiles estándar: Super-Admin (todo, 
 (todo menos aceptar), Supervisor (ver, actualizar y crear), Technician (ver/actualizar propios y tratamiento),
 Observer y Read-Only (ver todos).
 
-## 4. Entidades
+## 4. Entidades y varias empresas
 
 Cada riesgo pertenece a una entidad (con opción de visibilidad en sub-entidades). Los permisos se asignan por
-entidad en **Usuarios → (usuario) → Autorizaciones**, por lo que un consultor puede gestionar varias empresas y el
-personal de cada cliente sólo la suya. Las categorías también admiten entidad.
+entidad en **Usuarios → (usuario) → Autorizaciones**: un consultor puede gestionar varias empresas y el personal de
+cada cliente sólo la suya.
+
+En **Administración → Entidades → (entidad) → pestaña "Riesgos corporativos (ERM)"** (permiso "Categorías, apetito y
+tolerancia") se configura por empresa:
+
+- **Prefijo del código**: los riesgos nuevos se numeran `PREFIJO-001`, `PREFIJO-002`... de forma independiente en
+  cada entidad. Vacío = hereda el de la entidad superior (por defecto `RC`). El código es único dentro de la entidad.
+- **Apetito y tolerancia por categoría**: ajustan los valores por defecto de la taxonomía para esa empresa, con su
+  propia declaración de apetito. Lo que se deja en "Heredado" toma el valor de la entidad superior o el de la
+  categoría. La columna "Vigente" muestra el resultado.
+![Configuración ERM de la entidad](screenshots/entity-config.png)
+
+- **Categorías propias**: una empresa puede tener subcategorías propias creándolas en su entidad (por ejemplo,
+  "Habilitaciones sanitarias" para una clínica).
+
+Cuando un usuario ve varias entidades a la vez, el tablero agrega la tabla **Riesgos por entidad** (riesgos por
+nivel, fuera del apetito, acciones vencidas, KRI en alerta y exposición), con acceso al registro filtrado.
+
+![Riesgos por entidad](screenshots/dashboard-entities.png)
 
 ## 5. Integración con GLPI GRC Manager (opcional)
 

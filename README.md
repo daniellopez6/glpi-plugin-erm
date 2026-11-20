@@ -26,6 +26,8 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
   risks, overdue actions and KRIs in alert.
 - **Role based access** (per profile and entity): see all / see own risks, update all / update own, treatment,
   taxonomy & appetite, acceptance. Search, dashboard and selectors are filtered accordingly.
+- **Multi-company**: per entity risk code prefix and appetite/tolerance overrides (inherited by sub-entities), and a
+  "risks by entity" dashboard for consultants managing several companies.
 - Native GLPI features: entities, search engine, documents, notes, history, REST API (`GlpiPlugin\Erm\*`).
 
 ## Requirements
@@ -60,6 +62,7 @@ Clone the repository inside `glpi/plugins/erm` of a GLPI 12 development instance
 composer install            # dev tools: PHP_CodeSniffer (PSR-12) and PHPStan
 composer lint               # PSR-12
 composer analyse            # PHPStan level 5 (uses the parent GLPI sources)
+composer test               # PHPUnit unit tests
 python3 tools/extract_locales.py && python3 tools/build_po.py   # refresh locales (requires Babel)
 ```
 

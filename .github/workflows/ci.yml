@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GLPI 12
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: glpi-project/glpi
           ref: 12.0.2
           path: glpi
       - name: Checkout plugin
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: glpi/plugins/erm
       - name: Setup PHP
@@ -34,6 +34,9 @@ jobs:
       - name: PHP syntax
         working-directory: glpi/plugins/erm
         run: find src front setup.php hook.php -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Unit tests (PHPUnit)
+        working-directory: glpi/plugins/erm
+        run: vendor/bin/phpunit --no-progress
       - name: Coding standard (PSR-12)
         working-directory: glpi/plugins/erm
         run: vendor/bin/phpcs --standard=.phpcs.xml

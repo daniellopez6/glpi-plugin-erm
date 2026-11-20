@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translations_es import ES  # noqa: E402
 
-ES_ES = [("tenés", "tienes"), ("Elegí", "Elige"), ("sos", "eres"), ("Tu perfil", "Tu perfil")]
+ES_ES = [("tenés", "tienes"), ("Elegí", "Elige"), ("sos", "eres"), ("Dejalo", "Déjalo"), ("Ajustá", "Ajusta")]
 
 
 def build(lang: str, table: dict, replace: list) -> None:

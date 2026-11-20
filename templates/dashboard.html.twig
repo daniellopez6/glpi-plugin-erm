@@ -58,6 +58,35 @@
       <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">{{ __('Maximum economic exposure', 'erm') }}</div><div class="h3 m-0">{{ exposure }}</div></div></div></div>
    </div>
 
+   {% if by_entity|length %}
+   <div class="card mb-3">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-building-community me-2"></i>{{ __('Risks by entity', 'erm') }}</h3></div>
+      <div class="table-responsive"><table class="table card-table table-sm table-vcenter">
+         <thead><tr>
+            <th>{{ __('Entity', 'erm') }}</th><th class="text-end">{{ __('Active risks', 'erm') }}</th>
+            {% for k, label in levels|reverse(true) %}<th class="text-center">{{ label }}</th>{% endfor %}
+            <th class="text-end">{{ __('Outside appetite', 'erm') }}</th><th class="text-end">{{ __('Overdue actions', 'erm') }}</th>
+            <th class="text-end">{{ __('KRIs in alert', 'erm') }}</th><th class="text-end">{{ __('Maximum economic exposure', 'erm') }}</th>
+         </tr></thead>
+         <tbody>
+         {% for e in by_entity %}
+            <tr>
+               <td><a href="{{ e.url }}">{{ e.name }}</a></td>
+               <td class="text-end">{{ e.count }}</td>
+               {% for k, label in levels|reverse(true) %}
+                  <td class="text-center">{% if e.levels[k] %}<span class="badge" style="background:{{ level_color[k] }};color:{{ k == 'medium' ? '#1d273b' : '#fff' }}">{{ e.levels[k] }}</span>{% else %}<span class="text-muted">0</span>{% endif %}</td>
+               {% endfor %}
+               <td class="text-end">{% if e.outside %}<span class="badge bg-orange-lt">{{ e.outside }}</span>{% else %}0{% endif %}</td>
+               <td class="text-end">{% if e.overdue %}<span class="badge bg-red-lt">{{ e.overdue }}</span>{% else %}0{% endif %}</td>
+               <td class="text-end">{% if e.kri %}<span class="badge bg-orange-lt">{{ e.kri }}</span>{% else %}0{% endif %}</td>
+               <td class="text-end">{{ e.exposure|formatted_number }}</td>
+            </tr>
+         {% endfor %}
+         </tbody>
+      </table></div>
+   </div>
+   {% endif %}
+
    <div class="row row-cards mb-3">
       <div class="col-lg-6">{{ m.heatmap(__('Heat map - inherent risk', 'erm'), heat.inherent, cells, prob_labels, imp_labels) }}</div>
       <div class="col-lg-6">{{ m.heatmap(__('Heat map - residual risk', 'erm'), heat.residual, cells, prob_labels, imp_labels) }}</div>

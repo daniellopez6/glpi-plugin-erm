@@ -106,6 +106,27 @@ class Dashboard extends CommonGLPI
             }
         }
         uasort($byCat, fn($a, $b) => $b['exposure'] <=> $a['exposure']);
+
+        // Per entity breakdown (consultant view across several companies)
+        $byEntity = [];
+        foreach ($risks as $r) {
+            $eid = (int) $r['entities_id'];
+            $byEntity[$eid] ??= ['name' => \Dropdown::getDropdownName('glpi_entities', $eid), 'count' => 0, 'exposure' => 0.0,
+                                 'levels' => array_fill_keys(Scale::LEVELS, 0), 'outside' => 0, 'overdue' => 0, 'kri' => 0,
+                                 'url' => Risk::getSearchURL() . '?' . http_build_query(['criteria' => [[
+                                     'field' => 80, 'searchtype' => 'equals', 'value' => $eid,
+                                 ]]])];
+            $byEntity[$eid]['count']++;
+            $byEntity[$eid]['exposure'] += (float) $r['economic_impact_max'];
+            $lvl = $r['residual_level'] ?: $r['inherent_level'];
+            if (isset($byEntity[$eid]['levels'][$lvl])) {
+                $byEntity[$eid]['levels'][$lvl]++;
+            }
+            if (in_array($r['appetite'][0], ['above_appetite', 'above_tolerance'], true)) {
+                $byEntity[$eid]['outside']++;
+            }
+        }
+        $riskEntity = array_column($risks, 'entities_id', 'id');
         $maxExp = max(array_merge([1.0], array_column($byCat, 'exposure')));
 
         $overdue = iterator_to_array($DB->request([
@@ -118,12 +139,18 @@ class Dashboard extends CommonGLPI
         ]), false);
         foreach ($overdue as &$a) {
             $a['owner'] = $a['users_id'] ? getUserName($a['users_id']) : '';
+            $eid = (int) ($riskEntity[$a['risk_id']] ?? -1);
+            if (isset($byEntity[$eid])) {
+                $byEntity[$eid]['overdue']++;
+            }
         }
+        unset($a);
 
         $kris = [];
         foreach ($risks as $r) {
             foreach (Indicator::getForRisk((int) $r['id']) as $k) {
                 if (in_array($k['status'], ['orange', 'red'], true)) {
+                    $byEntity[(int) $r['entities_id']]['kri']++;
                     $k['risk_code'] = $r['code'];
                     $k['risk_id'] = $r['id'];
                     $kris[] = $k;
@@ -158,6 +185,7 @@ class Dashboard extends CommonGLPI
            'list_url'    => Risk::getSearchURL(),
            'grc'         => class_exists('GlpiPlugin\\Grcmanager\\Risk'),
            'only_own'    => Rights::onlyOwn(),
+           'by_entity'   => count($byEntity) > 1 ? $byEntity : [],
         ]);
     }
 }

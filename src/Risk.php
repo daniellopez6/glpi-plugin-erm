@@ -146,8 +146,11 @@ class Risk extends CommonDBTM
         if ($input === false) {
             return false;
         }
-        if (empty($input['code'])) {
-            $input['code'] = sprintf('RC-%03d', countElementsInTable($this->getTable()) + 1);
+        $entityId = (int) ($input['entities_id'] ?? ($_SESSION['glpiactive_entity'] ?? 0));
+        if (trim((string) ($input['code'] ?? '')) === '') {
+            $input['code'] = Numbering::next(self::codesOfEntity($entityId), EntityConfig::prefixFor($entityId));
+        } elseif (!$this->isCodeAvailable((string) $input['code'], $entityId)) {
+            return false;
         }
         $input = $this->applyAcceptance($input, ['status' => '', 'users_id' => 0, 'treatment' => '']);
         return $input;
@@ -200,6 +203,35 @@ class Risk extends CommonDBTM
         return $input;
     }
 
+    /**
+     * Codes already used in an entity.
+     *
+     * @return list<string>
+     */
+    public static function codesOfEntity(int $entityId): array
+    {
+        global $DB;
+        $codes = [];
+        foreach ($DB->request(['SELECT' => 'code', 'FROM' => self::getTable(), 'WHERE' => ['entities_id' => $entityId]]) as $row) {
+            $codes[] = (string) $row['code'];
+        }
+        return $codes;
+    }
+
+    /** A risk code must be unique within its entity. */
+    private function isCodeAvailable(string $code, int $entityId): bool
+    {
+        $where = ['code' => trim($code), 'entities_id' => $entityId];
+        if (!$this->isNewItem()) {
+            $where['NOT'] = ['id' => $this->getID()];
+        }
+        if (countElementsInTable(self::getTable(), $where) > 0) {
+            Session::addMessageAfterRedirect(sprintf(__('The code %s is already used in this entity.', 'erm'), htmlescape($code)), false, ERROR);
+            return false;
+        }
+        return true;
+    }
+
     public function prepareInputForUpdate($input)
     {
         // Profile with only the "Accept risks" right: changes outside the treatment decision are discarded.
@@ -211,6 +243,14 @@ class Risk extends CommonDBTM
         $input = $this->applyAcceptance($input, $this->fields);
         if ($input === false) {
             return false;
+        }
+        if (isset($input['code']) && trim((string) $input['code']) !== (string) $this->fields['code']) {
+            $entityId = (int) ($input['entities_id'] ?? $this->fields['entities_id']);
+            if (trim((string) $input['code']) === '') {
+                unset($input['code']);
+            } elseif (!$this->isCodeAvailable((string) $input['code'], $entityId)) {
+                return false;
+            }
         }
         $treatment = $input['treatment'] ?? $this->fields['treatment'];
         if (
@@ -231,7 +271,7 @@ class Risk extends CommonDBTM
     /** @return array{0:string,1:string} */
     public function appetitePosition(): array
     {
-        [$app, $tol] = Category::effectiveAppetite((int) $this->fields['plugin_erm_categories_id']);
+        [$app, $tol] = Category::effectiveAppetite((int) $this->fields['plugin_erm_categories_id'], (int) $this->fields['entities_id']);
         $level = $this->fields['residual_level'] ?: $this->fields['inherent_level'];
         return Scale::appetitePosition($level, $app, $tol);
     }
@@ -347,7 +387,7 @@ class Risk extends CommonDBTM
            'ORDER'     => ['r.residual_score DESC', 'r.inherent_score DESC'],
         ]);
         foreach ($iter as $row) {
-            [$app, $tol] = Category::effectiveAppetite((int) $row['plugin_erm_categories_id']);
+            [$app, $tol] = Category::effectiveAppetite((int) $row['plugin_erm_categories_id'], (int) $row['entities_id']);
             $row['appetite'] = Scale::appetitePosition($row['residual_level'] ?: $row['inherent_level'], $app, $tol);
             $rows[] = $row;
         }

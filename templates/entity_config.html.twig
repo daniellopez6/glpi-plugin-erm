@@ -1,0 +1,70 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<form method="post" action="{{ action }}">
+   <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+   <input type="hidden" name="entities_id" value="{{ entity_id }}">
+   <div class="card mb-3">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-hash me-2"></i>{{ __('Risk numbering', 'erm') }}</h3></div>
+      <div class="card-body row g-2 align-items-end">
+         <div class="col-md-3">
+            <label class="form-label">{{ __('Code prefix', 'erm') }}</label>
+            <input type="text" name="code_prefix" value="{{ prefix }}" maxlength="10" class="form-control" placeholder="{{ eff_prefix }}" {{ can_edit ? '' : 'disabled' }}>
+         </div>
+         <div class="col-md-9 text-muted small">
+            {{ __('New risks of this entity are numbered %s-001, %s-002... Leave empty to inherit the prefix of the parent entity.', 'erm')|format(eff_prefix, eff_prefix) }}
+         </div>
+      </div>
+   </div>
+   <div class="card">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-gauge me-2"></i>{{ __('Risk appetite of this entity', 'erm') }}</h3></div>
+      <div class="card-body text-muted small pb-0">
+         {{ __('Override the appetite and tolerance of each category for this entity (and its sub-entities). Empty values are inherited from the parent entity or from the category defaults.', 'erm') }}
+      </div>
+      <div class="table-responsive">
+         <table class="table card-table table-vcenter">
+            <thead><tr>
+               <th>{{ __('Category', 'erm') }}</th><th>{{ __('Default', 'erm') }}</th>
+               <th>{{ __('Appetite', 'erm') }}</th><th>{{ __('Tolerance', 'erm') }}</th>
+               <th>{{ __('Appetite statement', 'erm') }}</th><th>{{ __('Effective', 'erm') }}</th>
+            </tr></thead>
+            <tbody>
+            {% for r in rows %}
+               <tr>
+                  <td><b>{{ r.name }}</b></td>
+                  <td class="small text-muted">{{ levels[r.default_appetite] ?? '-' }} / {{ levels[r.default_tolerance] ?? '-' }}</td>
+                  {% for field in ['appetite_level', 'tolerance_level'] %}
+                     {% set current = field == 'appetite_level' ? r.appetite : r.tolerance %}
+                     <td>
+                        <select name="appetite[{{ r.id }}][{{ field }}]" class="form-select form-select-sm" {{ can_edit ? '' : 'disabled' }}>
+                           <option value="">{{ __('Inherited', 'erm') }}</option>
+                           {% for k, l in levels %}<option value="{{ k }}" {{ k == current ? 'selected' }}>{{ l }}</option>{% endfor %}
+                        </select>
+                     </td>
+                  {% endfor %}
+                  <td><textarea name="appetite[{{ r.id }}][appetite_statement]" rows="1" class="form-control form-control-sm" {{ can_edit ? '' : 'disabled' }}>{{ r.statement }}</textarea></td>
+                  {# badges built by Scale::badge() (escaped) #}
+                  <td class="text-nowrap">{{ r.eff_appetite|raw }} {{ r.eff_tolerance|raw }}</td>
+               </tr>
+            {% endfor %}
+            </tbody>
+         </table>
+      </div>
+      {% if can_edit %}
+      <div class="card-footer text-end">
+         <button type="submit" name="update" class="btn btn-primary"><i class="ti ti-device-floppy"></i> {{ __('Save', 'erm') }}</button>
+      </div>
+      {% endif %}
+   </div>
+</form>

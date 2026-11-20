@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.2.x · GLPI 12
+Versión del plugin: 1.3.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -42,7 +42,7 @@ impacto legal, reputacional y operativo, no sólo el económico. Los importes se
 
 1. **Registro de riesgos corporativos → Agregar**.
 2. **Identificación**: nombre del riesgo (redactalo como evento: "Deterioro de la cartera por…"), categoría,
-   dueño, área responsable, descripción, **causas** y **consecuencias**. El código (RC-001…) se asigna solo.
+   dueño, área responsable, descripción, **causas** y **consecuencias**. El código se asigna solo con el prefijo de tu empresa (por ejemplo RC-001 o CDV-001).
 3. **Evaluación inherente**: probabilidad e impacto sin controles. El nivel se calcula al guardar. Completá la
    velocidad de materialización y el impacto económico mínimo y máximo (acepta `1.500.000,50` o `1500000.5`, en la moneda de la organización).
 4. **Controles existentes y riesgo residual**: describí los controles, su eficacia y la tendencia; luego
@@ -106,11 +106,14 @@ riesgos de ransomware y phishing del SGSI.
 - **Riesgos y exposición por categoría**.
 - **Fuera del apetito**: riesgos residuales sobre el apetito (naranja) o sobre la tolerancia (rojo).
 - **Top 10 residuales**, **acciones vencidas** y **KRI en alerta**.
+- **Riesgos por entidad**: si tu perfil ve varias empresas, una tabla compara sus indicadores; el nombre de cada
+  entidad lleva al registro filtrado. Para trabajar sobre una sola empresa, elegila en el selector de entidad de GLPI.
 
 ## 10. Categorías y apetito
 
 **Categorías y apetito (ERM)** (requiere el permiso de configuración para modificar): cada categoría tiene
-apetito, tolerancia y declaración de apetito. Si una subcategoría no los define, **hereda** los de la superior.
+apetito, tolerancia y declaración de apetito por defecto. Si una subcategoría no los define, **hereda** los de la
+superior. Cada empresa puede ajustarlos en la pestaña "Riesgos corporativos (ERM)" de su entidad.
 Cambiar el apetito actualiza inmediatamente la posición de todos los riesgos de esa categoría.
 
 ## 11. Buenas prácticas

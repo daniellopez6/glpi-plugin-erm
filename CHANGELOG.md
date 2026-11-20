@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 ### Planned
-- Per-entity risk numbering, per-entity appetite and consolidated multi-entity dashboard.
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
+
+## [1.3.0] - 2026-11-20
+### Added
+- Multi-company support: "Corporate risks (ERM)" tab on entities with a risk code prefix and appetite/tolerance
+  overrides per category; both are inherited by sub-entities.
+- Risk codes numbered per entity (`PREFIX-001`), unique within the entity.
+- Dashboard "Risks by entity" breakdown when several entities are visible (consultant view), with links to the
+  filtered register.
+- PHPUnit unit tests (numbering, appetite resolution, scales, validation) run in CI.
 
 ## [1.2.0] - 2026-11-20
 ### Added
