@@ -5,9 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 ### Planned
-- English base strings with gettext translations (`locales/`), Spanish (es_AR) translation.
 - Per-entity risk numbering, per-entity appetite and consolidated multi-entity dashboard.
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
+
+## [1.2.0] - 2026-11-20
+### Added
+- Internationalization: English source strings through gettext (`erm` domain), `locales/erm.pot` template and
+  Spanish translations (`es_AR`, `es_ES`). Tools `tools/extract_locales.py` and `tools/build_po.py`.
+- Continuous integration (GitHub Actions): PHP syntax, PSR-12 (phpcs), PHPStan level 5 against GLPI 12, locales check.
+### Changed
+- Default taxonomy is generic (not industry specific) and created in the language of the installing user.
+- Impact scale and amounts no longer hard-code a currency; numbers use the user number format.
+- Code style aligned with PSR-12; code comments in English.
+### Removed
+- Legacy `front/category*.php` files: GLPI 12 serves plugin dropdowns through its generic controllers
+  (removes the "Unexpected output detected" warnings).
+### Fixed
+- Tab handlers check the item type before using it (PHPStan findings).
 
 ## [1.1.1] - 2026-11-20
 ### Security

@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.1.x · GLPI 12
+Versión del plugin: 1.2.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -10,7 +10,7 @@ están en la [guía de administración](guia-administracion.md).
 | Concepto | Qué significa en el plugin |
 |---|---|
 | **Riesgo corporativo** | Evento incierto que puede afectar los objetivos de la organización (no sólo de TI). |
-| **Categoría** | Clasificación jerárquica: Estratégico, Financiero, Operacional, Cumplimiento y legal, Fraude, Reputacional, ESG. Se puede adaptar. |
+| **Categoría** | Clasificación jerárquica: Estratégico, Financiero, Operacional, Cumplimiento y legal, Fraude, Reputacional, ESG y climático. Se crea al instalar en el idioma de quien instala y se puede adaptar. |
 | **Riesgo inherente** | Nivel del riesgo **sin** considerar los controles existentes. |
 | **Riesgo residual** | Nivel del riesgo **después** de los controles existentes. Es el que se compara con el apetito. |
 | **Apetito** | Nivel residual máximo que la organización **desea** asumir en una categoría. |
@@ -32,8 +32,9 @@ Lo que ves depende de tu perfil: con "ver propios" sólo aparecen tus riesgos, y
 **Probabilidad**: 1 Rara (< 5% anual) · 2 Improbable (5-25%) · 3 Posible (25-50%) · 4 Probable (50-80%) ·
 5 Casi cierta (> 80%).
 
-**Impacto**: 1 Insignificante (< ARS 5 M) · 2 Menor (5-50 M) · 3 Moderado (50-200 M) · 4 Mayor (200-800 M) ·
-5 Catastrófico (> ARS 800 M). Considerá también el impacto legal, reputacional y operativo, no sólo el económico.
+**Impacto**: 1 Insignificante · 2 Menor · 3 Moderado · 4 Mayor · 5 Catastrófico. Cada organización define los
+umbrales económicos de cada nivel en su metodología (por ejemplo, en la declaración de apetito); considerá también el
+impacto legal, reputacional y operativo, no sólo el económico. Los importes se cargan en la moneda de la organización.
 
 **Nivel** = probabilidad × impacto: **1-4 Bajo**, **5-9 Medio**, **10-16 Alto**, **20-25 Crítico**.
 
@@ -43,7 +44,7 @@ Lo que ves depende de tu perfil: con "ver propios" sólo aparecen tus riesgos, y
 2. **Identificación**: nombre del riesgo (redactalo como evento: "Deterioro de la cartera por…"), categoría,
    dueño, área responsable, descripción, **causas** y **consecuencias**. El código (RC-001…) se asigna solo.
 3. **Evaluación inherente**: probabilidad e impacto sin controles. El nivel se calcula al guardar. Completá la
-   velocidad de materialización y el impacto económico mínimo y máximo (acepta `1.500.000,50` o `1500000.5`).
+   velocidad de materialización y el impacto económico mínimo y máximo (acepta `1.500.000,50` o `1500000.5`, en la moneda de la organización).
 4. **Controles existentes y riesgo residual**: describí los controles, su eficacia y la tendencia; luego
    probabilidad e impacto residuales. Se muestra la **posición frente al apetito** de la categoría.
 5. **Tratamiento**: elegí la decisión (Mitigar, Transferir, Evitar, Aceptar), el estado, la justificación y las

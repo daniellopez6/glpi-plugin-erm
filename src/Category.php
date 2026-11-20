@@ -22,23 +22,25 @@ use Dropdown;
 use Session;
 
 /**
- * Categoría de riesgo corporativo (taxonomía jerárquica configurable) con apetito y tolerancia.
+ * Corporate risk category (configurable tree) with risk appetite and tolerance.
  */
 class Category extends CommonTreeDropdown
 {
     public static string $rightname = Rights::CONFIG;
+    public bool $dohistory = true;
+    public bool $can_be_translated = false;
 
-    /** La taxonomía y el apetito se pueden consultar con permiso de configuración o de lectura del registro. */
+    /**
+     * The taxonomy and appetite can be read with the configuration right or with read access to the register.
+     */
     public static function canView(): bool
     {
         return Session::haveRight(self::$rightname, READ) || Rights::canReadSome();
     }
-    public bool $dohistory = true;
-    public bool $can_be_translated = false;
 
     public static function getTypeName($nb = 0)
     {
-        return $nb > 1 ? 'Categorías de riesgo corporativo' : 'Categoría de riesgo corporativo';
+        return _n('Corporate risk category', 'Corporate risk categories', $nb, 'erm');
     }
 
     public static function getIcon()
@@ -48,23 +50,23 @@ class Category extends CommonTreeDropdown
 
     public static function getMenuName()
     {
-        return 'Categorías y apetito (ERM)';
+        return __('Categories and appetite (ERM)', 'erm');
     }
 
     public function getAdditionalFields()
     {
         return array_merge(parent::getAdditionalFields(), [
-            ['name' => 'appetite_level', 'label' => 'Apetito de riesgo (nivel residual máximo deseado)', 'type' => 'erm_level'],
-            ['name' => 'tolerance_level', 'label' => 'Tolerancia (nivel residual máximo admisible)', 'type' => 'erm_level'],
-            ['name' => 'appetite_statement', 'label' => 'Declaración de apetito', 'type' => 'textarea'],
+           ['name' => 'appetite_level', 'label' => __('Risk appetite (maximum desired residual level)', 'erm'), 'type' => 'erm_level'],
+           ['name' => 'tolerance_level', 'label' => __('Risk tolerance (maximum acceptable residual level)', 'erm'), 'type' => 'erm_level'],
+           ['name' => 'appetite_statement', 'label' => __('Appetite statement', 'erm'), 'type' => 'textarea'],
         ]);
     }
 
     public function displaySpecificTypeField($ID, $field = [], array $options = [])
     {
         if (($field['type'] ?? '') === 'erm_level') {
-            Dropdown::showFromArray($field['name'], ['' => 'Hereda de la categoría superior'] + Scale::levels(), [
-                'value' => $this->fields[$field['name']] ?? '',
+            Dropdown::showFromArray($field['name'], ['' => __('Inherited from parent category', 'erm')] + Scale::levels(), [
+              'value' => $this->fields[$field['name']] ?? '',
             ]);
         }
     }
@@ -72,9 +74,9 @@ class Category extends CommonTreeDropdown
     public function rawSearchOptions()
     {
         $tab = parent::rawSearchOptions();
-        $tab[] = ['id' => 101, 'table' => $this->getTable(), 'field' => 'appetite_level', 'name' => 'Apetito', 'datatype' => 'specific'];
-        $tab[] = ['id' => 102, 'table' => $this->getTable(), 'field' => 'tolerance_level', 'name' => 'Tolerancia', 'datatype' => 'specific'];
-        $tab[] = ['id' => 103, 'table' => $this->getTable(), 'field' => 'appetite_statement', 'name' => 'Declaración de apetito', 'datatype' => 'text'];
+        $tab[] = ['id' => 101, 'table' => $this->getTable(), 'field' => 'appetite_level', 'name' => __('Appetite', 'erm'), 'datatype' => 'specific'];
+        $tab[] = ['id' => 102, 'table' => $this->getTable(), 'field' => 'tolerance_level', 'name' => __('Tolerance', 'erm'), 'datatype' => 'specific'];
+        $tab[] = ['id' => 103, 'table' => $this->getTable(), 'field' => 'appetite_statement', 'name' => __('Appetite statement', 'erm'), 'datatype' => 'text'];
         return $tab;
     }
 
@@ -101,7 +103,8 @@ class Category extends CommonTreeDropdown
     }
 
     /**
-     * Apetito y tolerancia efectivos: si la categoría no los define, se heredan de la superior.
+     * Effective appetite and tolerance: inherited from the parent category when not defined.
+     *
      * @return array{0:string,1:string}
      */
     public static function effectiveAppetite(int $id): array
@@ -120,27 +123,37 @@ class Category extends CommonTreeDropdown
         return [$appetite, $tolerance];
     }
 
-    /** Taxonomía inicial basada en ISO 31000 / COSO ERM adaptada a una entidad financiera. */
+    /**
+     * Initial taxonomy (ISO 31000 / COSO ERM), created in the language of the user running the installation.
+     */
     public static function createDefaultTaxonomy(): void
     {
         $tree = [
-            ['Estratégico', 'medium', 'high', 'Se aceptan riesgos moderados para crecer en el canal digital, sin comprometer la solvencia.',
-                ['Modelo de negocio y competencia', 'Proyectos e iniciativas estratégicas', 'Gobierno corporativo']],
-            ['Financiero', 'medium', 'high', 'Se aceptan riesgos financieros moderados acordes al negocio de crédito al consumo; ningún riesgo puede comprometer la liquidez mínima ni el capital regulatorio.',
-                ['Crédito (incobrabilidad)', 'Liquidez y fondeo', 'Mercado (tasa y tipo de cambio)', 'Capital y solvencia']],
-            ['Operacional', 'medium', 'high', 'Se toleran fallas operativas menores con recuperación dentro del RTO.',
-                ['Procesos', 'Personas', 'Tecnología y seguridad de la información', 'Terceros y proveedores', 'Continuidad del negocio']],
-            ['Cumplimiento y legal', 'low', 'medium', 'Tolerancia mínima: los incumplimientos regulatorios o legales se corrigen con prioridad; nunca se aceptan de forma deliberada.',
-                ['Regulatorio (BCRA / UIF / AAIP)', 'Prevención de lavado de activos (PLA/FT)', 'Protección del consumidor', 'Litigios y contratos']],
-            ['Fraude', 'low', 'medium', 'Cero tolerancia al fraude interno; el fraude externo se mantiene acotado con controles de originación.',
-                ['Fraude interno', 'Fraude externo (identidad, originación)']],
-            ['Reputacional', 'medium', 'high', 'Se protege la confianza de clientes, reguladores y fondeadores; los eventos con exposición pública se escalan al Directorio.', []],
-            ['ESG y climático', 'medium', 'high', 'Riesgos ambientales, sociales y climáticos gestionados de forma progresiva.',
-                ['Climático (físico y de transición)', 'Social y derechos del consumidor']],
+           [__('Strategic', 'erm'), 'medium', 'high',
+               __('Moderate risks are accepted to pursue growth, without compromising solvency.', 'erm'),
+               [__('Business model and competition', 'erm'), __('Strategic projects and initiatives', 'erm'), __('Corporate governance', 'erm')]],
+           [__('Financial', 'erm'), 'medium', 'high',
+               __('Moderate financial risks consistent with the business are accepted; no risk may compromise minimum liquidity or regulatory capital.', 'erm'),
+               [__('Credit and counterparty', 'erm'), __('Liquidity and funding', 'erm'), __('Market (interest and exchange rates)', 'erm'), __('Capital and solvency', 'erm')]],
+           [__('Operational', 'erm'), 'medium', 'high',
+               __('Minor operational failures are tolerated when recovered within the agreed recovery time.', 'erm'),
+               [__('Processes', 'erm'), __('People', 'erm'), __('Technology and information security', 'erm'), __('Third parties and suppliers', 'erm'), __('Business continuity', 'erm')]],
+           [__('Compliance and legal', 'erm'), 'low', 'medium',
+               __('Minimal tolerance: regulatory or legal breaches are corrected as a priority and never accepted deliberately.', 'erm'),
+               [__('Regulatory', 'erm'), __('Anti-money laundering (AML/CFT)', 'erm'), __('Consumer protection', 'erm'), __('Litigation and contracts', 'erm')]],
+           [__('Fraud', 'erm'), 'low', 'medium',
+               __('Zero tolerance for internal fraud; external fraud is kept limited by preventive controls.', 'erm'),
+               [__('Internal fraud', 'erm'), __('External fraud', 'erm')]],
+           [__('Reputational', 'erm'), 'medium', 'high',
+               __('The trust of customers, regulators and investors is protected; events with public exposure are escalated to the Board.', 'erm'),
+               []],
+           [__('ESG and climate', 'erm'), 'medium', 'high',
+               __('Environmental, social and climate risks are managed progressively.', 'erm'),
+               [__('Climate (physical and transition)', 'erm'), __('Social', 'erm')]],
         ];
         foreach ($tree as [$name, $app, $tol, $stmt, $children]) {
             $pid = (new self())->add(['name' => $name, 'plugin_erm_categories_id' => 0, 'entities_id' => 0, 'is_recursive' => 1,
-                                      'appetite_level' => $app, 'tolerance_level' => $tol, 'appetite_statement' => $stmt]);
+                                     'appetite_level' => $app, 'tolerance_level' => $tol, 'appetite_statement' => $stmt]);
             foreach ($children as $child) {
                 (new self())->add(['name' => $child, 'plugin_erm_categories_id' => $pid, 'entities_id' => 0, 'is_recursive' => 1]);
             }

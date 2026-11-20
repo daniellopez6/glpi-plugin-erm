@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.1.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 1.2.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -15,7 +15,7 @@ Versión del plugin: 1.1.x · GLPI 12.0.x · PHP 8.2+
    ```
    También se puede hacer desde **Configuración → Complementos**.
 3. La instalación crea las tablas `glpi_plugin_erm_*`, la taxonomía inicial de categorías con apetito y
-   tolerancia, las columnas por defecto del registro y los permisos con valores iniciales por perfil.
+   tolerancia (en el idioma del usuario que instala), las columnas por defecto del registro y los permisos con valores iniciales por perfil.
 4. Los usuarios conectados deben **volver a iniciar sesión** (o cambiar de perfil) para ver el menú.
 
 ## 2. Actualización
@@ -88,7 +88,12 @@ GET /api.php/v1/GlpiPlugin%5CErm%5CRisk?range=0-49
 **Elimina todas las tablas y datos del plugin**, sus permisos, preferencias de visualización, vínculos de
 documentos e historial. Hacé un backup antes.
 
-## 8. Solución de problemas
+## 8. Idiomas
+
+El plugin está en inglés, español de Argentina (`es_AR`) y español de España (`es_ES`); se muestra en el idioma
+de cada usuario. Para agregar un idioma, crear un `.po` a partir de `locales/erm.pot` y compilarlo a `.mo`.
+
+## 9. Solución de problemas
 
 | Síntoma | Causa y solución |
 |---|---|

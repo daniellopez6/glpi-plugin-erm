@@ -15,18 +15,17 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Exception\Http\AccessDeniedHttpException;
 use GlpiPlugin\Erm\Risk_Item;
 
 $item = new Risk_Item();
 if (isset($_POST['add'])) {
     if (!Risk_Item::canEditRisk((int) ($_POST['plugin_erm_risks_id'] ?? 0))) {
-        throw new AccessDeniedHttpException();
+        throw new \Glpi\Exception\Http\AccessDeniedHttpException();
     }
     $item->add($_POST);
 } elseif (isset($_POST['purge'])) {
     if (!$item->getFromDB((int) $_POST['id']) || !Risk_Item::canEditRisk((int) $item->fields['plugin_erm_risks_id'])) {
-        throw new AccessDeniedHttpException();
+        throw new \Glpi\Exception\Http\AccessDeniedHttpException();
     }
     $item->delete(['id' => $item->getID()], true);
 }

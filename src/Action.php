@@ -23,7 +23,7 @@ use Glpi\Application\View\TemplateRenderer;
 use Session;
 
 /**
- * Acción del plan de tratamiento de un riesgo corporativo.
+ * Treatment plan action of a corporate risk.
  */
 class Action extends CommonDBChild
 {
@@ -40,7 +40,7 @@ class Action extends CommonDBChild
 
     public static function getTypeName($nb = 0)
     {
-        return $nb > 1 ? 'Plan de tratamiento' : 'Acción de tratamiento';
+        return _n('Treatment action', 'Treatment plan', $nb, 'erm');
     }
 
     public static function getIcon()
@@ -52,7 +52,7 @@ class Action extends CommonDBChild
     {
         if ($item instanceof Risk && !$item->isNewItem()) {
             $n = countElementsInTable(self::getTable(), ['plugin_erm_risks_id' => $item->getID()]);
-            return self::createTabEntry('Plan de tratamiento', $n, null, self::getIcon());
+            return self::createTabEntry(__('Treatment plan', 'erm'), $n, null, self::getIcon());
         }
         return '';
     }
@@ -60,6 +60,9 @@ class Action extends CommonDBChild
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         global $DB;
+        if (!$item instanceof Risk) {
+            return false;
+        }
         $rows = [];
         $today = date('Y-m-d');
         foreach ($DB->request(['FROM' => self::getTable(), 'WHERE' => ['plugin_erm_risks_id' => $item->getID()], 'ORDER' => ['due_date', 'id']]) as $r) {
@@ -68,13 +71,13 @@ class Action extends CommonDBChild
             $rows[] = $r;
         }
         TemplateRenderer::getInstance()->display('@erm/actions_tab.html.twig', [
-            'risk'     => $item,
-            'rows'     => $rows,
-            'statuses' => Scale::actionStatuses(),
-            'can_edit' => Session::haveRight(self::$rightname, UPDATE),
-            'can_add'  => Session::haveRight(self::$rightname, CREATE),
-            'can_purge' => Session::haveRight(self::$rightname, PURGE),
-            'action'   => plugin_erm_url('front/action.form.php'),
+           'risk'     => $item,
+           'rows'     => $rows,
+           'statuses' => Scale::actionStatuses(),
+           'can_edit' => Session::haveRight(self::$rightname, UPDATE),
+           'can_add'  => Session::haveRight(self::$rightname, CREATE),
+           'can_purge' => Session::haveRight(self::$rightname, PURGE),
+           'action'   => plugin_erm_url('front/action.form.php'),
         ]);
         return true;
     }
@@ -82,7 +85,7 @@ class Action extends CommonDBChild
     public function prepareInputForAdd($input)
     {
         if (trim((string) ($input['name'] ?? '')) === '') {
-            Session::addMessageAfterRedirect('La acción debe tener una descripción.', false, ERROR);
+            Session::addMessageAfterRedirect(__('The action must have a description.', 'erm'), false, ERROR);
             return false;
         }
         return $this->clean($input);

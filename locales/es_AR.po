@@ -1,0 +1,1015 @@
+# ERM - Enterprise Risk Management plugin for GLPI
+# This file is distributed under the same license as the plugin (GPL-3.0-or-later).
+msgid ""
+msgstr ""
+"Project-Id-Version:  erm\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-20 16:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es_AR\n"
+"Language-Team: es_AR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: setup.php:62
+msgid "ERM - Enterprise Risk Management"
+msgstr "ERM - Gestión de Riesgos Corporativos"
+
+#: src/Action.php:43
+msgid "Treatment action"
+msgid_plural "Treatment plan"
+msgstr[0] "Acción de tratamiento"
+msgstr[1] "Plan de tratamiento"
+
+#: src/Action.php:55 templates/actions_tab.html.twig:16
+msgid "Treatment plan"
+msgstr "Plan de tratamiento"
+
+#: src/Action.php:88
+msgid "The action must have a description."
+msgstr "La acción debe tener una descripción."
+
+#: src/Category.php:132
+msgid "Strategic"
+msgstr "Estratégico"
+
+#: src/Category.php:133
+msgid "Moderate risks are accepted to pursue growth, without compromising solvency."
+msgstr "Se aceptan riesgos moderados para crecer, sin comprometer la solvencia."
+
+#: src/Category.php:134
+msgid "Business model and competition"
+msgstr "Modelo de negocio y competencia"
+
+#: src/Category.php:134
+msgid "Strategic projects and initiatives"
+msgstr "Proyectos e iniciativas estratégicas"
+
+#: src/Category.php:134
+msgid "Corporate governance"
+msgstr "Gobierno corporativo"
+
+#: src/Category.php:135
+msgid "Financial"
+msgstr "Financiero"
+
+#: src/Category.php:136
+msgid ""
+"Moderate financial risks consistent with the business are accepted; no risk may compromise minimum liquidity or "
+"regulatory capital."
+msgstr ""
+"Se aceptan riesgos financieros moderados acordes al negocio; ningún riesgo puede comprometer la liquidez mínima ni el"
+" capital regulatorio."
+
+#: src/Category.php:137
+msgid "Credit and counterparty"
+msgstr "Crédito y contraparte"
+
+#: src/Category.php:137
+msgid "Liquidity and funding"
+msgstr "Liquidez y fondeo"
+
+#: src/Category.php:137
+msgid "Market (interest and exchange rates)"
+msgstr "Mercado (tasa y tipo de cambio)"
+
+#: src/Category.php:137
+msgid "Capital and solvency"
+msgstr "Capital y solvencia"
+
+#: src/Category.php:138
+msgid "Operational"
+msgstr "Operacional"
+
+#: src/Category.php:139
+msgid "Minor operational failures are tolerated when recovered within the agreed recovery time."
+msgstr "Se toleran fallas operativas menores recuperadas dentro del tiempo de recuperación acordado."
+
+#: src/Category.php:140
+msgid "Processes"
+msgstr "Procesos"
+
+#: src/Category.php:140
+msgid "People"
+msgstr "Personas"
+
+#: src/Category.php:140
+msgid "Technology and information security"
+msgstr "Tecnología y seguridad de la información"
+
+#: src/Category.php:140
+msgid "Third parties and suppliers"
+msgstr "Terceros y proveedores"
+
+#: src/Category.php:140
+msgid "Business continuity"
+msgstr "Continuidad del negocio"
+
+#: src/Category.php:141
+msgid "Compliance and legal"
+msgstr "Cumplimiento y legal"
+
+#: src/Category.php:142
+msgid "Minimal tolerance: regulatory or legal breaches are corrected as a priority and never accepted deliberately."
+msgstr ""
+"Tolerancia mínima: los incumplimientos regulatorios o legales se corrigen con prioridad y nunca se aceptan de forma "
+"deliberada."
+
+#: src/Category.php:143
+msgid "Regulatory"
+msgstr "Regulatorio"
+
+#: src/Category.php:143
+msgid "Anti-money laundering (AML/CFT)"
+msgstr "Prevención de lavado de activos (PLA/FT)"
+
+#: src/Category.php:143
+msgid "Consumer protection"
+msgstr "Protección del consumidor"
+
+#: src/Category.php:143
+msgid "Litigation and contracts"
+msgstr "Litigios y contratos"
+
+#: src/Category.php:144
+msgid "Fraud"
+msgstr "Fraude"
+
+#: src/Category.php:145
+msgid "Zero tolerance for internal fraud; external fraud is kept limited by preventive controls."
+msgstr "Cero tolerancia al fraude interno; el fraude externo se mantiene acotado con controles preventivos."
+
+#: src/Category.php:146
+msgid "Internal fraud"
+msgstr "Fraude interno"
+
+#: src/Category.php:146
+msgid "External fraud"
+msgstr "Fraude externo"
+
+#: src/Category.php:147
+msgid "Reputational"
+msgstr "Reputacional"
+
+#: src/Category.php:148
+msgid "The trust of customers, regulators and investors is protected; events with public exposure are escalated to the Board."
+msgstr ""
+"Se protege la confianza de clientes, reguladores e inversores; los eventos con exposición pública se escalan al "
+"Directorio."
+
+#: src/Category.php:150
+msgid "ESG and climate"
+msgstr "ESG y climático"
+
+#: src/Category.php:151
+msgid "Environmental, social and climate risks are managed progressively."
+msgstr "Los riesgos ambientales, sociales y climáticos se gestionan de forma progresiva."
+
+#: src/Category.php:152
+msgid "Climate (physical and transition)"
+msgstr "Climático (físico y de transición)"
+
+#: src/Category.php:152
+msgid "Social"
+msgstr "Social"
+
+#: src/Category.php:43
+msgid "Corporate risk category"
+msgid_plural "Corporate risk categories"
+msgstr[0] "Categoría de riesgo corporativo"
+msgstr[1] "Categorías de riesgo corporativo"
+
+#: src/Category.php:53
+msgid "Categories and appetite (ERM)"
+msgstr "Categorías y apetito (ERM)"
+
+#: src/Category.php:59
+msgid "Risk appetite (maximum desired residual level)"
+msgstr "Apetito de riesgo (nivel residual máximo deseado)"
+
+#: src/Category.php:60
+msgid "Risk tolerance (maximum acceptable residual level)"
+msgstr "Tolerancia (nivel residual máximo admisible)"
+
+#: src/Category.php:61 src/Category.php:79
+msgid "Appetite statement"
+msgstr "Declaración de apetito"
+
+#: src/Category.php:68
+msgid "Inherited from parent category"
+msgstr "Hereda de la categoría superior"
+
+#: src/Category.php:77
+msgid "Appetite"
+msgstr "Apetito"
+
+#: src/Category.php:78
+msgid "Tolerance"
+msgstr "Tolerancia"
+
+#: src/Dashboard.php:33 src/Risk_Item.php:117
+msgid "Corporate risks"
+msgstr "Riesgos corporativos"
+
+#: src/Dashboard.php:38 src/Profile.php:35 templates/profile_rights.html.twig:20
+msgid "Corporate risks (ERM)"
+msgstr "Riesgos corporativos (ERM)"
+
+#: src/Dashboard.php:96
+msgid "Uncategorized"
+msgstr "Sin categoría"
+
+#: src/Indicator.php:115
+msgid "The indicator must have a name."
+msgstr "El indicador debe tener un nombre."
+
+#: src/Indicator.php:43
+msgid "Key risk indicator (KRI)"
+msgid_plural "Key risk indicators (KRI)"
+msgstr[0] "Indicador clave de riesgo (KRI)"
+msgstr[1] "Indicadores clave de riesgo (KRI)"
+
+#: src/Indicator.php:53
+msgid "Monthly"
+msgstr "Mensual"
+
+#: src/Indicator.php:53
+msgid "Quarterly"
+msgstr "Trimestral"
+
+#: src/Indicator.php:53
+msgid "Weekly"
+msgstr "Semanal"
+
+#: src/Indicator.php:53
+msgid "Daily"
+msgstr "Diaria"
+
+#: src/Indicator.php:69
+msgid "Indicators (KRI)"
+msgstr "Indicadores (KRI)"
+
+#: src/IndicatorValue.php:39
+msgid "KRI measurement"
+msgid_plural "KRI measurements"
+msgstr[0] "Medición de KRI"
+msgstr[1] "Mediciones de KRI"
+
+#: src/IndicatorValue.php:45
+msgid "The measurement must have a numeric value."
+msgstr "La medición debe tener un valor numérico."
+
+#: src/IndicatorValue.php:51
+msgid "Invalid measurement date."
+msgstr "Fecha de medición inválida."
+
+#: src/Profile.php:48
+msgid "See all"
+msgstr "Ver todos"
+
+#: src/Profile.php:48
+msgid "See all items"
+msgstr "Ver todos los elementos"
+
+#: src/Profile.php:49
+msgid "See own"
+msgstr "Ver propios"
+
+#: src/Profile.php:49
+msgid "See only own risks (owner, owner group or responsible of actions/KRIs)"
+msgstr "Ver sólo los riesgos propios (dueño, área o responsable de acciones/KRI)"
+
+#: src/Profile.php:50
+msgid "Update the items the user can see"
+msgstr "Modificar los elementos que puede ver"
+
+#: src/Profile.php:51
+msgid "Update own"
+msgstr "Actualizar propios"
+
+#: src/Profile.php:51
+msgid "Update only own risks"
+msgstr "Modificar sólo los riesgos propios"
+
+#: src/Profile.php:52
+msgid "Create items"
+msgstr "Crear elementos"
+
+#: src/Profile.php:53
+msgid "Put in trashbin"
+msgstr "Enviar a la papelera"
+
+#: src/Profile.php:54
+msgid "Delete permanently"
+msgstr "Eliminar definitivamente"
+
+#: src/Profile.php:58 src/Risk.php:48
+msgid "Corporate risk register"
+msgstr "Registro de riesgos corporativos"
+
+#: src/Profile.php:62
+msgid "Read notes"
+msgstr "Leer notas"
+
+#: src/Profile.php:62
+msgid "Read the notes"
+msgstr "Leer las notas"
+
+#: src/Profile.php:63
+msgid "Update notes"
+msgstr "Actualizar notas"
+
+#: src/Profile.php:63
+msgid "Update the notes"
+msgstr "Modificar las notas"
+
+#: src/Profile.php:67
+msgid "Treatment and monitoring (actions, KRIs and measurements)"
+msgstr "Tratamiento y seguimiento (acciones, KRI y mediciones)"
+
+#: src/Profile.php:73
+msgid "Categories, appetite and tolerance"
+msgstr "Categorías, apetito y tolerancia"
+
+#: src/Profile.php:79
+msgid "Formal risk acceptance (Committee / Board)"
+msgstr "Aceptación formal de riesgos (Comité / Directorio)"
+
+#: src/Profile.php:81
+msgid "Accept risks"
+msgstr "Aceptar riesgos"
+
+#: src/Profile.php:81
+msgid "Accept or revoke the acceptance of a risk (never an own risk)"
+msgstr "Aceptar o revocar la aceptación de un riesgo (nunca el propio)"
+
+#: src/Risk.php:142
+msgid "The risk must have a name."
+msgstr "El riesgo debe tener un nombre."
+
+#: src/Risk.php:181
+msgid "You are not allowed to accept risks: this is done by the Risk Committee or the Board."
+msgstr "No tenés permiso para aceptar riesgos: lo hace el Comité de riesgos o el Directorio."
+
+#: src/Risk.php:182
+msgid "You are not allowed to revoke the acceptance of a risk."
+msgstr "No tenés permiso para revocar la aceptación de un riesgo."
+
+#: src/Risk.php:186
+msgid "To accept the risk, the treatment decision must be \"Accept\"."
+msgstr "Para aceptar el riesgo, la decisión de tratamiento debe ser \"Aceptar\"."
+
+#: src/Risk.php:190
+msgid "The risk owner cannot accept their own risk (segregation of duties)."
+msgstr "El dueño del riesgo no puede aceptar su propio riesgo (segregación de funciones)."
+
+#: src/Risk.php:220
+msgid "A mitigated or transferred risk cannot be closed without a treatment plan."
+msgstr "No se puede cerrar un riesgo mitigado o transferido sin plan de tratamiento."
+
+#: src/Risk.php:244 templates/dashboard.html.twig:87 templates/dashboard.html.twig:103 templates/risk_form.html.twig:26
+msgid "Risk"
+msgstr "Riesgo"
+
+#: src/Risk.php:246 templates/dashboard.html.twig:87 templates/dashboard.html.twig:103 templates/items_tab.html.twig:18
+#: templates/risk_form.html.twig:25
+msgid "Code"
+msgstr "Código"
+
+#: src/Risk.php:247 templates/dashboard.html.twig:87 templates/risk_form.html.twig:27
+msgid "Category"
+msgstr "Categoría"
+
+#: src/Risk.php:248 templates/risk_form.html.twig:28
+msgid "Risk owner"
+msgstr "Dueño del riesgo"
+
+#: src/Risk.php:249
+msgid "Group"
+msgstr "Área"
+
+#: src/Risk.php:250 templates/risk_form.html.twig:37
+msgid "Inherent level"
+msgstr "Nivel inherente"
+
+#: src/Risk.php:251 templates/risk_form.html.twig:48
+msgid "Residual level"
+msgstr "Nivel residual"
+
+#: src/Risk.php:252
+msgid "Inherent score"
+msgstr "Puntaje inherente"
+
+#: src/Risk.php:253
+msgid "Residual score"
+msgstr "Puntaje residual"
+
+#: src/Risk.php:254
+msgid "Treatment"
+msgstr "Tratamiento"
+
+#: src/Risk.php:255 templates/actions_tab.html.twig:19 templates/risk_form.html.twig:56
+msgid "Status"
+msgstr "Estado"
+
+#: src/Risk.php:256 templates/risk_form.html.twig:40
+msgid "Maximum economic impact"
+msgstr "Impacto económico máximo"
+
+#: src/Risk.php:257 templates/risk_form.html.twig:39
+msgid "Minimum economic impact"
+msgstr "Impacto económico mínimo"
+
+#: src/Risk.php:258 templates/risk_form.html.twig:38
+msgid "Velocity"
+msgstr "Velocidad de materialización"
+
+#: src/Risk.php:259 templates/risk_form.html.twig:45
+msgid "Trend"
+msgstr "Tendencia"
+
+#: src/Risk.php:260 templates/risk_form.html.twig:63
+msgid "Next review"
+msgstr "Próxima revisión"
+
+#: src/Risk.php:261 templates/risk_form.html.twig:44
+msgid "Control effectiveness"
+msgstr "Eficacia de los controles"
+
+#: src/Risk.php:262
+msgid "Description"
+msgstr "Descripción"
+
+#: src/Risk.php:308
+msgid "Pending"
+msgstr "Pendiente"
+
+#: src/Risk.php:38 src/Risk_Item.php:179 templates/items_tab.html.twig:18
+msgid "Corporate risk"
+msgid_plural "Corporate risks"
+msgstr[0] "Riesgo corporativo"
+msgstr[1] "Riesgos corporativos"
+
+#: src/Risk_Item.php:146
+msgid "Link with"
+msgstr "Vincular con"
+
+#: src/Risk_Item.php:148 src/Risk_Item.php:182 templates/indicators_tab.html.twig:49 templates/items_tab.html.twig:18
+msgid "Comment"
+msgstr "Comentario"
+
+#: src/Risk_Item.php:149 src/Risk_Item.php:183
+msgid "Link"
+msgstr "Vincular"
+
+#: src/Risk_Item.php:48 src/Risk_Item.php:113
+msgid "Related items"
+msgstr "Elementos relacionados"
+
+#: src/Risk_Item.php:73
+msgid "Select an item to link."
+msgstr "Elegí un elemento para vincular."
+
+#: src/Risk_Item.php:78
+msgid "The item does not exist or you are not allowed to see it."
+msgstr "El elemento no existe o no tenés permiso para verlo."
+
+#: src/Risk_Item.php:85
+msgid "The item is already linked."
+msgstr "El elemento ya está vinculado."
+
+#: src/Risk_Item.php:96
+#, python-format
+msgid "Linked with %s"
+msgstr "Vínculo con %s"
+
+#: src/Scale.php:120
+msgid "Not assessed"
+msgstr "Sin evaluar"
+
+#: src/Scale.php:141
+msgid "No decision"
+msgstr "Sin decisión"
+
+#: src/Scale.php:142
+msgid "Mitigate"
+msgstr "Mitigar"
+
+#: src/Scale.php:143
+msgid "Transfer"
+msgstr "Transferir"
+
+#: src/Scale.php:144
+msgid "Avoid"
+msgstr "Evitar"
+
+#: src/Scale.php:145
+msgid "Accept"
+msgstr "Aceptar"
+
+#: src/Scale.php:157
+msgid "Identified"
+msgstr "Identificado"
+
+#: src/Scale.php:158
+msgid "Assessed"
+msgstr "Evaluado"
+
+#: src/Scale.php:159
+msgid "In treatment"
+msgstr "En tratamiento"
+
+#: src/Scale.php:160
+msgid "Accepted"
+msgstr "Aceptado"
+
+#: src/Scale.php:161
+msgid "Closed"
+msgstr "Cerrado"
+
+#: src/Scale.php:174
+msgid "None"
+msgstr "Inexistente"
+
+#: src/Scale.php:190
+msgid "Immediate (days)"
+msgstr "Inmediata (días)"
+
+#: src/Scale.php:191
+msgid "Short (weeks)"
+msgstr "Corta (semanas)"
+
+#: src/Scale.php:192
+msgid "Medium (months)"
+msgstr "Media (meses)"
+
+#: src/Scale.php:193
+msgid "Long (more than a year)"
+msgstr "Larga (más de un año)"
+
+#: src/Scale.php:206
+msgid "Increasing"
+msgstr "En aumento"
+
+#: src/Scale.php:207
+msgid "Stable"
+msgstr "Estable"
+
+#: src/Scale.php:208
+msgid "Decreasing"
+msgstr "En disminución"
+
+#: src/Scale.php:220
+msgid "Planned"
+msgstr "Planificada"
+
+#: src/Scale.php:221
+msgid "In progress"
+msgstr "En curso"
+
+#: src/Scale.php:222
+msgid "Done"
+msgstr "Realizada"
+
+#: src/Scale.php:223
+msgid "Cancelled"
+msgstr "Cancelada"
+
+#: src/Scale.php:235
+msgid "No appetite defined"
+msgstr "Sin apetito definido"
+
+#: src/Scale.php:238
+msgid "Above tolerance"
+msgstr "Sobre la tolerancia"
+
+#: src/Scale.php:241
+msgid "Above appetite"
+msgstr "Sobre el apetito"
+
+#: src/Scale.php:243
+msgid "Within appetite"
+msgstr "Dentro del apetito"
+
+#: src/Scale.php:35
+msgid "1 - Rare (< 5% per year)"
+msgstr "1 - Rara (< 5% anual)"
+
+#: src/Scale.php:36
+msgid "2 - Unlikely (5-25%)"
+msgstr "2 - Improbable (5-25%)"
+
+#: src/Scale.php:37
+msgid "3 - Possible (25-50%)"
+msgstr "3 - Posible (25-50%)"
+
+#: src/Scale.php:38
+msgid "4 - Likely (50-80%)"
+msgstr "4 - Probable (50-80%)"
+
+#: src/Scale.php:39
+msgid "5 - Almost certain (> 80%)"
+msgstr "5 - Casi cierta (> 80%)"
+
+#: src/Scale.php:51
+msgid "1 - Insignificant"
+msgstr "1 - Insignificante"
+
+#: src/Scale.php:52
+msgid "2 - Minor"
+msgstr "2 - Menor"
+
+#: src/Scale.php:53
+msgid "3 - Moderate"
+msgstr "3 - Moderado"
+
+#: src/Scale.php:54
+msgid "4 - Major"
+msgstr "4 - Mayor"
+
+#: src/Scale.php:55
+msgid "5 - Catastrophic"
+msgstr "5 - Catastrófico"
+
+#: src/Scale.php:67 src/Scale.php:175
+msgid "Low"
+msgstr "Bajo"
+
+#: src/Scale.php:68 src/Scale.php:176
+msgid "Medium"
+msgstr "Medio"
+
+#: src/Scale.php:69 src/Scale.php:177
+msgid "High"
+msgstr "Alto"
+
+#: src/Scale.php:70 templates/indicators_tab.html.twig:16 templates/indicators_tab.html.twig:69
+msgid "Critical"
+msgstr "Crítico"
+
+#: src/Validator.php:80
+#, python-format
+msgid "The field \"%s\" is mandatory."
+msgstr "El campo \"%s\" es obligatorio."
+
+#: src/Validator.php:90
+#, python-format
+msgid "Invalid value in \"%s\"."
+msgstr "Valor inválido en \"%s\"."
+
+#: templates/actions_tab.html.twig:19
+msgid "Action"
+msgstr "Acción"
+
+#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:64 templates/indicators_tab.html.twig:29
+msgid "Responsible"
+msgstr "Responsable"
+
+#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:65
+msgid "Due date"
+msgstr "Vencimiento"
+
+#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:66
+msgid "Estimated cost"
+msgstr "Costo estimado"
+
+#: templates/actions_tab.html.twig:19
+msgid "Done on"
+msgstr "Realizada el"
+
+#: templates/actions_tab.html.twig:25
+msgid "overdue"
+msgstr "vencida"
+
+#: templates/actions_tab.html.twig:36
+msgid "Save"
+msgstr "Guardar"
+
+#: templates/actions_tab.html.twig:47
+msgid "Delete"
+msgstr "Eliminar"
+
+#: templates/actions_tab.html.twig:53
+msgid "No actions. A risk to be mitigated or transferred needs a treatment plan."
+msgstr "Sin acciones. Un riesgo a mitigar o transferir necesita un plan de tratamiento."
+
+#: templates/actions_tab.html.twig:63
+msgid "New action"
+msgstr "Nueva acción"
+
+#: templates/actions_tab.html.twig:67
+msgid "Add"
+msgstr "Agregar"
+
+#: templates/dashboard.html.twig:101
+msgid "Top 10 residual risks"
+msgstr "Top 10 riesgos residuales"
+
+#: templates/dashboard.html.twig:101
+msgid "See full register"
+msgstr "Ver registro completo"
+
+#: templates/dashboard.html.twig:103
+msgid "Inherent"
+msgstr "Inherente"
+
+#: templates/dashboard.html.twig:103
+msgid "Residual"
+msgstr "Residual"
+
+#: templates/dashboard.html.twig:103
+msgid "Max. impact"
+msgstr "Impacto máx."
+
+#: templates/dashboard.html.twig:116
+msgid "Overdue treatment actions"
+msgstr "Acciones de tratamiento vencidas"
+
+#: templates/dashboard.html.twig:121
+msgid "No overdue actions."
+msgstr "Sin acciones vencidas."
+
+#: templates/dashboard.html.twig:125
+msgid "KRIs in alert"
+msgstr "KRI en alerta"
+
+#: templates/dashboard.html.twig:131
+msgid "No KRI in alert."
+msgstr "Ningún KRI en alerta."
+
+#: templates/dashboard.html.twig:34
+msgid "Probability (rows) × Impact (columns)"
+msgstr "Probabilidad (filas) × Impacto (columnas)"
+
+#: templates/dashboard.html.twig:44
+msgid "Enterprise risk management (ERM)"
+msgstr "Gestión de riesgos corporativos (ERM)"
+
+#: templates/dashboard.html.twig:45
+msgid ""
+"strategic, financial, operational, compliance, fraud, reputational and ESG risks, assessed with a 5×5 matrix (ISO "
+"31000 / COSO ERM)."
+msgstr ""
+"riesgos estratégicos, financieros, operacionales, de cumplimiento, fraude, reputacionales y ESG, evaluados con una "
+"matriz 5×5 (ISO 31000 / COSO ERM)."
+
+#: templates/dashboard.html.twig:46
+msgid ""
+"Information security risks are managed in detail in the ISMS register (GRC Manager) and can be linked from the "
+"\"Related items\" tab."
+msgstr ""
+"Los riesgos de seguridad de la información se gestionan en detalle en el registro del SGSI (GRC Manager) y pueden "
+"vincularse desde la pestaña «Elementos relacionados»."
+
+#: templates/dashboard.html.twig:50
+msgid ""
+"Restricted view: only the risks you own, the risks of your groups and those where you have actions or indicators "
+"assigned are shown."
+msgstr ""
+"Vista restringida: se muestran sólo los riesgos de los que sos dueño, los de tus grupos y aquellos donde tenés "
+"acciones o indicadores asignados."
+
+#: templates/dashboard.html.twig:54
+msgid "Active risks"
+msgstr "Riesgos activos"
+
+#: templates/dashboard.html.twig:56
+#, python-format
+msgid "Residual %s"
+msgstr "Residual %s"
+
+#: templates/dashboard.html.twig:58
+msgid "Maximum economic exposure"
+msgstr "Exposición económica máxima"
+
+#: templates/dashboard.html.twig:62
+msgid "Heat map - inherent risk"
+msgstr "Mapa de calor - riesgo inherente"
+
+#: templates/dashboard.html.twig:63
+msgid "Heat map - residual risk"
+msgstr "Mapa de calor - riesgo residual"
+
+#: templates/dashboard.html.twig:69
+msgid "Risks and exposure by category"
+msgstr "Riesgos y exposición por categoría"
+
+#: templates/dashboard.html.twig:73
+#, python-format
+msgid "%d risk"
+msgid_plural "%d risks"
+msgstr[0] "%d riesgo"
+msgstr[1] "%d riesgos"
+
+#: templates/dashboard.html.twig:79
+msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
+msgstr "El largo de cada barra es proporcional a la exposición máxima de la categoría; los colores, al nivel residual."
+
+#: templates/dashboard.html.twig:85
+msgid "Outside risk appetite"
+msgstr "Fuera del apetito de riesgo"
+
+#: templates/dashboard.html.twig:87
+msgid "Position"
+msgstr "Posición"
+
+#: templates/dashboard.html.twig:92
+msgid "All residual risks are within appetite."
+msgstr "Todos los riesgos residuales están dentro del apetito."
+
+#: templates/indicators_tab.html.twig:16
+msgid "Normal"
+msgstr "Normal"
+
+#: templates/indicators_tab.html.twig:16 templates/indicators_tab.html.twig:68
+msgid "Warning"
+msgstr "Alerta"
+
+#: templates/indicators_tab.html.twig:16
+msgid "No measurement"
+msgstr "Sin medición"
+
+#: templates/indicators_tab.html.twig:25
+msgid "Warning threshold"
+msgstr "Umbral de alerta"
+
+#: templates/indicators_tab.html.twig:26
+msgid "Critical threshold"
+msgstr "Umbral crítico"
+
+#: templates/indicators_tab.html.twig:27 templates/indicators_tab.html.twig:67
+msgid "Direction"
+msgstr "Sentido"
+
+#: templates/indicators_tab.html.twig:27
+msgid "lower is worse"
+msgstr "menor es peor"
+
+#: templates/indicators_tab.html.twig:27
+msgid "higher is worse"
+msgstr "mayor es peor"
+
+#: templates/indicators_tab.html.twig:28 templates/indicators_tab.html.twig:70
+msgid "Frequency"
+msgstr "Frecuencia"
+
+#: templates/indicators_tab.html.twig:47
+msgid "Date"
+msgstr "Fecha"
+
+#: templates/indicators_tab.html.twig:48
+msgid "Value"
+msgstr "Valor"
+
+#: templates/indicators_tab.html.twig:50
+msgid "Record value"
+msgstr "Registrar valor"
+
+#: templates/indicators_tab.html.twig:56
+msgid "This risk has no key risk indicators (KRI) yet."
+msgstr "Este riesgo todavía no tiene indicadores clave (KRI)."
+
+#: templates/indicators_tab.html.twig:60
+msgid "New indicator"
+msgstr "Nuevo indicador"
+
+#: templates/indicators_tab.html.twig:65
+msgid "Name"
+msgstr "Nombre"
+
+#: templates/indicators_tab.html.twig:66
+msgid "Unit"
+msgstr "Unidad"
+
+#: templates/indicators_tab.html.twig:67
+msgid "Higher is worse"
+msgstr "Mayor es peor"
+
+#: templates/indicators_tab.html.twig:67
+msgid "Lower is worse"
+msgstr "Menor es peor"
+
+#: templates/indicators_tab.html.twig:71
+msgid "Add KRI"
+msgstr "Agregar KRI"
+
+#: templates/items_tab.html.twig:18
+msgid "Type"
+msgstr "Tipo"
+
+#: templates/items_tab.html.twig:18
+msgid "Item"
+msgstr "Elemento"
+
+#: templates/items_tab.html.twig:18
+msgid "Level"
+msgstr "Nivel"
+
+#: templates/items_tab.html.twig:32
+msgid "Unlink"
+msgstr "Desvincular"
+
+#: templates/items_tab.html.twig:38
+msgid "No linked items."
+msgstr "Sin elementos vinculados."
+
+#: templates/risk_form.html.twig:21
+msgid ""
+"Your profile (Risk Committee) can only record the treatment decision, the status and the justification. The "
+"assessment is maintained by the risk owner."
+msgstr ""
+"Tu perfil (Comité de riesgos) sólo puede registrar la decisión de tratamiento, el estado y la justificación. La "
+"evaluación la mantiene el dueño del riesgo."
+
+#: templates/risk_form.html.twig:24
+msgid "Identification"
+msgstr "Identificación"
+
+#: templates/risk_form.html.twig:25
+msgid "Assigned automatically (RC-001...) when left empty."
+msgstr "Se asigna automáticamente (RC-001...) si se deja vacío."
+
+#: templates/risk_form.html.twig:29
+msgid "Responsible group"
+msgstr "Área responsable"
+
+#: templates/risk_form.html.twig:30
+msgid "Risk event description"
+msgstr "Descripción del evento de riesgo"
+
+#: templates/risk_form.html.twig:31
+msgid "Causes"
+msgstr "Causas"
+
+#: templates/risk_form.html.twig:32
+msgid "Consequences"
+msgstr "Consecuencias"
+
+#: templates/risk_form.html.twig:34
+msgid "Inherent assessment (without controls)"
+msgstr "Evaluación inherente (sin controles)"
+
+#: templates/risk_form.html.twig:35
+msgid "Probability"
+msgstr "Probabilidad"
+
+#: templates/risk_form.html.twig:36
+msgid "Impact"
+msgstr "Impacto"
+
+#: templates/risk_form.html.twig:42
+msgid "Existing controls and residual risk"
+msgstr "Controles existentes y riesgo residual"
+
+#: templates/risk_form.html.twig:43
+msgid "Existing controls"
+msgstr "Controles existentes"
+
+#: templates/risk_form.html.twig:46
+msgid "Residual probability"
+msgstr "Probabilidad residual"
+
+#: templates/risk_form.html.twig:47
+msgid "Residual impact"
+msgstr "Impacto residual"
+
+#: templates/risk_form.html.twig:50
+msgid "Position against appetite"
+msgstr "Posición frente al apetito"
+
+#: templates/risk_form.html.twig:54
+msgid "Treatment and acceptance"
+msgstr "Tratamiento y aceptación"
+
+#: templates/risk_form.html.twig:55
+msgid "Treatment decision"
+msgstr "Decisión de tratamiento"
+
+#: templates/risk_form.html.twig:57
+msgid "Decision justification"
+msgstr "Justificación de la decisión"
+
+#: templates/risk_form.html.twig:58
+msgid "Formal acceptance"
+msgstr "Aceptación formal"
+
+#: templates/risk_form.html.twig:60
+msgid ""
+"To accept: decision \"Accept\" and status \"Accepted\". Who and when are recorded automatically. The risk owner "
+"cannot accept it."
+msgstr ""
+"Para aceptar: decisión \"Aceptar\" y estado \"Aceptado\". Se registra automáticamente quién y cuándo. El dueño del "
+"riesgo no puede aceptarlo."
+
+#: templates/risk_form.html.twig:61
+msgid "Only the Risk Committee or the Board (\"Accept risks\" right) can formally accept a risk."
+msgstr "Sólo el Comité de riesgos o el Directorio (permiso \"Aceptar riesgos\") puede aceptar formalmente un riesgo."
+
+#: templates/risk_form.html.twig:64
+msgid "Last review"
+msgstr "Última revisión"
+

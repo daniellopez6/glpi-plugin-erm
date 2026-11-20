@@ -15,11 +15,12 @@
 <div class="card">
    <div class="table-responsive">
       <table class="table table-hover card-table">
-         <thead><tr><th>{{ reverse ? 'Código' : 'Tipo' }}</th><th>{{ reverse ? 'Riesgo corporativo' : 'Elemento' }}</th>{% if reverse %}<th>Nivel</th>{% endif %}<th>Comentario</th>{% if can_edit %}<th></th>{% endif %}</tr></thead>
+         <thead><tr><th>{{ reverse ? __('Code', 'erm') : __('Type', 'erm') }}</th><th>{{ reverse ? __('Corporate risk', 'erm') : __('Item', 'erm') }}</th>{% if reverse %}<th>{{ __('Level', 'erm') }}</th>{% endif %}<th>{{ __('Comment', 'erm') }}</th>{% if can_edit %}<th></th>{% endif %}</tr></thead>
          <tbody>
          {% for r in rows %}
             <tr>
                <td><i class="{{ r.icon }} me-1"></i>{{ r.type }}</td>
+               {# link: built by GLPI getLink() (escaped); level: Scale::badge() (escaped) #}
                <td>{{ r.link|raw }}</td>
                {% if reverse %}<td>{{ r.level|raw }}</td>{% endif %}
                <td>{{ r.comment }}</td>
@@ -28,13 +29,13 @@
                   <form method="post" action="{{ action }}">
                      <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
                      <input type="hidden" name="id" value="{{ r.id }}">
-                     <button type="submit" name="purge" class="btn btn-sm btn-ghost-danger" title="Desvincular"><i class="ti ti-unlink"></i></button>
+                     <button type="submit" name="purge" class="btn btn-sm btn-ghost-danger" title="{{ __('Unlink', 'erm') }}"><i class="ti ti-unlink"></i></button>
                   </form>
                </td>
                {% endif %}
             </tr>
          {% else %}
-            <tr><td colspan="5" class="text-muted">Sin elementos vinculados.</td></tr>
+            <tr><td colspan="5" class="text-muted">{{ __('No linked items.', 'erm') }}</td></tr>
          {% endfor %}
          </tbody>
       </table>

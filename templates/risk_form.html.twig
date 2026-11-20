@@ -12,54 +12,54 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
-{# Formulario del riesgo corporativo (ERM) #}
+{# Corporate risk form #}
 {% extends 'generic_show_form.html.twig' %}
 {% import 'components/form/fields_macros.html.twig' as fields %}
 
 {% block form_fields %}
    {% if acceptance_only %}
-   <div class="alert alert-info col-12"><i class="ti ti-gavel me-2"></i>Tu perfil (Comité de riesgos) sólo puede registrar la decisión de tratamiento, el estado y la justificación. La evaluación la mantiene el dueño del riesgo.</div>
+   <div class="alert alert-info col-12"><i class="ti ti-gavel me-2"></i>{{ __('Your profile (Risk Committee) can only record the treatment decision, the status and the justification. The assessment is maintained by the risk owner.', 'erm') }}</div>
    {% endif %}
    <fieldset {{ acceptance_only ? 'disabled' }} style="display:contents">
-   {{ fields.smallTitle('Identificación', 'ti ti-id') }}
-   {{ fields.textField('code', item.fields['code'], 'Código', {'helper': 'Se asigna automáticamente (RC-001...) si se deja vacío.'}) }}
-   {{ fields.textField('name', item.fields['name'], 'Riesgo', {'required': true}) }}
-   {{ fields.dropdownField('GlpiPlugin\\Erm\\Category', 'plugin_erm_categories_id', item.fields['plugin_erm_categories_id'], 'Categoría', {'entity': item.fields['entities_id']}) }}
-   {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], 'Dueño del riesgo', {'right': 'all', 'entity': item.fields['entities_id']}) }}
-   {{ fields.dropdownField('Group', 'groups_id', item.fields['groups_id'], 'Área responsable', {'entity': item.fields['entities_id']}) }}
-   {{ fields.textareaField('description', item.fields['description'], 'Descripción del evento de riesgo', {'full_width': true}) }}
-   {{ fields.textareaField('causes', item.fields['causes'], 'Causas', {'full_width': true}) }}
-   {{ fields.textareaField('consequences', item.fields['consequences'], 'Consecuencias', {'full_width': true}) }}
+   {{ fields.smallTitle(__('Identification', 'erm'), 'ti ti-id') }}
+   {{ fields.textField('code', item.fields['code'], __('Code', 'erm'), {'helper': __('Assigned automatically (RC-001...) when left empty.', 'erm')}) }}
+   {{ fields.textField('name', item.fields['name'], __('Risk', 'erm'), {'required': true}) }}
+   {{ fields.dropdownField('GlpiPlugin\\Erm\\Category', 'plugin_erm_categories_id', item.fields['plugin_erm_categories_id'], __('Category', 'erm'), {'entity': item.fields['entities_id']}) }}
+   {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], __('Risk owner', 'erm'), {'right': 'all', 'entity': item.fields['entities_id']}) }}
+   {{ fields.dropdownField('Group', 'groups_id', item.fields['groups_id'], __('Responsible group', 'erm'), {'entity': item.fields['entities_id']}) }}
+   {{ fields.textareaField('description', item.fields['description'], __('Risk event description', 'erm'), {'full_width': true}) }}
+   {{ fields.textareaField('causes', item.fields['causes'], __('Causes', 'erm'), {'full_width': true}) }}
+   {{ fields.textareaField('consequences', item.fields['consequences'], __('Consequences', 'erm'), {'full_width': true}) }}
 
-   {{ fields.smallTitle('Evaluación inherente (sin controles)', 'ti ti-flame') }}
-   {{ fields.dropdownArrayField('inherent_probability', item.fields['inherent_probability'] ?? 0, probabilities, 'Probabilidad') }}
-   {{ fields.dropdownArrayField('inherent_impact', item.fields['inherent_impact'] ?? 0, impacts, 'Impacto') }}
-   {{ fields.htmlField('', inherent_badge, 'Nivel inherente') }}
-   {{ fields.dropdownArrayField('velocity', item.fields['velocity'], velocities, 'Velocidad de materialización') }}
-   {{ fields.numberField('economic_impact_min', item.fields['economic_impact_min'], 'Impacto económico mínimo (ARS)', {'step': 'any'}) }}
-   {{ fields.numberField('economic_impact_max', item.fields['economic_impact_max'], 'Impacto económico máximo (ARS)', {'step': 'any'}) }}
+   {{ fields.smallTitle(__('Inherent assessment (without controls)', 'erm'), 'ti ti-flame') }}
+   {{ fields.dropdownArrayField('inherent_probability', item.fields['inherent_probability'] ?? 0, probabilities, __('Probability', 'erm')) }}
+   {{ fields.dropdownArrayField('inherent_impact', item.fields['inherent_impact'] ?? 0, impacts, __('Impact', 'erm')) }}
+   {{ fields.htmlField('', inherent_badge, __('Inherent level', 'erm')) }}
+   {{ fields.dropdownArrayField('velocity', item.fields['velocity'], velocities, __('Velocity', 'erm')) }}
+   {{ fields.numberField('economic_impact_min', item.fields['economic_impact_min'], __('Minimum economic impact', 'erm'), {'step': 'any'}) }}
+   {{ fields.numberField('economic_impact_max', item.fields['economic_impact_max'], __('Maximum economic impact', 'erm'), {'step': 'any'}) }}
 
-   {{ fields.smallTitle('Controles existentes y riesgo residual', 'ti ti-shield-check') }}
-   {{ fields.textareaField('existing_controls', item.fields['existing_controls'], 'Controles existentes', {'full_width': true}) }}
-   {{ fields.dropdownArrayField('control_effectiveness', item.fields['control_effectiveness'], effectiveness, 'Eficacia de los controles') }}
-   {{ fields.dropdownArrayField('trend', item.fields['trend'], trends, 'Tendencia') }}
-   {{ fields.dropdownArrayField('residual_probability', item.fields['residual_probability'] ?? 0, probabilities, 'Probabilidad residual') }}
-   {{ fields.dropdownArrayField('residual_impact', item.fields['residual_impact'] ?? 0, impacts, 'Impacto residual') }}
-   {{ fields.htmlField('', residual_badge, 'Nivel residual') }}
+   {{ fields.smallTitle(__('Existing controls and residual risk', 'erm'), 'ti ti-shield-check') }}
+   {{ fields.textareaField('existing_controls', item.fields['existing_controls'], __('Existing controls', 'erm'), {'full_width': true}) }}
+   {{ fields.dropdownArrayField('control_effectiveness', item.fields['control_effectiveness'], effectiveness, __('Control effectiveness', 'erm')) }}
+   {{ fields.dropdownArrayField('trend', item.fields['trend'], trends, __('Trend', 'erm')) }}
+   {{ fields.dropdownArrayField('residual_probability', item.fields['residual_probability'] ?? 0, probabilities, __('Residual probability', 'erm')) }}
+   {{ fields.dropdownArrayField('residual_impact', item.fields['residual_impact'] ?? 0, impacts, __('Residual impact', 'erm')) }}
+   {{ fields.htmlField('', residual_badge, __('Residual level', 'erm')) }}
    {% if appetite_badge %}
-      {{ fields.htmlField('', appetite_badge, 'Posición frente al apetito') }}
+      {{ fields.htmlField('', appetite_badge, __('Position against appetite', 'erm')) }}
    {% endif %}
    </fieldset>
 
-   {{ fields.smallTitle('Tratamiento y aceptación', 'ti ti-checklist') }}
-   {{ fields.dropdownArrayField('treatment', item.fields['treatment'], treatments, 'Decisión de tratamiento') }}
-   {{ fields.dropdownArrayField('status', item.fields['status'] ?: 'identified', statuses, 'Estado') }}
-   {{ fields.textareaField('justification', item.fields['justification'], 'Justificación de la decisión', {'full_width': true}) }}
-   {{ fields.htmlField('', acceptance, 'Aceptación formal', {
+   {{ fields.smallTitle(__('Treatment and acceptance', 'erm'), 'ti ti-checklist') }}
+   {{ fields.dropdownArrayField('treatment', item.fields['treatment'], treatments, __('Treatment decision', 'erm')) }}
+   {{ fields.dropdownArrayField('status', item.fields['status'] ?: 'identified', statuses, __('Status', 'erm')) }}
+   {{ fields.textareaField('justification', item.fields['justification'], __('Decision justification', 'erm'), {'full_width': true}) }}
+   {{ fields.htmlField('', acceptance, __('Formal acceptance', 'erm'), {
       'helper': can_accept
-         ? 'Para aceptar: decisión "Aceptar" y estado "Aceptado". Se registra automáticamente quién y cuándo. El dueño del riesgo no puede aceptarlo.'
-         : 'Sólo el Comité de riesgos o el Directorio (permiso "Aceptación de riesgos") puede aceptar formalmente un riesgo.'
+         ? __('To accept: decision "Accept" and status "Accepted". Who and when are recorded automatically. The risk owner cannot accept it.', 'erm')
+         : __('Only the Risk Committee or the Board ("Accept risks" right) can formally accept a risk.', 'erm')
    }) }}
-   {{ fields.dateField('review_date', item.fields['review_date'], 'Próxima revisión') }}
-   {{ fields.dateField('last_review_date', item.fields['last_review_date'], 'Última revisión') }}
+   {{ fields.dateField('review_date', item.fields['review_date'], __('Next review', 'erm')) }}
+   {{ fields.dateField('last_review_date', item.fields['last_review_date'], __('Last review', 'erm')) }}
 {% endblock %}

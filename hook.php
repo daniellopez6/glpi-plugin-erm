@@ -16,7 +16,7 @@
  */
 
 /**
- * Instalación y desinstalación del plugin ERM.
+ * Installation and uninstallation of the ERM plugin.
  */
 
 use GlpiPlugin\Erm\Category;
@@ -148,14 +148,14 @@ function plugin_erm_install(): bool
     ];
     foreach ($tables as $table => $columns) {
         if (!$DB->tableExists($table)) {
-            // DDL estática definida en este archivo (sin datos de usuario). GLPI 12 no ofrece una API para crear
-            // tablas; los plugins oficiales usan el mismo mecanismo.
+            // Static DDL defined in this file (no user data). GLPI 12 provides no API to create
+            // tables; official plugins use the same mechanism.
             $DB->doQuery("CREATE TABLE `$table` ($columns) ENGINE=InnoDB DEFAULT CHARSET={$charset} COLLATE={$collation} ROW_FORMAT=DYNAMIC");
         }
     }
 
-    // Derechos (1.1.0): registro, tratamiento, configuración y aceptación. Sólo se crean los que faltan;
-    // los valores ya asignados por un administrador nunca se pisan.
+    // Rights (1.1.0): register, treatment, configuration and acceptance. Only missing rights are created;
+    // values already set by an administrator are never overwritten.
     foreach (Rights::all() as $right) {
         if (countElementsInTable('glpi_profilerights', ['name' => $right]) === 0) {
             ProfileRight::addProfileRights([$right]);
@@ -171,11 +171,11 @@ function plugin_erm_install(): bool
         }
     }
 
-    // Columnas por defecto del registro de riesgos (código, categoría, dueño, niveles, tratamiento, estado, revisión)
+    // Default columns of the risk register (code, category, owner, levels, treatment, status, review)
     if (countElementsInTable('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Risk', 'users_id' => 0]) === 0) {
         foreach ([3, 4, 5, 7, 8, 13, 11, 12, 17] as $rank => $num) {
             $DB->insert('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Risk', 'num' => $num, 'rank' => $rank + 1,
-                                                    'users_id' => 0, 'interface' => 'central']);
+                                                   'users_id' => 0, 'interface' => 'central']);
         }
     }
 
@@ -191,8 +191,10 @@ function plugin_erm_uninstall(): bool
 {
     global $DB;
 
-    foreach (['glpi_plugin_erm_categories', 'glpi_plugin_erm_risks', 'glpi_plugin_erm_actions', 'glpi_plugin_erm_indicators',
-              'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items'] as $table) {
+    foreach (
+        ['glpi_plugin_erm_categories', 'glpi_plugin_erm_risks', 'glpi_plugin_erm_actions', 'glpi_plugin_erm_indicators',
+              'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items'] as $table
+    ) {
         $DB->dropTable($table, true);
     }
     ProfileRight::deleteProfileRights(Rights::all());
@@ -205,7 +207,7 @@ function plugin_erm_uninstall(): bool
 }
 
 /**
- * Búsqueda: un perfil con "Ver los propios" (sin "Ver todos") sólo lista sus riesgos.
+ * Search: a profile with "See own" (without "See all") only lists its own risks.
  */
 function plugin_erm_addDefaultWhere($itemtype)
 {

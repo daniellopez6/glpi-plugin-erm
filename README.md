@@ -4,8 +4,7 @@
 Manage strategic, financial, operational, compliance, fraud, reputational and ESG risks next to your IT and
 ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/parime/glpi-iso27001-management).
 
-> Status: **beta**. User interface strings are currently in Spanish; English base strings with gettext
-> translations are planned (see [CHANGELOG](CHANGELOG.md)).
+> Status: **beta**. Available in English, Spanish (Argentina) and Spanish (Spain).
 
 ![Dashboard](docs/screenshots/dashboard.png)
 
@@ -55,11 +54,22 @@ See the [administration guide](docs/guia-administracion.md) and the [user manual
 
 ## Development
 
+Clone the repository inside `glpi/plugins/erm` of a GLPI 12 development instance, then:
+
 ```bash
-composer install            # dev tools: GLPI coding standard (phpcs) and PHPStan
-composer lint
-composer analyse            # run from a plugin checked out inside glpi/plugins
+composer install            # dev tools: PHP_CodeSniffer (PSR-12) and PHPStan
+composer lint               # PSR-12
+composer analyse            # PHPStan level 5 (uses the parent GLPI sources)
+python3 tools/extract_locales.py && python3 tools/build_po.py   # refresh locales (requires Babel)
 ```
+
+The same checks run in GitHub Actions on every push and pull request.
+
+### Translations
+
+Strings use the `erm` gettext domain. `tools/extract_locales.py` regenerates `locales/erm.pot`; translations live in
+`tools/translations_es.py` (Spanish) and are compiled to `locales/*.po` / `*.mo` by `tools/build_po.py`.
+New languages are welcome: add a `.po` file based on `locales/erm.pot`.
 
 Contributions are welcome, see [CONTRIBUTING](CONTRIBUTING.md). Security issues: see [SECURITY](SECURITY.md).
 

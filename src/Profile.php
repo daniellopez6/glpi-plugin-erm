@@ -22,70 +22,72 @@ use Glpi\Application\View\TemplateRenderer;
 use Profile as GlpiProfile;
 
 /**
- * Pestaña "Riesgos corporativos (ERM)" en la ficha del perfil: matriz con los cuatro derechos del plugin.
+ * "Corporate risks (ERM)" tab on the profile form: matrix with the four plugin rights.
  */
 class Profile extends CommonGLPI
 {
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        if ($item instanceof GlpiProfile && !$item->isNewItem() && ($item->fields['interface'] ?? '') === 'central'
-            && GlpiProfile::canView()) {
-            return self::createTabEntry('Riesgos corporativos (ERM)', 0, null, 'ti ti-building-bank');
+        if (
+            $item instanceof GlpiProfile && !$item->isNewItem() && ($item->fields['interface'] ?? '') === 'central'
+            && GlpiProfile::canView()
+        ) {
+            return self::createTabEntry(__('Corporate risks (ERM)', 'erm'), 0, null, 'ti ti-building-bank');
         }
         return '';
     }
 
     /**
-     * Matriz de derechos. Las etiquetas son las mismas en todas las filas para que GLPI agrupe cada derecho
-     * en una sola columna.
+     * Rights matrix. Labels are identical on every row so that GLPI groups each right
+     * in a single column.
      *
      * @return array<int, array<string, mixed>>
      */
     public static function getRightsMatrix(): array
     {
-        $read       = ['short' => 'Ver todos', 'long' => 'Ver todos los elementos'];
-        $readOwn    = ['short' => 'Ver propios', 'long' => 'Ver sólo los riesgos propios (dueño, área o responsable de acciones/KRI)'];
-        $update     = ['short' => 'Actualizar', 'long' => 'Modificar los elementos que puede ver'];
-        $updateOwn  = ['short' => 'Actualizar propios', 'long' => 'Modificar sólo los riesgos propios'];
-        $create     = ['short' => 'Crear', 'long' => 'Crear elementos'];
-        $trash      = ['short' => 'Papelera', 'long' => 'Enviar a la papelera'];
-        $purge      = ['short' => 'Purgar', 'long' => 'Eliminar definitivamente'];
+        $read       = ['short' => __('See all', 'erm'), 'long' => __('See all items', 'erm')];
+        $readOwn    = ['short' => __('See own', 'erm'), 'long' => __('See only own risks (owner, owner group or responsible of actions/KRIs)', 'erm')];
+        $update     = ['short' => 'Actualizar', 'long' => __('Update the items the user can see', 'erm')];
+        $updateOwn  = ['short' => __('Update own', 'erm'), 'long' => __('Update only own risks', 'erm')];
+        $create     = ['short' => 'Crear', 'long' => __('Create items', 'erm')];
+        $trash      = ['short' => 'Papelera', 'long' => __('Put in trashbin', 'erm')];
+        $purge      = ['short' => 'Purgar', 'long' => __('Delete permanently', 'erm')];
         return [
-            [
-                'itemtype' => Risk::class,
-                'label'    => 'Registro de riesgos corporativos',
-                'field'    => Rights::RISK,
-                'rights'   => [READ => $read, READ_OWNED => $readOwn, UPDATE => $update, UPDATE_OWNED => $updateOwn,
-                               CREATE => $create, DELETE => $trash, PURGE => $purge,
-                               READNOTE => ['short' => 'Leer notas', 'long' => 'Leer las notas'],
-                               UPDATENOTE => ['short' => 'Actualizar notas', 'long' => 'Modificar las notas']],
-            ],
-            [
-                'itemtype' => Action::class,
-                'label'    => 'Tratamiento y seguimiento (acciones, KRI y mediciones)',
-                'field'    => Rights::TREATMENT,
-                'rights'   => [CREATE => $create, UPDATE => $update, PURGE => $purge],
-            ],
-            [
-                'itemtype' => Category::class,
-                'label'    => 'Categorías, apetito y tolerancia',
-                'field'    => Rights::CONFIG,
-                'rights'   => [READ => $read, UPDATE => $update, CREATE => $create, DELETE => $trash, PURGE => $purge],
-            ],
-            [
-                'itemtype' => Risk::class,
-                'label'    => 'Aceptación formal de riesgos (Comité / Directorio)',
-                'field'    => Rights::ACCEPT,
-                'rights'   => [UPDATE => ['short' => 'Aceptar riesgos', 'long' => 'Aceptar o revocar la aceptación de un riesgo (nunca el propio)']],
-            ],
+           [
+               'itemtype' => Risk::class,
+               'label'    => __('Corporate risk register', 'erm'),
+               'field'    => Rights::RISK,
+               'rights'   => [READ => $read, READ_OWNED => $readOwn, UPDATE => $update, UPDATE_OWNED => $updateOwn,
+                              CREATE => $create, DELETE => $trash, PURGE => $purge,
+                              READNOTE => ['short' => __('Read notes', 'erm'), 'long' => __('Read the notes', 'erm')],
+                              UPDATENOTE => ['short' => __('Update notes', 'erm'), 'long' => __('Update the notes', 'erm')]],
+           ],
+           [
+               'itemtype' => Action::class,
+               'label'    => __('Treatment and monitoring (actions, KRIs and measurements)', 'erm'),
+               'field'    => Rights::TREATMENT,
+               'rights'   => [CREATE => $create, UPDATE => $update, PURGE => $purge],
+           ],
+           [
+               'itemtype' => Category::class,
+               'label'    => __('Categories, appetite and tolerance', 'erm'),
+               'field'    => Rights::CONFIG,
+               'rights'   => [READ => $read, UPDATE => $update, CREATE => $create, DELETE => $trash, PURGE => $purge],
+           ],
+           [
+               'itemtype' => Risk::class,
+               'label'    => __('Formal risk acceptance (Committee / Board)', 'erm'),
+               'field'    => Rights::ACCEPT,
+               'rights'   => [UPDATE => ['short' => __('Accept risks', 'erm'), 'long' => __('Accept or revoke the acceptance of a risk (never an own risk)', 'erm')]],
+           ],
         ];
     }
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         TemplateRenderer::getInstance()->display('@erm/profile_rights.html.twig', [
-            'item'   => $item,
-            'rights' => self::getRightsMatrix(),
+           'item'   => $item,
+           'rights' => self::getRightsMatrix(),
         ]);
         return true;
     }

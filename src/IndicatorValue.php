@@ -20,7 +20,7 @@ namespace GlpiPlugin\Erm;
 use CommonDBChild;
 
 /**
- * Medición de un KRI en una fecha.
+ * Measurement of a KRI on a date.
  */
 class IndicatorValue extends CommonDBChild
 {
@@ -36,19 +36,19 @@ class IndicatorValue extends CommonDBChild
 
     public static function getTypeName($nb = 0)
     {
-        return $nb > 1 ? 'Mediciones de KRI' : 'Medición de KRI';
+        return _n('KRI measurement', 'KRI measurements', $nb, 'erm');
     }
 
     public function prepareInputForAdd($input)
     {
         if (!isset($input['value']) || Validator::decimal($input['value']) === false || Validator::decimal($input['value']) === 'NULL') {
-            \Session::addMessageAfterRedirect('La medición debe tener un valor numérico.', false, ERROR);
+            \Session::addMessageAfterRedirect(__('The measurement must have a numeric value.', 'erm'), false, ERROR);
             return false;
         }
         $input['value'] = Validator::decimal($input['value']);
         $date = Validator::date($input['value_date'] ?? '');
         if ($date === false) {
-            \Session::addMessageAfterRedirect('Fecha de medición inválida.', false, ERROR);
+            \Session::addMessageAfterRedirect(__('Invalid measurement date.', 'erm'), false, ERROR);
             return false;
         }
         $input['value_date'] = $date === 'NULL' ? date('Y-m-d') : $date;

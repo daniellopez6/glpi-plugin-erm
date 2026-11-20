@@ -12,19 +12,18 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
-{% import 'components/form/fields_macros.html.twig' as fields %}
 <div class="card">
-   <div class="card-header"><h3 class="card-title"><i class="ti ti-list-check me-2"></i>Plan de tratamiento</h3></div>
+   <div class="card-header"><h3 class="card-title"><i class="ti ti-list-check me-2"></i>{{ __('Treatment plan', 'erm') }}</h3></div>
    <div class="table-responsive">
       <table class="table table-hover card-table">
-         <thead><tr><th>Acción</th><th>Responsable</th><th>Vencimiento</th><th>Costo estimado</th><th>Estado</th><th>Realizada</th>{% if can_purge %}<th></th>{% endif %}</tr></thead>
+         <thead><tr><th>{{ __('Action', 'erm') }}</th><th>{{ __('Responsible', 'erm') }}</th><th>{{ __('Due date', 'erm') }}</th><th>{{ __('Estimated cost', 'erm') }}</th><th>{{ __('Status', 'erm') }}</th><th>{{ __('Done on', 'erm') }}</th>{% if can_purge %}<th></th>{% endif %}</tr></thead>
          <tbody>
          {% for r in rows %}
             <tr>
                <td>{{ r.name }}</td>
                <td>{{ r.owner }}</td>
-               <td>{% if r.overdue %}<span class="badge bg-red-lt"><i class="ti ti-alarm"></i> {{ r.due_date }} vencida</span>{% else %}{{ r.due_date }}{% endif %}</td>
-               <td>{{ r.cost is not null ? 'ARS ' ~ r.cost|number_format(0, ',', '.') : '-' }}</td>
+               <td>{% if r.overdue %}<span class="badge bg-red-lt"><i class="ti ti-alarm"></i> {{ r.due_date }} {{ __('overdue', 'erm') }}</span>{% else %}{{ r.due_date }}{% endif %}</td>
+               <td>{{ r.cost is not null ? r.cost|formatted_number : '-' }}</td>
                {% if can_edit %}
                <td colspan="2">
                   <form method="post" action="{{ action }}" class="d-flex gap-1">
@@ -34,7 +33,7 @@
                         {% for k, v in statuses %}<option value="{{ k }}" {{ k == r.status ? 'selected' }}>{{ v }}</option>{% endfor %}
                      </select>
                      <input type="date" name="completion_date" value="{{ r.completion_date }}" class="form-control form-control-sm">
-                     <button type="submit" name="update" class="btn btn-sm btn-outline-primary"><i class="ti ti-device-floppy"></i></button>
+                     <button type="submit" name="update" class="btn btn-sm btn-outline-primary" title="{{ __('Save', 'erm') }}"><i class="ti ti-device-floppy"></i></button>
                   </form>
                </td>
                {% else %}
@@ -45,13 +44,13 @@
                   <form method="post" action="{{ action }}">
                      <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
                      <input type="hidden" name="id" value="{{ r.id }}">
-                     <button type="submit" name="purge" class="btn btn-sm btn-ghost-danger" title="Eliminar"><i class="ti ti-trash"></i></button>
+                     <button type="submit" name="purge" class="btn btn-sm btn-ghost-danger" title="{{ __('Delete', 'erm') }}"><i class="ti ti-trash"></i></button>
                   </form>
                </td>
                {% endif %}
             </tr>
          {% else %}
-            <tr><td colspan="7" class="text-muted">Sin acciones. Un riesgo a mitigar o transferir necesita un plan de tratamiento.</td></tr>
+            <tr><td colspan="7" class="text-muted">{{ __('No actions. A risk to be mitigated or transferred needs a treatment plan.', 'erm') }}</td></tr>
          {% endfor %}
          </tbody>
       </table>
@@ -61,11 +60,11 @@
       <form method="post" action="{{ action }}" class="row g-2 align-items-end">
          <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
          <input type="hidden" name="plugin_erm_risks_id" value="{{ risk.getID() }}">
-         <div class="col-md-4"><label class="form-label">Nueva acción</label><input type="text" name="name" class="form-control" required></div>
-         <div class="col-md-2"><label class="form-label">Responsable</label>{{ call('User::dropdown', [{'name': 'users_id', 'right': 'all', 'display': false, 'entity': risk.fields['entities_id']}])|raw }}</div>
-         <div class="col-md-2"><label class="form-label">Vencimiento</label><input type="date" name="due_date" class="form-control"></div>
-         <div class="col-md-2"><label class="form-label">Costo (ARS)</label><input type="number" step="any" name="cost" class="form-control"></div>
-         <div class="col-md-2"><button type="submit" name="add" class="btn btn-primary w-100"><i class="ti ti-plus"></i> Agregar</button></div>
+         <div class="col-md-4"><label class="form-label">{{ __('New action', 'erm') }}</label><input type="text" name="name" class="form-control" required></div>
+         <div class="col-md-2"><label class="form-label">{{ __('Responsible', 'erm') }}</label>{{ call('User::dropdown', [{'name': 'users_id', 'right': 'all', 'display': false, 'entity': risk.fields['entities_id']}])|raw }}</div>
+         <div class="col-md-2"><label class="form-label">{{ __('Due date', 'erm') }}</label><input type="date" name="due_date" class="form-control"></div>
+         <div class="col-md-2"><label class="form-label">{{ __('Estimated cost', 'erm') }}</label><input type="text" inputmode="decimal" name="cost" class="form-control"></div>
+         <div class="col-md-2"><button type="submit" name="add" class="btn btn-primary w-100"><i class="ti ti-plus"></i> {{ __('Add', 'erm') }}</button></div>
       </form>
    </div>
    {% endif %}

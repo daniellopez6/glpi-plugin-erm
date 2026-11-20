@@ -23,7 +23,7 @@ use Glpi\Application\View\TemplateRenderer;
 use Session;
 
 /**
- * Indicador clave de riesgo (KRI) de un riesgo corporativo, con umbrales y valores históricos.
+ * Key risk indicator (KRI) of a corporate risk, with thresholds and history.
  */
 class Indicator extends CommonDBChild
 {
@@ -40,7 +40,7 @@ class Indicator extends CommonDBChild
 
     public static function getTypeName($nb = 0)
     {
-        return $nb > 1 ? 'Indicadores clave de riesgo (KRI)' : 'Indicador clave de riesgo (KRI)';
+        return _n('Key risk indicator (KRI)', 'Key risk indicators (KRI)', $nb, 'erm');
     }
 
     public static function getIcon()
@@ -50,7 +50,7 @@ class Indicator extends CommonDBChild
 
     public static function frequencies(): array
     {
-        return ['monthly' => 'Mensual', 'quarterly' => 'Trimestral', 'weekly' => 'Semanal', 'daily' => 'Diaria'];
+        return ['monthly' => __('Monthly', 'erm'), 'quarterly' => __('Quarterly', 'erm'), 'weekly' => __('Weekly', 'erm'), 'daily' => __('Daily', 'erm')];
     }
 
     public static function status(?float $value, string $direction, ?float $warn, ?float $crit): string
@@ -66,7 +66,7 @@ class Indicator extends CommonDBChild
     {
         if ($item instanceof Risk && !$item->isNewItem()) {
             $n = countElementsInTable(self::getTable(), ['plugin_erm_risks_id' => $item->getID()]);
-            return self::createTabEntry('Indicadores (KRI)', $n, null, self::getIcon());
+            return self::createTabEntry(__('Indicators (KRI)', 'erm'), $n, null, self::getIcon());
         }
         return '';
     }
@@ -77,12 +77,12 @@ class Indicator extends CommonDBChild
         $out = [];
         foreach ($DB->request(['FROM' => self::getTable(), 'WHERE' => ['plugin_erm_risks_id' => $riskId], 'ORDER' => 'id']) as $k) {
             $vals = iterator_to_array($DB->request(['FROM' => IndicatorValue::getTable(),
-                'WHERE' => ['plugin_erm_indicators_id' => $k['id']], 'ORDER' => ['value_date DESC', 'id DESC'], 'LIMIT' => 12]), false);
+              'WHERE' => ['plugin_erm_indicators_id' => $k['id']], 'ORDER' => ['value_date DESC', 'id DESC'], 'LIMIT' => 12]), false);
             $last = $vals[0] ?? null;
             $warn = $k['threshold_warning'] !== null ? (float) $k['threshold_warning'] : null;
             $crit = $k['threshold_critical'] !== null ? (float) $k['threshold_critical'] : null;
             foreach ($vals as &$v) {
-                $v['status'] = self::status((float) $v['value'], $k['direction'], $warn, $crit);
+                 $v['status'] = self::status((float) $v['value'], $k['direction'], $warn, $crit);
             }
             $k['values'] = array_reverse($vals);
             $k['last'] = $last;
@@ -95,13 +95,16 @@ class Indicator extends CommonDBChild
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
+        if (!$item instanceof Risk) {
+            return false;
+        }
         TemplateRenderer::getInstance()->display('@erm/indicators_tab.html.twig', [
-            'risk'        => $item,
-            'indicators'  => self::getForRisk($item->getID()),
-            'frequencies' => self::frequencies(),
-            'can_edit'    => Session::haveRight(self::$rightname, CREATE),
-            'action'      => plugin_erm_url('front/indicator.form.php'),
-            'today'       => date('Y-m-d'),
+           'risk'        => $item,
+           'indicators'  => self::getForRisk($item->getID()),
+           'frequencies' => self::frequencies(),
+           'can_edit'    => Session::haveRight(self::$rightname, CREATE),
+           'action'      => plugin_erm_url('front/indicator.form.php'),
+           'today'       => date('Y-m-d'),
         ]);
         return true;
     }
@@ -109,7 +112,7 @@ class Indicator extends CommonDBChild
     public function prepareInputForAdd($input)
     {
         if (trim((string) ($input['name'] ?? '')) === '') {
-            Session::addMessageAfterRedirect('El indicador debe tener un nombre.', false, ERROR);
+            Session::addMessageAfterRedirect(__('The indicator must have a name.', 'erm'), false, ERROR);
             return false;
         }
         if (isset($input['direction']) && !in_array($input['direction'], ['higher_is_worse', 'lower_is_worse'], true)) {

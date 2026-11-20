@@ -20,12 +20,12 @@ namespace GlpiPlugin\Erm;
 use Session;
 
 /**
- * Validaciones comunes de entrada (fechas, números, textos obligatorios).
+ * Common input validation (dates, numbers, mandatory texts).
  */
 final class Validator
 {
     /**
-     * Normaliza una fecha Y-m-d; devuelve 'NULL' si está vacía o false si es inválida.
+     * Normalizes a Y-m-d date; returns 'NULL' when empty or false when invalid.
      *
      * @param mixed $value
      * @return string|false
@@ -41,7 +41,7 @@ final class Validator
     }
 
     /**
-     * Normaliza un número decimal; 'NULL' si está vacío, false si no es numérico.
+     * Normalizes a decimal number; 'NULL' when empty, false when not numeric.
      *
      * @param mixed $value
      * @return string|false
@@ -52,7 +52,7 @@ final class Validator
         if ($value === '') {
             return 'NULL';
         }
-        // Acepta 1500000.5, 1500000,5, 1.500.000,50 (es_AR) y 1,500,000.50 (en).
+       // Accepts 1500000.5, 1500000,5, 1.500.000,50 (es_AR) and 1,500,000.50 (en).
         $lastComma = strrpos($value, ',');
         $lastDot   = strrpos($value, '.');
         if ($lastComma !== false && ($lastDot === false || $lastComma > $lastDot)) {
@@ -66,7 +66,7 @@ final class Validator
     }
 
     /**
-     * Valida los campos indicados de $input; agrega un mensaje y devuelve false ante el primer error.
+     * Validates the given fields of $input; adds a message and returns false on the first error.
      *
      * @param array<string,mixed> $input
      * @param array<string,string> $rules campo => 'date'|'decimal'|'required'
@@ -77,7 +77,7 @@ final class Validator
         foreach ($rules as $field => $rule) {
             if ($rule === 'required') {
                 if (array_key_exists($field, $input) && trim((string) $input[$field]) === '') {
-                    Session::addMessageAfterRedirect(sprintf('El campo "%s" es obligatorio.', $field), false, ERROR);
+                    Session::addMessageAfterRedirect(sprintf(__('The field "%s" is mandatory.', 'erm'), $field), false, ERROR);
                     return false;
                 }
                 continue;
@@ -87,7 +87,7 @@ final class Validator
             }
             $value = $rule === 'date' ? self::date($input[$field]) : self::decimal($input[$field]);
             if ($value === false) {
-                Session::addMessageAfterRedirect(sprintf('Valor inválido en "%s".', $field), false, ERROR);
+                Session::addMessageAfterRedirect(sprintf(__('Invalid value in "%s".', 'erm'), $field), false, ERROR);
                 return false;
             }
             $input[$field] = $value;
@@ -96,7 +96,7 @@ final class Validator
     }
 
     /**
-     * Valor entero dentro de un rango, o el mínimo si está fuera.
+     * Integer value within a range, or the minimum when out of range.
      *
      * @param mixed $value
      */

@@ -15,12 +15,11 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Exception\Http\AccessDeniedHttpException;
 use GlpiPlugin\Erm\Dashboard;
 use GlpiPlugin\Erm\Risk;
 
 if (!Risk::canView()) {
-    throw new AccessDeniedHttpException();
+    throw new \Glpi\Exception\Http\AccessDeniedHttpException();
 }
 Html::header(Dashboard::getTypeName(), $_SERVER['PHP_SELF'], plugin_erm_sector(), Dashboard::class);
 Dashboard::show();

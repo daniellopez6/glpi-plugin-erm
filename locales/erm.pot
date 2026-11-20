@@ -1,0 +1,978 @@
+# ERM - Enterprise Risk Management plugin for GLPI
+# This file is distributed under the same license as the plugin (GPL-3.0-or-later).
+msgid ""
+msgstr ""
+"Project-Id-Version: erm\n"
+"POT-Creation-Date: 2026-11-20 16:54+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: setup.php:62
+msgid "ERM - Enterprise Risk Management"
+msgstr ""
+
+#: src/Action.php:43
+msgid "Treatment action"
+msgid_plural "Treatment plan"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Action.php:55 templates/actions_tab.html.twig:16
+msgid "Treatment plan"
+msgstr ""
+
+#: src/Action.php:88
+msgid "The action must have a description."
+msgstr ""
+
+#: src/Category.php:132
+msgid "Strategic"
+msgstr ""
+
+#: src/Category.php:133
+msgid "Moderate risks are accepted to pursue growth, without compromising solvency."
+msgstr ""
+
+#: src/Category.php:134
+msgid "Business model and competition"
+msgstr ""
+
+#: src/Category.php:134
+msgid "Strategic projects and initiatives"
+msgstr ""
+
+#: src/Category.php:134
+msgid "Corporate governance"
+msgstr ""
+
+#: src/Category.php:135
+msgid "Financial"
+msgstr ""
+
+#: src/Category.php:136
+msgid "Moderate financial risks consistent with the business are accepted; no risk may compromise minimum liquidity or regulatory capital."
+msgstr ""
+
+#: src/Category.php:137
+msgid "Credit and counterparty"
+msgstr ""
+
+#: src/Category.php:137
+msgid "Liquidity and funding"
+msgstr ""
+
+#: src/Category.php:137
+msgid "Market (interest and exchange rates)"
+msgstr ""
+
+#: src/Category.php:137
+msgid "Capital and solvency"
+msgstr ""
+
+#: src/Category.php:138
+msgid "Operational"
+msgstr ""
+
+#: src/Category.php:139
+msgid "Minor operational failures are tolerated when recovered within the agreed recovery time."
+msgstr ""
+
+#: src/Category.php:140
+msgid "Processes"
+msgstr ""
+
+#: src/Category.php:140
+msgid "People"
+msgstr ""
+
+#: src/Category.php:140
+msgid "Technology and information security"
+msgstr ""
+
+#: src/Category.php:140
+msgid "Third parties and suppliers"
+msgstr ""
+
+#: src/Category.php:140
+msgid "Business continuity"
+msgstr ""
+
+#: src/Category.php:141
+msgid "Compliance and legal"
+msgstr ""
+
+#: src/Category.php:142
+msgid "Minimal tolerance: regulatory or legal breaches are corrected as a priority and never accepted deliberately."
+msgstr ""
+
+#: src/Category.php:143
+msgid "Regulatory"
+msgstr ""
+
+#: src/Category.php:143
+msgid "Anti-money laundering (AML/CFT)"
+msgstr ""
+
+#: src/Category.php:143
+msgid "Consumer protection"
+msgstr ""
+
+#: src/Category.php:143
+msgid "Litigation and contracts"
+msgstr ""
+
+#: src/Category.php:144
+msgid "Fraud"
+msgstr ""
+
+#: src/Category.php:145
+msgid "Zero tolerance for internal fraud; external fraud is kept limited by preventive controls."
+msgstr ""
+
+#: src/Category.php:146
+msgid "Internal fraud"
+msgstr ""
+
+#: src/Category.php:146
+msgid "External fraud"
+msgstr ""
+
+#: src/Category.php:147
+msgid "Reputational"
+msgstr ""
+
+#: src/Category.php:148
+msgid "The trust of customers, regulators and investors is protected; events with public exposure are escalated to the Board."
+msgstr ""
+
+#: src/Category.php:150
+msgid "ESG and climate"
+msgstr ""
+
+#: src/Category.php:151
+msgid "Environmental, social and climate risks are managed progressively."
+msgstr ""
+
+#: src/Category.php:152
+msgid "Climate (physical and transition)"
+msgstr ""
+
+#: src/Category.php:152
+msgid "Social"
+msgstr ""
+
+#: src/Category.php:43
+msgid "Corporate risk category"
+msgid_plural "Corporate risk categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Category.php:53
+msgid "Categories and appetite (ERM)"
+msgstr ""
+
+#: src/Category.php:59
+msgid "Risk appetite (maximum desired residual level)"
+msgstr ""
+
+#: src/Category.php:60
+msgid "Risk tolerance (maximum acceptable residual level)"
+msgstr ""
+
+#: src/Category.php:61 src/Category.php:79
+msgid "Appetite statement"
+msgstr ""
+
+#: src/Category.php:68
+msgid "Inherited from parent category"
+msgstr ""
+
+#: src/Category.php:77
+msgid "Appetite"
+msgstr ""
+
+#: src/Category.php:78
+msgid "Tolerance"
+msgstr ""
+
+#: src/Dashboard.php:33 src/Risk_Item.php:117
+msgid "Corporate risks"
+msgstr ""
+
+#: src/Dashboard.php:38 src/Profile.php:35 templates/profile_rights.html.twig:20
+msgid "Corporate risks (ERM)"
+msgstr ""
+
+#: src/Dashboard.php:96
+msgid "Uncategorized"
+msgstr ""
+
+#: src/Indicator.php:115
+msgid "The indicator must have a name."
+msgstr ""
+
+#: src/Indicator.php:43
+msgid "Key risk indicator (KRI)"
+msgid_plural "Key risk indicators (KRI)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Indicator.php:53
+msgid "Monthly"
+msgstr ""
+
+#: src/Indicator.php:53
+msgid "Quarterly"
+msgstr ""
+
+#: src/Indicator.php:53
+msgid "Weekly"
+msgstr ""
+
+#: src/Indicator.php:53
+msgid "Daily"
+msgstr ""
+
+#: src/Indicator.php:69
+msgid "Indicators (KRI)"
+msgstr ""
+
+#: src/IndicatorValue.php:39
+msgid "KRI measurement"
+msgid_plural "KRI measurements"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/IndicatorValue.php:45
+msgid "The measurement must have a numeric value."
+msgstr ""
+
+#: src/IndicatorValue.php:51
+msgid "Invalid measurement date."
+msgstr ""
+
+#: src/Profile.php:48
+msgid "See all"
+msgstr ""
+
+#: src/Profile.php:48
+msgid "See all items"
+msgstr ""
+
+#: src/Profile.php:49
+msgid "See own"
+msgstr ""
+
+#: src/Profile.php:49
+msgid "See only own risks (owner, owner group or responsible of actions/KRIs)"
+msgstr ""
+
+#: src/Profile.php:50
+msgid "Update the items the user can see"
+msgstr ""
+
+#: src/Profile.php:51
+msgid "Update own"
+msgstr ""
+
+#: src/Profile.php:51
+msgid "Update only own risks"
+msgstr ""
+
+#: src/Profile.php:52
+msgid "Create items"
+msgstr ""
+
+#: src/Profile.php:53
+msgid "Put in trashbin"
+msgstr ""
+
+#: src/Profile.php:54
+msgid "Delete permanently"
+msgstr ""
+
+#: src/Profile.php:58 src/Risk.php:48
+msgid "Corporate risk register"
+msgstr ""
+
+#: src/Profile.php:62
+msgid "Read notes"
+msgstr ""
+
+#: src/Profile.php:62
+msgid "Read the notes"
+msgstr ""
+
+#: src/Profile.php:63
+msgid "Update notes"
+msgstr ""
+
+#: src/Profile.php:63
+msgid "Update the notes"
+msgstr ""
+
+#: src/Profile.php:67
+msgid "Treatment and monitoring (actions, KRIs and measurements)"
+msgstr ""
+
+#: src/Profile.php:73
+msgid "Categories, appetite and tolerance"
+msgstr ""
+
+#: src/Profile.php:79
+msgid "Formal risk acceptance (Committee / Board)"
+msgstr ""
+
+#: src/Profile.php:81
+msgid "Accept risks"
+msgstr ""
+
+#: src/Profile.php:81
+msgid "Accept or revoke the acceptance of a risk (never an own risk)"
+msgstr ""
+
+#: src/Risk.php:142
+msgid "The risk must have a name."
+msgstr ""
+
+#: src/Risk.php:181
+msgid "You are not allowed to accept risks: this is done by the Risk Committee or the Board."
+msgstr ""
+
+#: src/Risk.php:182
+msgid "You are not allowed to revoke the acceptance of a risk."
+msgstr ""
+
+#: src/Risk.php:186
+msgid "To accept the risk, the treatment decision must be \"Accept\"."
+msgstr ""
+
+#: src/Risk.php:190
+msgid "The risk owner cannot accept their own risk (segregation of duties)."
+msgstr ""
+
+#: src/Risk.php:220
+msgid "A mitigated or transferred risk cannot be closed without a treatment plan."
+msgstr ""
+
+#: src/Risk.php:244 templates/dashboard.html.twig:87 templates/dashboard.html.twig:103 templates/risk_form.html.twig:26
+msgid "Risk"
+msgstr ""
+
+#: src/Risk.php:246 templates/dashboard.html.twig:87 templates/dashboard.html.twig:103 templates/items_tab.html.twig:18 templates/risk_form.html.twig:25
+msgid "Code"
+msgstr ""
+
+#: src/Risk.php:247 templates/dashboard.html.twig:87 templates/risk_form.html.twig:27
+msgid "Category"
+msgstr ""
+
+#: src/Risk.php:248 templates/risk_form.html.twig:28
+msgid "Risk owner"
+msgstr ""
+
+#: src/Risk.php:249
+msgid "Group"
+msgstr ""
+
+#: src/Risk.php:250 templates/risk_form.html.twig:37
+msgid "Inherent level"
+msgstr ""
+
+#: src/Risk.php:251 templates/risk_form.html.twig:48
+msgid "Residual level"
+msgstr ""
+
+#: src/Risk.php:252
+msgid "Inherent score"
+msgstr ""
+
+#: src/Risk.php:253
+msgid "Residual score"
+msgstr ""
+
+#: src/Risk.php:254
+msgid "Treatment"
+msgstr ""
+
+#: src/Risk.php:255 templates/actions_tab.html.twig:19 templates/risk_form.html.twig:56
+msgid "Status"
+msgstr ""
+
+#: src/Risk.php:256 templates/risk_form.html.twig:40
+msgid "Maximum economic impact"
+msgstr ""
+
+#: src/Risk.php:257 templates/risk_form.html.twig:39
+msgid "Minimum economic impact"
+msgstr ""
+
+#: src/Risk.php:258 templates/risk_form.html.twig:38
+msgid "Velocity"
+msgstr ""
+
+#: src/Risk.php:259 templates/risk_form.html.twig:45
+msgid "Trend"
+msgstr ""
+
+#: src/Risk.php:260 templates/risk_form.html.twig:63
+msgid "Next review"
+msgstr ""
+
+#: src/Risk.php:261 templates/risk_form.html.twig:44
+msgid "Control effectiveness"
+msgstr ""
+
+#: src/Risk.php:262
+msgid "Description"
+msgstr ""
+
+#: src/Risk.php:308
+msgid "Pending"
+msgstr ""
+
+#: src/Risk.php:38
+msgid "Corporate risk"
+msgid_plural "Corporate risks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Risk_Item.php:146
+msgid "Link with"
+msgstr ""
+
+#: src/Risk_Item.php:148 src/Risk_Item.php:182 templates/indicators_tab.html.twig:49 templates/items_tab.html.twig:18
+msgid "Comment"
+msgstr ""
+
+#: src/Risk_Item.php:149 src/Risk_Item.php:183
+msgid "Link"
+msgstr ""
+
+#: src/Risk_Item.php:179 templates/items_tab.html.twig:18
+msgid "Corporate risk"
+msgstr ""
+
+#: src/Risk_Item.php:48 src/Risk_Item.php:113
+msgid "Related items"
+msgstr ""
+
+#: src/Risk_Item.php:73
+msgid "Select an item to link."
+msgstr ""
+
+#: src/Risk_Item.php:78
+msgid "The item does not exist or you are not allowed to see it."
+msgstr ""
+
+#: src/Risk_Item.php:85
+msgid "The item is already linked."
+msgstr ""
+
+#: src/Risk_Item.php:96
+msgid "Linked with %s"
+msgstr ""
+
+#: src/Scale.php:120
+msgid "Not assessed"
+msgstr ""
+
+#: src/Scale.php:141
+msgid "No decision"
+msgstr ""
+
+#: src/Scale.php:142
+msgid "Mitigate"
+msgstr ""
+
+#: src/Scale.php:143
+msgid "Transfer"
+msgstr ""
+
+#: src/Scale.php:144
+msgid "Avoid"
+msgstr ""
+
+#: src/Scale.php:145
+msgid "Accept"
+msgstr ""
+
+#: src/Scale.php:157
+msgid "Identified"
+msgstr ""
+
+#: src/Scale.php:158
+msgid "Assessed"
+msgstr ""
+
+#: src/Scale.php:159
+msgid "In treatment"
+msgstr ""
+
+#: src/Scale.php:160
+msgid "Accepted"
+msgstr ""
+
+#: src/Scale.php:161
+msgid "Closed"
+msgstr ""
+
+#: src/Scale.php:174
+msgid "None"
+msgstr ""
+
+#: src/Scale.php:190
+msgid "Immediate (days)"
+msgstr ""
+
+#: src/Scale.php:191
+msgid "Short (weeks)"
+msgstr ""
+
+#: src/Scale.php:192
+msgid "Medium (months)"
+msgstr ""
+
+#: src/Scale.php:193
+msgid "Long (more than a year)"
+msgstr ""
+
+#: src/Scale.php:206
+msgid "Increasing"
+msgstr ""
+
+#: src/Scale.php:207
+msgid "Stable"
+msgstr ""
+
+#: src/Scale.php:208
+msgid "Decreasing"
+msgstr ""
+
+#: src/Scale.php:220
+msgid "Planned"
+msgstr ""
+
+#: src/Scale.php:221
+msgid "In progress"
+msgstr ""
+
+#: src/Scale.php:222
+msgid "Done"
+msgstr ""
+
+#: src/Scale.php:223
+msgid "Cancelled"
+msgstr ""
+
+#: src/Scale.php:235
+msgid "No appetite defined"
+msgstr ""
+
+#: src/Scale.php:238
+msgid "Above tolerance"
+msgstr ""
+
+#: src/Scale.php:241
+msgid "Above appetite"
+msgstr ""
+
+#: src/Scale.php:243
+msgid "Within appetite"
+msgstr ""
+
+#: src/Scale.php:35
+msgid "1 - Rare (< 5% per year)"
+msgstr ""
+
+#: src/Scale.php:36
+msgid "2 - Unlikely (5-25%)"
+msgstr ""
+
+#: src/Scale.php:37
+msgid "3 - Possible (25-50%)"
+msgstr ""
+
+#: src/Scale.php:38
+msgid "4 - Likely (50-80%)"
+msgstr ""
+
+#: src/Scale.php:39
+msgid "5 - Almost certain (> 80%)"
+msgstr ""
+
+#: src/Scale.php:51
+msgid "1 - Insignificant"
+msgstr ""
+
+#: src/Scale.php:52
+msgid "2 - Minor"
+msgstr ""
+
+#: src/Scale.php:53
+msgid "3 - Moderate"
+msgstr ""
+
+#: src/Scale.php:54
+msgid "4 - Major"
+msgstr ""
+
+#: src/Scale.php:55
+msgid "5 - Catastrophic"
+msgstr ""
+
+#: src/Scale.php:67 src/Scale.php:175
+msgid "Low"
+msgstr ""
+
+#: src/Scale.php:68 src/Scale.php:176
+msgid "Medium"
+msgstr ""
+
+#: src/Scale.php:69 src/Scale.php:177
+msgid "High"
+msgstr ""
+
+#: src/Scale.php:70 templates/indicators_tab.html.twig:16 templates/indicators_tab.html.twig:69
+msgid "Critical"
+msgstr ""
+
+#: src/Validator.php:80
+msgid "The field \"%s\" is mandatory."
+msgstr ""
+
+#: src/Validator.php:90
+msgid "Invalid value in \"%s\"."
+msgstr ""
+
+#: templates/actions_tab.html.twig:19
+msgid "Action"
+msgstr ""
+
+#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:64 templates/indicators_tab.html.twig:29
+msgid "Responsible"
+msgstr ""
+
+#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:65
+msgid "Due date"
+msgstr ""
+
+#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:66
+msgid "Estimated cost"
+msgstr ""
+
+#: templates/actions_tab.html.twig:19
+msgid "Done on"
+msgstr ""
+
+#: templates/actions_tab.html.twig:25
+msgid "overdue"
+msgstr ""
+
+#: templates/actions_tab.html.twig:36
+msgid "Save"
+msgstr ""
+
+#: templates/actions_tab.html.twig:47
+msgid "Delete"
+msgstr ""
+
+#: templates/actions_tab.html.twig:53
+msgid "No actions. A risk to be mitigated or transferred needs a treatment plan."
+msgstr ""
+
+#: templates/actions_tab.html.twig:63
+msgid "New action"
+msgstr ""
+
+#: templates/actions_tab.html.twig:67
+msgid "Add"
+msgstr ""
+
+#: templates/dashboard.html.twig:101
+msgid "Top 10 residual risks"
+msgstr ""
+
+#: templates/dashboard.html.twig:101
+msgid "See full register"
+msgstr ""
+
+#: templates/dashboard.html.twig:103
+msgid "Inherent"
+msgstr ""
+
+#: templates/dashboard.html.twig:103
+msgid "Residual"
+msgstr ""
+
+#: templates/dashboard.html.twig:103
+msgid "Max. impact"
+msgstr ""
+
+#: templates/dashboard.html.twig:116
+msgid "Overdue treatment actions"
+msgstr ""
+
+#: templates/dashboard.html.twig:121
+msgid "No overdue actions."
+msgstr ""
+
+#: templates/dashboard.html.twig:125
+msgid "KRIs in alert"
+msgstr ""
+
+#: templates/dashboard.html.twig:131
+msgid "No KRI in alert."
+msgstr ""
+
+#: templates/dashboard.html.twig:34
+msgid "Probability (rows) × Impact (columns)"
+msgstr ""
+
+#: templates/dashboard.html.twig:44
+msgid "Enterprise risk management (ERM)"
+msgstr ""
+
+#: templates/dashboard.html.twig:45
+msgid "strategic, financial, operational, compliance, fraud, reputational and ESG risks, assessed with a 5×5 matrix (ISO 31000 / COSO ERM)."
+msgstr ""
+
+#: templates/dashboard.html.twig:46
+msgid "Information security risks are managed in detail in the ISMS register (GRC Manager) and can be linked from the \"Related items\" tab."
+msgstr ""
+
+#: templates/dashboard.html.twig:50
+msgid "Restricted view: only the risks you own, the risks of your groups and those where you have actions or indicators assigned are shown."
+msgstr ""
+
+#: templates/dashboard.html.twig:54
+msgid "Active risks"
+msgstr ""
+
+#: templates/dashboard.html.twig:56
+msgid "Residual %s"
+msgstr ""
+
+#: templates/dashboard.html.twig:58
+msgid "Maximum economic exposure"
+msgstr ""
+
+#: templates/dashboard.html.twig:62
+msgid "Heat map - inherent risk"
+msgstr ""
+
+#: templates/dashboard.html.twig:63
+msgid "Heat map - residual risk"
+msgstr ""
+
+#: templates/dashboard.html.twig:69
+msgid "Risks and exposure by category"
+msgstr ""
+
+#: templates/dashboard.html.twig:73
+msgid "%d risk"
+msgid_plural "%d risks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/dashboard.html.twig:79
+msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
+msgstr ""
+
+#: templates/dashboard.html.twig:85
+msgid "Outside risk appetite"
+msgstr ""
+
+#: templates/dashboard.html.twig:87
+msgid "Position"
+msgstr ""
+
+#: templates/dashboard.html.twig:92
+msgid "All residual risks are within appetite."
+msgstr ""
+
+#: templates/indicators_tab.html.twig:16
+msgid "Normal"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:16 templates/indicators_tab.html.twig:68
+msgid "Warning"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:16
+msgid "No measurement"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:25
+msgid "Warning threshold"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:26
+msgid "Critical threshold"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:27 templates/indicators_tab.html.twig:67
+msgid "Direction"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:27
+msgid "lower is worse"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:27
+msgid "higher is worse"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:28 templates/indicators_tab.html.twig:70
+msgid "Frequency"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:47
+msgid "Date"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:48
+msgid "Value"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:50
+msgid "Record value"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:56
+msgid "This risk has no key risk indicators (KRI) yet."
+msgstr ""
+
+#: templates/indicators_tab.html.twig:60
+msgid "New indicator"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:65
+msgid "Name"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:66
+msgid "Unit"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:67
+msgid "Higher is worse"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:67
+msgid "Lower is worse"
+msgstr ""
+
+#: templates/indicators_tab.html.twig:71
+msgid "Add KRI"
+msgstr ""
+
+#: templates/items_tab.html.twig:18
+msgid "Type"
+msgstr ""
+
+#: templates/items_tab.html.twig:18
+msgid "Item"
+msgstr ""
+
+#: templates/items_tab.html.twig:18
+msgid "Level"
+msgstr ""
+
+#: templates/items_tab.html.twig:32
+msgid "Unlink"
+msgstr ""
+
+#: templates/items_tab.html.twig:38
+msgid "No linked items."
+msgstr ""
+
+#: templates/risk_form.html.twig:21
+msgid "Your profile (Risk Committee) can only record the treatment decision, the status and the justification. The assessment is maintained by the risk owner."
+msgstr ""
+
+#: templates/risk_form.html.twig:24
+msgid "Identification"
+msgstr ""
+
+#: templates/risk_form.html.twig:25
+msgid "Assigned automatically (RC-001...) when left empty."
+msgstr ""
+
+#: templates/risk_form.html.twig:29
+msgid "Responsible group"
+msgstr ""
+
+#: templates/risk_form.html.twig:30
+msgid "Risk event description"
+msgstr ""
+
+#: templates/risk_form.html.twig:31
+msgid "Causes"
+msgstr ""
+
+#: templates/risk_form.html.twig:32
+msgid "Consequences"
+msgstr ""
+
+#: templates/risk_form.html.twig:34
+msgid "Inherent assessment (without controls)"
+msgstr ""
+
+#: templates/risk_form.html.twig:35
+msgid "Probability"
+msgstr ""
+
+#: templates/risk_form.html.twig:36
+msgid "Impact"
+msgstr ""
+
+#: templates/risk_form.html.twig:42
+msgid "Existing controls and residual risk"
+msgstr ""
+
+#: templates/risk_form.html.twig:43
+msgid "Existing controls"
+msgstr ""
+
+#: templates/risk_form.html.twig:46
+msgid "Residual probability"
+msgstr ""
+
+#: templates/risk_form.html.twig:47
+msgid "Residual impact"
+msgstr ""
+
+#: templates/risk_form.html.twig:50
+msgid "Position against appetite"
+msgstr ""
+
+#: templates/risk_form.html.twig:54
+msgid "Treatment and acceptance"
+msgstr ""
+
+#: templates/risk_form.html.twig:55
+msgid "Treatment decision"
+msgstr ""
+
+#: templates/risk_form.html.twig:57
+msgid "Decision justification"
+msgstr ""
+
+#: templates/risk_form.html.twig:58
+msgid "Formal acceptance"
+msgstr ""
+
+#: templates/risk_form.html.twig:60
+msgid "To accept: decision \"Accept\" and status \"Accepted\". Who and when are recorded automatically. The risk owner cannot accept it."
+msgstr ""
+
+#: templates/risk_form.html.twig:61
+msgid "Only the Risk Committee or the Board (\"Accept risks\" right) can formally accept a risk."
+msgstr ""
+
+#: templates/risk_form.html.twig:64
+msgid "Last review"
+msgstr ""

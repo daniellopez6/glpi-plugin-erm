@@ -5,3 +5,5 @@
 /.phpcs.xml       export-ignore
 /phpstan.neon     export-ignore
 /CONTRIBUTING.md  export-ignore
+/tools export-ignore
+/.github export-ignore

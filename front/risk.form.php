@@ -40,7 +40,7 @@ if (isset($_POST['add'])) {
     $item->redirectToList();
 } else {
     if (!Risk::canView()) {
-        throw new Glpi\Exception\Http\AccessDeniedHttpException();
+        throw new \Glpi\Exception\Http\AccessDeniedHttpException();
     }
     Html::header(Risk::getTypeName(1), $_SERVER['PHP_SELF'], plugin_erm_sector(), GlpiPlugin\Erm\Dashboard::class, Risk::class);
     $item->display(['id' => (int) ($_GET['id'] ?? 0)]);

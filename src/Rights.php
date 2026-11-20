@@ -21,16 +21,16 @@ use Glpi\DBAL\QuerySubQuery;
 use Session;
 
 /**
- * Modelo de permisos del plugin ERM.
+ * Rights model of the ERM plugin.
  *
- * - plugin_erm            Registro de riesgos: READ (todos) o READ_OWNED (sólo los propios), UPDATE / UPDATE_OWNED,
- *                         CREATE, DELETE, PURGE, notas.
- * - plugin_erm_treatment  Tratamiento y seguimiento: acciones y mediciones de KRI (CREATE, UPDATE, PURGE).
- * - plugin_erm_config     Taxonomía de categorías, apetito y tolerancia.
- * - plugin_erm_accept     Aceptación formal de riesgos (UPDATE). Quien es dueño del riesgo no puede aceptarlo.
+ * - plugin_erm            Risk register: READ (all) or READ_OWNED (own only), UPDATE / UPDATE_OWNED,
+ *                         CREATE, DELETE, PURGE, notes.
+ * - plugin_erm_treatment  Treatment and monitoring: actions and KRI measurements (CREATE, UPDATE, PURGE).
+ * - plugin_erm_config     Category taxonomy, appetite and tolerance.
+ * - plugin_erm_accept     Formal risk acceptance (UPDATE). The risk owner cannot accept it.
  *
- * Un riesgo es "propio" si el usuario es su dueño, pertenece a su área responsable o es responsable de
- * alguna de sus acciones o indicadores.
+ * A risk is "own" when the user is its owner, belongs to its responsible group or is responsible for
+ * one of its actions or indicators.
  */
 final class Rights
 {
@@ -54,7 +54,7 @@ final class Rights
         return Session::haveRightsOr(self::RISK, [READ, READ_OWNED]);
     }
 
-    /** El usuario sólo puede ver los riesgos propios. */
+    /** The user can only see own risks. */
     public static function onlyOwn(): bool
     {
         return !self::canReadAll() && Session::haveRight(self::RISK, READ_OWNED);
@@ -65,14 +65,14 @@ final class Rights
         return Session::haveRight(self::ACCEPT, UPDATE);
     }
 
-    /** Criterio SQL (DBmysqlIterator) que restringe a los riesgos propios. */
+    /** SQL criteria (DBmysqlIterator) restricting to own risks. */
     public static function ownCriteria(string $table = 'glpi_plugin_erm_risks'): array
     {
         $uid = (int) Session::getLoginUserID();
         $groups = array_map('intval', $_SESSION['glpigroups'] ?? []);
         $or = [
-            "$table.users_id" => $uid,
-            "$table.id" => new QuerySubQuery(['SELECT' => 'plugin_erm_risks_id', 'FROM' => Action::getTable(), 'WHERE' => ['users_id' => $uid]]),
+           "$table.users_id" => $uid,
+           "$table.id" => new QuerySubQuery(['SELECT' => 'plugin_erm_risks_id', 'FROM' => Action::getTable(), 'WHERE' => ['users_id' => $uid]]),
         ];
         $or[] = ["$table.id" => new QuerySubQuery(['SELECT' => 'plugin_erm_risks_id', 'FROM' => Indicator::getTable(), 'WHERE' => ['users_id' => $uid]])];
         if ($groups) {
@@ -92,18 +92,18 @@ final class Rights
         }
         $rid = (int) ($fields['id'] ?? 0);
         return $rid > 0 && (countElementsInTable(Action::getTable(), ['plugin_erm_risks_id' => $rid, 'users_id' => $uid]) > 0
-            || countElementsInTable(Indicator::getTable(), ['plugin_erm_risks_id' => $rid, 'users_id' => $uid]) > 0);
+           || countElementsInTable(Indicator::getTable(), ['plugin_erm_risks_id' => $rid, 'users_id' => $uid]) > 0);
     }
 
-    /** Valores por defecto al instalar/actualizar, por nombre de perfil. */
+    /** Default values at install/update time, by profile name. */
     public static function defaults(string $profile): array
     {
         $own = READ_OWNED | UPDATE_OWNED;
         return match ($profile) {
             'Super-Admin' => [self::RISK => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE, self::TREATMENT => ALLSTANDARDRIGHT,
-                              self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => UPDATE],
+                             self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => UPDATE],
             'Admin'       => [self::RISK => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE, self::TREATMENT => ALLSTANDARDRIGHT,
-                              self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => 0],
+                             self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => 0],
             'Supervisor'  => [self::RISK => READ | UPDATE | CREATE, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => READ, self::ACCEPT => 0],
             'Technician'  => [self::RISK => $own, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => 0, self::ACCEPT => 0],
             'Observer', 'Read-Only' => [self::RISK => READ, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0],

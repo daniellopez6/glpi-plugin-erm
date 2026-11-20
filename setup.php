@@ -16,8 +16,8 @@
  */
 
 /**
- * Plugin ERM - Gestión de Riesgos Corporativos para GLPI.
- * Registro de riesgos empresariales (ISO 31000 / COSO ERM) integrado con GLPI GRC Manager.
+ * ERM - Enterprise Risk Management plugin for GLPI.
+ * Enterprise risk register (ISO 31000 / COSO ERM), optionally integrated with GLPI GRC Manager.
  * Licencia GPL-3.0-or-later.
  */
 
@@ -30,7 +30,7 @@ use GlpiPlugin\Erm\Profile;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '1.1.1');
+define('PLUGIN_ERM_VERSION', '1.2.0');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -51,7 +51,7 @@ function plugin_init_erm(): void
     Plugin::registerClass(Risk::class, ['document_types' => true]);
     $CFG_GLPI['document_types'][] = Risk::class;
 
-    // Mismo sector de menú que GRC Manager si está activo; si no, en "Gestión".
+    // Same menu sector as GRC Manager when active; otherwise "Management".
     $sector = Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'management';
     $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, Risk::class, Category::class]];
 }
@@ -59,7 +59,7 @@ function plugin_init_erm(): void
 function plugin_version_erm(): array
 {
     return [
-        'name'         => 'Gestión de Riesgos Corporativos (ERM)',
+        'name'         => __('ERM - Enterprise Risk Management', 'erm'),
         'version'      => PLUGIN_ERM_VERSION,
         'author'       => 'daniellopez6',
         'license'      => 'GPL-3.0-or-later',
@@ -72,7 +72,7 @@ function plugin_version_erm(): array
 }
 
 /**
- * Opciones del plugin: no ejecutar la instalación automáticamente al descargarlo desde el Marketplace.
+ * Plugin options: do not run the installation automatically when downloaded from the Marketplace.
  *
  * @return array<string,mixed>
  */
@@ -91,14 +91,14 @@ function plugin_erm_check_config($verbose = false): bool
     return true;
 }
 
-/** URL de un archivo del plugin (relativa a la raíz de GLPI o absoluta). */
+/** URL of a plugin file (relative to the GLPI root or absolute). */
 function plugin_erm_url(string $path, bool $full = true): string
 {
     global $CFG_GLPI;
     return ($full ? $CFG_GLPI['root_doc'] : '') . '/plugins/erm/' . ltrim($path, '/');
 }
 
-/** Sector de menú donde viven las páginas del plugin (el de GRC Manager si está activo). */
+/** Menu sector of the plugin pages (GRC Manager's one when active). */
 function plugin_erm_sector(): string
 {
     return Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'management';
