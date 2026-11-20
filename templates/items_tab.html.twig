@@ -1,0 +1,42 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="card">
+   <div class="table-responsive">
+      <table class="table table-hover card-table">
+         <thead><tr><th>{{ reverse ? 'Código' : 'Tipo' }}</th><th>{{ reverse ? 'Riesgo corporativo' : 'Elemento' }}</th>{% if reverse %}<th>Nivel</th>{% endif %}<th>Comentario</th>{% if can_edit %}<th></th>{% endif %}</tr></thead>
+         <tbody>
+         {% for r in rows %}
+            <tr>
+               <td><i class="{{ r.icon }} me-1"></i>{{ r.type }}</td>
+               <td>{{ r.link|raw }}</td>
+               {% if reverse %}<td>{{ r.level|raw }}</td>{% endif %}
+               <td>{{ r.comment }}</td>
+               {% if can_edit %}
+               <td>
+                  <form method="post" action="{{ action }}">
+                     <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                     <input type="hidden" name="id" value="{{ r.id }}">
+                     <button type="submit" name="purge" class="btn btn-sm btn-ghost-danger" title="Desvincular"><i class="ti ti-unlink"></i></button>
+                  </form>
+               </td>
+               {% endif %}
+            </tr>
+         {% else %}
+            <tr><td colspan="5" class="text-muted">Sin elementos vinculados.</td></tr>
+         {% endfor %}
+         </tbody>
+      </table>
+   </div>
+</div>

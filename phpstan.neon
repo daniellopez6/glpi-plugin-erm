@@ -1,0 +1,12 @@
+parameters:
+    level: 3
+    paths:
+        - src
+        - front
+        - setup.php
+        - hook.php
+    scanDirectories:
+        - ../../src
+        - ../../inc
+    bootstrapFiles:
+        - ../../inc/based_config.php

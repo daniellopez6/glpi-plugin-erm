@@ -1,0 +1,136 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{% macro heatmap(title, data, cells, prob_labels, imp_labels) %}
+<div class="card h-100">
+   <div class="card-header"><h3 class="card-title">{{ title }}</h3></div>
+   <div class="card-body">
+      <table class="erm-heat" style="width:100%;border-collapse:separate;border-spacing:3px">
+         {% for p in 5..1 %}
+         <tr>
+            <th class="text-end small text-muted pe-2" style="width:30%;font-weight:normal">{{ prob_labels[p] }}</th>
+            {% for i in 1..5 %}
+               {% set codes = data[p][i] ?? [] %}
+               <td style="background:{{ cells[p][i] }};height:52px;border-radius:6px;text-align:center;vertical-align:middle;color:{{ cells[p][i] == '#f5c518' ? '#1d273b' : '#fff' }}"
+                   title="{{ codes|join(', ') }}">
+                  {% if codes|length %}<div style="font-size:1.4rem;font-weight:700;line-height:1">{{ codes|length }}</div><div style="font-size:.65rem">{{ codes|slice(0,3)|join(' ') }}{{ codes|length > 3 ? '…' }}</div>{% endif %}
+               </td>
+            {% endfor %}
+         </tr>
+         {% endfor %}
+         <tr><th></th>{% for i in 1..5 %}<th class="small text-muted text-center" style="font-weight:normal">{{ imp_labels[i]|split(' (')|first }}</th>{% endfor %}</tr>
+      </table>
+      <div class="text-center small text-muted mt-1">Probabilidad (filas) × Impacto (columnas)</div>
+   </div>
+</div>
+{% endmacro %}
+{% import _self as m %}
+
+<div class="container-fluid">
+   <div class="alert alert-info d-flex">
+      <i class="ti ti-info-circle me-2 fs-2"></i>
+      <div>
+         <b>Gestión de riesgos corporativos (ERM)</b>: riesgos estratégicos, financieros, operacionales, de cumplimiento, fraude, reputacionales y ESG,
+         evaluados con una matriz 5×5 (ISO 31000 / COSO ERM). Los riesgos de seguridad de la información se gestionan en detalle en el registro del SGSI
+         {% if grc %}(GRC Manager) y pueden vincularse desde la pestaña «Elementos relacionados»{% endif %}.
+      </div>
+   </div>
+
+   {% if only_own %}
+   <div class="alert alert-warning"><i class="ti ti-eye-check me-2"></i>Vista restringida: se muestran sólo los riesgos de los que sos dueño, los de tu área y aquellos donde tenés acciones o indicadores asignados.</div>
+   {% endif %}
+   <div class="row row-cards mb-3">
+      <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">Riesgos activos</div><div class="h1 m-0">{{ total }}</div></div></div></div>
+      {% for k, label in levels|reverse(true) %}
+      <div class="col-sm-6 col-lg-2"><div class="card card-sm" style="border-left:6px solid {{ level_color[k] }}"><div class="card-body"><div class="text-muted">Residual {{ label|lower }}</div><div class="h1 m-0">{{ by_level[k] }}</div></div></div></div>
+      {% endfor %}
+      <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">Exposición económica máxima</div><div class="h3 m-0">{{ exposure }}</div></div></div></div>
+   </div>
+
+   <div class="row row-cards mb-3">
+      <div class="col-lg-6">{{ m.heatmap('Mapa de calor - riesgo inherente', heat.inherent, cells, prob_labels, imp_labels) }}</div>
+      <div class="col-lg-6">{{ m.heatmap('Mapa de calor - riesgo residual', heat.residual, cells, prob_labels, imp_labels) }}</div>
+   </div>
+
+   <div class="row row-cards mb-3">
+      <div class="col-lg-6">
+         <div class="card h-100">
+            <div class="card-header"><h3 class="card-title">Riesgos y exposición por categoría</h3></div>
+            <div class="card-body">
+               {% for cat, d in by_cat %}
+               <div class="mb-2">
+                  <div class="d-flex justify-content-between small"><b>{{ cat }}</b><span>{{ d.count }} riesgos · ARS {{ d.exposure|number_format(0, ',', '.') }}</span></div>
+                  <div class="progress" style="height:14px">
+                     {% for lvl, n in d.levels %}{% if n %}<div class="progress-bar" style="width:{{ (n / d.count * (d.exposure / max_exp) * 100)|round(1) }}%;background:{{ level_color[lvl] }}" title="{{ levels[lvl] }}: {{ n }}"></div>{% endif %}{% endfor %}
+                  </div>
+               </div>
+               {% endfor %}
+               <div class="small text-muted">El largo de cada barra es proporcional a la exposición máxima de la categoría; los colores, al nivel residual.</div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-6">
+         <div class="card h-100">
+            <div class="card-header"><h3 class="card-title">Fuera del apetito de riesgo <span class="badge bg-red-lt ms-2">{{ outside|length }}</span></h3></div>
+            <div class="table-responsive"><table class="table card-table table-sm">
+               <thead><tr><th>Código</th><th>Riesgo</th><th>Categoría</th><th>Posición</th></tr></thead>
+               <tbody>
+               {% for r in outside %}
+                  <tr><td>{{ r.code }}</td><td><a href="{{ risk_url }}?id={{ r.id }}">{{ r.name }}</a></td><td class="small">{{ r.category }}</td>
+                      <td><span class="badge {{ r.appetite[0] == 'above_tolerance' ? 'bg-red-lt' : 'bg-orange-lt' }}">{{ r.appetite[1] }}</span></td></tr>
+               {% else %}<tr><td colspan="4" class="text-muted">Todos los riesgos residuales están dentro del apetito.</td></tr>{% endfor %}
+               </tbody></table></div>
+         </div>
+      </div>
+   </div>
+
+   <div class="row row-cards mb-3">
+      <div class="col-lg-7">
+         <div class="card h-100">
+            <div class="card-header"><h3 class="card-title">Top 10 riesgos residuales</h3><div class="card-actions"><a href="{{ list_url }}">Ver registro completo</a></div></div>
+            <div class="table-responsive"><table class="table card-table table-sm">
+               <thead><tr><th>Código</th><th>Riesgo</th><th>Inherente</th><th>Residual</th><th>Impacto máx.</th></tr></thead>
+               <tbody>
+               {% for r in top %}
+                  <tr><td>{{ r.code }}</td><td><a href="{{ risk_url }}?id={{ r.id }}">{{ r.name }}</a></td>
+                      <td><span class="badge" style="background:{{ level_color[r.inherent_level] ?? '#adb5bd' }};color:{{ r.inherent_level == 'medium' ? '#1d273b' : '#fff' }}">{{ r.inherent_score }}</span></td>
+                      <td><span class="badge" style="background:{{ level_color[r.residual_level] ?? '#adb5bd' }};color:{{ r.residual_level == 'medium' ? '#1d273b' : '#fff' }}">{{ r.residual_score }}</span></td>
+                      <td class="small">{{ r.economic_impact_max ? 'ARS ' ~ r.economic_impact_max|number_format(0, ',', '.') : '-' }}</td></tr>
+               {% endfor %}
+               </tbody></table></div>
+         </div>
+      </div>
+      <div class="col-lg-5">
+         <div class="card mb-3">
+            <div class="card-header"><h3 class="card-title">Acciones de tratamiento vencidas <span class="badge bg-red-lt ms-2">{{ overdue|length }}</span></h3></div>
+            <div class="table-responsive"><table class="table card-table table-sm">
+               <tbody>
+               {% for a in overdue %}
+                  <tr><td><a href="{{ risk_url }}?id={{ a.risk_id }}">{{ a.code }}</a></td><td class="small">{{ a.name }}</td><td class="small">{{ a.owner }}</td><td><span class="badge bg-red-lt">{{ a.due_date }}</span></td></tr>
+               {% else %}<tr><td class="text-muted">Sin acciones vencidas.</td></tr>{% endfor %}
+               </tbody></table></div>
+         </div>
+         <div class="card">
+            <div class="card-header"><h3 class="card-title">KRI en alerta</h3></div>
+            <div class="table-responsive"><table class="table card-table table-sm">
+               <tbody>
+               {% for k in kris %}
+                  <tr><td><a href="{{ risk_url }}?id={{ k.risk_id }}">{{ k.risk_code }}</a></td><td class="small">{{ k.name }}</td>
+                      <td><span class="badge {{ k.status == 'red' ? 'bg-red-lt' : 'bg-orange-lt' }}">{{ k.last.value|number_format(1, ',', '.') }} {{ k.unit }}</span></td></tr>
+               {% else %}<tr><td class="text-muted">Ningún KRI en alerta.</td></tr>{% endfor %}
+               </tbody></table></div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,75 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{% set colors = {'green': 'bg-green-lt', 'orange': 'bg-orange-lt', 'red': 'bg-red-lt', 'none': 'bg-secondary-lt'} %}
+{% set labels = {'green': 'Normal', 'orange': 'Alerta', 'red': 'Crítico', 'none': 'Sin medición'} %}
+{% for k in indicators %}
+<div class="card mb-3">
+   <div class="card-header d-flex justify-content-between">
+      <h3 class="card-title"><i class="ti ti-gauge me-2"></i>{{ k.name }}</h3>
+      <span class="badge {{ colors[k.status] }}">{{ labels[k.status] }}{% if k.last %}: {{ k.last.value|number_format(2, ',', '.') }} {{ k.unit }} ({{ k.last.value_date }}){% endif %}</span>
+   </div>
+   <div class="card-body">
+      <div class="row mb-2 text-muted small">
+         <div class="col">Umbral de alerta: <b>{{ k.threshold_warning ?? '-' }}</b> {{ k.unit }}</div>
+         <div class="col">Umbral crítico: <b>{{ k.threshold_critical ?? '-' }}</b> {{ k.unit }}</div>
+         <div class="col">Sentido: <b>{{ k.direction == 'lower_is_worse' ? 'menor es peor' : 'mayor es peor' }}</b></div>
+         <div class="col">Frecuencia: <b>{{ frequencies[k.frequency] ?? k.frequency }}</b></div>
+         <div class="col">Responsable: <b>{{ k.owner }}</b></div>
+      </div>
+      {% if k.values|length %}
+      <div class="d-flex align-items-end gap-1" style="height:90px">
+         {% set maxv = max(k.values|map(v => v.value|abs)|merge([k.threshold_critical ?? 0, 1])) %}
+         {% for v in k.values %}
+            <div class="text-center" style="flex:1">
+               <div class="small">{{ v.value|number_format(1, ',', '.') }}</div>
+               <div class="{{ colors[v.status] }}" style="height:{{ (v.value|abs / maxv * 55)|round + 4 }}px;border-radius:3px"></div>
+               <div class="small text-muted">{{ v.value_date|date('m/y') }}</div>
+            </div>
+         {% endfor %}
+      </div>
+      {% endif %}
+      {% if can_edit %}
+      <form method="post" action="{{ action }}" class="row g-2 mt-2 align-items-end">
+         <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+         <input type="hidden" name="plugin_erm_indicators_id" value="{{ k.id }}">
+         <div class="col-md-3"><label class="form-label small">Fecha</label><input type="date" name="value_date" value="{{ today }}" class="form-control form-control-sm"></div>
+         <div class="col-md-3"><label class="form-label small">Valor</label><input type="number" step="any" name="value" class="form-control form-control-sm" required></div>
+         <div class="col-md-4"><label class="form-label small">Comentario</label><input type="text" name="comment" class="form-control form-control-sm"></div>
+         <div class="col-md-2"><button type="submit" name="add_value" class="btn btn-sm btn-outline-primary w-100">Registrar valor</button></div>
+      </form>
+      {% endif %}
+   </div>
+</div>
+{% else %}
+<div class="alert alert-info">Este riesgo todavía no tiene indicadores clave (KRI).</div>
+{% endfor %}
+{% if can_edit %}
+<div class="card">
+   <div class="card-header"><h3 class="card-title">Nuevo indicador</h3></div>
+   <div class="card-body">
+      <form method="post" action="{{ action }}" class="row g-2 align-items-end">
+         <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+         <input type="hidden" name="plugin_erm_risks_id" value="{{ risk.getID() }}">
+         <div class="col-md-3"><label class="form-label">Nombre</label><input type="text" name="name" class="form-control" required></div>
+         <div class="col-md-1"><label class="form-label">Unidad</label><input type="text" name="unit" class="form-control"></div>
+         <div class="col-md-2"><label class="form-label">Sentido</label><select name="direction" class="form-select"><option value="higher_is_worse">Mayor es peor</option><option value="lower_is_worse">Menor es peor</option></select></div>
+         <div class="col-md-1"><label class="form-label">Alerta</label><input type="number" step="any" name="threshold_warning" class="form-control"></div>
+         <div class="col-md-1"><label class="form-label">Crítico</label><input type="number" step="any" name="threshold_critical" class="form-control"></div>
+         <div class="col-md-2"><label class="form-label">Frecuencia</label><select name="frequency" class="form-select">{% for f, l in frequencies %}<option value="{{ f }}">{{ l }}</option>{% endfor %}</select></div>
+         <div class="col-md-2"><button type="submit" name="add" class="btn btn-primary w-100"><i class="ti ti-plus"></i> Agregar KRI</button></div>
+      </form>
+   </div>
+</div>
+{% endif %}
