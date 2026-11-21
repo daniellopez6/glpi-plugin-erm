@@ -15,7 +15,10 @@
 {% set state_badge = {'overdue': 'bg-red-lt', 'soon': 'bg-orange-lt', 'ok': 'bg-green-lt', 'none': 'bg-secondary-lt'} %}
 {% set kri_colors = {'green': 'bg-green-lt', 'orange': 'bg-orange-lt', 'red': 'bg-red-lt', 'none': 'bg-secondary-lt'} %}
 <div class="container-fluid">
-   <h2 class="mb-3"><i class="ti ti-user-check me-2"></i>{{ __('My ERM workspace', 'erm') }} <span class="text-muted fs-4">· {{ user }}</span></h2>
+   <div class="d-flex align-items-center mb-3">
+      <h2 class="m-0"><i class="ti ti-user-check me-2"></i>{{ __('My ERM workspace', 'erm') }} <span class="text-muted fs-4">· {{ user }}</span></h2>
+      <a href="{{ report_url }}" class="btn btn-outline-primary ms-auto"><i class="ti ti-speakerphone me-1"></i>{{ __('Report a risk or an incident', 'erm') }}</a>
+   </div>
 
    <div class="row row-cards mb-3">
       {% for key, label in {

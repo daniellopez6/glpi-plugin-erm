@@ -153,5 +153,40 @@ class Category extends CommonTreeDropdown
                 (new self())->add(['name' => $child, 'plugin_erm_categories_id' => $pid, 'entities_id' => 0, 'is_recursive' => 1]);
             }
         }
+        self::createAiTaxonomy();
+    }
+
+    /** Marker of the "Artificial intelligence" root category (recognised even if renamed). */
+    public const AI_MARKER = '[erm:ai]';
+
+    /**
+     * Creates the "Artificial intelligence" branch (ISO/IEC 42001, AI Act) once.
+     */
+    public static function createAiTaxonomy(): void
+    {
+        if (self::aiRootId() > 0) {
+            return;
+        }
+        $pid = (new self())->add([
+            'name' => __('Artificial intelligence', 'erm'), 'plugin_erm_categories_id' => 0, 'entities_id' => 0, 'is_recursive' => 1,
+            'appetite_level' => 'low', 'tolerance_level' => 'medium',
+            'appetite_statement' => __('AI is adopted to improve services, but no AI system may discriminate, expose personal data, mislead customers or act without the human oversight its impact requires.', 'erm'),
+            'comment' => self::AI_MARKER,
+        ]);
+        foreach (
+            [__('Bias and discrimination', 'erm'), __('Privacy and personal data', 'erm'), __('Reliability, accuracy and hallucinations', 'erm'),
+                  __('Misuse, attacks and prompt injection', 'erm'), __('Transparency and accountability', 'erm'),
+            __('Dependence on AI providers and models', 'erm')] as $child
+        ) {
+            (new self())->add(['name' => $child, 'plugin_erm_categories_id' => $pid, 'entities_id' => 0, 'is_recursive' => 1]);
+        }
+    }
+
+    /** Id of the "Artificial intelligence" root category (0 when missing). */
+    public static function aiRootId(): int
+    {
+        global $DB;
+        $row = $DB->request(['SELECT' => 'id', 'FROM' => self::getTable(), 'WHERE' => ['comment' => ['LIKE', '%' . self::AI_MARKER . '%']], 'LIMIT' => 1])->current();
+        return (int) ($row['id'] ?? 0);
     }
 }

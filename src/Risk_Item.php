@@ -56,7 +56,7 @@ class Risk_Item extends CommonDBTM
     /** Linkable itemtypes: GRC risks and processes, compliance objects and business assets. */
     public static function getLinkableItemtypes(): array
     {
-        $types = ['Supplier', 'Contract', 'Appliance', 'Project', 'Computer', 'Software', 'Group', 'Change'];
+        $types = [AiSystem::class, 'Supplier', 'Contract', 'Appliance', 'Project', 'Computer', 'Software', 'Group', 'Change'];
         $grc = ['GlpiPlugin\\Grcmanager\\Risk', 'GlpiPlugin\\Grcmanager\\BusinessProcess', 'GlpiPlugin\\Grcmanager\\SupplierRisk',
                'GlpiPlugin\\Grcmanager\\ComplianceObligation', 'GlpiPlugin\\Grcmanager\\Control', 'GlpiPlugin\\Grcmanager\\Objective'];
         foreach ($grc as $t) {

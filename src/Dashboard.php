@@ -188,6 +188,33 @@ class Dashboard extends CommonGLPI
         return $sum;
     }
 
+    /**
+     * AI governance figures of the visible entities (null when the user cannot see AI systems).
+     *
+     * @return array<string,mixed>|null
+     */
+    public static function aiGovernance(): ?array
+    {
+        global $DB;
+        if (!AiSystem::canView()) {
+            return null;
+        }
+        $out = ['total' => 0, 'production' => 0, 'regulated' => 0, 'gaps' => []];
+        $iter = $DB->request(['FROM' => AiSystem::getTable(), 'WHERE' => ['is_deleted' => 0]
+            + getEntitiesRestrictCriteria(AiSystem::getTable(), '', '', true), 'ORDER' => 'name']);
+        foreach ($iter as $s) {
+            $out['total']++;
+            $out['production'] += $s['status'] === 'production' ? 1 : 0;
+            $out['regulated'] += in_array($s['aiact_class'], ['high', 'limited', 'prohibited'], true) ? 1 : 0;
+            $gap = AiSystem::governance($s)['gap'];
+            if ($gap !== 'none') {
+                $out['gaps'][] = ['id' => $s['id'], 'name' => $s['name'], 'gap' => AiSystem::gapLabels()[$gap] ?? $gap,
+                                  'class' => AiSystem::aiActClasses()[$s['aiact_class']] ?? ''];
+            }
+        }
+        return $out;
+    }
+
     public static function show(): void
     {
         $risks = Risk::activeRisks();
@@ -289,6 +316,11 @@ class Dashboard extends CommonGLPI
            'treatment_counts' => array_count_values(self::treatments($risks)),
            'acceptances_to_renew' => count(self::acceptancesToRenew($risks)),
            'portfolio_ale' => Scale::money(self::portfolioAle($risks)),
+           'ai'          => self::aiGovernance(),
+           'ai_url'      => AiSystem::getSearchURL(),
+           'ai_form_url' => AiSystem::getFormURL(),
+           'pending_reports' => Concern::canReview() ? Concern::countPending() : null,
+           'reports_url' => Concern::getSearchURL(),
            'events'      => Event::canView(),
            'events_url'  => Event::getSearchURL(),
            'net_loss_12m' => Event::canView() ? Scale::money(Event::netLossSince(date('Y-m-d', strtotime('-12 months')))) : '',

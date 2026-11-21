@@ -23,6 +23,7 @@ use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use GlpiPlugin\Erm\Action;
 use GlpiPlugin\Erm\AcceptanceState;
+use GlpiPlugin\Erm\AiImpact;
 use GlpiPlugin\Erm\Category;
 use GlpiPlugin\Erm\Indicator;
 use GlpiPlugin\Erm\NotificationTargetRisk;
@@ -276,6 +277,78 @@ function plugin_erm_install(): bool
             PRIMARY KEY (`id`),
             UNIQUE KEY `unicity` (`period`,`plugin_erm_risks_id`),
             KEY `entities_id` (`entities_id`)",
+        'glpi_plugin_erm_aisystems' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `is_recursive` tinyint NOT NULL DEFAULT '0',
+            `is_deleted` tinyint NOT NULL DEFAULT '0',
+            `name` varchar(255) NOT NULL DEFAULT '',
+            `purpose` text,
+            `ai_type` varchar(32) NOT NULL DEFAULT 'generative',
+            `deployment` varchar(32) NOT NULL DEFAULT 'saas_api',
+            `suppliers_id` int {$sign} NOT NULL DEFAULT '0',
+            `model_name` varchar(255) NOT NULL DEFAULT '',
+            `users_id` int {$sign} NOT NULL DEFAULT '0',
+            `groups_id` int {$sign} NOT NULL DEFAULT '0',
+            `personal_data` tinyint NOT NULL DEFAULT '0',
+            `sensitive_data` tinyint NOT NULL DEFAULT '0',
+            `affected_groups` varchar(255) NOT NULL DEFAULT '',
+            `human_oversight` varchar(16) NOT NULL DEFAULT 'on_loop',
+            `data_description` text,
+            `aiact_role` varchar(16) NOT NULL DEFAULT 'deployer',
+            `aiact_class` varchar(16) NOT NULL DEFAULT 'unassessed',
+            `status` varchar(16) NOT NULL DEFAULT 'planned',
+            `comment` text,
+            `date_creation` timestamp NULL DEFAULT NULL,
+            `date_mod` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `entities_id` (`entities_id`),
+            KEY `is_deleted` (`is_deleted`),
+            KEY `users_id` (`users_id`),
+            KEY `suppliers_id` (`suppliers_id`)",
+        'glpi_plugin_erm_aiassessments' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `plugin_erm_aisystems_id` int {$sign} NOT NULL DEFAULT '0',
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `is_recursive` tinyint NOT NULL DEFAULT '0',
+            `assessment_date` date DEFAULT NULL,
+            `users_id` int {$sign} NOT NULL DEFAULT '0',
+            `status` varchar(16) NOT NULL DEFAULT 'draft',
+            " . implode('', array_map(fn($d) => "`score_{$d}` tinyint NOT NULL DEFAULT '0', `notes_{$d}` text, ", AiImpact::DIMENSIONS)) . "
+            `overall_level` varchar(16) NOT NULL DEFAULT '',
+            `mitigations` text,
+            `residual_level` varchar(16) NOT NULL DEFAULT '',
+            `next_assessment_date` date DEFAULT NULL,
+            `users_id_approval` int {$sign} NOT NULL DEFAULT '0',
+            `date_approval` timestamp NULL DEFAULT NULL,
+            `approval_comment` text,
+            `date_creation` timestamp NULL DEFAULT NULL,
+            `date_mod` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `plugin_erm_aisystems_id` (`plugin_erm_aisystems_id`),
+            KEY `entities_id` (`entities_id`),
+            KEY `status` (`status`)",
+        'glpi_plugin_erm_concerns' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `users_id` int {$sign} NOT NULL DEFAULT '0',
+            `report_type` varchar(16) NOT NULL DEFAULT 'risk',
+            `name` varchar(255) NOT NULL DEFAULT '',
+            `description` text,
+            `area` varchar(255) NOT NULL DEFAULT '',
+            `occurrence_date` date DEFAULT NULL,
+            `estimated_loss` decimal(20,2) DEFAULT NULL,
+            `status` varchar(16) NOT NULL DEFAULT 'new',
+            `users_id_reviewer` int {$sign} NOT NULL DEFAULT '0',
+            `date_review` timestamp NULL DEFAULT NULL,
+            `review_comment` text,
+            `result_itemtype` varchar(255) NOT NULL DEFAULT '',
+            `result_items_id` int {$sign} NOT NULL DEFAULT '0',
+            `date_creation` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `entities_id` (`entities_id`),
+            KEY `users_id` (`users_id`),
+            KEY `status` (`status`)",
         'glpi_plugin_erm_risks_items' => "
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
@@ -348,8 +421,15 @@ function plugin_erm_install(): bool
     foreach (Rights::all() as $right) {
         if (countElementsInTable('glpi_profilerights', ['name' => $right]) === 0) {
             ProfileRight::addProfileRights([$right]);
+            $roles = ErmProfile::roleProfiles();
             foreach ($DB->request(['FROM' => 'glpi_profiles']) as $profile) {
                 $value = Rights::defaults((string) $profile['name'])[$right] ?? 0;
+                // Role profiles created by the plugin get the value of their role definition
+                foreach ($roles as $key => $role) {
+                    if (str_contains((string) $profile['comment'], ErmProfile::marker($key))) {
+                        $value = $role['rights'][$right] ?? 0;
+                    }
+                }
                 if ($right === Rights::RISK && $profile['interface'] !== 'central') {
                     $value = 0;
                 }
@@ -376,6 +456,14 @@ function plugin_erm_install(): bool
         }
     }
 
+    // Default columns of the AI system register (status, type, AI Act class, provider, owner, personal data)
+    if (countElementsInTable('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\AiSystem', 'users_id' => 0]) === 0) {
+        foreach ([4, 3, 5, 6, 7, 10] as $rank => $num) {
+            $DB->insert('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\AiSystem', 'num' => $num, 'rank' => $rank + 1,
+                                                   'users_id' => 0, 'interface' => 'central']);
+        }
+    }
+
     // Default columns of the risk register (code, category, owner, levels, treatment, status, review)
     if (countElementsInTable('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Risk', 'users_id' => 0]) === 0) {
         foreach ([3, 4, 5, 7, 8, 13, 11, 12, 17] as $rank => $num) {
@@ -386,6 +474,9 @@ function plugin_erm_install(): bool
 
     if (countElementsInTable(Category::getTable()) === 0) {
         Category::createDefaultTaxonomy();
+    } else {
+        // 2.0.0: "Artificial intelligence" branch for existing installations
+        Category::createAiTaxonomy();
     }
 
     // 1.7.0: ready-to-assign role profiles (created once, never overwritten)
@@ -502,12 +593,13 @@ function plugin_erm_uninstall(): bool
               'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items',
               'glpi_plugin_erm_entityconfigs', 'glpi_plugin_erm_appetites', 'glpi_plugin_erm_events',
               'glpi_plugin_erm_events_items', 'glpi_plugin_erm_reviews', 'glpi_plugin_erm_alerts',
-              'glpi_plugin_erm_snapshots'] as $table
+              'glpi_plugin_erm_snapshots', 'glpi_plugin_erm_aisystems', 'glpi_plugin_erm_aiassessments',
+              'glpi_plugin_erm_concerns'] as $table
     ) {
         $DB->dropTable($table, true);
     }
     ProfileRight::deleteProfileRights(Rights::all());
-    foreach (['GlpiPlugin\\Erm\\Risk', 'GlpiPlugin\\Erm\\Category', 'GlpiPlugin\\Erm\\Action', 'GlpiPlugin\\Erm\\Event'] as $itemtype) {
+    foreach (['GlpiPlugin\\Erm\\Risk', 'GlpiPlugin\\Erm\\Category', 'GlpiPlugin\\Erm\\Action', 'GlpiPlugin\\Erm\\Event', 'GlpiPlugin\\Erm\\AiSystem'] as $itemtype) {
         $DB->delete('glpi_displaypreferences', ['itemtype' => $itemtype]);
         $DB->delete('glpi_documents_items', ['itemtype' => $itemtype]);
         $DB->delete('glpi_logs', ['itemtype' => $itemtype]);
@@ -533,4 +625,14 @@ function plugin_erm_addDefaultWhere($itemtype)
         ]]];
     }
     return [];
+}
+
+/**
+ * A GLPI object linked to risks or loss events was purged: remove its links.
+ */
+function plugin_erm_item_purge(CommonDBTM $item): void
+{
+    global $DB;
+    $DB->delete(GlpiPlugin\Erm\Risk_Item::getTable(), ['itemtype' => $item::class, 'items_id' => $item->getID()]);
+    $DB->delete(GlpiPlugin\Erm\Event_Item::getTable(), ['itemtype' => $item::class, 'items_id' => $item->getID()]);
 }

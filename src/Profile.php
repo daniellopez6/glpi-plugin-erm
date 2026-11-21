@@ -84,6 +84,15 @@ class Profile extends CommonGLPI
                               UPDATENOTE => ['short' => __('Update notes', 'erm'), 'long' => __('Update the notes', 'erm')]],
            ],
            [
+               'itemtype' => AiSystem::class,
+               'label'    => __('AI systems and impact assessments', 'erm'),
+               'field'    => Rights::AI,
+               'rights'   => [READ => $read, UPDATE => $update, CREATE => $create, DELETE => $trash, PURGE => $purge,
+                              READNOTE => ['short' => __('Read notes', 'erm'), 'long' => __('Read the notes', 'erm')],
+                              UPDATENOTE => ['short' => __('Update notes', 'erm'), 'long' => __('Update the notes', 'erm')],
+                              Rights::APPROVE => ['short' => __('Approve assessments', 'erm'), 'long' => __('Approve or reject AI impact assessments (never own ones)', 'erm')]],
+           ],
+           [
                'itemtype' => Risk::class,
                'label'    => __('Formal risk acceptance (Committee / Board)', 'erm'),
                'field'    => Rights::ACCEPT,
@@ -112,33 +121,40 @@ class Profile extends CommonGLPI
                 'comment' => __('Manages the corporate risk process: register, treatment, taxonomy and appetite, loss events and entity settings. Does not formally accept risks. No access to the inventory.', 'erm'),
                 'rights'  => $base + $itil + ['entity' => READ, 'user' => READ, 'group' => READ,
                     Rights::RISK => $all | $notes, Rights::TREATMENT => $all, Rights::CONFIG => $all,
-                    Rights::ACCEPT => 0, Rights::EVENT => $all | $notes],
+                    Rights::ACCEPT => 0, Rights::EVENT => $all | $notes, Rights::AI => $all | $notes],
             ],
             'owner' => [
                 'name'    => 'ERM - ' . __('Risk owner', 'erm'),
                 'comment' => __('Sees and updates only own risks (owner, owner group or responsible of actions/KRIs), manages their treatment and reports loss events. No access to the inventory.', 'erm'),
                 'rights'  => $base + $itil + [Rights::RISK => $own, Rights::TREATMENT => CREATE | UPDATE, Rights::CONFIG => 0,
-                    Rights::ACCEPT => 0, Rights::EVENT => READ | CREATE],
+                    Rights::ACCEPT => 0, Rights::EVENT => READ | CREATE, Rights::AI => READ],
             ],
             'treatment' => [
                 'name'    => 'ERM - ' . __('Treatment responsible', 'erm'),
                 'comment' => __('Executes treatment actions and measures KRIs: sees the risks where they have actions or indicators, updates them and reports loss events.', 'erm'),
                 'rights'  => $base + [Rights::RISK => READ_OWNED, Rights::TREATMENT => UPDATE | CREATE, Rights::CONFIG => 0,
-                    Rights::ACCEPT => 0, Rights::EVENT => READ | CREATE],
+                    Rights::ACCEPT => 0, Rights::EVENT => READ | CREATE, Rights::AI => 0],
             ],
             'committee' => [
                 'name'    => 'ERM - ' . __('Risk Committee', 'erm'),
                 'comment' => __('Board or Risk Committee: sees the whole register, approves appetite and tolerance and formally accepts risks (never own risks).', 'erm'),
                 'rights'  => ['knowbase' => READ, 'personalization' => READ | UPDATE, 'password_update' => 1, 'document' => READ,
                     Rights::RISK => READ | READNOTE, Rights::TREATMENT => 0, Rights::CONFIG => READ | UPDATE,
-                    Rights::ACCEPT => UPDATE, Rights::EVENT => READ],
+                    Rights::ACCEPT => UPDATE, Rights::EVENT => READ, Rights::AI => READ | READNOTE | Rights::APPROVE],
             ],
             'audit' => [
                 'name'    => 'ERM - ' . __('Internal audit', 'erm'),
                 'comment' => __('Read-only access to the whole register, notes, appetite, treatment plans, reviews and loss events, with the related tickets as evidence.', 'erm'),
                 'rights'  => ['knowbase' => READ, 'personalization' => READ | UPDATE, 'password_update' => 1, 'document' => READ] + $itil
                     + [Rights::RISK => READ | READNOTE, Rights::TREATMENT => 0, Rights::CONFIG => READ,
-                       Rights::ACCEPT => 0, Rights::EVENT => READ | READNOTE],
+                       Rights::ACCEPT => 0, Rights::EVENT => READ | READNOTE, Rights::AI => READ | READNOTE],
+            ],
+            'ai' => [
+                'name'    => 'ERM - ' . __('AI officer', 'erm'),
+                'comment' => __('Keeps the inventory of AI systems and their impact assessments (ISO/IEC 42001), and manages the risks of their own AI systems. Assessments are approved by the AI or Risk Committee. No access to the inventory.', 'erm'),
+                'rights'  => $base + [Rights::RISK => $own, Rights::TREATMENT => CREATE | UPDATE, Rights::CONFIG => 0,
+                    Rights::ACCEPT => 0, Rights::EVENT => READ | CREATE, Rights::AI => READ | CREATE | UPDATE | READNOTE | UPDATENOTE,
+                    'contact_enterprise' => READ],
             ],
         ];
     }

@@ -7,6 +7,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.0.0] - 2026-11-22
+### Added
+- AI governance (ISO/IEC 42001, EU AI Act):
+  - AI system inventory: purpose, type, deployment, provider and model, owner, personal and sensitive data, affected
+    people, human oversight, AI Act role and class, lifecycle status; documents, notes, history and corporate risks.
+  - AI impact assessment (42001 6.1.4 / 8.4, ISO/IEC 42005 criteria): nine dimensions (bias, privacy, transparency,
+    security, reliability and hallucinations, human oversight, misuse, societal impact, legal) with score and
+    rationale, overall level, mitigations and residual impact, next assessment. Draft, submitted, approved or
+    rejected; the approver must not be the author; approved assessments are read only. A corporate risk can be
+    created from an approved assessment.
+  - Governance gaps: systems in development or production of limited or high AI Act class without a current
+    approved assessment, and prohibited practices; AI governance card on the dashboard.
+  - "Artificial intelligence" risk category branch (created on update).
+  - New right "AI systems and impact assessments" (`plugin_erm_ai`) with "Approve assessments", and new role profile
+    "ERM - AI officer"; existing role profiles get the AI right of their role.
+- Risk reports from the staff: any user, also from the simplified interface (new menu entry), reports an incident, a
+  near miss or a risk; the risk team turns it into a loss event or a corporate risk, or closes it with a comment;
+  the reporter follows the status in "My reports". Pending reports are shown on the dashboard.
+- Unit tests for the AI impact rules (86 tests).
+
+### Fixed
+- Purging a risk or a loss event left its links in the database (and a warning in the GLPI log); purging a linked
+  GLPI object (ticket, problem, change, supplier...) now removes its links to risks and loss events.
+
 ## [1.9.2] - 2026-11-21
 ### Security
 - The saved search of an automatic KRI is also validated when only the saved search is changed (for example through

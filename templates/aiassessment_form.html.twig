@@ -1,0 +1,65 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{# AI impact assessment form #}
+{% extends 'generic_show_form.html.twig' %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% block form_fields %}
+   <input type="hidden" name="plugin_erm_aisystems_id" value="{{ item.fields['plugin_erm_aisystems_id'] }}">
+   {% if system %}
+   {{ fields.htmlField('', '<a href="' ~ system.getLinkURL() ~ '"><b>' ~ system.fields['name']|e ~ '</b></a>', __('AI system', 'erm')) }}
+   {% endif %}
+   {% if not item.isNewItem() %}
+   {{ fields.htmlField('', '<b>' ~ status_label|e ~ '</b>' ~ (approval ? '<div class="small text-muted">' ~ approval|e ~ '</div>' : ''), __('Status', 'erm')) }}
+   {{ fields.htmlField('', assessor|e, __('Assessed by', 'erm')) }}
+   {% endif %}
+   {{ fields.dateField('assessment_date', item.fields['assessment_date'], __('Assessment date', 'erm')) }}
+   {{ fields.dateField('next_assessment_date', item.fields['next_assessment_date'], __('Next assessment', 'erm')) }}
+
+   {{ fields.smallTitle(__('Impact by dimension', 'erm'), 'ti ti-adjustments') }}
+   <div class="col-12 text-muted small mb-2">{{ __('For each dimension, score the potential impact on people and on the organization if the system fails, is misused or behaves unexpectedly, and explain why. The overall level follows the worst dimension.', 'erm') }}</div>
+   {% for key, label in dimensions %}
+      {{ fields.dropdownArrayField('score_' ~ key, item.fields['score_' ~ key] ?? 0, scores, label) }}
+      {{ fields.textareaField('notes_' ~ key, item.fields['notes_' ~ key], __('Rationale', 'erm'), {'rows': 2}) }}
+   {% endfor %}
+   {% if not item.isNewItem() %}
+   {# badge built by Scale::badge() (escaped) #}
+   {{ fields.htmlField('', overall, __('Overall impact level', 'erm')) }}
+   {% endif %}
+
+   {{ fields.smallTitle(__('Treatment', 'erm'), 'ti ti-shield-check') }}
+   {{ fields.textareaField('mitigations', item.fields['mitigations'], __('Mitigations and controls', 'erm'), {'full_width': true, 'helper': __('E.g. human review of outputs, disclosure that the customer talks to an AI, guardrails against prompt injection, bias testing, logging, kill switch.', 'erm')}) }}
+   {{ fields.dropdownArrayField('residual_level', item.fields['residual_level'] ?? '', levels, __('Residual impact after mitigations', 'erm')) }}
+
+   {% if not item.isNewItem() %}
+      {{ fields.smallTitle(__('Approval', 'erm'), 'ti ti-gavel') }}
+      {% if item.fields['approval_comment'] %}{{ fields.htmlField('', item.fields['approval_comment']|e|nl2br, __('Approval comment', 'erm')) }}{% endif %}
+      <div class="col-12 d-flex flex-wrap gap-2 align-items-end">
+         {% if can_submit %}
+            <button type="submit" name="submit_approval" value="1" class="btn btn-outline-primary"><i class="ti ti-send me-1"></i>{{ __('Save and submit for approval', 'erm') }}</button>
+         {% endif %}
+         {% if can_decide %}
+            <input type="text" name="approval_comment" class="form-control" style="max-width:30rem" placeholder="{{ __('Approval comment', 'erm') }}">
+            <button type="submit" name="approve" class="btn btn-success"><i class="ti ti-check me-1"></i>{{ __('Approve', 'erm') }}</button>
+            <button type="submit" name="reject" class="btn btn-outline-danger"><i class="ti ti-x me-1"></i>{{ __('Reject', 'erm') }}</button>
+         {% elseif author_blocked %}
+            <span class="text-muted small">{{ __('You authored this assessment: another person with the approval right must approve it.', 'erm') }}</span>
+         {% endif %}
+         {% if can_risk %}
+            <button type="submit" name="create_risk" class="btn btn-outline-warning"><i class="ti ti-shield-plus me-1"></i>{{ __('Create corporate risk', 'erm') }}</button>
+         {% endif %}
+      </div>
+   {% endif %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{# AI system form #}
+{% extends 'generic_show_form.html.twig' %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% block form_fields %}
+   {% if gap != 'none' %}
+   <div class="alert alert-danger col-12"><i class="ti ti-alert-triangle me-2"></i>{{ gap_label }}</div>
+   {% endif %}
+   {{ fields.smallTitle(__('Identification', 'erm'), 'ti ti-brain') }}
+   {{ fields.textField('name', item.fields['name'], __('Name'), {'required': true}) }}
+   {{ fields.dropdownArrayField('status', item.fields['status'] ?: 'planned', statuses, __('Status', 'erm')) }}
+   {{ fields.textareaField('purpose', item.fields['purpose'], __('Purpose and use case', 'erm'), {'full_width': true, 'helper': __('What the system does, for which process and for whom. Example: voicebot that answers balance inquiries of the customers of a client bank.', 'erm')}) }}
+   {{ fields.dropdownArrayField('ai_type', item.fields['ai_type'], types, __('AI type', 'erm')) }}
+   {{ fields.dropdownArrayField('deployment', item.fields['deployment'], deployments, __('Deployment', 'erm')) }}
+   {{ fields.dropdownField('Supplier', 'suppliers_id', item.fields['suppliers_id'], __('Provider', 'erm'), {'entity': item.fields['entities_id']}) }}
+   {{ fields.textField('model_name', item.fields['model_name'], __('Model', 'erm'), {'helper': __('Model and version, e.g. GPT-4o, Whisper large-v3, in-house classifier v2.', 'erm')}) }}
+   {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], __('Owner', 'erm'), {'right': 'all', 'entity': item.fields['entities_id']}) }}
+   {{ fields.dropdownField('Group', 'groups_id', item.fields['groups_id'], __('Responsible group', 'erm'), {'entity': item.fields['entities_id']}) }}
+
+   {{ fields.smallTitle(__('Data, people and oversight', 'erm'), 'ti ti-users') }}
+   {{ fields.dropdownYesNo('personal_data', item.fields['personal_data'], __('Processes personal data', 'erm')) }}
+   {{ fields.dropdownYesNo('sensitive_data', item.fields['sensitive_data'], __('Processes sensitive data (health, biometrics, financial...)', 'erm')) }}
+   {{ fields.dropdownArrayField('affected', '', affected, __('Affected people', 'erm'), {'multiple': true, 'values': selected_affected}) }}
+   {{ fields.dropdownArrayField('human_oversight', item.fields['human_oversight'], oversight, __('Human oversight', 'erm')) }}
+   {{ fields.textareaField('data_description', item.fields['data_description'], __('Data used (training, inputs, outputs)', 'erm'), {'full_width': true}) }}
+
+   {{ fields.smallTitle(__('Regulatory classification', 'erm'), 'ti ti-scale') }}
+   {{ fields.dropdownArrayField('aiact_role', item.fields['aiact_role'], roles, __('Role (AI Act)', 'erm')) }}
+   {{ fields.dropdownArrayField('aiact_class', item.fields['aiact_class'] ?: 'unassessed', classes, __('AI Act class', 'erm'), {'helper': __('High risk: e.g. credit scoring, recruitment, access to essential services. Limited: chatbots and voicebots that interact with people, generated content (transparency duties).', 'erm')}) }}
+   {% if not item.isNewItem() %}
+   {{ fields.htmlField('', last_level ? last_level ~ ' <span class="small text-muted">' ~ last_date|e ~ '</span>' : '<span class="text-muted">' ~ __('None', 'erm')|e ~ '</span>', __('Last approved impact assessment', 'erm')) }}
+   {% endif %}
+   {{ fields.textareaField('comment', item.fields['comment'], __('Comments'), {'full_width': true}) }}
+{% endblock %}

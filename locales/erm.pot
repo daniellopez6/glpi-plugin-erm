@@ -3,11 +3,35 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: erm\n"
-"POT-Creation-Date: 2026-11-21 23:13+0000\n"
+"POT-Creation-Date: 2026-11-21 23:33+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: front/aiassessment.form.php:32
+msgid "Assessment submitted for approval."
+msgstr ""
+
+#: front/aiassessment.form.php:38 src/AiAssessment.php:186
+msgid "Assessment approved"
+msgstr ""
+
+#: front/aiassessment.form.php:38 src/AiAssessment.php:186
+msgid "Assessment rejected"
+msgstr ""
+
+#: front/concern.php:26
+msgid "Thank you: your report was sent to the risk team."
+msgstr ""
+
+#: front/concern.php:42
+msgid "Report closed."
+msgstr ""
+
+#: front/concern.php:48 front/concern.php:50 templates/concern.html.twig:19 templates/myspace.html.twig:20
+msgid "Report a risk or an incident"
+msgstr ""
 
 #: front/entityconfig.form.php:30
 msgid "ERM settings saved."
@@ -29,23 +53,23 @@ msgstr ""
 msgid "Review recorded."
 msgstr ""
 
-#: hook.php:442 hook.php:443 src/NotificationTargetRisk.php:129 src/Notifier.php:32
+#: hook.php:533 hook.php:534 src/NotificationTargetRisk.php:129 src/Notifier.php:32
 msgid "Corporate risk alerts"
 msgstr ""
 
-#: hook.php:447 hook.php:448 src/NotificationTargetRisk.php:43
+#: hook.php:538 hook.php:539 src/NotificationTargetRisk.php:43
 msgid "A corporate risk has been assigned to you"
 msgstr ""
 
-#: hook.php:452 hook.php:453 src/NotificationTargetRisk.php:45
+#: hook.php:543 hook.php:544 src/NotificationTargetRisk.php:45
 msgid "A treatment action of your risk has been completed"
 msgstr ""
 
-#: hook.php:457 hook.php:458 src/NotificationTargetRisk.php:44
+#: hook.php:548 hook.php:549 src/NotificationTargetRisk.php:44
 msgid "A treatment action has been assigned to you"
 msgstr ""
 
-#: setup.php:74
+#: setup.php:90
 msgid "ERM - Enterprise Risk Management"
 msgstr ""
 
@@ -71,7 +95,7 @@ msgstr[1] ""
 msgid "Action plans"
 msgstr ""
 
-#: src/Action.php:89 templates/action_form.html.twig:23 templates/actions_tab.html.twig:42 templates/myspace.html.twig:36
+#: src/Action.php:89 templates/action_form.html.twig:23 templates/actions_tab.html.twig:42 templates/concern.html.twig:57 templates/myspace.html.twig:39
 msgid "Action"
 msgstr ""
 
@@ -79,15 +103,15 @@ msgstr ""
 msgid "Risk code"
 msgstr ""
 
-#: src/Action.php:92 templates/action_form.html.twig:25 templates/actions_tab.html.twig:42 templates/actions_tab.html.twig:88 templates/myspace.html.twig:36
+#: src/Action.php:92 templates/action_form.html.twig:25 templates/actions_tab.html.twig:42 templates/actions_tab.html.twig:88 templates/myspace.html.twig:39
 msgid "Due date"
 msgstr ""
 
-#: src/Action.php:93 src/Event.php:167 src/Risk.php:355 templates/action_form.html.twig:26 templates/actions_tab.html.twig:42 templates/event_form.html.twig:33 templates/events_tab.html.twig:75 templates/myspace.html.twig:36 templates/myspace.html.twig:91 templates/risk_form.html.twig:72 templates/risk_list.html.twig:30
+#: src/Action.php:93 src/AiSystem.php:241 src/Event.php:169 src/Risk.php:358 templates/action_form.html.twig:26 templates/actions_tab.html.twig:42 templates/aiassessment_form.html.twig:25 templates/aiassessments_tab.html.twig:22 templates/aisystem_form.html.twig:25 templates/concern.html.twig:42 templates/event_form.html.twig:33 templates/events_tab.html.twig:75 templates/myspace.html.twig:39 templates/myspace.html.twig:94 templates/risk_form.html.twig:72 templates/risk_list.html.twig:30
 msgid "Status"
 msgstr ""
 
-#: src/Action.php:94 src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:344 templates/action_form.html.twig:21 templates/consolidated.html.twig:74 templates/dashboard.html.twig:88 templates/dashboard.html.twig:157 templates/dashboard.html.twig:173 templates/myspace.html.twig:36 templates/myspace.html.twig:63 templates/myspace.html.twig:91 templates/risk_form.html.twig:26 templates/risk_list.html.twig:26
+#: src/Action.php:94 src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:347 templates/action_form.html.twig:21 templates/consolidated.html.twig:74 templates/dashboard.html.twig:110 templates/dashboard.html.twig:179 templates/dashboard.html.twig:195 templates/myspace.html.twig:39 templates/myspace.html.twig:66 templates/myspace.html.twig:94 templates/risk_form.html.twig:26 templates/risk_list.html.twig:26
 msgid "Risk"
 msgstr ""
 
@@ -105,6 +129,294 @@ msgstr ""
 
 #: src/Action.php:99
 msgid "Residual level of the risk"
+msgstr ""
+
+#: src/AiAssessment.php:115
+msgid "An approved assessment cannot be modified: create a new one."
+msgstr ""
+
+#: src/AiAssessment.php:159
+msgid "Score at least one dimension before submitting the assessment."
+msgstr ""
+
+#: src/AiAssessment.php:171
+msgid "Only a submitted assessment can be approved or rejected."
+msgstr ""
+
+#: src/AiAssessment.php:175
+msgid "The assessment must be approved by someone with the approval right other than its author."
+msgstr ""
+
+#: src/AiAssessment.php:207
+msgid "AI: %1$s - %2$s"
+msgstr ""
+
+#: src/AiAssessment.php:219
+msgid "Impact assessment of %s"
+msgstr ""
+
+#: src/AiAssessment.php:40
+msgid "AI impact assessment"
+msgid_plural "AI impact assessments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/AiAssessment.php:55
+msgid "Draft"
+msgstr ""
+
+#: src/AiAssessment.php:55
+msgid "Submitted for approval"
+msgstr ""
+
+#: src/AiAssessment.php:56
+msgid "Approved"
+msgstr ""
+
+#: src/AiAssessment.php:56
+msgid "Rejected"
+msgstr ""
+
+#: src/AiImpact.php:35 src/Category.php:177
+msgid "Bias and discrimination"
+msgstr ""
+
+#: src/AiImpact.php:36 src/Category.php:177
+msgid "Privacy and personal data"
+msgstr ""
+
+#: src/AiImpact.php:37
+msgid "Transparency and explainability"
+msgstr ""
+
+#: src/AiImpact.php:38
+msgid "Safety and security (attacks, prompt injection)"
+msgstr ""
+
+#: src/AiImpact.php:39 src/Category.php:177
+msgid "Reliability, accuracy and hallucinations"
+msgstr ""
+
+#: src/AiImpact.php:40
+msgid "Human oversight and autonomy"
+msgstr ""
+
+#: src/AiImpact.php:41
+msgid "Misuse and unintended use"
+msgstr ""
+
+#: src/AiImpact.php:42
+msgid "Impact on people, society and environment"
+msgstr ""
+
+#: src/AiImpact.php:43
+msgid "Legal and contractual compliance"
+msgstr ""
+
+#: src/AiImpact.php:51
+msgid "1 - Negligible"
+msgstr ""
+
+#: src/AiImpact.php:52
+msgid "2 - Limited"
+msgstr ""
+
+#: src/AiImpact.php:53 src/Scale.php:53
+msgid "3 - Moderate"
+msgstr ""
+
+#: src/AiImpact.php:54
+msgid "4 - Significant"
+msgstr ""
+
+#: src/AiImpact.php:55
+msgid "5 - Severe"
+msgstr ""
+
+#: src/AiSystem.php:100
+msgid "Not classified"
+msgstr ""
+
+#: src/AiSystem.php:101
+msgid "Minimal risk"
+msgstr ""
+
+#: src/AiSystem.php:102
+msgid "Limited risk (transparency obligations)"
+msgstr ""
+
+#: src/AiSystem.php:103
+msgid "High risk (Annex III)"
+msgstr ""
+
+#: src/AiSystem.php:104
+msgid "Prohibited practice"
+msgstr ""
+
+#: src/AiSystem.php:110
+msgid "Human in the loop (approves each output)"
+msgstr ""
+
+#: src/AiSystem.php:110
+msgid "Human on the loop (monitors, can intervene)"
+msgstr ""
+
+#: src/AiSystem.php:111
+msgid "No human oversight (fully automated)"
+msgstr ""
+
+#: src/AiSystem.php:116 src/Scale.php:239
+msgid "Planned"
+msgstr ""
+
+#: src/AiSystem.php:116
+msgid "In development / pilot"
+msgstr ""
+
+#: src/AiSystem.php:117 templates/dashboard.html.twig:81
+msgid "In production"
+msgstr ""
+
+#: src/AiSystem.php:117
+msgid "Retired"
+msgstr ""
+
+#: src/AiSystem.php:122
+msgid "Customers / end users"
+msgstr ""
+
+#: src/AiSystem.php:122
+msgid "Employees / agents"
+msgstr ""
+
+#: src/AiSystem.php:123
+msgid "Job candidates"
+msgstr ""
+
+#: src/AiSystem.php:123
+msgid "General public"
+msgstr ""
+
+#: src/AiSystem.php:123
+msgid "Minors or vulnerable people"
+msgstr ""
+
+#: src/AiSystem.php:155
+msgid "The AI system must have a name."
+msgstr ""
+
+#: src/AiSystem.php:205
+msgid "Requires an approved impact assessment and has none"
+msgstr ""
+
+#: src/AiSystem.php:206
+msgid "The impact assessment must be renewed"
+msgstr ""
+
+#: src/AiSystem.php:207
+msgid "Classified as a prohibited practice: it must not be used"
+msgstr ""
+
+#: src/AiSystem.php:240 templates/aisystem_form.html.twig:27
+msgid "AI type"
+msgstr ""
+
+#: src/AiSystem.php:242 templates/aisystem_form.html.twig:43
+msgid "AI Act class"
+msgstr ""
+
+#: src/AiSystem.php:243 templates/aisystem_form.html.twig:29
+msgid "Provider"
+msgstr ""
+
+#: src/AiSystem.php:244 templates/aisystem_form.html.twig:31
+msgid "Owner"
+msgstr ""
+
+#: src/AiSystem.php:245 templates/aisystem_form.html.twig:30
+msgid "Model"
+msgstr ""
+
+#: src/AiSystem.php:246 templates/aisystem_form.html.twig:28
+msgid "Deployment"
+msgstr ""
+
+#: src/AiSystem.php:247
+msgid "Personal data"
+msgstr ""
+
+#: src/AiSystem.php:248 templates/aisystem_form.html.twig:38
+msgid "Human oversight"
+msgstr ""
+
+#: src/AiSystem.php:249 templates/aisystem_form.html.twig:32 templates/risk_form.html.twig:29
+msgid "Responsible group"
+msgstr ""
+
+#: src/AiSystem.php:250
+msgid "Purpose"
+msgstr ""
+
+#: src/AiSystem.php:38
+msgid "AI system"
+msgid_plural "AI systems"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/AiSystem.php:71
+msgid "Generative AI / LLM (text, chatbot, agent)"
+msgstr ""
+
+#: src/AiSystem.php:72
+msgid "Speech (recognition, synthesis, voicebot)"
+msgstr ""
+
+#: src/AiSystem.php:73
+msgid "Speech and text analytics (sentiment, quality)"
+msgstr ""
+
+#: src/AiSystem.php:74
+msgid "Prediction or scoring (machine learning)"
+msgstr ""
+
+#: src/AiSystem.php:75
+msgid "Computer vision / biometrics"
+msgstr ""
+
+#: src/AiSystem.php:76
+msgid "Automated decision or routing"
+msgstr ""
+
+#: src/AiSystem.php:77
+msgid "Other"
+msgstr ""
+
+#: src/AiSystem.php:84
+msgid "Third-party service (SaaS / API)"
+msgstr ""
+
+#: src/AiSystem.php:85
+msgid "Developed in-house"
+msgstr ""
+
+#: src/AiSystem.php:86
+msgid "Third-party model adapted in-house"
+msgstr ""
+
+#: src/AiSystem.php:87
+msgid "Embedded in a purchased product"
+msgstr ""
+
+#: src/AiSystem.php:93
+msgid "Deployer (uses the system)"
+msgstr ""
+
+#: src/AiSystem.php:93
+msgid "Provider (develops or places on the market)"
+msgstr ""
+
+#: src/AiSystem.php:94
+msgid "Provider and deployer"
 msgstr ""
 
 #: src/Category.php:127
@@ -243,6 +555,26 @@ msgstr ""
 msgid "Social"
 msgstr ""
 
+#: src/Category.php:171
+msgid "Artificial intelligence"
+msgstr ""
+
+#: src/Category.php:173
+msgid "AI is adopted to improve services, but no AI system may discriminate, expose personal data, mislead customers or act without the human oversight its impact requires."
+msgstr ""
+
+#: src/Category.php:178
+msgid "Misuse, attacks and prompt injection"
+msgstr ""
+
+#: src/Category.php:178
+msgid "Transparency and accountability"
+msgstr ""
+
+#: src/Category.php:179
+msgid "Dependence on AI providers and models"
+msgstr ""
+
 #: src/Category.php:43
 msgid "Corporate risk category"
 msgid_plural "Corporate risk categories"
@@ -277,6 +609,64 @@ msgstr ""
 msgid "Tolerance"
 msgstr ""
 
+#: src/Concern.php:101
+msgid "Describe briefly what you want to report."
+msgstr ""
+
+#: src/Concern.php:169
+msgid "Recorded as a loss event."
+msgstr ""
+
+#: src/Concern.php:181
+msgid "Area: %s"
+msgstr ""
+
+#: src/Concern.php:182
+msgid "Reported by %s"
+msgstr ""
+
+#: src/Concern.php:191
+msgid "Registered as a corporate risk to be assessed."
+msgstr ""
+
+#: src/Concern.php:202
+msgid "Explain to the reporter why the report is closed."
+msgstr ""
+
+#: src/Concern.php:34
+msgid "Risk report"
+msgid_plural "Risk reports"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Concern.php:39
+msgid "Reports received"
+msgstr ""
+
+#: src/Concern.php:74
+msgid "Something happened that caused a loss or damage"
+msgstr ""
+
+#: src/Concern.php:75
+msgid "Something almost happened (near miss)"
+msgstr ""
+
+#: src/Concern.php:76
+msgid "Something could happen (a risk I see)"
+msgstr ""
+
+#: src/Concern.php:82
+msgid "Received"
+msgstr ""
+
+#: src/Concern.php:82
+msgid "Taken into account"
+msgstr ""
+
+#: src/Concern.php:82
+msgid "Closed without action"
+msgstr ""
+
 #: src/Consolidated.php:125 src/Dashboard.php:38 src/EntityConfig.php:57 src/Profile.php:36 templates/profile_rights.html.twig:20
 msgid "Corporate risks (ERM)"
 msgstr ""
@@ -293,7 +683,7 @@ msgstr ""
 msgid "Integrated risk map"
 msgstr ""
 
-#: src/Dashboard.php:224 src/Dashboard.php:345
+#: src/Dashboard.php:251 src/Dashboard.php:377
 msgid "Uncategorized"
 msgstr ""
 
@@ -301,55 +691,55 @@ msgstr ""
 msgid "Corporate risks"
 msgstr ""
 
-#: src/Dashboard.php:335 src/Notifier.php:173
+#: src/Dashboard.php:367 src/Notifier.php:173
 msgid "Residual level: %s"
 msgstr ""
 
-#: src/Dashboard.php:339
+#: src/Dashboard.php:371
 msgid "Inherent: probability %1$s × impact %2$s"
 msgstr ""
 
-#: src/Dashboard.php:339
+#: src/Dashboard.php:371
 msgid "Residual: probability %1$s × impact %2$s"
 msgstr ""
 
-#: src/Dashboard.php:345
+#: src/Dashboard.php:377
 msgid "Category: %s"
 msgstr ""
 
-#: src/Dashboard.php:348 src/Report.php:170 templates/report.html.twig:22
+#: src/Dashboard.php:380 src/Report.php:170 templates/report.html.twig:22
 msgid "Entity: %s"
 msgstr ""
 
-#: src/Dashboard.php:352 src/Scale.php:257
+#: src/Dashboard.php:384 src/Scale.php:257
 msgid "Above tolerance"
 msgstr ""
 
-#: src/Dashboard.php:353 src/Scale.php:260
+#: src/Dashboard.php:385 src/Scale.php:260
 msgid "Above appetite"
 msgstr ""
 
-#: src/Dashboard.php:354 templates/dashboard.html.twig:108
+#: src/Dashboard.php:386 templates/dashboard.html.twig:130
 msgid "Outside appetite"
 msgstr ""
 
-#: src/Dashboard.php:358 templates/dashboard.html.twig:108
+#: src/Dashboard.php:390 templates/dashboard.html.twig:130
 msgid "With overdue actions"
 msgstr ""
 
-#: src/Dashboard.php:361 templates/dashboard.html.twig:109
+#: src/Dashboard.php:393 templates/dashboard.html.twig:131
 msgid "With KRIs in alert"
 msgstr ""
 
-#: src/Dashboard.php:364
+#: src/Dashboard.php:396
 msgid "Underestimated according to loss history"
 msgstr ""
 
-#: src/Dashboard.php:367
+#: src/Dashboard.php:399
 msgid "Treatment not effective or without plan"
 msgstr ""
 
-#: src/Dashboard.php:370
+#: src/Dashboard.php:402
 msgid "Acceptance expired or expiring"
 msgstr ""
 
@@ -373,47 +763,47 @@ msgstr ""
 msgid "The detection date cannot be earlier than the occurrence date."
 msgstr ""
 
-#: src/Event.php:162 src/NotificationTargetRisk.php:160 templates/event_form.html.twig:27 templates/event_form.html.twig:28 templates/events_tab.html.twig:75
+#: src/Event.php:164 src/NotificationTargetRisk.php:160 templates/event_form.html.twig:27 templates/event_form.html.twig:28 templates/events_tab.html.twig:75
 msgid "Event"
 msgstr ""
 
-#: src/Event.php:164 templates/event_form.html.twig:30 templates/events_tab.html.twig:75
+#: src/Event.php:166 templates/event_form.html.twig:30 templates/events_tab.html.twig:75
 msgid "Occurrence date"
 msgstr ""
 
-#: src/Event.php:165 templates/event_form.html.twig:31
+#: src/Event.php:167 templates/event_form.html.twig:31
 msgid "Detection date"
 msgstr ""
 
-#: src/Event.php:166 templates/event_form.html.twig:29 templates/events_tab.html.twig:75
+#: src/Event.php:168 templates/event_form.html.twig:29 templates/events_tab.html.twig:75
 msgid "Event type"
 msgstr ""
 
-#: src/Event.php:168 templates/event_form.html.twig:39
+#: src/Event.php:170 templates/event_form.html.twig:39
 msgid "Gross loss"
 msgstr ""
 
-#: src/Event.php:169 templates/event_form.html.twig:40
+#: src/Event.php:171 templates/event_form.html.twig:40
 msgid "Recoveries"
 msgstr ""
 
-#: src/Event.php:170 templates/event_form.html.twig:41 templates/events_tab.html.twig:75
+#: src/Event.php:172 templates/event_form.html.twig:41 templates/events_tab.html.twig:75
 msgid "Net loss"
 msgstr ""
 
-#: src/Event.php:171 src/Risk.php:347 templates/dashboard.html.twig:157 templates/entity_config.html.twig:54 templates/event_form.html.twig:32 templates/myspace.html.twig:91 templates/risk_form.html.twig:27 templates/risk_list.html.twig:28
+#: src/Event.php:173 src/Risk.php:350 templates/dashboard.html.twig:179 templates/entity_config.html.twig:54 templates/event_form.html.twig:32 templates/myspace.html.twig:94 templates/risk_form.html.twig:27 templates/risk_list.html.twig:28
 msgid "Category"
 msgstr ""
 
-#: src/Event.php:172 templates/event_form.html.twig:34
+#: src/Event.php:174 templates/concern.html.twig:57 templates/event_form.html.twig:34
 msgid "Reported by"
 msgstr ""
 
-#: src/Event.php:173 templates/event_form.html.twig:36
+#: src/Event.php:175 templates/event_form.html.twig:36
 msgid "Root cause"
 msgstr ""
 
-#: src/Event.php:174 src/Risk.php:362
+#: src/Event.php:176 src/Risk.php:365
 msgid "Description"
 msgstr ""
 
@@ -511,15 +901,15 @@ msgstr ""
 msgid "Invalid measurement date."
 msgstr ""
 
-#: src/MySpace.php:33 templates/myspace.html.twig:18
+#: src/MySpace.php:33 templates/myspace.html.twig:19
 msgid "My ERM workspace"
 msgstr ""
 
-#: src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:346 templates/dashboard.html.twig:88 templates/dashboard.html.twig:157 templates/dashboard.html.twig:173 templates/items_tab.html.twig:18 templates/myspace.html.twig:91 templates/risk_form.html.twig:25 templates/risk_list.html.twig:26
+#: src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:349 templates/dashboard.html.twig:110 templates/dashboard.html.twig:179 templates/dashboard.html.twig:195 templates/items_tab.html.twig:18 templates/myspace.html.twig:94 templates/risk_form.html.twig:25 templates/risk_list.html.twig:26
 msgid "Code"
 msgstr ""
 
-#: src/NotificationTargetRisk.php:162 src/Risk.php:351 templates/risk_form.html.twig:58
+#: src/NotificationTargetRisk.php:162 src/Risk.php:354 templates/risk_form.html.twig:58
 msgid "Residual level"
 msgstr ""
 
@@ -535,7 +925,7 @@ msgstr ""
 msgid "Detail"
 msgstr ""
 
-#: src/NotificationTargetRisk.php:163 templates/indicators_tab.html.twig:55 templates/report.html.twig:41 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:65
+#: src/NotificationTargetRisk.php:163 templates/aiassessments_tab.html.twig:22 templates/concern.html.twig:42 templates/concern.html.twig:57 templates/indicators_tab.html.twig:55 templates/report.html.twig:41 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:65
 msgid "Date"
 msgstr ""
 
@@ -615,7 +1005,7 @@ msgstr ""
 msgid "Linked ISMS control failed its last test"
 msgstr ""
 
-#: src/NotificationTargetRisk.php:74 src/NotificationTargetRisk.php:161 src/Profile.php:118 src/Report.php:242 src/Risk.php:348 templates/consolidated.html.twig:74 templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
+#: src/NotificationTargetRisk.php:74 src/NotificationTargetRisk.php:161 src/Profile.php:127 src/Report.php:242 src/Risk.php:351 templates/consolidated.html.twig:74 templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
 msgid "Risk owner"
 msgstr ""
 
@@ -663,40 +1053,48 @@ msgstr ""
 msgid "Corporate risk e-mail alerts (overdue actions and reviews, KRIs, risks above tolerance)"
 msgstr ""
 
-#: src/Profile.php:111
+#: src/Profile.php:120
 msgid "Risk manager"
 msgstr ""
 
-#: src/Profile.php:112
+#: src/Profile.php:121
 msgid "Manages the corporate risk process: register, treatment, taxonomy and appetite, loss events and entity settings. Does not formally accept risks. No access to the inventory."
 msgstr ""
 
-#: src/Profile.php:119
+#: src/Profile.php:128
 msgid "Sees and updates only own risks (owner, owner group or responsible of actions/KRIs), manages their treatment and reports loss events. No access to the inventory."
 msgstr ""
 
-#: src/Profile.php:124
+#: src/Profile.php:133
 msgid "Treatment responsible"
 msgstr ""
 
-#: src/Profile.php:125
+#: src/Profile.php:134
 msgid "Executes treatment actions and measures KRIs: sees the risks where they have actions or indicators, updates them and reports loss events."
 msgstr ""
 
-#: src/Profile.php:130
+#: src/Profile.php:139
 msgid "Risk Committee"
 msgstr ""
 
-#: src/Profile.php:131
+#: src/Profile.php:140
 msgid "Board or Risk Committee: sees the whole register, approves appetite and tolerance and formally accepts risks (never own risks)."
 msgstr ""
 
-#: src/Profile.php:137
+#: src/Profile.php:146
 msgid "Internal audit"
 msgstr ""
 
-#: src/Profile.php:138
+#: src/Profile.php:147
 msgid "Read-only access to the whole register, notes, appetite, treatment plans, reviews and loss events, with the related tickets as evidence."
+msgstr ""
+
+#: src/Profile.php:153
+msgid "AI officer"
+msgstr ""
+
+#: src/Profile.php:154
+msgid "Keeps the inventory of AI systems and their impact assessments (ISO/IEC 42001), and manages the risks of their own AI systems. Assessments are approved by the AI or Risk Committee. No access to the inventory."
 msgstr ""
 
 #: src/Profile.php:49
@@ -743,19 +1141,19 @@ msgstr ""
 msgid "Corporate risk register"
 msgstr ""
 
-#: src/Profile.php:63 src/Profile.php:83
+#: src/Profile.php:63 src/Profile.php:83 src/Profile.php:91
 msgid "Read notes"
 msgstr ""
 
-#: src/Profile.php:63 src/Profile.php:83
+#: src/Profile.php:63 src/Profile.php:83 src/Profile.php:91
 msgid "Read the notes"
 msgstr ""
 
-#: src/Profile.php:64 src/Profile.php:84
+#: src/Profile.php:64 src/Profile.php:84 src/Profile.php:92
 msgid "Update notes"
 msgstr ""
 
-#: src/Profile.php:64 src/Profile.php:84
+#: src/Profile.php:64 src/Profile.php:84 src/Profile.php:92
 msgid "Update the notes"
 msgstr ""
 
@@ -772,14 +1170,26 @@ msgid "Loss events and incidents"
 msgstr ""
 
 #: src/Profile.php:88
+msgid "AI systems and impact assessments"
+msgstr ""
+
+#: src/Profile.php:93
+msgid "Approve assessments"
+msgstr ""
+
+#: src/Profile.php:93
+msgid "Approve or reject AI impact assessments (never own ones)"
+msgstr ""
+
+#: src/Profile.php:97
 msgid "Formal risk acceptance (Committee / Board)"
 msgstr ""
 
-#: src/Profile.php:90
+#: src/Profile.php:99
 msgid "Accept risks"
 msgstr ""
 
-#: src/Profile.php:90
+#: src/Profile.php:99
 msgid "Accept or revoke the acceptance of a risk (never an own risk)"
 msgstr ""
 
@@ -803,7 +1213,7 @@ msgstr ""
 msgid "1. Executive summary"
 msgstr ""
 
-#: src/Report.php:178 templates/myspace.html.twig:63
+#: src/Report.php:178 templates/myspace.html.twig:66
 msgid "Indicator"
 msgstr ""
 
@@ -811,7 +1221,7 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
-#: src/Report.php:180 templates/dashboard.html.twig:61 templates/dashboard.html.twig:106
+#: src/Report.php:180 templates/dashboard.html.twig:61 templates/dashboard.html.twig:128
 msgid "Active risks"
 msgstr ""
 
@@ -819,11 +1229,11 @@ msgstr ""
 msgid "Residual %s"
 msgstr ""
 
-#: src/Report.php:184 templates/dashboard.html.twig:155
+#: src/Report.php:184 templates/dashboard.html.twig:177
 msgid "Outside risk appetite"
 msgstr ""
 
-#: src/Report.php:185 templates/dashboard.html.twig:65 templates/dashboard.html.twig:109 templates/risk_list.html.twig:20
+#: src/Report.php:185 templates/dashboard.html.twig:65 templates/dashboard.html.twig:131 templates/risk_list.html.twig:20
 msgid "Maximum economic exposure"
 msgstr ""
 
@@ -875,11 +1285,11 @@ msgstr ""
 msgid "Impact"
 msgstr ""
 
-#: src/Report.php:242 templates/actions_tab.html.twig:27 templates/dashboard.html.twig:173 templates/myspace.html.twig:91 templates/reviews_tab.html.twig:30 templates/reviews_tab.html.twig:42 templates/risk_list.html.twig:29
+#: src/Report.php:242 templates/actions_tab.html.twig:27 templates/aiassessments_tab.html.twig:22 templates/dashboard.html.twig:195 templates/myspace.html.twig:94 templates/reviews_tab.html.twig:30 templates/reviews_tab.html.twig:42 templates/risk_list.html.twig:29
 msgid "Residual"
 msgstr ""
 
-#: src/Report.php:242 templates/dashboard.html.twig:157 templates/myspace.html.twig:91 templates/risk_list.html.twig:29
+#: src/Report.php:242 templates/dashboard.html.twig:179 templates/myspace.html.twig:94 templates/risk_list.html.twig:29
 msgid "Position"
 msgstr ""
 
@@ -887,7 +1297,7 @@ msgstr ""
 msgid "4. Risks outside the appetite"
 msgstr ""
 
-#: src/Report.php:249 templates/dashboard.html.twig:162
+#: src/Report.php:249 templates/dashboard.html.twig:184
 msgid "All residual risks are within appetite."
 msgstr ""
 
@@ -981,47 +1391,47 @@ msgstr ""
 msgid "A mitigated or transferred risk cannot be closed without a treatment plan."
 msgstr ""
 
-#: src/Risk.php:349
+#: src/Risk.php:352
 msgid "Group"
 msgstr ""
 
-#: src/Risk.php:350 templates/risk_form.html.twig:37
+#: src/Risk.php:353 templates/risk_form.html.twig:37
 msgid "Inherent level"
 msgstr ""
 
-#: src/Risk.php:352
+#: src/Risk.php:355
 msgid "Inherent score"
 msgstr ""
 
-#: src/Risk.php:353
+#: src/Risk.php:356
 msgid "Residual score"
 msgstr ""
 
-#: src/Risk.php:354
+#: src/Risk.php:357 templates/aiassessment_form.html.twig:42
 msgid "Treatment"
 msgstr ""
 
-#: src/Risk.php:356 templates/risk_form.html.twig:40
+#: src/Risk.php:359 templates/risk_form.html.twig:40
 msgid "Maximum economic impact"
 msgstr ""
 
-#: src/Risk.php:357 templates/risk_form.html.twig:39
+#: src/Risk.php:360 templates/risk_form.html.twig:39
 msgid "Minimum economic impact"
 msgstr ""
 
-#: src/Risk.php:358 templates/risk_form.html.twig:38
+#: src/Risk.php:361 templates/risk_form.html.twig:38
 msgid "Velocity"
 msgstr ""
 
-#: src/Risk.php:359 templates/risk_form.html.twig:55
+#: src/Risk.php:362 templates/risk_form.html.twig:55
 msgid "Trend"
 msgstr ""
 
-#: src/Risk.php:360 templates/myspace.html.twig:91 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:69 templates/risk_form.html.twig:86 templates/risk_list.html.twig:30
+#: src/Risk.php:363 templates/myspace.html.twig:94 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:69 templates/risk_form.html.twig:86 templates/risk_list.html.twig:30
 msgid "Next review"
 msgstr ""
 
-#: src/Risk.php:361 templates/risk_form.html.twig:44
+#: src/Risk.php:364 templates/risk_form.html.twig:44
 msgid "Control effectiveness"
 msgstr ""
 
@@ -1031,7 +1441,7 @@ msgid_plural "Corporate risks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Risk.php:408
+#: src/Risk.php:411
 msgid "Pending"
 msgstr ""
 
@@ -1099,7 +1509,7 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
-#: src/Scale.php:174
+#: src/Scale.php:174 templates/aisystem_form.html.twig:45
 msgid "None"
 msgstr ""
 
@@ -1151,10 +1561,6 @@ msgstr ""
 msgid "Under analysis"
 msgstr ""
 
-#: src/Scale.php:239
-msgid "Planned"
-msgstr ""
-
 #: src/Scale.php:240
 msgid "In progress"
 msgstr ""
@@ -1201,10 +1607,6 @@ msgstr ""
 
 #: src/Scale.php:52
 msgid "2 - Minor"
-msgstr ""
-
-#: src/Scale.php:53
-msgid "3 - Moderate"
 msgstr ""
 
 #: src/Scale.php:54
@@ -1257,11 +1659,11 @@ msgstr ""
 msgid "In the currency of the organization."
 msgstr ""
 
-#: templates/actions_tab.html.twig:16 templates/dashboard.html.twig:74
+#: templates/actions_tab.html.twig:16 templates/dashboard.html.twig:96
 msgid "Target reached"
 msgstr ""
 
-#: templates/actions_tab.html.twig:17 templates/dashboard.html.twig:74
+#: templates/actions_tab.html.twig:17 templates/dashboard.html.twig:96
 msgid "Treatment in progress"
 msgstr ""
 
@@ -1269,7 +1671,7 @@ msgstr ""
 msgid "Plan completed, target not reached: review the plan or the controls"
 msgstr ""
 
-#: templates/actions_tab.html.twig:19 templates/dashboard.html.twig:74
+#: templates/actions_tab.html.twig:19 templates/dashboard.html.twig:96
 msgid "Above target without plan"
 msgstr ""
 
@@ -1277,11 +1679,11 @@ msgstr ""
 msgid "Define the target risk in the main tab to measure the effectiveness of the treatment."
 msgstr ""
 
-#: templates/actions_tab.html.twig:22 templates/dashboard.html.twig:70
+#: templates/actions_tab.html.twig:22 templates/dashboard.html.twig:92
 msgid "Treatment effectiveness"
 msgstr ""
 
-#: templates/actions_tab.html.twig:26 templates/dashboard.html.twig:173 templates/reviews_tab.html.twig:29 templates/reviews_tab.html.twig:42 templates/risk_list.html.twig:29
+#: templates/actions_tab.html.twig:26 templates/dashboard.html.twig:195 templates/reviews_tab.html.twig:29 templates/reviews_tab.html.twig:42 templates/risk_list.html.twig:29
 msgid "Inherent"
 msgstr ""
 
@@ -1293,11 +1695,11 @@ msgstr ""
 msgid "%1$d of %2$d actions closed"
 msgstr ""
 
-#: templates/actions_tab.html.twig:48 templates/myspace.html.twig:42
+#: templates/actions_tab.html.twig:48 templates/myspace.html.twig:45
 msgid "overdue"
 msgstr ""
 
-#: templates/actions_tab.html.twig:59 templates/entity_config.html.twig:82 templates/myspace.html.twig:51
+#: templates/actions_tab.html.twig:59 templates/entity_config.html.twig:82 templates/myspace.html.twig:54
 msgid "Save"
 msgstr ""
 
@@ -1315,6 +1717,222 @@ msgstr ""
 
 #: templates/actions_tab.html.twig:90
 msgid "Add"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:22
+msgid "AI system"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:26 templates/aiassessments_tab.html.twig:22
+msgid "Assessed by"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:28
+msgid "Assessment date"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:29 templates/aiassessments_tab.html.twig:22
+msgid "Next assessment"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:31
+msgid "Impact by dimension"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:32
+msgid "For each dimension, score the potential impact on people and on the organization if the system fails, is misused or behaves unexpectedly, and explain why. The overall level follows the worst dimension."
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:35
+msgid "Rationale"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:39 templates/aiassessments_tab.html.twig:22
+msgid "Overall impact level"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:43
+msgid "Mitigations and controls"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:43
+msgid "E.g. human review of outputs, disclosure that the customer talks to an AI, guardrails against prompt injection, bias testing, logging, kill switch."
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:44
+msgid "Residual impact after mitigations"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:47
+msgid "Approval"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:48 templates/aiassessment_form.html.twig:54
+msgid "Approval comment"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:51
+msgid "Save and submit for approval"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:55
+msgid "Approve"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:56
+msgid "Reject"
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:58
+msgid "You authored this assessment: another person with the approval right must approve it."
+msgstr ""
+
+#: templates/aiassessment_form.html.twig:61
+msgid "Create corporate risk"
+msgstr ""
+
+#: templates/aiassessments_tab.html.twig:17
+msgid "AI impact assessments"
+msgstr ""
+
+#: templates/aiassessments_tab.html.twig:18
+msgid "New assessment"
+msgstr ""
+
+#: templates/aiassessments_tab.html.twig:22
+msgid "Approved by"
+msgstr ""
+
+#: templates/aiassessments_tab.html.twig:34
+msgid "No impact assessment. Systems of limited or high risk under the AI Act need an approved assessment before production."
+msgstr ""
+
+#: templates/aisystem_form.html.twig:23 templates/risk_form.html.twig:24
+msgid "Identification"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:26
+msgid "Purpose and use case"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:26
+msgid "What the system does, for which process and for whom. Example: voicebot that answers balance inquiries of the customers of a client bank."
+msgstr ""
+
+#: templates/aisystem_form.html.twig:30
+msgid "Model and version, e.g. GPT-4o, Whisper large-v3, in-house classifier v2."
+msgstr ""
+
+#: templates/aisystem_form.html.twig:34
+msgid "Data, people and oversight"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:35
+msgid "Processes personal data"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:36
+msgid "Processes sensitive data (health, biometrics, financial...)"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:37
+msgid "Affected people"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:39
+msgid "Data used (training, inputs, outputs)"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:41
+msgid "Regulatory classification"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:42
+msgid "Role (AI Act)"
+msgstr ""
+
+#: templates/aisystem_form.html.twig:43
+msgid "High risk: e.g. credit scoring, recruitment, access to essential services. Limited: chatbots and voicebots that interact with people, generated content (transparency duties)."
+msgstr ""
+
+#: templates/aisystem_form.html.twig:45
+msgid "Last approved impact assessment"
+msgstr ""
+
+#: templates/concern.html.twig:21
+msgid "Anyone can report something that went wrong, almost went wrong or could go wrong: a mistake, a fraud attempt, a complaint, a supplier failure, an unsafe practice... The risk team reviews every report. Reporting in good faith is never penalized."
+msgstr ""
+
+#: templates/concern.html.twig:24
+msgid "What do you want to report?"
+msgstr ""
+
+#: templates/concern.html.twig:26 templates/concern.html.twig:42
+msgid "Title"
+msgstr ""
+
+#: templates/concern.html.twig:27
+msgid "What happened or could happen, and why it matters"
+msgstr ""
+
+#: templates/concern.html.twig:29
+msgid "Date (if it happened)"
+msgstr ""
+
+#: templates/concern.html.twig:30
+msgid "Estimated loss (optional)"
+msgstr ""
+
+#: templates/concern.html.twig:31
+msgid "Area or process"
+msgstr ""
+
+#: templates/concern.html.twig:33
+msgid "Send report"
+msgstr ""
+
+#: templates/concern.html.twig:40
+msgid "My reports"
+msgstr ""
+
+#: templates/concern.html.twig:47
+msgid "You have not sent any report."
+msgstr ""
+
+#: templates/concern.html.twig:55
+msgid "Reports to review"
+msgstr ""
+
+#: templates/concern.html.twig:57
+msgid "Report"
+msgstr ""
+
+#: templates/concern.html.twig:61
+msgid "occurred"
+msgstr ""
+
+#: templates/concern.html.twig:64
+msgid "Estimated loss"
+msgstr ""
+
+#: templates/concern.html.twig:70
+msgid "Record as loss event"
+msgstr ""
+
+#: templates/concern.html.twig:71
+msgid "Register as corporate risk"
+msgstr ""
+
+#: templates/concern.html.twig:72
+msgid "Reason to close"
+msgstr ""
+
+#: templates/concern.html.twig:72
+msgid "Close"
+msgstr ""
+
+#: templates/concern.html.twig:76
+msgid "No pending reports."
 msgstr ""
 
 #: templates/consolidated.html.twig:18
@@ -1369,7 +1987,7 @@ msgstr ""
 msgid "Level"
 msgstr ""
 
-#: templates/consolidated.html.twig:74 templates/dashboard.html.twig:106 templates/risk_list.html.twig:27
+#: templates/consolidated.html.twig:74 templates/dashboard.html.twig:128 templates/risk_list.html.twig:27
 msgid "Entity"
 msgstr ""
 
@@ -1377,61 +1995,89 @@ msgstr ""
 msgid "No high or critical risks."
 msgstr ""
 
-#: templates/dashboard.html.twig:103
+#: templates/dashboard.html.twig:105
+msgid "Assessment vs. loss history"
+msgstr ""
+
+#: templates/dashboard.html.twig:107
+msgid "Net losses, last 12 months"
+msgstr ""
+
+#: templates/dashboard.html.twig:107
+msgid "Loss event register"
+msgstr ""
+
+#: templates/dashboard.html.twig:110 templates/events_tab.html.twig:30 templates/events_tab.html.twig:70
+msgid "Loss events"
+msgstr ""
+
+#: templates/dashboard.html.twig:110
+msgid "Probability (assessed → history)"
+msgstr ""
+
+#: templates/dashboard.html.twig:110
+msgid "Impact (assessed → history)"
+msgstr ""
+
+#: templates/dashboard.html.twig:118
+msgid "No risk is underestimated according to its loss history."
+msgstr ""
+
+#: templates/dashboard.html.twig:125
 msgid "Risks by entity"
 msgstr ""
 
-#: templates/dashboard.html.twig:132
+#: templates/dashboard.html.twig:154
 msgid "Heat map - inherent risk"
 msgstr ""
 
-#: templates/dashboard.html.twig:133
+#: templates/dashboard.html.twig:155
 msgid "Heat map - residual risk"
 msgstr ""
 
-#: templates/dashboard.html.twig:139
+#: templates/dashboard.html.twig:161
 msgid "Risks and exposure by category"
 msgstr ""
 
-#: templates/dashboard.html.twig:143 templates/report.html.twig:28 templates/risk_list.html.twig:18
+#: templates/dashboard.html.twig:165 templates/report.html.twig:28 templates/risk_list.html.twig:18
 msgid "%d risk"
 msgid_plural "%d risks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/dashboard.html.twig:149
+#: templates/dashboard.html.twig:171
 msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
 msgstr ""
 
-#: templates/dashboard.html.twig:171
+#: templates/dashboard.html.twig:193
 msgid "Top 10 residual risks"
 msgstr ""
 
-#: templates/dashboard.html.twig:171
+#: templates/dashboard.html.twig:193
 msgid "See full register"
 msgstr ""
 
-#: templates/dashboard.html.twig:173 templates/risk_list.html.twig:30
+#: templates/dashboard.html.twig:195 templates/risk_list.html.twig:30
 msgid "Max. impact"
 msgstr ""
 
-#: templates/dashboard.html.twig:186
+#: templates/dashboard.html.twig:208
 msgid "Overdue treatment actions"
 msgstr ""
 
-#: templates/dashboard.html.twig:187
+#: templates/dashboard.html.twig:209
 msgid "See all action plans"
 msgstr ""
 
-#: templates/dashboard.html.twig:192
+#: templates/dashboard.html.twig:214
 msgid "No overdue actions."
 msgstr ""
 
-#: templates/dashboard.html.twig:196
+#: templates/dashboard.html.twig:218
 msgid "KRIs in alert"
 msgstr ""
 
-#: templates/dashboard.html.twig:202
+#: templates/dashboard.html.twig:224
 msgid "No KRI in alert."
 msgstr ""
 
@@ -1463,48 +2109,46 @@ msgstr ""
 msgid "Expected annual loss"
 msgstr ""
 
+#: templates/dashboard.html.twig:70
+msgid "%d risk report from the staff is waiting for review."
+msgid_plural "%d risk reports from the staff are waiting for review."
+msgstr[0] ""
+msgstr[1] ""
+
 #: templates/dashboard.html.twig:71
-msgid "See risks to act on"
+msgid "Review"
 msgstr ""
 
-#: templates/dashboard.html.twig:73
-msgid "Acceptances to renew"
+#: templates/dashboard.html.twig:76
+msgid "AI governance (ISO/IEC 42001)"
 msgstr ""
 
-#: templates/dashboard.html.twig:74
-msgid "Plan completed, target not reached"
+#: templates/dashboard.html.twig:77 templates/dashboard.html.twig:80
+msgid "AI systems"
 msgstr ""
 
-#: templates/dashboard.html.twig:74
-msgid "Without target"
+#: templates/dashboard.html.twig:82
+msgid "Limited or high risk (AI Act)"
 msgstr ""
 
 #: templates/dashboard.html.twig:83
-msgid "Assessment vs. loss history"
+msgid "Governance gaps"
 msgstr ""
 
-#: templates/dashboard.html.twig:85
-msgid "Net losses, last 12 months"
+#: templates/dashboard.html.twig:93
+msgid "See risks to act on"
 msgstr ""
 
-#: templates/dashboard.html.twig:85
-msgid "Loss event register"
-msgstr ""
-
-#: templates/dashboard.html.twig:88 templates/events_tab.html.twig:30 templates/events_tab.html.twig:70
-msgid "Loss events"
-msgstr ""
-
-#: templates/dashboard.html.twig:88
-msgid "Probability (assessed → history)"
-msgstr ""
-
-#: templates/dashboard.html.twig:88
-msgid "Impact (assessed → history)"
+#: templates/dashboard.html.twig:95
+msgid "Acceptances to renew"
 msgstr ""
 
 #: templates/dashboard.html.twig:96
-msgid "No risk is underestimated according to its loss history."
+msgid "Plan completed, target not reached"
+msgstr ""
+
+#: templates/dashboard.html.twig:96
+msgid "Without target"
 msgstr ""
 
 #: templates/entity_config.html.twig:19
@@ -1735,7 +2379,7 @@ msgstr ""
 msgid "higher is worse"
 msgstr ""
 
-#: templates/indicators_tab.html.twig:28 templates/indicators_tab.html.twig:78 templates/myspace.html.twig:63
+#: templates/indicators_tab.html.twig:28 templates/indicators_tab.html.twig:78 templates/myspace.html.twig:66
 msgid "Frequency"
 msgstr ""
 
@@ -1755,7 +2399,7 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: templates/indicators_tab.html.twig:58 templates/myspace.html.twig:63 templates/myspace.html.twig:79
+#: templates/indicators_tab.html.twig:58 templates/myspace.html.twig:66 templates/myspace.html.twig:82
 msgid "Record value"
 msgstr ""
 
@@ -1795,59 +2439,59 @@ msgstr ""
 msgid "No linked items."
 msgstr ""
 
-#: templates/myspace.html.twig:101
+#: templates/myspace.html.twig:104
 msgid "Not scheduled"
 msgstr ""
 
-#: templates/myspace.html.twig:103
+#: templates/myspace.html.twig:106
 msgid "You do not own any risk."
 msgstr ""
 
-#: templates/myspace.html.twig:22
+#: templates/myspace.html.twig:25
 msgid "My risks"
 msgstr ""
 
-#: templates/myspace.html.twig:22
+#: templates/myspace.html.twig:25
 msgid "Pending actions"
 msgstr ""
 
-#: templates/myspace.html.twig:22
+#: templates/myspace.html.twig:25
 msgid "Overdue actions"
 msgstr ""
 
-#: templates/myspace.html.twig:23
+#: templates/myspace.html.twig:26
 msgid "KRIs to measure"
 msgstr ""
 
-#: templates/myspace.html.twig:23
+#: templates/myspace.html.twig:26
 msgid "Reviews due"
 msgstr ""
 
-#: templates/myspace.html.twig:34
+#: templates/myspace.html.twig:37
 msgid "My pending actions"
 msgstr ""
 
-#: templates/myspace.html.twig:56
+#: templates/myspace.html.twig:59
 msgid "You have no pending actions."
 msgstr ""
 
-#: templates/myspace.html.twig:61
+#: templates/myspace.html.twig:64
 msgid "KRIs I measure"
 msgstr ""
 
-#: templates/myspace.html.twig:63
+#: templates/myspace.html.twig:66
 msgid "Last value"
 msgstr ""
 
-#: templates/myspace.html.twig:63
+#: templates/myspace.html.twig:66
 msgid "Next measurement"
 msgstr ""
 
-#: templates/myspace.html.twig:84
+#: templates/myspace.html.twig:87
 msgid "You are not responsible for any KRI."
 msgstr ""
 
-#: templates/myspace.html.twig:89
+#: templates/myspace.html.twig:92
 msgid "Risks I own"
 msgstr ""
 
@@ -1947,16 +2591,8 @@ msgstr ""
 msgid "Your profile (Risk Committee) can only record the treatment decision, the status and the justification. The assessment is maintained by the risk owner."
 msgstr ""
 
-#: templates/risk_form.html.twig:24
-msgid "Identification"
-msgstr ""
-
 #: templates/risk_form.html.twig:25
 msgid "Assigned automatically (RC-001...) when left empty."
-msgstr ""
-
-#: templates/risk_form.html.twig:29
-msgid "Responsible group"
 msgstr ""
 
 #: templates/risk_form.html.twig:30

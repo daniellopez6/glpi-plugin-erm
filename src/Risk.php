@@ -324,8 +324,11 @@ class Risk extends CommonDBTM
 
     public function cleanDBonPurge()
     {
-        $this->deleteChildrenAndRelationsFromDb([Review::class]);
-        $this->deleteChildrenAndRelationsFromDb([Action::class, Indicator::class, Risk_Item::class]);
+        global $DB;
+        $this->deleteChildrenAndRelationsFromDb([Review::class, Action::class, Indicator::class]);
+        // Link tables are not GLPI relations (CommonDBConnexity): clean them explicitly
+        $DB->delete(Risk_Item::getTable(), ['plugin_erm_risks_id' => $this->getID()]);
+        $DB->delete(Event_Item::getTable(), ['itemtype' => self::class, 'items_id' => $this->getID()]);
     }
 
     /** @return array{0:string,1:string} */

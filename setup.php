@@ -23,7 +23,10 @@
 
 use Glpi\Plugin\Hooks;
 use GlpiPlugin\Erm\Action;
+use GlpiPlugin\Erm\AiAssessment;
+use GlpiPlugin\Erm\AiSystem;
 use GlpiPlugin\Erm\Category;
+use GlpiPlugin\Erm\Concern;
 use GlpiPlugin\Erm\Consolidated;
 use GlpiPlugin\Erm\Dashboard;
 use GlpiPlugin\Erm\EntityConfig;
@@ -37,7 +40,7 @@ use GlpiPlugin\Erm\Review;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '1.9.2');
+define('PLUGIN_ERM_VERSION', '2.0.0');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -59,13 +62,26 @@ function plugin_init_erm(): void
     Plugin::registerClass(Review::class, ['addtabon' => [Risk::class]]);
     Plugin::registerClass(EntityConfig::class, ['addtabon' => ['Entity']]);
     Plugin::registerClass(Event::class, ['document_types' => true]);
+    Plugin::registerClass(AiSystem::class, ['document_types' => true]);
+    Plugin::registerClass(AiAssessment::class, ['addtabon' => [AiSystem::class]]);
+    $CFG_GLPI['document_types'][] = AiSystem::class;
     Plugin::registerClass(Event_Item::class, ['addtabon' => array_merge([Event::class], Event_Item::getLinkableItemtypes())]);
     $CFG_GLPI['document_types'][] = Risk::class;
     $CFG_GLPI['document_types'][] = Event::class;
 
     // Same menu sector as GRC Manager when active; otherwise "Management".
     $sector = Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'management';
-    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, MySpace::class, Consolidated::class, Risk::class, Action::class, Event::class, Report::class, Category::class]];
+    // Remove the links to risks and loss events when a linked GLPI object is purged
+    foreach (array_unique(array_merge(Risk_Item::getLinkableItemtypes(), Event_Item::getLinkableItemtypes())) as $itemtype) {
+        if (!str_starts_with($itemtype, 'GlpiPlugin\\Erm\\')) {
+            $PLUGIN_HOOKS[Hooks::ITEM_PURGE]['erm'][$itemtype] = 'plugin_erm_item_purge';
+        }
+    }
+
+    // Simplified interface: report a risk or an incident
+    $PLUGIN_HOOKS[Hooks::HELPDESK_MENU_ENTRY]['erm'] = '/front/concern.php';
+    $PLUGIN_HOOKS[Hooks::HELPDESK_MENU_ENTRY_ICON]['erm'] = 'ti ti-speakerphone';
+    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, MySpace::class, Consolidated::class, Risk::class, Action::class, Event::class, Concern::class, AiSystem::class, Report::class, Category::class]];
 }
 
 function plugin_version_erm(): array

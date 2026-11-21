@@ -35,6 +35,9 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
   risks, overdue actions and KRIs in alert. **Every figure is clickable** and opens the risks behind it.
 - **Action plan register** searchable across all risks, and a personal **"My ERM workspace"** (my actions, the
   KRIs I measure, my risks and reviews).
+- **AI governance (ISO/IEC 42001, EU AI Act)**: inventory of AI systems, impact assessments with approval by
+  someone other than the author, AI risk category and governance gaps on the dashboard.
+- **Risk reports from the staff** from the simplified interface, reviewed and turned into loss events or risks.
 - **Ready-to-assign role profiles** (Risk manager, Risk owner, Treatment responsible, Risk Committee, Internal
   audit) without access to the inventory.
 - **Board report (PDF)** with quarterly snapshots and comparison with the previous quarter, and an **integrated

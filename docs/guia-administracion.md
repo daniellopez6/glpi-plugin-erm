@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.9.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 2.0.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -42,6 +42,7 @@ Versión del plugin: 1.9.x · GLPI 12.0.x · PHP 8.2+
 | **Tratamiento y seguimiento** (`plugin_erm_treatment`) | Crear · Actualizar · Purgar | Acciones, indicadores y mediciones de los riesgos que el usuario puede ver. El registro "Planes de acción" respeta la misma visibilidad: con "Ver propios", sólo las acciones de sus riesgos o asignadas al usuario. |
 | **Categorías, apetito y tolerancia** (`plugin_erm_config`) | Ver todos · Actualizar · Crear · Papelera · Purgar | Taxonomía y apetito. La taxonomía se puede **consultar** también con permiso de lectura del registro. |
 | **Eventos de pérdida e incidentes** (`plugin_erm_event`) | Ver todos · Actualizar · Crear · Papelera · Purgar · Leer/Actualizar notas | Registrar eventos, vincularlos con riesgos y tickets. Para que la mesa de ayuda pueda reportar eventos alcanza con "Ver todos + Crear". |
+| **Sistemas de IA y evaluaciones de impacto** (`plugin_erm_ai`) | Ver · Actualizar · Crear · Papelera · Purgar · Notas · **Aprobar evaluaciones** | Inventario de IA y evaluaciones de impacto. "Aprobar" permite aprobar o rechazar evaluaciones enviadas, nunca las propias. |
 | **Aceptación formal de riesgos** (`plugin_erm_accept`) | Aceptar riesgos | Aceptar o revocar una aceptación. Nunca sobre un riesgo propio. Con sólo este permiso, el usuario edita decisión, estado, justificación y fechas de revisión. |
 
 Sin ningún permiso, el usuario no ve el menú, el tablero, el registro ni la pestaña "Riesgos corporativos" en
@@ -49,7 +50,7 @@ otros objetos.
 
 ### Perfiles listos para asignar
 
-La instalación crea cinco perfiles de **interfaz estándar sin acceso al inventario** (equipos, software, redes,
+La instalación crea seis perfiles de **interfaz estándar sin acceso al inventario** (equipos, software, redes,
 etc.): sólo gestión de riesgos y lo mínimo de GLPI para cada rol. Se asignan en **Administración → Usuarios →
 (usuario) → Autorizaciones**, por entidad.
 
@@ -59,9 +60,10 @@ etc.): sólo gestión de riesgos y lo mínimo de GLPI para cada rol. Se asignan 
 | ERM - Dueño de riesgo | Gerentes dueños de riesgos | Ver y actualizar propios | Crear + Actualizar | — | — | Ver + Crear | Documentos, tickets/problemas/cambios (lectura) |
 | ERM - Responsable de tratamiento | Quien ejecuta acciones o mide KRI | Ver propios | Crear + Actualizar | — | — | Ver + Crear | Documentos |
 | ERM - Comité de riesgos | Directorio / Comité | Ver todos + notas | — | Ver + Actualizar | Aceptar | Ver | Documentos (lectura) |
+| ERM - Responsable de IA | Quien mantiene el inventario de IA | Ver y actualizar propios | Crear + Actualizar | — | — | Ver + Crear | Documentos; IA: crear, actualizar y notas (no aprueba) |
 | ERM - Auditoría interna | Auditores | Ver todos + notas | — | Ver | — | Ver + notas | Documentos y tickets/problemas/cambios (lectura) |
 
-Todos incluyen base de conocimientos, preferencias personales y cambio de contraseña. Cada perfil se crea **una
+En IA: el Gestor tiene todo menos aprobar, el Comité ve y **aprueba evaluaciones**, Auditoría lee. Todos incluyen base de conocimientos, preferencias personales y cambio de contraseña. Cada perfil se crea **una
 sola vez** (se reconoce por una marca `[erm:...]` en el comentario, aunque se le cambie el nombre) y la instalación
 **nunca lo modifica**: se puede adaptar libremente. Si se borra, se vuelve a crear en la próxima actualización;
 para evitarlo, conservá la marca en otro perfil. La desinstalación no borra los perfiles (pueden tener usuarios
@@ -138,7 +140,13 @@ Para que se envíen:
 3. El cron de GLPI debe estar activo (`php bin/console glpi:cron` cada minuto), porque ermalerts corre en modo
    externo.
 
-## 6. Integración con GLPI GRC Manager (opcional)
+## 6. Reportes del personal
+
+La interfaz simplificada (autoservicio) muestra la entrada **Complementos → ERM** para reportar riesgos e incidentes.
+Cualquier usuario autenticado puede reportar (en su entidad activa) y ver sus propios reportes. Los revisan quienes
+tienen el permiso de crear eventos de pérdida o riesgos.
+
+## 7. Integración con GLPI GRC Manager (opcional)
 
 ERM es **independiente**: se instala y funciona sin GRC Manager (su menú aparece en **Gestión**). Si GRC Manager
 está activo:
@@ -158,7 +166,7 @@ búsquedas guardadas de GLPI).
 La acción automática **ermsnapshot** (diaria, entre las 2 y las 5) toma la foto trimestral del perfil de riesgos
 la primera vez que corre en cada trimestre.
 
-## 7. API REST
+## 8. API REST
 
 Los objetos están disponibles en la API v1 de GLPI con los nombres de clase completos (codificados en la URL):
 `GlpiPlugin\Erm\Risk`, `Category`, `Action`, `Indicator`, `IndicatorValue`, `Risk_Item`. La API respeta los mismos
@@ -168,18 +176,18 @@ permisos y validaciones que la interfaz. Ejemplo:
 GET /api.php/v1/GlpiPlugin%5CErm%5CRisk?range=0-49
 ```
 
-## 8. Desinstalación
+## 9. Desinstalación
 
 **Configuración → Complementos → ERM → Desinstalar** (o `php bin/console plugin:uninstall erm`).
 **Elimina todas las tablas y datos del plugin**, sus notificaciones y acción automática, sus permisos, preferencias de visualización, vínculos de
 documentos e historial. Hacé un backup antes.
 
-## 9. Idiomas
+## 10. Idiomas
 
 El plugin está en inglés, español de Argentina (`es_AR`) y español de España (`es_ES`); se muestra en el idioma
 de cada usuario. Para agregar un idioma, crear un `.po` a partir de `locales/erm.pot` y compilarlo a `.mo`.
 
-## 10. Solución de problemas
+## 11. Solución de problemas
 
 | Síntoma | Causa y solución |
 |---|---|

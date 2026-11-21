@@ -1,0 +1,39 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="card">
+   <div class="card-header">
+      <h3 class="card-title"><i class="ti ti-clipboard-check me-2"></i>{{ __('AI impact assessments', 'erm') }}</h3>
+      {% if can_add %}<div class="card-actions"><a href="{{ new_url }}" class="btn btn-primary btn-sm"><i class="ti ti-plus"></i> {{ __('New assessment', 'erm') }}</a></div>{% endif %}
+   </div>
+   <div class="table-responsive">
+      <table class="table table-hover card-table table-vcenter">
+         <thead><tr><th>{{ __('Date', 'erm') }}</th><th>{{ __('Overall impact level', 'erm') }}</th><th>{{ __('Residual', 'erm') }}</th><th>{{ __('Status', 'erm') }}</th><th>{{ __('Assessed by', 'erm') }}</th><th>{{ __('Approved by', 'erm') }}</th><th>{{ __('Next assessment', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for r in rows %}
+            <tr>
+               <td><a href="{{ url }}?id={{ r.id }}">{{ r.assessment_date }}</a></td>
+               {# badge built by Scale::badge() (escaped) #}
+               <td>{{ r.level_badge|raw }}</td>
+               <td>{{ r.residual_badge|raw }}</td>
+               <td><span class="badge {{ r.status == 'approved' ? 'bg-green-lt' : (r.status == 'rejected' ? 'bg-red-lt' : (r.status == 'submitted' ? 'bg-blue-lt' : 'bg-secondary-lt')) }}">{{ r.status_label }}</span></td>
+               <td class="small">{{ r.assessor }}</td><td class="small">{{ r.approver }}</td><td class="small">{{ r.next_assessment_date }}</td>
+            </tr>
+         {% else %}
+            <tr><td colspan="7" class="text-muted">{{ __('No impact assessment. Systems of limited or high risk under the AI Act need an approved assessment before production.', 'erm') }}</td></tr>
+         {% endfor %}
+         </tbody>
+      </table>
+   </div>
+</div>

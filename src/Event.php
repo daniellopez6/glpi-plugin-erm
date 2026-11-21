@@ -151,7 +151,9 @@ class Event extends CommonDBTM
 
     public function cleanDBonPurge()
     {
-        $this->deleteChildrenAndRelationsFromDb([Event_Item::class]);
+        global $DB;
+        // Event_Item is not a GLPI relation (CommonDBConnexity): clean it explicitly
+        $DB->delete(Event_Item::getTable(), ['plugin_erm_events_id' => $this->getID()]);
     }
 
     // ------------------------------------------------------------------ search

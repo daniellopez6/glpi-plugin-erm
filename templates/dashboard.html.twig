@@ -65,6 +65,28 @@
       <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">{{ __('Maximum economic exposure', 'erm') }}</div><div class="h3 m-0">{{ exposure }}</div><div class="small text-muted" title="{{ __('Sum of the expected annual loss of each risk according to its assessment', 'erm') }}">{{ __('Expected annual loss', 'erm') }}: {{ portfolio_ale }}</div></div></div></div>
    </div>
 
+   {% if pending_reports %}
+   <div class="alert alert-info d-flex align-items-center"><i class="ti ti-speakerphone me-2 fs-2"></i>
+      <div class="flex-grow-1">{{ _n('%d risk report from the staff is waiting for review.', '%d risk reports from the staff are waiting for review.', pending_reports, 'erm')|format(pending_reports) }}</div>
+      <a href="{{ reports_url }}" class="btn btn-sm btn-primary">{{ __('Review', 'erm') }}</a></div>
+   {% endif %}
+
+   {% if ai %}
+   <div class="card mb-3 {{ ai.gaps|length ? 'border-danger' : '' }}">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-brain me-2"></i>{{ __('AI governance (ISO/IEC 42001)', 'erm') }}</h3>
+         <div class="card-actions"><a href="{{ ai_url }}">{{ __('AI systems', 'erm') }}</a></div></div>
+      <div class="card-body">
+         <div class="row text-center g-2 mb-2">
+            <div class="col"><div class="h2 m-0">{{ ai.total }}</div><div class="small text-muted">{{ __('AI systems', 'erm') }}</div></div>
+            <div class="col"><div class="h2 m-0">{{ ai.production }}</div><div class="small text-muted">{{ __('In production', 'erm') }}</div></div>
+            <div class="col"><div class="h2 m-0">{{ ai.regulated }}</div><div class="small text-muted">{{ __('Limited or high risk (AI Act)', 'erm') }}</div></div>
+            <div class="col"><div class="h2 m-0 {{ ai.gaps|length ? 'text-danger' : '' }}">{{ ai.gaps|length }}</div><div class="small text-muted">{{ __('Governance gaps', 'erm') }}</div></div>
+         </div>
+         {% for g in ai.gaps %}<div class="small"><i class="ti ti-alert-triangle text-danger me-1"></i><a href="{{ ai_form_url }}?id={{ g.id }}">{{ g.name }}</a> ({{ g.class }}): {{ g.gap }}</div>{% endfor %}
+      </div>
+   </div>
+   {% endif %}
+
    {% set tc = treatment_counts %}
    <div class="card mb-3">
       <div class="card-header"><h3 class="card-title"><i class="ti ti-target-arrow me-2"></i>{{ __('Treatment effectiveness', 'erm') }}</h3>

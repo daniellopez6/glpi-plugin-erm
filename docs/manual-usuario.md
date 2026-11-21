@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.9.x · GLPI 12
+Versión del plugin: 2.0.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -29,6 +29,8 @@ Menú **GRC y cumplimiento** (o **Gestión** si GRC Manager no está instalado):
 - **Registro de riesgos corporativos**: lista y búsqueda.
 - **Planes de acción**: todas las acciones de tratamiento.
 - **Eventos de pérdida**: base de incidentes con efecto económico, casi pérdidas y ganancias inesperadas.
+- **Reportes recibidos**: reportes de riesgos e incidentes enviados por el personal (para el equipo de riesgos).
+- **Sistemas de IA**: inventario de sistemas de inteligencia artificial y sus evaluaciones de impacto.
 - **Categorías y apetito (ERM)**: taxonomía, apetito y tolerancia.
 
 Lo que ves depende de tu perfil: con "ver propios" sólo aparecen tus riesgos, y un aviso lo indica en el tablero.
@@ -175,7 +177,38 @@ visión integral. Se genera para la entidad elegida en GLPI.
 Las **fotos trimestrales** guardan la evaluación de todos los riesgos al comienzo de cada trimestre (acción
 automática) y permiten comparar períodos. Quien tiene el permiso de configuración puede tomarla a mano.
 
-## 12. Eventos de pérdida e historial
+## 12. Reportar un riesgo o un incidente
+
+Cualquier persona puede reportar algo que salió mal, que casi sale mal o que podría salir mal. En la interfaz
+simplificada está en el menú **Complementos → ERM**; en la interfaz estándar, en **Mi espacio ERM → Reportar un
+riesgo o un incidente**. Se elige el tipo (pasó algo con pérdida, casi pasa, podría pasar), se describe y se envía.
+En **Mis reportes** se sigue el estado: recibido, tomado en cuenta o cerrado sin acción (con el motivo).
+
+El equipo de riesgos los revisa en **Reportes recibidos** y los registra como **evento de pérdida** (incidentes y
+casi pérdidas) o como **riesgo corporativo** a evaluar, o los cierra explicando por qué. El tablero avisa cuántos
+esperan revisión.
+
+## 13. Sistemas de IA y evaluaciones de impacto
+
+**Inventario** (menú **Sistemas de IA**): para cada sistema, su propósito y caso de uso, tipo (IA generativa, voz,
+analítica, predicción, visión, decisión automática), despliegue y proveedor, modelo, dueño, datos personales o
+sensibles, personas afectadas, supervisión humana y **clase según el AI Act** (mínimo, limitado, alto, prohibido).
+
+**Evaluación de impacto** (pestaña del sistema, ISO/IEC 42001 6.1.4): para nueve dimensiones (sesgo, privacidad,
+transparencia, seguridad, fiabilidad y alucinaciones, supervisión humana, uso indebido, impacto social, cumplimiento
+legal) se puntúa el impacto del 1 al 5 con su fundamento. El **nivel general** sigue a la peor dimensión (y sube a
+crítico con tres dimensiones significativas). Se cargan las mitigaciones, el impacto residual y la próxima
+evaluación.
+
+Circuito: **borrador → enviada a aprobación → aprobada o rechazada**. La aprueba alguien con el permiso "Aprobar
+evaluaciones" (Comité de IA o de riesgos) **distinto del autor**; una evaluación aprobada no se modifica (se crea una
+nueva). Desde una evaluación aprobada de nivel medio o superior, **Crear riesgo corporativo** registra el riesgo en
+la categoría "Inteligencia artificial", vinculado al sistema.
+
+**Brechas de gobierno** (en la ficha y en el tablero): sistemas en desarrollo o producción de riesgo limitado o alto
+sin evaluación aprobada vigente, y prácticas prohibidas.
+
+## 14. Eventos de pérdida e historial
 
 La ISO 31000 pide que el análisis se apoye en información confiable. Los eventos de pérdida son esa evidencia.
 
@@ -220,7 +253,7 @@ Si la pérdida esperada según el historial es mucho mayor que la de la evaluaci
 
 ![Registro de eventos](screenshots/loss-events.png)
 
-## 13. Mi espacio ERM
+## 15. Mi espacio ERM
 
 Pantalla personal con lo que tenés que hacer:
 
@@ -231,7 +264,7 @@ Pantalla personal con lo que tenés que hacer:
 - **Riesgos a mi cargo** (como dueño o por tu área), con su nivel, la posición frente al apetito y la próxima
   revisión.
 
-## 14. Tablero
+## 16. Tablero
 
 ![Tablero](screenshots/dashboard.png)
 
@@ -254,14 +287,14 @@ Pantalla personal con lo que tenés que hacer:
 - **Riesgos por entidad**: si tu perfil ve varias empresas, una tabla compara sus indicadores; el nombre de cada
   entidad lleva al registro filtrado. Para trabajar sobre una sola empresa, elegila en el selector de entidad de GLPI.
 
-## 15. Categorías y apetito
+## 17. Categorías y apetito
 
 **Categorías y apetito (ERM)** (requiere el permiso de configuración para modificar): cada categoría tiene
 apetito, tolerancia y declaración de apetito por defecto. Si una subcategoría no los define, **hereda** los de la
 superior. Cada empresa puede ajustarlos en la pestaña "Riesgos corporativos (ERM)" de su entidad.
 Cambiar el apetito actualiza inmediatamente la posición de todos los riesgos de esa categoría.
 
-## 16. Buenas prácticas
+## 18. Buenas prácticas
 
 - Revisá cada riesgo al menos una vez al año (campo "Próxima revisión") y siempre ante un cambio relevante.
 - Un riesgo sobre la tolerancia debe tener un plan de tratamiento con fechas, o una aceptación formal justificada.

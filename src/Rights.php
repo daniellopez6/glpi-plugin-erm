@@ -29,6 +29,8 @@ use Session;
  * - plugin_erm_config     Category taxonomy, appetite and tolerance.
  * - plugin_erm_accept     Formal risk acceptance (UPDATE). The risk owner cannot accept it.
  * - plugin_erm_event      Loss event database: READ, CREATE, UPDATE, DELETE, PURGE, notes.
+ * - plugin_erm_ai         AI systems and impact assessments: READ, CREATE, UPDATE, DELETE, PURGE, notes and
+ *                         APPROVE (approve impact assessments, never one's own).
  *
  * A risk is "own" when the user is its owner, belongs to its responsible group or is responsible for
  * one of its actions or indicators.
@@ -40,10 +42,14 @@ final class Rights
     public const CONFIG    = 'plugin_erm_config';
     public const ACCEPT    = 'plugin_erm_accept';
     public const EVENT     = 'plugin_erm_event';
+    public const AI        = 'plugin_erm_ai';
+
+    /** Specific bit of plugin_erm_ai: approve AI impact assessments. */
+    public const APPROVE   = 4096;
 
     public static function all(): array
     {
-        return [self::RISK, self::TREATMENT, self::CONFIG, self::ACCEPT, self::EVENT];
+        return [self::RISK, self::TREATMENT, self::CONFIG, self::ACCEPT, self::EVENT, self::AI];
     }
 
     public static function canReadAll(): bool
@@ -104,16 +110,17 @@ final class Rights
         return match ($profile) {
             'Super-Admin' => [self::RISK => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE, self::TREATMENT => ALLSTANDARDRIGHT,
                              self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => UPDATE,
-                             self::EVENT => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE],
+                             self::EVENT => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE,
+                             self::AI => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE | self::APPROVE],
             'Admin'       => [self::RISK => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE, self::TREATMENT => ALLSTANDARDRIGHT,
                              self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => 0,
-                             self::EVENT => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE],
+                             self::EVENT => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE, self::AI => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE],
             'Supervisor'  => [self::RISK => READ | UPDATE | CREATE, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => READ, self::ACCEPT => 0,
-                             self::EVENT => READ | UPDATE | CREATE],
+                             self::EVENT => READ | UPDATE | CREATE, self::AI => READ | UPDATE | CREATE],
             'Technician'  => [self::RISK => $own, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => 0, self::ACCEPT => 0,
-                             self::EVENT => READ | CREATE],
-            'Observer', 'Read-Only' => [self::RISK => READ, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0, self::EVENT => READ],
-            default       => [self::RISK => 0, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0, self::EVENT => 0],
+                             self::EVENT => READ | CREATE, self::AI => READ],
+            'Observer', 'Read-Only' => [self::RISK => READ, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0, self::EVENT => READ, self::AI => READ],
+            default       => [self::RISK => 0, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0, self::EVENT => 0, self::AI => 0],
         };
     }
 }
