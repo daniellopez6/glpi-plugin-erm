@@ -28,7 +28,8 @@ if (isset($_POST['take_snapshot'])) {
         throw new \Glpi\Exception\Http\AccessDeniedHttpException();
     }
     $period = Period::quarterOf(date('Y-m-d'));
-    $n = Snapshot::take($period);
+    // A manual snapshot only covers the active entities of the user
+    $n = Snapshot::take($period, array_map('intval', $_SESSION['glpiactiveentities'] ?? []));
     Session::addMessageAfterRedirect(sprintf(__('Snapshot of %1$s taken (%2$d risks).', 'erm'), Period::label($period), $n));
     Html::back();
 }

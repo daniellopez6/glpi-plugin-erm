@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 21:14+0000\n"
+"POT-Creation-Date: 2026-11-21 21:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_AR\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "ERM settings saved."
 msgstr "Configuración ERM guardada."
 
-#: front/report.php:32
+#: front/report.php:33
 msgid "Snapshot of %1$s taken (%2$d risks)."
 msgstr "Foto de %1$s tomada (%2$d riesgos)."
 
@@ -1895,10 +1895,12 @@ msgstr "Fotos trimestrales"
 #: templates/report.html.twig:39
 msgid ""
 "A snapshot keeps the assessment of every active risk at a date. The automatic action \"ermsnapshot\" takes it at the "
-"beginning of each quarter; it can also be taken manually (it replaces the snapshot of the current quarter)."
+"beginning of each quarter; it can also be taken manually for the active entities (it replaces their snapshot of the "
+"current quarter)."
 msgstr ""
 "Una foto guarda la evaluación de cada riesgo activo en una fecha. La acción automática \"ermsnapshot\" la toma al "
-"comienzo de cada trimestre; también se puede tomar a mano (reemplaza la foto del trimestre actual)."
+"comienzo de cada trimestre; también se puede tomar a mano para las entidades activas (reemplaza su foto del trimestre"
+" actual)."
 
 #: templates/report.html.twig:41
 msgid "Period"

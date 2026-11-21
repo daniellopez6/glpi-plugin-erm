@@ -394,4 +394,5 @@ ES = {
  'Risks': 'Riesgos',
  'No snapshots yet.': 'Todavía no hay fotos.',
  'Take snapshot of %s now': 'Tomar ahora la foto de %s',
+ 'A snapshot keeps the assessment of every active risk at a date. The automatic action "ermsnapshot" takes it at the beginning of each quarter; it can also be taken manually for the active entities (it replaces their snapshot of the current quarter).': 'Una foto guarda la evaluación de cada riesgo activo en una fecha. La acción automática "ermsnapshot" la toma al comienzo de cada trimestre; también se puede tomar a mano para las entidades activas (reemplaza su foto del trimestre actual).',
 }

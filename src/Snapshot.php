@@ -53,22 +53,27 @@ class Snapshot extends CommonGLPI
     }
 
     /**
-     * Records the snapshot of a period (all entities), replacing a previous one of the same period.
+     * Records the snapshot of a period, replacing a previous one of the same period.
+     *
+     * @param list<int>|null $entities entities to snapshot: null for all (automatic action), or the active entities
+     *                                 of the user for a manual snapshot (other entities are left untouched)
      */
-    public static function take(string $period): int
+    public static function take(string $period, ?array $entities = null): int
     {
         global $DB;
-        if (!Period::isValid($period)) {
+        if (!Period::isValid($period) || ($entities !== null && !$entities)) {
             return 0;
         }
-        $DB->delete(self::TABLE, ['period' => $period]);
+        $scope = $entities === null ? [] : ['entities_id' => array_map('intval', $entities)];
+        $DB->delete(self::TABLE, ['period' => $period] + $scope);
         $now = $_SESSION['glpi_currenttime'] ?? date('Y-m-d H:i:s');
         $n = 0;
         $iter = $DB->request([
             'SELECT'    => ['r.*', 'c.completename AS category'],
             'FROM'      => Risk::getTable() . ' AS r',
             'LEFT JOIN' => [Category::getTable() . ' AS c' => ['ON' => ['r' => 'plugin_erm_categories_id', 'c' => 'id']]],
-            'WHERE'     => ['r.is_deleted' => 0, 'NOT' => ['r.status' => 'closed']],
+            'WHERE'     => ['r.is_deleted' => 0, 'NOT' => ['r.status' => 'closed']]
+                + ($entities === null ? [] : ['r.entities_id' => array_map('intval', $entities)]),
         ]);
         foreach ($iter as $r) {
             [$app, $tol] = Category::effectiveAppetite((int) $r['plugin_erm_categories_id'], (int) $r['entities_id']);
@@ -106,10 +111,19 @@ class Snapshot extends CommonGLPI
     {
         global $DB;
         $out = [];
+        $where = getEntitiesRestrictCriteria(self::TABLE, '', '', true);
+        if (Rights::onlyOwn()) {
+            // Users who only see own risks only count their own risks
+            $own = array_map('intval', array_column(Risk::activeRisks(), 'id'));
+            if (!$own) {
+                return $out;
+            }
+            $where['plugin_erm_risks_id'] = $own;
+        }
         $iter = $DB->request([
             'SELECT' => ['period', 'COUNT' => 'id AS n', 'MAX' => 'snapshot_date AS d'],
             'FROM'   => self::TABLE,
-            'WHERE'  => getEntitiesRestrictCriteria(self::TABLE, '', '', true),
+            'WHERE'  => $where,
             'GROUPBY' => 'period',
             'ORDER'  => 'period DESC',
         ]);

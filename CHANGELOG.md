@@ -7,7 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
-## [1.8.0] - 2026-11-21
+## [1.8.1] - 2026-11-21
+### Security
+- A manual snapshot only replaces the snapshot of the user's active entities (the automatic action still covers all
+  entities).
+- Users who only see own risks only see the number of their own risks in the list of snapshots.
+
+## [1.8.0] - 2026-11-21 (not released, superseded by 1.8.1)
 ### Added
 - Board report (ISO 31000 6.7) as PDF: executive summary with the variation against a previous quarter, changes
   (risks that increased, decreased, are new, went outside or came back within the appetite, closed), residual heat
