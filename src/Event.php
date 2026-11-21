@@ -267,7 +267,9 @@ class Event extends CommonDBTM
             'SELECT'     => ['l.items_id AS risk_id', 'e.id', 'e.name', 'e.event_type', 'e.status', 'e.occurrence_date', 'e.net_loss', 'e.gross_loss'],
             'FROM'       => Event_Item::getTable() . ' AS l',
             'INNER JOIN' => [self::getTable() . ' AS e' => ['ON' => ['l' => 'plugin_erm_events_id', 'e' => 'id']]],
-            'WHERE'      => ['l.itemtype' => Risk::class, 'l.items_id' => $riskIds, 'e.is_deleted' => 0],
+            // Only events of the entities visible to the user count for the statistics
+            'WHERE'      => ['l.itemtype' => Risk::class, 'l.items_id' => $riskIds, 'e.is_deleted' => 0]
+                + getEntitiesRestrictCriteria('e', '', '', true),
             'ORDER'      => ['e.occurrence_date DESC'],
         ]);
         foreach ($iter as $row) {

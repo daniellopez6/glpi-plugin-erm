@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.5.1] - 2026-11-21
+### Security
+- The loss history statistics of a risk only use events of the entities visible to the user.
+
 ## [1.5.0] - 2026-11-21
 ### Added
 - Loss event database (ISO 31000 6.4.3, Basel / BCRA operational loss data): losses, near misses and unexpected
