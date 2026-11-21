@@ -7,6 +7,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.4.0] - 2026-11-21
+### Added
+- Dashboard drill-down: every figure (level cards, heat map cells, categories, per entity counters, outside
+  appetite, KRIs in alert) opens the list of the risks behind it.
+- Action plan register: all treatment actions of the visible risks in the GLPI search engine (filters, export,
+  saved searches) with their own form and history; "See all action plans" from the dashboard.
+- "My ERM workspace": my pending actions (quick status update), the KRIs I measure (next measurement and quick
+  value entry) and the risks I own with their next review.
+- Unit tests for drill-down filters and measurement schedule (57 tests).
+
+### Changed
+- Treatment actions store the entity of their risk (migrated automatically).
+
 ## [1.3.0] - 2026-11-20
 ### Added
 - Multi-company support: "Corporate risks (ERM)" tab on entities with a risk code prefix and appetite/tolerance

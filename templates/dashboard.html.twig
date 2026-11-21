@@ -12,7 +12,7 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
-{% macro heatmap(title, data, cells, prob_labels, imp_labels) %}
+{% macro heatmap(title, kind, data, cells, prob_labels, imp_labels, drill_url) %}
 <div class="card h-100">
    <div class="card-header"><h3 class="card-title">{{ title }}</h3></div>
    <div class="card-body">
@@ -24,7 +24,7 @@
                {% set codes = data[p][i] ?? [] %}
                <td style="background:{{ cells[p][i] }};height:52px;border-radius:6px;text-align:center;vertical-align:middle;color:{{ cells[p][i] == '#f5c518' ? '#1d273b' : '#fff' }}"
                    title="{{ codes|join(', ') }}">
-                  {% if codes|length %}<div style="font-size:1.4rem;font-weight:700;line-height:1">{{ codes|length }}</div><div style="font-size:.65rem">{{ codes|slice(0,3)|join(' ') }}{{ codes|length > 3 ? '…' }}</div>{% endif %}
+                  {% if codes|length %}<a href="{{ drill_url }}&{{ {'heat': kind, 'p': p, 'i': i}|url_encode }}" class="erm-drill d-block text-reset text-decoration-none"><div style="font-size:1.4rem;font-weight:700;line-height:1">{{ codes|length }}</div><div style="font-size:.65rem">{{ codes|slice(0,3)|join(' ') }}{{ codes|length > 3 ? '…' }}</div></a>{% endif %}
                </td>
             {% endfor %}
          </tr>
@@ -36,6 +36,13 @@
 </div>
 {% endmacro %}
 {% import _self as m %}
+<style>
+   .erm-drill { cursor: pointer; }
+   a.erm-card { color: inherit; text-decoration: none; display: block; height: 100%; }
+   a.erm-card .card { transition: box-shadow .15s, transform .15s; }
+   a.erm-card:hover .card { box-shadow: 0 .25rem .75rem rgba(0,0,0,.12); transform: translateY(-1px); }
+   .erm-heat a.erm-drill:hover { text-decoration: underline !important; }
+</style>
 
 <div class="container-fluid">
    <div class="alert alert-info d-flex">
@@ -51,9 +58,9 @@
    {% endif %}
 
    <div class="row row-cards mb-3">
-      <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">{{ __('Active risks', 'erm') }}</div><div class="h1 m-0">{{ total }}</div></div></div></div>
+      <div class="col-sm-6 col-lg-2"><a class="erm-card" href="{{ drill_url }}"><div class="card card-sm"><div class="card-body"><div class="text-muted">{{ __('Active risks', 'erm') }}</div><div class="h1 m-0">{{ total }}</div></div></div></a></div>
       {% for k, label in levels|reverse(true) %}
-      <div class="col-sm-6 col-lg-2"><div class="card card-sm" style="border-left:6px solid {{ level_color[k] }}"><div class="card-body"><div class="text-muted">{{ __('Residual %s', 'erm')|format(label|lower) }}</div><div class="h1 m-0">{{ by_level[k] }}</div></div></div></div>
+      <div class="col-sm-6 col-lg-2"><a class="erm-card" href="{{ drill_url }}&level={{ k }}"><div class="card card-sm" style="border-left:6px solid {{ level_color[k] }}"><div class="card-body"><div class="text-muted">{{ __('Residual %s', 'erm')|format(label|lower) }}</div><div class="h1 m-0">{{ by_level[k] }}</div></div></div></a></div>
       {% endfor %}
       <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">{{ __('Maximum economic exposure', 'erm') }}</div><div class="h3 m-0">{{ exposure }}</div></div></div></div>
    </div>
@@ -65,20 +72,21 @@
          <thead><tr>
             <th>{{ __('Entity', 'erm') }}</th><th class="text-end">{{ __('Active risks', 'erm') }}</th>
             {% for k, label in levels|reverse(true) %}<th class="text-center">{{ label }}</th>{% endfor %}
-            <th class="text-end">{{ __('Outside appetite', 'erm') }}</th><th class="text-end">{{ __('Overdue actions', 'erm') }}</th>
-            <th class="text-end">{{ __('KRIs in alert', 'erm') }}</th><th class="text-end">{{ __('Maximum economic exposure', 'erm') }}</th>
+            <th class="text-end">{{ __('Outside appetite', 'erm') }}</th><th class="text-end">{{ __('With overdue actions', 'erm') }}</th>
+            <th class="text-end">{{ __('With KRIs in alert', 'erm') }}</th><th class="text-end">{{ __('Maximum economic exposure', 'erm') }}</th>
          </tr></thead>
          <tbody>
          {% for e in by_entity %}
             <tr>
-               <td><a href="{{ e.url }}">{{ e.name }}</a></td>
-               <td class="text-end">{{ e.count }}</td>
+               {% set eu = drill_url ~ '&entity=' ~ e.id %}
+               <td><a href="{{ eu }}">{{ e.name }}</a></td>
+               <td class="text-end"><a href="{{ eu }}">{{ e.count }}</a></td>
                {% for k, label in levels|reverse(true) %}
-                  <td class="text-center">{% if e.levels[k] %}<span class="badge" style="background:{{ level_color[k] }};color:{{ k == 'medium' ? '#1d273b' : '#fff' }}">{{ e.levels[k] }}</span>{% else %}<span class="text-muted">0</span>{% endif %}</td>
+                  <td class="text-center">{% if e.levels[k] %}<a href="{{ eu }}&level={{ k }}" class="badge text-decoration-none" style="background:{{ level_color[k] }};color:{{ k == 'medium' ? '#1d273b' : '#fff' }}">{{ e.levels[k] }}</a>{% else %}<span class="text-muted">0</span>{% endif %}</td>
                {% endfor %}
-               <td class="text-end">{% if e.outside %}<span class="badge bg-orange-lt">{{ e.outside }}</span>{% else %}0{% endif %}</td>
-               <td class="text-end">{% if e.overdue %}<span class="badge bg-red-lt">{{ e.overdue }}</span>{% else %}0{% endif %}</td>
-               <td class="text-end">{% if e.kri %}<span class="badge bg-orange-lt">{{ e.kri }}</span>{% else %}0{% endif %}</td>
+               <td class="text-end">{% if e.outside %}<a href="{{ eu }}&outside=any" class="badge bg-orange-lt">{{ e.outside }}</a>{% else %}0{% endif %}</td>
+               <td class="text-end">{% if e.overdue %}<a href="{{ eu }}&overdue=1" class="badge bg-red-lt">{{ e.overdue }}</a>{% else %}0{% endif %}</td>
+               <td class="text-end">{% if e.kri %}<a href="{{ eu }}&kri=1" class="badge bg-orange-lt">{{ e.kri }}</a>{% else %}0{% endif %}</td>
                <td class="text-end">{{ e.exposure|formatted_number }}</td>
             </tr>
          {% endfor %}
@@ -88,8 +96,8 @@
    {% endif %}
 
    <div class="row row-cards mb-3">
-      <div class="col-lg-6">{{ m.heatmap(__('Heat map - inherent risk', 'erm'), heat.inherent, cells, prob_labels, imp_labels) }}</div>
-      <div class="col-lg-6">{{ m.heatmap(__('Heat map - residual risk', 'erm'), heat.residual, cells, prob_labels, imp_labels) }}</div>
+      <div class="col-lg-6">{{ m.heatmap(__('Heat map - inherent risk', 'erm'), 'inherent', heat.inherent, cells, prob_labels, imp_labels, drill_url) }}</div>
+      <div class="col-lg-6">{{ m.heatmap(__('Heat map - residual risk', 'erm'), 'residual', heat.residual, cells, prob_labels, imp_labels, drill_url) }}</div>
    </div>
 
    <div class="row row-cards mb-3">
@@ -98,12 +106,12 @@
             <div class="card-header"><h3 class="card-title">{{ __('Risks and exposure by category', 'erm') }}</h3></div>
             <div class="card-body">
                {% for cat, d in by_cat %}
-               <div class="mb-2">
-                  <div class="d-flex justify-content-between small"><b>{{ cat }}</b><span>{{ _n('%d risk', '%d risks', d.count, 'erm')|format(d.count) }} · {{ d.exposure|formatted_number }}</span></div>
+               <a href="{{ d.url }}" class="d-block mb-2 text-reset text-decoration-none erm-drill">
+                  <div class="d-flex justify-content-between small"><b>{{ d.name }}</b><span>{{ _n('%d risk', '%d risks', d.count, 'erm')|format(d.count) }} · {{ d.exposure|formatted_number }}</span></div>
                   <div class="progress" style="height:14px">
                      {% for lvl, n in d.levels %}{% if n %}<div class="progress-bar" style="width:{{ (n / d.count * (d.exposure / max_exp) * 100)|round(1) }}%;background:{{ level_color[lvl] }}" title="{{ levels[lvl] }}: {{ n }}"></div>{% endif %}{% endfor %}
                   </div>
-               </div>
+               </a>
                {% endfor %}
                <div class="small text-muted">{{ __('Bar length is proportional to the maximum exposure of the category; colours show the residual level.', 'erm') }}</div>
             </div>
@@ -111,7 +119,7 @@
       </div>
       <div class="col-lg-6">
          <div class="card h-100">
-            <div class="card-header"><h3 class="card-title">{{ __('Outside risk appetite', 'erm') }} <span class="badge bg-red-lt ms-2">{{ outside|length }}</span></h3></div>
+            <div class="card-header"><h3 class="card-title">{{ __('Outside risk appetite', 'erm') }} <a href="{{ drill_url }}&outside=any" class="badge bg-red-lt ms-2">{{ outside|length }}</a></h3></div>
             <div class="table-responsive"><table class="table card-table table-sm">
                <thead><tr><th>{{ __('Code', 'erm') }}</th><th>{{ __('Risk', 'erm') }}</th><th>{{ __('Category', 'erm') }}</th><th>{{ __('Position', 'erm') }}</th></tr></thead>
                <tbody>
@@ -142,16 +150,17 @@
       </div>
       <div class="col-lg-5">
          <div class="card mb-3">
-            <div class="card-header"><h3 class="card-title">{{ __('Overdue treatment actions', 'erm') }} <span class="badge bg-red-lt ms-2">{{ overdue|length }}</span></h3></div>
+            <div class="card-header"><h3 class="card-title">{{ __('Overdue treatment actions', 'erm') }} <span class="badge bg-red-lt ms-2">{{ overdue|length }}</span></h3>
+               <div class="card-actions"><a href="{{ actions_url }}?{{ {'criteria': [{'field': 4, 'searchtype': 'lessthan', 'value': 'TODAY'}, {'link': 'AND', 'field': 5, 'searchtype': 'notequals', 'value': 'done'}, {'link': 'AND', 'field': 5, 'searchtype': 'notequals', 'value': 'cancelled'}]}|url_encode }}">{{ __('See all action plans', 'erm') }}</a></div></div>
             <div class="table-responsive"><table class="table card-table table-sm">
                <tbody>
                {% for a in overdue %}
-                  <tr><td><a href="{{ risk_url }}?id={{ a.risk_id }}">{{ a.code }}</a></td><td class="small">{{ a.name }}</td><td class="small">{{ a.owner }}</td><td><span class="badge bg-red-lt">{{ a.due_date }}</span></td></tr>
+                  <tr><td><a href="{{ risk_url }}?id={{ a.risk_id }}">{{ a.code }}</a></td><td class="small"><a href="{{ actions_form_url }}?id={{ a.id }}" class="text-reset">{{ a.name }}</a></td><td class="small">{{ a.owner }}</td><td><span class="badge bg-red-lt">{{ a.due_date }}</span></td></tr>
                {% else %}<tr><td class="text-muted">{{ __('No overdue actions.', 'erm') }}</td></tr>{% endfor %}
                </tbody></table></div>
          </div>
          <div class="card">
-            <div class="card-header"><h3 class="card-title">{{ __('KRIs in alert', 'erm') }}</h3></div>
+            <div class="card-header"><h3 class="card-title">{{ __('KRIs in alert', 'erm') }} {% if kris|length %}<a href="{{ drill_url }}&kri=1" class="badge bg-orange-lt ms-2">{{ kris|length }}</a>{% endif %}</h3></div>
             <div class="table-responsive"><table class="table card-table table-sm">
                <tbody>
                {% for k in kris %}

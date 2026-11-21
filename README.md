@@ -23,7 +23,9 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
   obligations, and with suppliers, contracts, appliances, computers, projects, groups and changes. A reverse tab
   "Corporate risks" is added to those objects.
 - **Dashboard**: inherent and residual heat maps, exposure per category, risks above appetite, top residual
-  risks, overdue actions and KRIs in alert.
+  risks, overdue actions and KRIs in alert. **Every figure is clickable** and opens the risks behind it.
+- **Action plan register** searchable across all risks, and a personal **"My ERM workspace"** (my actions, the
+  KRIs I measure, my risks and reviews).
 - **Role based access** (per profile and entity): see all / see own risks, update all / update own, treatment,
   taxonomy & appetite, acceptance. Search, dashboard and selectors are filtered accordingly.
 - **Multi-company**: per entity risk code prefix and appetite/tolerance overrides (inherited by sub-entities), and a

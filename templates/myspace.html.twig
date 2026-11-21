@@ -1,0 +1,106 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{% set state_badge = {'overdue': 'bg-red-lt', 'soon': 'bg-orange-lt', 'ok': 'bg-green-lt', 'none': 'bg-secondary-lt'} %}
+{% set kri_colors = {'green': 'bg-green-lt', 'orange': 'bg-orange-lt', 'red': 'bg-red-lt', 'none': 'bg-secondary-lt'} %}
+<div class="container-fluid">
+   <h2 class="mb-3"><i class="ti ti-user-check me-2"></i>{{ __('My ERM workspace', 'erm') }} <span class="text-muted fs-4">· {{ user }}</span></h2>
+
+   <div class="row row-cards mb-3">
+      {% for key, label in {
+         'risks': __('My risks', 'erm'), 'actions': __('Pending actions', 'erm'), 'overdue': __('Overdue actions', 'erm'),
+         'kris_due': __('KRIs to measure', 'erm'), 'reviews_due': __('Reviews due', 'erm')} %}
+      <div class="col-sm-6 col-lg">
+         <a class="text-reset text-decoration-none" href="#erm-{{ key in ['overdue'] ? 'actions' : (key == 'kris_due' ? 'kris' : (key == 'reviews_due' ? 'risks' : key)) }}">
+         <div class="card card-sm" {% if key in ['overdue', 'kris_due', 'reviews_due'] and counters[key] %}style="border-left:6px solid #d63939"{% endif %}>
+            <div class="card-body"><div class="text-muted">{{ label }}</div><div class="h1 m-0">{{ counters[key] }}</div></div>
+         </div></a>
+      </div>
+      {% endfor %}
+   </div>
+
+   <div class="card mb-3" id="erm-actions">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-list-check me-2"></i>{{ __('My pending actions', 'erm') }}</h3></div>
+      <div class="table-responsive"><table class="table card-table table-vcenter">
+         <thead><tr><th>{{ __('Risk', 'erm') }}</th><th>{{ __('Action', 'erm') }}</th><th>{{ __('Due date', 'erm') }}</th><th>{{ __('Status', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for a in actions %}
+            <tr>
+               <td class="text-nowrap"><a href="{{ risk_url }}?id={{ a.plugin_erm_risks_id }}" title="{{ a.risk_name }}">{{ a.code }}</a></td>
+               <td><a href="{{ action_url }}?id={{ a.id }}" class="text-reset">{{ a.name }}</a></td>
+               <td class="text-nowrap">{% if a.due_date %}<span class="badge {{ state_badge[a.state] }}">{{ a.due_date }}{% if a.state == 'overdue' %} · {{ __('overdue', 'erm') }}{% endif %}</span>{% else %}-{% endif %}</td>
+               <td>
+               {% if can_update_actions %}
+                  <form method="post" action="{{ action_url }}" class="d-flex gap-1">
+                     <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                     <input type="hidden" name="id" value="{{ a.id }}">
+                     <select name="status" class="form-select form-select-sm" style="min-width:9rem">
+                        {% for k, v in statuses %}<option value="{{ k }}" {{ k == a.status ? 'selected' }}>{{ v }}</option>{% endfor %}
+                     </select>
+                     <button type="submit" name="update" class="btn btn-sm btn-outline-primary" title="{{ __('Save', 'erm') }}"><i class="ti ti-device-floppy"></i></button>
+                  </form>
+               {% else %}{{ statuses[a.status] ?? a.status }}{% endif %}
+               </td>
+            </tr>
+         {% else %}<tr><td colspan="4" class="text-muted">{{ __('You have no pending actions.', 'erm') }}</td></tr>{% endfor %}
+         </tbody></table></div>
+   </div>
+
+   <div class="card mb-3" id="erm-kris">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-gauge me-2"></i>{{ __('KRIs I measure', 'erm') }}</h3></div>
+      <div class="table-responsive"><table class="table card-table table-vcenter">
+         <thead><tr><th>{{ __('Risk', 'erm') }}</th><th>{{ __('Indicator', 'erm') }}</th><th>{{ __('Frequency', 'erm') }}</th><th>{{ __('Last value', 'erm') }}</th><th>{{ __('Next measurement', 'erm') }}</th><th>{{ __('Record value', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for k in kris %}
+            <tr>
+               <td class="text-nowrap"><a href="{{ risk_url }}?id={{ k.risk_id }}">{{ k.risk_code }}</a></td>
+               <td>{{ k.name }}</td>
+               <td class="small">{{ frequencies[k.frequency] ?? k.frequency }}</td>
+               <td>{% if k.last %}<span class="badge {{ kri_colors[k.status] }}">{{ k.last.value|formatted_number }} {{ k.unit }}</span> <span class="small text-muted">{{ k.last.value_date }}</span>{% else %}<span class="text-muted">-</span>{% endif %}</td>
+               <td><span class="badge {{ state_badge[k.state] }}">{{ k.next }}</span></td>
+               <td>
+               {% if can_measure %}
+                  <form method="post" action="{{ kri_post_url }}" class="d-flex gap-1">
+                     <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                     <input type="hidden" name="plugin_erm_indicators_id" value="{{ k.id }}">
+                     <input type="date" name="value_date" value="{{ today }}" class="form-control form-control-sm" style="max-width:9.5rem">
+                     <input type="text" inputmode="decimal" name="value" class="form-control form-control-sm" style="max-width:7rem" placeholder="{{ k.unit }}" required>
+                     <button type="submit" name="add_value" class="btn btn-sm btn-outline-primary" title="{{ __('Record value', 'erm') }}"><i class="ti ti-plus"></i></button>
+                  </form>
+               {% endif %}
+               </td>
+            </tr>
+         {% else %}<tr><td colspan="6" class="text-muted">{{ __('You are not responsible for any KRI.', 'erm') }}</td></tr>{% endfor %}
+         </tbody></table></div>
+   </div>
+
+   <div class="card mb-3" id="erm-risks">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-shield-half me-2"></i>{{ __('Risks I own', 'erm') }}</h3></div>
+      <div class="table-responsive"><table class="table card-table table-vcenter">
+         <thead><tr><th>{{ __('Code', 'erm') }}</th><th>{{ __('Risk', 'erm') }}</th><th>{{ __('Category', 'erm') }}</th><th>{{ __('Residual', 'erm') }}</th><th>{{ __('Position', 'erm') }}</th><th>{{ __('Status', 'erm') }}</th><th>{{ __('Next review', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for r in risks %}
+            <tr>
+               <td class="text-nowrap">{{ r.code }}</td>
+               <td><a href="{{ risk_url }}?id={{ r.id }}">{{ r.name }}</a></td>
+               <td class="small">{{ r.category }}</td>
+               <td>{{ r.residual_badge|raw }}</td>
+               <td>{{ r.appetite_badge|raw }}</td>
+               <td class="small">{{ r.status_label }}</td>
+               <td>{% if r.review_date %}<span class="badge {{ state_badge[r.review_state] }}">{{ r.review_date }}</span>{% else %}<span class="badge bg-secondary-lt">{{ __('Not scheduled', 'erm') }}</span>{% endif %}</td>
+            </tr>
+         {% else %}<tr><td colspan="7" class="text-muted">{{ __('You do not own any risk.', 'erm') }}</td></tr>{% endfor %}
+         </tbody></table></div>
+   </div>
+</div>

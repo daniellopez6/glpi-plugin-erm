@@ -1,0 +1,54 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="container-fluid">
+   <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+      <a href="{{ dashboard_url }}" class="btn btn-outline-secondary btn-sm"><i class="ti ti-arrow-left me-1"></i>{{ __('Back to dashboard', 'erm') }}</a>
+      <h2 class="m-0 ms-2">{{ _n('%d risk', '%d risks', rows|length, 'erm')|format(rows|length) }}</h2>
+      {% for c in chips %}<span class="badge bg-blue-lt fs-5">{{ c }}</span>{% else %}<span class="badge bg-secondary-lt fs-5">{{ __('All active risks', 'erm') }}</span>{% endfor %}
+      <span class="ms-auto text-muted">{{ __('Maximum economic exposure', 'erm') }}: <b>{{ exposure }}</b></span>
+   </div>
+   <div class="card">
+      <div class="table-responsive">
+         <table class="table table-hover card-table table-vcenter">
+            <thead><tr>
+               <th>{{ __('Code', 'erm') }}</th><th>{{ __('Risk', 'erm') }}</th>
+               {% if multi_entity %}<th>{{ __('Entity', 'erm') }}</th>{% endif %}
+               <th>{{ __('Category', 'erm') }}</th><th>{{ __('Risk owner', 'erm') }}</th>
+               <th>{{ __('Inherent', 'erm') }}</th><th>{{ __('Residual', 'erm') }}</th><th>{{ __('Position', 'erm') }}</th>
+               <th>{{ __('Status', 'erm') }}</th><th>{{ __('Next review', 'erm') }}</th><th class="text-end">{{ __('Max. impact', 'erm') }}</th>
+            </tr></thead>
+            <tbody>
+            {% for r in rows %}
+               <tr>
+                  <td class="text-nowrap">{{ r.code }}</td>
+                  <td><a href="{{ risk_url }}?id={{ r.id }}">{{ r.name }}</a></td>
+                  {% if multi_entity %}<td class="small">{{ r.entity }}</td>{% endif %}
+                  <td class="small">{{ r.category }}</td>
+                  <td class="small">{{ r.owner }}</td>
+                  <td>{{ r.inherent_badge|raw }}</td>
+                  <td>{{ r.residual_badge|raw }}</td>
+                  <td>{{ r.appetite_badge|raw }}</td>
+                  <td class="small">{{ r.status_label }}</td>
+                  <td class="small text-nowrap">{{ r.review_date }}</td>
+                  <td class="text-end small">{{ r.economic_impact_max ? r.economic_impact_max|formatted_number : '-' }}</td>
+               </tr>
+            {% else %}
+               <tr><td colspan="11" class="text-muted">{{ __('No risks match this selection.', 'erm') }}</td></tr>
+            {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

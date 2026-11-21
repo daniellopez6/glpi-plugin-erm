@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: erm\n"
-"POT-Creation-Date: 2026-11-20 17:17+0000\n"
+"POT-Creation-Date: 2026-11-21 16:25+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,22 +13,62 @@ msgstr ""
 msgid "ERM settings saved."
 msgstr ""
 
-#: setup.php:64
+#: setup.php:65
 msgid "ERM - Enterprise Risk Management"
 msgstr ""
 
-#: src/Action.php:43
+#: src/Action.php:153 templates/actions_tab.html.twig:16
+msgid "Treatment plan"
+msgstr ""
+
+#: src/Action.php:186
+msgid "The action must have a description."
+msgstr ""
+
+#: src/Action.php:44
 msgid "Treatment action"
 msgid_plural "Treatment plan"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Action.php:55 templates/actions_tab.html.twig:16
-msgid "Treatment plan"
+#: src/Action.php:54 src/Action.php:88 src/Dashboard.php:67
+msgid "Action plans"
 msgstr ""
 
-#: src/Action.php:88
-msgid "The action must have a description."
+#: src/Action.php:89 templates/action_form.html.twig:24 templates/actions_tab.html.twig:19 templates/myspace.html.twig:36
+msgid "Action"
+msgstr ""
+
+#: src/Action.php:91
+msgid "Risk code"
+msgstr ""
+
+#: src/Action.php:92 templates/action_form.html.twig:26 templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:65 templates/myspace.html.twig:36
+msgid "Due date"
+msgstr ""
+
+#: src/Action.php:93 src/Risk.php:308 templates/action_form.html.twig:27 templates/actions_tab.html.twig:19 templates/myspace.html.twig:36 templates/myspace.html.twig:91 templates/risk_form.html.twig:56 templates/risk_list.html.twig:30
+msgid "Status"
+msgstr ""
+
+#: src/Action.php:94 src/Risk.php:297 templates/action_form.html.twig:21 templates/dashboard.html.twig:124 templates/dashboard.html.twig:140 templates/myspace.html.twig:36 templates/myspace.html.twig:63 templates/myspace.html.twig:91 templates/risk_form.html.twig:26 templates/risk_list.html.twig:26
+msgid "Risk"
+msgstr ""
+
+#: src/Action.php:95 templates/action_form.html.twig:25 templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:64 templates/indicators_tab.html.twig:29
+msgid "Responsible"
+msgstr ""
+
+#: src/Action.php:96 templates/action_form.html.twig:28 templates/actions_tab.html.twig:19
+msgid "Done on"
+msgstr ""
+
+#: src/Action.php:97 templates/action_form.html.twig:29 templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:66
+msgid "Estimated cost"
+msgstr ""
+
+#: src/Action.php:99
+msgid "Residual level of the risk"
 msgstr ""
 
 #: src/Category.php:127
@@ -201,16 +241,56 @@ msgstr ""
 msgid "Tolerance"
 msgstr ""
 
+#: src/Dashboard.php:148 src/Dashboard.php:242
+msgid "Uncategorized"
+msgstr ""
+
+#: src/Dashboard.php:232
+msgid "Residual level: %s"
+msgstr ""
+
+#: src/Dashboard.php:236
+msgid "Inherent: probability %1$s × impact %2$s"
+msgstr ""
+
+#: src/Dashboard.php:236
+msgid "Residual: probability %1$s × impact %2$s"
+msgstr ""
+
+#: src/Dashboard.php:242
+msgid "Category: %s"
+msgstr ""
+
+#: src/Dashboard.php:245
+msgid "Entity: %s"
+msgstr ""
+
+#: src/Dashboard.php:249 src/Scale.php:238
+msgid "Above tolerance"
+msgstr ""
+
+#: src/Dashboard.php:250 src/Scale.php:241
+msgid "Above appetite"
+msgstr ""
+
+#: src/Dashboard.php:251 templates/dashboard.html.twig:75
+msgid "Outside appetite"
+msgstr ""
+
+#: src/Dashboard.php:255 templates/dashboard.html.twig:75
+msgid "With overdue actions"
+msgstr ""
+
+#: src/Dashboard.php:258 templates/dashboard.html.twig:76
+msgid "With KRIs in alert"
+msgstr ""
+
 #: src/Dashboard.php:33 src/Risk_Item.php:117
 msgid "Corporate risks"
 msgstr ""
 
 #: src/Dashboard.php:38 src/EntityConfig.php:52 src/Profile.php:35 templates/profile_rights.html.twig:20
 msgid "Corporate risks (ERM)"
-msgstr ""
-
-#: src/Dashboard.php:96
-msgid "Uncategorized"
 msgstr ""
 
 #: src/EntityConfig.php:41
@@ -259,6 +339,10 @@ msgstr ""
 
 #: src/IndicatorValue.php:51
 msgid "Invalid measurement date."
+msgstr ""
+
+#: src/MySpace.php:33 templates/myspace.html.twig:18
+msgid "My ERM workspace"
 msgstr ""
 
 #: src/Profile.php:48
@@ -369,79 +453,71 @@ msgstr ""
 msgid "A mitigated or transferred risk cannot be closed without a treatment plan."
 msgstr ""
 
-#: src/Risk.php:284 templates/dashboard.html.twig:116 templates/dashboard.html.twig:132 templates/risk_form.html.twig:26
-msgid "Risk"
-msgstr ""
-
-#: src/Risk.php:286 templates/dashboard.html.twig:116 templates/dashboard.html.twig:132 templates/items_tab.html.twig:18 templates/risk_form.html.twig:25
+#: src/Risk.php:299 templates/dashboard.html.twig:124 templates/dashboard.html.twig:140 templates/items_tab.html.twig:18 templates/myspace.html.twig:91 templates/risk_form.html.twig:25 templates/risk_list.html.twig:26
 msgid "Code"
 msgstr ""
 
-#: src/Risk.php:287 templates/dashboard.html.twig:116 templates/entity_config.html.twig:38 templates/risk_form.html.twig:27
+#: src/Risk.php:300 templates/dashboard.html.twig:124 templates/entity_config.html.twig:38 templates/myspace.html.twig:91 templates/risk_form.html.twig:27 templates/risk_list.html.twig:28
 msgid "Category"
 msgstr ""
 
-#: src/Risk.php:288 templates/risk_form.html.twig:28
+#: src/Risk.php:301 templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
 msgid "Risk owner"
 msgstr ""
 
-#: src/Risk.php:289
+#: src/Risk.php:302
 msgid "Group"
 msgstr ""
 
-#: src/Risk.php:290 templates/risk_form.html.twig:37
+#: src/Risk.php:303 templates/risk_form.html.twig:37
 msgid "Inherent level"
 msgstr ""
 
-#: src/Risk.php:291 templates/risk_form.html.twig:48
+#: src/Risk.php:304 templates/risk_form.html.twig:48
 msgid "Residual level"
 msgstr ""
 
-#: src/Risk.php:292
+#: src/Risk.php:305
 msgid "Inherent score"
 msgstr ""
 
-#: src/Risk.php:293
+#: src/Risk.php:306
 msgid "Residual score"
 msgstr ""
 
-#: src/Risk.php:294
+#: src/Risk.php:307
 msgid "Treatment"
 msgstr ""
 
-#: src/Risk.php:295 templates/actions_tab.html.twig:19 templates/risk_form.html.twig:56
-msgid "Status"
-msgstr ""
-
-#: src/Risk.php:296 templates/risk_form.html.twig:40
+#: src/Risk.php:309 templates/risk_form.html.twig:40
 msgid "Maximum economic impact"
 msgstr ""
 
-#: src/Risk.php:297 templates/risk_form.html.twig:39
+#: src/Risk.php:310 templates/risk_form.html.twig:39
 msgid "Minimum economic impact"
 msgstr ""
 
-#: src/Risk.php:298 templates/risk_form.html.twig:38
+#: src/Risk.php:311 templates/risk_form.html.twig:38
 msgid "Velocity"
 msgstr ""
 
-#: src/Risk.php:299 templates/risk_form.html.twig:45
+#: src/Risk.php:312 templates/risk_form.html.twig:45
 msgid "Trend"
 msgstr ""
 
-#: src/Risk.php:300 templates/risk_form.html.twig:63
+#: src/Risk.php:313 templates/myspace.html.twig:91 templates/risk_form.html.twig:63 templates/risk_list.html.twig:30
 msgid "Next review"
 msgstr ""
 
-#: src/Risk.php:301 templates/risk_form.html.twig:44
+#: src/Risk.php:314 templates/risk_form.html.twig:44
 msgid "Control effectiveness"
 msgstr ""
 
-#: src/Risk.php:302
+#: src/Risk.php:315
 msgid "Description"
 msgstr ""
 
-#: src/Risk.php:348
+#: src/Risk.php:361
 msgid "Pending"
 msgstr ""
 
@@ -583,14 +659,6 @@ msgstr ""
 msgid "No appetite defined"
 msgstr ""
 
-#: src/Scale.php:238
-msgid "Above tolerance"
-msgstr ""
-
-#: src/Scale.php:241
-msgid "Above appetite"
-msgstr ""
-
 #: src/Scale.php:243
 msgid "Within appetite"
 msgstr ""
@@ -659,31 +727,19 @@ msgstr ""
 msgid "Invalid value in \"%s\"."
 msgstr ""
 
-#: templates/actions_tab.html.twig:19
-msgid "Action"
+#: templates/action_form.html.twig:26
+msgid "Overdue"
 msgstr ""
 
-#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:64 templates/indicators_tab.html.twig:29
-msgid "Responsible"
+#: templates/action_form.html.twig:29
+msgid "In the currency of the organization."
 msgstr ""
 
-#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:65
-msgid "Due date"
-msgstr ""
-
-#: templates/actions_tab.html.twig:19 templates/actions_tab.html.twig:66
-msgid "Estimated cost"
-msgstr ""
-
-#: templates/actions_tab.html.twig:19
-msgid "Done on"
-msgstr ""
-
-#: templates/actions_tab.html.twig:25
+#: templates/actions_tab.html.twig:25 templates/myspace.html.twig:42
 msgid "overdue"
 msgstr ""
 
-#: templates/actions_tab.html.twig:36 templates/entity_config.html.twig:66
+#: templates/actions_tab.html.twig:36 templates/entity_config.html.twig:66 templates/myspace.html.twig:51
 msgid "Save"
 msgstr ""
 
@@ -703,57 +759,73 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: templates/dashboard.html.twig:102
+#: templates/dashboard.html.twig:100
+msgid "Heat map - residual risk"
+msgstr ""
+
+#: templates/dashboard.html.twig:106
+msgid "Risks and exposure by category"
+msgstr ""
+
+#: templates/dashboard.html.twig:110 templates/risk_list.html.twig:18
 msgid "%d risk"
 msgid_plural "%d risks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/dashboard.html.twig:108
+#: templates/dashboard.html.twig:116
 msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
 msgstr ""
 
-#: templates/dashboard.html.twig:114
+#: templates/dashboard.html.twig:122
 msgid "Outside risk appetite"
 msgstr ""
 
-#: templates/dashboard.html.twig:116
+#: templates/dashboard.html.twig:124 templates/myspace.html.twig:91 templates/risk_list.html.twig:29
 msgid "Position"
 msgstr ""
 
-#: templates/dashboard.html.twig:121
+#: templates/dashboard.html.twig:129
 msgid "All residual risks are within appetite."
 msgstr ""
 
-#: templates/dashboard.html.twig:130
+#: templates/dashboard.html.twig:138
 msgid "Top 10 residual risks"
 msgstr ""
 
-#: templates/dashboard.html.twig:130
+#: templates/dashboard.html.twig:138
 msgid "See full register"
 msgstr ""
 
-#: templates/dashboard.html.twig:132
+#: templates/dashboard.html.twig:140 templates/risk_list.html.twig:29
 msgid "Inherent"
 msgstr ""
 
-#: templates/dashboard.html.twig:132
+#: templates/dashboard.html.twig:140 templates/myspace.html.twig:91 templates/risk_list.html.twig:29
 msgid "Residual"
 msgstr ""
 
-#: templates/dashboard.html.twig:132
+#: templates/dashboard.html.twig:140 templates/risk_list.html.twig:30
 msgid "Max. impact"
 msgstr ""
 
-#: templates/dashboard.html.twig:145
+#: templates/dashboard.html.twig:153
 msgid "Overdue treatment actions"
 msgstr ""
 
-#: templates/dashboard.html.twig:150
+#: templates/dashboard.html.twig:154
+msgid "See all action plans"
+msgstr ""
+
+#: templates/dashboard.html.twig:159
 msgid "No overdue actions."
 msgstr ""
 
-#: templates/dashboard.html.twig:160
+#: templates/dashboard.html.twig:163
+msgid "KRIs in alert"
+msgstr ""
+
+#: templates/dashboard.html.twig:169
 msgid "No KRI in alert."
 msgstr ""
 
@@ -761,64 +833,44 @@ msgstr ""
 msgid "Probability (rows) × Impact (columns)"
 msgstr ""
 
-#: templates/dashboard.html.twig:44
+#: templates/dashboard.html.twig:51
 msgid "Enterprise risk management (ERM)"
 msgstr ""
 
-#: templates/dashboard.html.twig:45
+#: templates/dashboard.html.twig:52
 msgid "strategic, financial, operational, compliance, fraud, reputational and ESG risks, assessed with a 5×5 matrix (ISO 31000 / COSO ERM)."
 msgstr ""
 
-#: templates/dashboard.html.twig:46
+#: templates/dashboard.html.twig:53
 msgid "Information security risks are managed in detail in the ISMS register (GRC Manager) and can be linked from the \"Related items\" tab."
 msgstr ""
 
-#: templates/dashboard.html.twig:50
+#: templates/dashboard.html.twig:57
 msgid "Restricted view: only the risks you own, the risks of your groups and those where you have actions or indicators assigned are shown."
 msgstr ""
 
-#: templates/dashboard.html.twig:54 templates/dashboard.html.twig:66
+#: templates/dashboard.html.twig:61 templates/dashboard.html.twig:73
 msgid "Active risks"
 msgstr ""
 
-#: templates/dashboard.html.twig:56
+#: templates/dashboard.html.twig:63
 msgid "Residual %s"
 msgstr ""
 
-#: templates/dashboard.html.twig:58 templates/dashboard.html.twig:69
+#: templates/dashboard.html.twig:65 templates/dashboard.html.twig:76 templates/risk_list.html.twig:20
 msgid "Maximum economic exposure"
 msgstr ""
 
-#: templates/dashboard.html.twig:63
+#: templates/dashboard.html.twig:70
 msgid "Risks by entity"
 msgstr ""
 
-#: templates/dashboard.html.twig:66
+#: templates/dashboard.html.twig:73 templates/risk_list.html.twig:27
 msgid "Entity"
 msgstr ""
 
-#: templates/dashboard.html.twig:68
-msgid "Outside appetite"
-msgstr ""
-
-#: templates/dashboard.html.twig:68
-msgid "Overdue actions"
-msgstr ""
-
-#: templates/dashboard.html.twig:69 templates/dashboard.html.twig:154
-msgid "KRIs in alert"
-msgstr ""
-
-#: templates/dashboard.html.twig:91
+#: templates/dashboard.html.twig:99
 msgid "Heat map - inherent risk"
-msgstr ""
-
-#: templates/dashboard.html.twig:92
-msgid "Heat map - residual risk"
-msgstr ""
-
-#: templates/dashboard.html.twig:98
-msgid "Risks and exposure by category"
 msgstr ""
 
 #: templates/entity_config.html.twig:19
@@ -885,7 +937,7 @@ msgstr ""
 msgid "higher is worse"
 msgstr ""
 
-#: templates/indicators_tab.html.twig:28 templates/indicators_tab.html.twig:70
+#: templates/indicators_tab.html.twig:28 templates/indicators_tab.html.twig:70 templates/myspace.html.twig:63
 msgid "Frequency"
 msgstr ""
 
@@ -897,7 +949,7 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: templates/indicators_tab.html.twig:50
+#: templates/indicators_tab.html.twig:50 templates/myspace.html.twig:63 templates/myspace.html.twig:79
 msgid "Record value"
 msgstr ""
 
@@ -947,6 +999,66 @@ msgstr ""
 
 #: templates/items_tab.html.twig:38
 msgid "No linked items."
+msgstr ""
+
+#: templates/myspace.html.twig:101
+msgid "Not scheduled"
+msgstr ""
+
+#: templates/myspace.html.twig:103
+msgid "You do not own any risk."
+msgstr ""
+
+#: templates/myspace.html.twig:22
+msgid "My risks"
+msgstr ""
+
+#: templates/myspace.html.twig:22
+msgid "Pending actions"
+msgstr ""
+
+#: templates/myspace.html.twig:22
+msgid "Overdue actions"
+msgstr ""
+
+#: templates/myspace.html.twig:23
+msgid "KRIs to measure"
+msgstr ""
+
+#: templates/myspace.html.twig:23
+msgid "Reviews due"
+msgstr ""
+
+#: templates/myspace.html.twig:34
+msgid "My pending actions"
+msgstr ""
+
+#: templates/myspace.html.twig:56
+msgid "You have no pending actions."
+msgstr ""
+
+#: templates/myspace.html.twig:61
+msgid "KRIs I measure"
+msgstr ""
+
+#: templates/myspace.html.twig:63
+msgid "Indicator"
+msgstr ""
+
+#: templates/myspace.html.twig:63
+msgid "Last value"
+msgstr ""
+
+#: templates/myspace.html.twig:63
+msgid "Next measurement"
+msgstr ""
+
+#: templates/myspace.html.twig:84
+msgid "You are not responsible for any KRI."
+msgstr ""
+
+#: templates/myspace.html.twig:89
+msgid "Risks I own"
 msgstr ""
 
 #: templates/risk_form.html.twig:21
@@ -1035,4 +1147,16 @@ msgstr ""
 
 #: templates/risk_form.html.twig:64
 msgid "Last review"
+msgstr ""
+
+#: templates/risk_list.html.twig:17
+msgid "Back to dashboard"
+msgstr ""
+
+#: templates/risk_list.html.twig:19
+msgid "All active risks"
+msgstr ""
+
+#: templates/risk_list.html.twig:48
+msgid "No risks match this selection."
 msgstr ""

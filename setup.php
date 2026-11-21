@@ -27,11 +27,12 @@ use GlpiPlugin\Erm\Category;
 use GlpiPlugin\Erm\Dashboard;
 use GlpiPlugin\Erm\EntityConfig;
 use GlpiPlugin\Erm\Indicator;
+use GlpiPlugin\Erm\MySpace;
 use GlpiPlugin\Erm\Profile;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '1.3.0');
+define('PLUGIN_ERM_VERSION', '1.4.0');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -55,7 +56,7 @@ function plugin_init_erm(): void
 
     // Same menu sector as GRC Manager when active; otherwise "Management".
     $sector = Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'management';
-    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, Risk::class, Category::class]];
+    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, MySpace::class, Risk::class, Action::class, Category::class]];
 }
 
 function plugin_version_erm(): array

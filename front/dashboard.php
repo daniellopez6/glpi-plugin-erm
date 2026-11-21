@@ -22,5 +22,9 @@ if (!Risk::canView()) {
     throw new \Glpi\Exception\Http\AccessDeniedHttpException();
 }
 Html::header(Dashboard::getTypeName(), $_SERVER['PHP_SELF'], plugin_erm_sector(), Dashboard::class);
-Dashboard::show();
+if (isset($_GET['list'])) {
+    Dashboard::showList($_GET);
+} else {
+    Dashboard::show();
+}
 Html::footer();

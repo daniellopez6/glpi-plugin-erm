@@ -27,5 +27,11 @@ if (isset($_POST['add'])) {
 } elseif (isset($_POST['purge'])) {
     $item->check($_POST['id'], PURGE);
     $item->delete($_POST, true);
+} else {
+    $item->check((int) ($_GET['id'] ?? 0), READ);
+    Html::header(Action::getTypeName(1), $_SERVER['PHP_SELF'], plugin_erm_sector(), GlpiPlugin\Erm\Dashboard::class, Action::class);
+    $item->display(['id' => (int) $_GET['id']]);
+    Html::footer();
+    return;
 }
 Html::back();

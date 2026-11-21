@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.3.x · GLPI 12
+Versión del plugin: 1.4.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -22,7 +22,9 @@ están en la [guía de administración](guia-administracion.md).
 Menú **GRC y cumplimiento** (o **Gestión** si GRC Manager no está instalado):
 
 - **Riesgos corporativos (ERM)**: tablero.
+- **Mi espacio ERM**: mis acciones, mis indicadores y mis riesgos.
 - **Registro de riesgos corporativos**: lista y búsqueda.
+- **Planes de acción**: todas las acciones de tratamiento.
 - **Categorías y apetito (ERM)**: taxonomía, apetito y tolerancia.
 
 Lo que ves depende de tu perfil: con "ver propios" sólo aparecen tus riesgos, y un aviso lo indica en el tablero.
@@ -62,6 +64,14 @@ Pestaña **Plan de tratamiento** del riesgo:
   completa la fecha si no la indicaste.
 - Las acciones vencidas se resaltan en rojo y aparecen en el tablero.
 - Un riesgo a **mitigar o transferir no se puede cerrar** sin al menos una acción.
+- Cada acción tiene su propia ficha (descripción, responsable, vencimiento, estado, costo, comentarios e
+  historial): hacé clic en la descripción.
+
+**Planes de acción** (menú): reúne las acciones de todos los riesgos que podés ver, con el buscador de GLPI
+(filtros por responsable, estado, vencimiento, entidad o nivel del riesgo; exportación a Excel/PDF; búsquedas
+guardadas). Desde el tablero, "Ver todos los planes de acción" abre las acciones vencidas.
+
+![Planes de acción](screenshots/action-plans.png)
 
 ## 6. Indicadores clave de riesgo (KRI)
 
@@ -96,7 +106,18 @@ contrato, aplicación, equipo, proyecto, grupo, cambio) y el elemento. Desde eso
 **Riesgos corporativos** muestra el camino inverso. Ejemplo: el riesgo de ciberataque corporativo vinculado a los
 riesgos de ransomware y phishing del SGSI.
 
-## 9. Tablero
+## 9. Mi espacio ERM
+
+Pantalla personal con lo que tenés que hacer:
+
+- **Mis acciones pendientes**, ordenadas por vencimiento (en rojo las vencidas, en naranja las que vencen en
+  los próximos 30 días). Podés cambiar el estado sin abrir el riesgo.
+- **KRI a mi cargo**: último valor, **próxima medición** según la frecuencia y un campo para registrar el valor
+  en el momento.
+- **Riesgos a mi cargo** (como dueño o por tu área), con su nivel, la posición frente al apetito y la próxima
+  revisión.
+
+## 10. Tablero
 
 ![Tablero](screenshots/dashboard.png)
 
@@ -106,17 +127,23 @@ riesgos de ransomware y phishing del SGSI.
 - **Riesgos y exposición por categoría**.
 - **Fuera del apetito**: riesgos residuales sobre el apetito (naranja) o sobre la tolerancia (rojo).
 - **Top 10 residuales**, **acciones vencidas** y **KRI en alerta**.
+- **Todos los números se pueden cliquear**: las tarjetas por nivel, cada celda de los mapas de calor, cada
+  categoría, los contadores por entidad, "fuera del apetito" y "KRI en alerta" abren la lista de los riesgos que
+  hay detrás, con el filtro aplicado a la vista y un botón para volver al tablero.
+
+![Detalle desde el tablero](screenshots/drilldown.png)
+
 - **Riesgos por entidad**: si tu perfil ve varias empresas, una tabla compara sus indicadores; el nombre de cada
   entidad lleva al registro filtrado. Para trabajar sobre una sola empresa, elegila en el selector de entidad de GLPI.
 
-## 10. Categorías y apetito
+## 11. Categorías y apetito
 
 **Categorías y apetito (ERM)** (requiere el permiso de configuración para modificar): cada categoría tiene
 apetito, tolerancia y declaración de apetito por defecto. Si una subcategoría no los define, **hereda** los de la
 superior. Cada empresa puede ajustarlos en la pestaña "Riesgos corporativos (ERM)" de su entidad.
 Cambiar el apetito actualiza inmediatamente la posición de todos los riesgos de esa categoría.
 
-## 11. Buenas prácticas
+## 12. Buenas prácticas
 
 - Revisá cada riesgo al menos una vez al año (campo "Próxima revisión") y siempre ante un cambio relevante.
 - Un riesgo sobre la tolerancia debe tener un plan de tratamiento con fechas, o una aceptación formal justificada.

@@ -8,3 +8,4 @@
 .vscode/
 /composer.lock
 /.phpunit.result.cache
+__pycache__/

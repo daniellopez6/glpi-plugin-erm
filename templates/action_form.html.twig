@@ -1,0 +1,31 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{# Treatment action form #}
+{% extends 'generic_show_form.html.twig' %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% block form_fields %}
+   {% if risk %}
+   {{ fields.htmlField('', '<a href="' ~ risk.getLinkURL() ~ '"><b>' ~ risk.fields['code']|e ~ '</b> ' ~ risk.fields['name']|e ~ '</a>', __('Risk', 'erm')) }}
+   {% endif %}
+   <input type="hidden" name="plugin_erm_risks_id" value="{{ item.fields['plugin_erm_risks_id'] }}">
+   {{ fields.textareaField('name', item.fields['name'], __('Action', 'erm'), {'required': true, 'full_width': true}) }}
+   {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], __('Responsible', 'erm'), {'right': 'all', 'entity': item.fields['entities_id']}) }}
+   {{ fields.dateField('due_date', item.fields['due_date'], __('Due date', 'erm'), {'helper': overdue ? __('Overdue', 'erm') : ''}) }}
+   {{ fields.dropdownArrayField('status', item.fields['status'], statuses, __('Status', 'erm')) }}
+   {{ fields.dateField('completion_date', item.fields['completion_date'], __('Done on', 'erm')) }}
+   {{ fields.textField('cost', item.fields['cost'], __('Estimated cost', 'erm'), {'helper': __('In the currency of the organization.', 'erm')}) }}
+   {{ fields.textareaField('comment', item.fields['comment'], __('Comments'), {'full_width': true}) }}
+{% endblock %}

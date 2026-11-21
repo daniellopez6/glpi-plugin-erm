@@ -263,6 +263,19 @@ class Risk extends CommonDBTM
         return $input;
     }
 
+    public function post_updateItem($history = true)
+    {
+        global $DB;
+        // Keep the entity of the treatment actions aligned with their risk
+        if (array_intersect($this->updates, ['entities_id', 'is_recursive'])) {
+            $DB->update(Action::getTable(), [
+                'entities_id'  => $this->fields['entities_id'],
+                'is_recursive' => $this->fields['is_recursive'],
+            ], ['plugin_erm_risks_id' => $this->getID()]);
+        }
+        parent::post_updateItem($history);
+    }
+
     public function cleanDBonPurge()
     {
         $this->deleteChildrenAndRelationsFromDb([Action::class, Indicator::class, Risk_Item::class]);

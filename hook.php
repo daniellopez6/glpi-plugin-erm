@@ -19,6 +19,9 @@
  * Installation and uninstallation of the ERM plugin.
  */
 
+use Glpi\DBAL\QueryExpression;
+use Glpi\DBAL\QuerySubQuery;
+use GlpiPlugin\Erm\Action;
 use GlpiPlugin\Erm\Category;
 use GlpiPlugin\Erm\Rights;
 use GlpiPlugin\Erm\Risk;
@@ -99,6 +102,8 @@ function plugin_erm_install(): bool
         'glpi_plugin_erm_actions' => "
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `is_recursive` tinyint NOT NULL DEFAULT '1',
             `name` text,
             `users_id` int {$sign} NOT NULL DEFAULT '0',
             `due_date` date DEFAULT NULL,
@@ -110,7 +115,9 @@ function plugin_erm_install(): bool
             `date_mod` timestamp NULL DEFAULT NULL,
             PRIMARY KEY (`id`),
             KEY `plugin_erm_risks_id` (`plugin_erm_risks_id`),
-            KEY `users_id` (`users_id`)",
+            KEY `entities_id` (`entities_id`),
+            KEY `users_id` (`users_id`),
+            KEY `due_date` (`due_date`)",
         'glpi_plugin_erm_indicators' => "
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
@@ -173,6 +180,19 @@ function plugin_erm_install(): bool
         }
     }
 
+    // 1.4.0: actions carry the entity of their risk so the action register can be searched per entity
+    if (!$DB->fieldExists('glpi_plugin_erm_actions', 'entities_id')) {
+        $migration->addField('glpi_plugin_erm_actions', 'entities_id', "int {$sign} NOT NULL DEFAULT '0'", ['after' => 'plugin_erm_risks_id']);
+        $migration->addField('glpi_plugin_erm_actions', 'is_recursive', "tinyint NOT NULL DEFAULT '1'", ['after' => 'entities_id']);
+        $migration->addKey('glpi_plugin_erm_actions', 'entities_id');
+        $migration->addKey('glpi_plugin_erm_actions', 'due_date');
+        $migration->migrationOneTable('glpi_plugin_erm_actions');
+        $DB->update('glpi_plugin_erm_actions', [
+            'glpi_plugin_erm_actions.entities_id'  => new QueryExpression($DB->quoteName('r.entities_id')),
+            'glpi_plugin_erm_actions.is_recursive' => new QueryExpression($DB->quoteName('r.is_recursive')),
+        ], ['r.id' => ['>', 0]], ['INNER JOIN' => ['glpi_plugin_erm_risks AS r' => ['ON' => ['glpi_plugin_erm_actions' => 'plugin_erm_risks_id', 'r' => 'id']]]]);
+    }
+
     // Rights (1.1.0): register, treatment, configuration and acceptance. Only missing rights are created;
     // values already set by an administrator are never overwritten.
     foreach (Rights::all() as $right) {
@@ -187,6 +207,14 @@ function plugin_erm_install(): bool
                     ProfileRight::updateProfileRights((int) $profile['id'], [$right => $value]);
                 }
             }
+        }
+    }
+
+    // Default columns of the action register (risk code, risk, responsible, due date, status, done on)
+    if (countElementsInTable('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Action', 'users_id' => 0]) === 0) {
+        foreach ([3, 6, 7, 4, 5, 8, 11] as $rank => $num) {
+            $DB->insert('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Action', 'num' => $num, 'rank' => $rank + 1,
+                                                   'users_id' => 0, 'interface' => 'central']);
         }
     }
 
@@ -218,7 +246,7 @@ function plugin_erm_uninstall(): bool
         $DB->dropTable($table, true);
     }
     ProfileRight::deleteProfileRights(Rights::all());
-    foreach (['GlpiPlugin\\Erm\\Risk', 'GlpiPlugin\\Erm\\Category'] as $itemtype) {
+    foreach (['GlpiPlugin\\Erm\\Risk', 'GlpiPlugin\\Erm\\Category', 'GlpiPlugin\\Erm\\Action'] as $itemtype) {
         $DB->delete('glpi_displaypreferences', ['itemtype' => $itemtype]);
         $DB->delete('glpi_documents_items', ['itemtype' => $itemtype]);
         $DB->delete('glpi_logs', ['itemtype' => $itemtype]);
@@ -233,6 +261,15 @@ function plugin_erm_addDefaultWhere($itemtype)
 {
     if ($itemtype === Risk::class && Rights::onlyOwn()) {
         return [Rights::ownCriteria(Risk::getTable())];
+    }
+    if ($itemtype === Action::class && Rights::onlyOwn()) {
+        // Actions of own risks, plus the actions assigned to the user
+        return [['OR' => [
+            Action::getTable() . '.users_id' => (int) Session::getLoginUserID(),
+            Action::getTable() . '.plugin_erm_risks_id' => new QuerySubQuery([
+                'SELECT' => 'id', 'FROM' => Risk::getTable(), 'WHERE' => [Rights::ownCriteria(Risk::getTable())],
+            ]),
+        ]]];
     }
     return [];
 }
