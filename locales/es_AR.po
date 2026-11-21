@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 16:25+0000\n"
+"POT-Creation-Date: 2026-11-21 16:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_AR\n"
@@ -262,50 +262,50 @@ msgstr "Apetito"
 msgid "Tolerance"
 msgstr "Tolerancia"
 
-#: src/Dashboard.php:148 src/Dashboard.php:242
+#: src/Dashboard.php:148 src/Dashboard.php:246
 msgid "Uncategorized"
 msgstr "Sin categoría"
 
-#: src/Dashboard.php:232
+#: src/Dashboard.php:236
 #, python-format
 msgid "Residual level: %s"
 msgstr "Nivel residual: %s"
 
-#: src/Dashboard.php:236
+#: src/Dashboard.php:240
 msgid "Inherent: probability %1$s × impact %2$s"
 msgstr "Inherente: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:236
+#: src/Dashboard.php:240
 msgid "Residual: probability %1$s × impact %2$s"
 msgstr "Residual: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:242
+#: src/Dashboard.php:246
 #, python-format
 msgid "Category: %s"
 msgstr "Categoría: %s"
 
-#: src/Dashboard.php:245
+#: src/Dashboard.php:249
 #, python-format
 msgid "Entity: %s"
 msgstr "Entidad: %s"
 
-#: src/Dashboard.php:249 src/Scale.php:238
+#: src/Dashboard.php:253 src/Scale.php:238
 msgid "Above tolerance"
 msgstr "Sobre la tolerancia"
 
-#: src/Dashboard.php:250 src/Scale.php:241
+#: src/Dashboard.php:254 src/Scale.php:241
 msgid "Above appetite"
 msgstr "Sobre el apetito"
 
-#: src/Dashboard.php:251 templates/dashboard.html.twig:75
+#: src/Dashboard.php:255 templates/dashboard.html.twig:75
 msgid "Outside appetite"
 msgstr "Fuera del apetito"
 
-#: src/Dashboard.php:255 templates/dashboard.html.twig:75
+#: src/Dashboard.php:259 templates/dashboard.html.twig:75
 msgid "With overdue actions"
 msgstr "Con acciones vencidas"
 
-#: src/Dashboard.php:258 templates/dashboard.html.twig:76
+#: src/Dashboard.php:262 templates/dashboard.html.twig:76
 msgid "With KRIs in alert"
 msgstr "Con KRI en alerta"
 
