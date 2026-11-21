@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.7.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 1.8.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -140,9 +140,19 @@ Para que se envíen:
 
 ## 6. Integración con GLPI GRC Manager (opcional)
 
-Si GRC Manager está activo, el plugin se ubica en su menú "GRC y cumplimiento" y permite vincular riesgos
-corporativos con riesgos, procesos de negocio, controles, objetivos, obligaciones y riesgos de proveedores del
-SGSI. No es un requisito: sin GRC Manager el plugin funciona y su menú aparece en **Gestión**.
+ERM es **independiente**: se instala y funciona sin GRC Manager (su menú aparece en **Gestión**). Si GRC Manager
+está activo:
+
+- el menú se ubica en "GRC y cumplimiento";
+- los riesgos corporativos se pueden vincular con riesgos, procesos de negocio, controles, objetivos, obligaciones y
+  riesgos de proveedores del SGSI;
+- el **mapa integral** y el **informe de Directorio** suman los riesgos del SGSI y de proveedores, sólo lectura y
+  sólo para usuarios con permiso de lectura en GRC Manager.
+
+ERM nunca escribe en las tablas de GRC Manager.
+
+La acción automática **ermsnapshot** (diaria, entre las 2 y las 5) toma la foto trimestral del perfil de riesgos
+la primera vez que corre en cada trimestre.
 
 ## 7. API REST
 

@@ -7,6 +7,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.8.0] - 2026-11-21
+### Added
+- Board report (ISO 31000 6.7) as PDF: executive summary with the variation against a previous quarter, changes
+  (risks that increased, decreased, are new, went outside or came back within the appetite, closed), residual heat
+  map, risks outside the appetite, top 10, treatment, losses and the integrated view.
+- Quarterly snapshots of the risk profile: automatic action "ermsnapshot" (first run of each quarter) or manual
+  snapshot from the report page.
+- Integrated risk map: corporate risks together with the ISMS and supplier risks of GLPI GRC Manager by level, the
+  high and critical risks of all sources, and a coherence check (corporate risks assessed below their linked
+  risks). GRC Manager data is only read, when the plugin is active and the user may see it.
+- Unit tests for periods, snapshot comparison and consolidation (77 tests).
+
 ## [1.7.1] - 2026-11-21
 ### Added
 - Notice to the risk owner when a treatment action is completed (not when the owners completes it); when it was the

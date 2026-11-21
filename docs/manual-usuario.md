@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.6.x · GLPI 12
+Versión del plugin: 1.8.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -24,6 +24,8 @@ Menú **GRC y cumplimiento** (o **Gestión** si GRC Manager no está instalado):
 
 - **Riesgos corporativos (ERM)**: tablero.
 - **Mi espacio ERM**: mis acciones, mis indicadores y mis riesgos.
+- **Mapa integral de riesgos**: riesgos corporativos, de seguridad de la información y de proveedores juntos.
+- **Informe de Directorio**: informe en PDF y fotos trimestrales.
 - **Registro de riesgos corporativos**: lista y búsqueda.
 - **Planes de acción**: todas las acciones de tratamiento.
 - **Eventos de pérdida**: base de incidentes con efecto económico, casi pérdidas y ganancias inesperadas.
@@ -145,7 +147,24 @@ Si el administrador activó las notificaciones de GLPI, el plugin avisa por corr
 
 Todo eso también está siempre a la vista en **Mi espacio ERM** y en el tablero.
 
-## 11. Eventos de pérdida e historial
+## 11. Mapa integral e informe de Directorio
+
+**Mapa integral de riesgos**: reúne los riesgos corporativos (ERM) con los de seguridad de la información y de
+proveedores de GRC Manager (si está instalado y tenés acceso), contados por nivel, con la lista de riesgos altos y
+críticos de todos los orígenes. El control de **coherencia** marca los riesgos corporativos evaluados por debajo de
+los riesgos del SGSI o de proveedores vinculados: un riesgo corporativo los agrega, así que no debería ser menor.
+
+**Informe de Directorio** (PDF): elegí con qué trimestre comparar y descargalo. Incluye resumen ejecutivo con la
+variación, cambios del período (riesgos que subieron, bajaron, nuevos, que salieron o volvieron al apetito,
+cerrados), mapa de calor residual, riesgos fuera del apetito, los diez principales, tratamiento, pérdidas y la
+visión integral. Se genera para la entidad elegida en GLPI.
+
+![Informe de Directorio](screenshots/board-report.png)
+
+Las **fotos trimestrales** guardan la evaluación de todos los riesgos al comienzo de cada trimestre (acción
+automática) y permiten comparar períodos. Quien tiene el permiso de configuración puede tomarla a mano.
+
+## 12. Eventos de pérdida e historial
 
 La ISO 31000 pide que el análisis se apoye en información confiable. Los eventos de pérdida son esa evidencia.
 
@@ -179,7 +198,7 @@ El sistema **sugiere**, no cambia la evaluación: la decisión es del dueño del
 
 ![Registro de eventos](screenshots/loss-events.png)
 
-## 12. Mi espacio ERM
+## 13. Mi espacio ERM
 
 Pantalla personal con lo que tenés que hacer:
 
@@ -190,7 +209,7 @@ Pantalla personal con lo que tenés que hacer:
 - **Riesgos a mi cargo** (como dueño o por tu área), con su nivel, la posición frente al apetito y la próxima
   revisión.
 
-## 13. Tablero
+## 14. Tablero
 
 ![Tablero](screenshots/dashboard.png)
 
@@ -213,14 +232,14 @@ Pantalla personal con lo que tenés que hacer:
 - **Riesgos por entidad**: si tu perfil ve varias empresas, una tabla compara sus indicadores; el nombre de cada
   entidad lleva al registro filtrado. Para trabajar sobre una sola empresa, elegila en el selector de entidad de GLPI.
 
-## 14. Categorías y apetito
+## 15. Categorías y apetito
 
 **Categorías y apetito (ERM)** (requiere el permiso de configuración para modificar): cada categoría tiene
 apetito, tolerancia y declaración de apetito por defecto. Si una subcategoría no los define, **hereda** los de la
 superior. Cada empresa puede ajustarlos en la pestaña "Riesgos corporativos (ERM)" de su entidad.
 Cambiar el apetito actualiza inmediatamente la posición de todos los riesgos de esa categoría.
 
-## 15. Buenas prácticas
+## 16. Buenas prácticas
 
 - Revisá cada riesgo al menos una vez al año (campo "Próxima revisión") y siempre ante un cambio relevante.
 - Un riesgo sobre la tolerancia debe tener un plan de tratamiento con fechas, o una aceptación formal justificada.

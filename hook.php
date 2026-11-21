@@ -27,6 +27,7 @@ use GlpiPlugin\Erm\NotificationTargetRisk;
 use GlpiPlugin\Erm\Notifier;
 use GlpiPlugin\Erm\Profile as ErmProfile;
 use GlpiPlugin\Erm\Rights;
+use GlpiPlugin\Erm\Snapshot;
 use GlpiPlugin\Erm\Risk;
 
 function plugin_erm_install(): bool
@@ -247,6 +248,29 @@ function plugin_erm_install(): bool
             `date_sent` timestamp NULL DEFAULT NULL,
             PRIMARY KEY (`id`),
             UNIQUE KEY `unicity` (`itemtype`,`items_id`,`alert_type`)",
+        'glpi_plugin_erm_snapshots' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `period` varchar(7) NOT NULL DEFAULT '',
+            `snapshot_date` timestamp NULL DEFAULT NULL,
+            `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `code` varchar(32) NOT NULL DEFAULT '',
+            `name` varchar(255) NOT NULL DEFAULT '',
+            `category` text,
+            `users_id` int {$sign} NOT NULL DEFAULT '0',
+            `inherent_score` tinyint NOT NULL DEFAULT '0',
+            `inherent_level` varchar(16) NOT NULL DEFAULT '',
+            `residual_score` tinyint NOT NULL DEFAULT '0',
+            `residual_level` varchar(16) NOT NULL DEFAULT '',
+            `target_score` tinyint NOT NULL DEFAULT '0',
+            `target_level` varchar(16) NOT NULL DEFAULT '',
+            `appetite_position` varchar(20) NOT NULL DEFAULT '',
+            `economic_impact_max` decimal(20,2) DEFAULT NULL,
+            `status` varchar(16) NOT NULL DEFAULT '',
+            `treatment` varchar(16) NOT NULL DEFAULT '',
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `unicity` (`period`,`plugin_erm_risks_id`),
+            KEY `entities_id` (`entities_id`)",
         'glpi_plugin_erm_risks_items' => "
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
@@ -356,6 +380,13 @@ function plugin_erm_install(): bool
         'comment' => '',
     ]);
     plugin_erm_install_notifications();
+    CronTask::register(Snapshot::class, 'ermsnapshot', DAY_TIMESTAMP, [
+        'mode'    => CronTask::MODE_EXTERNAL,
+        'state'   => CronTask::STATE_WAITING,
+        'hourmin' => 2,
+        'hourmax' => 5,
+        'comment' => '',
+    ]);
 
     $migration->executeMigration();
     return true;
@@ -443,7 +474,8 @@ function plugin_erm_uninstall(): bool
         ['glpi_plugin_erm_categories', 'glpi_plugin_erm_risks', 'glpi_plugin_erm_actions', 'glpi_plugin_erm_indicators',
               'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items',
               'glpi_plugin_erm_entityconfigs', 'glpi_plugin_erm_appetites', 'glpi_plugin_erm_events',
-              'glpi_plugin_erm_events_items', 'glpi_plugin_erm_reviews', 'glpi_plugin_erm_alerts'] as $table
+              'glpi_plugin_erm_events_items', 'glpi_plugin_erm_reviews', 'glpi_plugin_erm_alerts',
+              'glpi_plugin_erm_snapshots'] as $table
     ) {
         $DB->dropTable($table, true);
     }

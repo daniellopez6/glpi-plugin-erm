@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: erm\n"
-"POT-Creation-Date: 2026-11-21 17:38+0000\n"
+"POT-Creation-Date: 2026-11-21 21:13+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,27 +13,31 @@ msgstr ""
 msgid "ERM settings saved."
 msgstr ""
 
+#: front/report.php:32
+msgid "Snapshot of %1$s taken (%2$d risks)."
+msgstr ""
+
 #: front/review.form.php:28
 msgid "Review recorded."
 msgstr ""
 
-#: hook.php:384 hook.php:385 src/NotificationTargetRisk.php:126 src/Notifier.php:32
+#: hook.php:415 hook.php:416 src/NotificationTargetRisk.php:126 src/Notifier.php:32
 msgid "Corporate risk alerts"
 msgstr ""
 
-#: hook.php:389 hook.php:390 src/NotificationTargetRisk.php:43
+#: hook.php:420 hook.php:421 src/NotificationTargetRisk.php:43
 msgid "A corporate risk has been assigned to you"
 msgstr ""
 
-#: hook.php:394 hook.php:395 src/NotificationTargetRisk.php:45
+#: hook.php:425 hook.php:426 src/NotificationTargetRisk.php:45
 msgid "A treatment action of your risk has been completed"
 msgstr ""
 
-#: hook.php:399 hook.php:400 src/NotificationTargetRisk.php:44
+#: hook.php:430 hook.php:431 src/NotificationTargetRisk.php:44
 msgid "A treatment action has been assigned to you"
 msgstr ""
 
-#: setup.php:72
+#: setup.php:74
 msgid "ERM - Enterprise Risk Management"
 msgstr ""
 
@@ -75,7 +79,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: src/Action.php:94 src/NotificationTargetRisk.php:157 src/Risk.php:309 templates/action_form.html.twig:21 templates/dashboard.html.twig:87 templates/dashboard.html.twig:156 templates/dashboard.html.twig:172 templates/myspace.html.twig:36 templates/myspace.html.twig:63 templates/myspace.html.twig:91 templates/risk_form.html.twig:26 templates/risk_list.html.twig:26
+#: src/Action.php:94 src/NotificationTargetRisk.php:157 src/Report.php:241 src/Risk.php:309 templates/action_form.html.twig:21 templates/consolidated.html.twig:74 templates/dashboard.html.twig:87 templates/dashboard.html.twig:156 templates/dashboard.html.twig:172 templates/myspace.html.twig:36 templates/myspace.html.twig:63 templates/myspace.html.twig:91 templates/risk_form.html.twig:26 templates/risk_list.html.twig:26
 msgid "Risk"
 msgstr ""
 
@@ -265,6 +269,22 @@ msgstr ""
 msgid "Tolerance"
 msgstr ""
 
+#: src/Consolidated.php:125 src/Dashboard.php:38 src/EntityConfig.php:57 src/Profile.php:36 templates/profile_rights.html.twig:20
+msgid "Corporate risks (ERM)"
+msgstr ""
+
+#: src/Consolidated.php:126
+msgid "Information security risks (ISMS)"
+msgstr ""
+
+#: src/Consolidated.php:127
+msgid "Supplier risks"
+msgstr ""
+
+#: src/Consolidated.php:37
+msgid "Integrated risk map"
+msgstr ""
+
 #: src/Dashboard.php:191 src/Dashboard.php:309
 msgid "Uncategorized"
 msgstr ""
@@ -285,7 +305,7 @@ msgstr ""
 msgid "Category: %s"
 msgstr ""
 
-#: src/Dashboard.php:312
+#: src/Dashboard.php:312 src/Report.php:170 templates/report.html.twig:22
 msgid "Entity: %s"
 msgstr ""
 
@@ -319,10 +339,6 @@ msgstr ""
 
 #: src/Dashboard.php:331
 msgid "Treatment not effective or without plan"
-msgstr ""
-
-#: src/Dashboard.php:38 src/EntityConfig.php:57 src/Profile.php:36 templates/profile_rights.html.twig:20
-msgid "Corporate risks (ERM)"
 msgstr ""
 
 #: src/EntityConfig.php:268
@@ -463,7 +479,7 @@ msgstr ""
 msgid "My ERM workspace"
 msgstr ""
 
-#: src/NotificationTargetRisk.php:157 src/Risk.php:311 templates/dashboard.html.twig:87 templates/dashboard.html.twig:156 templates/dashboard.html.twig:172 templates/items_tab.html.twig:18 templates/myspace.html.twig:91 templates/risk_form.html.twig:25 templates/risk_list.html.twig:26
+#: src/NotificationTargetRisk.php:157 src/Report.php:241 src/Risk.php:311 templates/dashboard.html.twig:87 templates/dashboard.html.twig:156 templates/dashboard.html.twig:172 templates/items_tab.html.twig:18 templates/myspace.html.twig:91 templates/risk_form.html.twig:25 templates/risk_list.html.twig:26
 msgid "Code"
 msgstr ""
 
@@ -483,7 +499,7 @@ msgstr ""
 msgid "Detail"
 msgstr ""
 
-#: src/NotificationTargetRisk.php:160 templates/indicators_tab.html.twig:47 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:65
+#: src/NotificationTargetRisk.php:160 templates/indicators_tab.html.twig:47 templates/report.html.twig:41 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:65
 msgid "Date"
 msgstr ""
 
@@ -551,7 +567,7 @@ msgstr ""
 msgid "Treatment completed without reaching the target"
 msgstr ""
 
-#: src/NotificationTargetRisk.php:71 src/NotificationTargetRisk.php:158 src/Profile.php:118 src/Risk.php:313 templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
+#: src/NotificationTargetRisk.php:71 src/NotificationTargetRisk.php:158 src/Profile.php:118 src/Report.php:242 src/Risk.php:313 templates/consolidated.html.twig:74 templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
 msgid "Risk owner"
 msgstr ""
 
@@ -715,6 +731,138 @@ msgstr ""
 msgid "Accept or revoke the acceptance of a risk (never an own risk)"
 msgstr ""
 
+#: src/Report.php:134
+msgid "Corporate risk report - %s"
+msgstr ""
+
+#: src/Report.php:171
+msgid "Generated on %1$s by %2$s"
+msgstr ""
+
+#: src/Report.php:172
+msgid "Compared with the snapshot of %s"
+msgstr ""
+
+#: src/Report.php:172
+msgid "No previous snapshot to compare with."
+msgstr ""
+
+#: src/Report.php:176
+msgid "1. Executive summary"
+msgstr ""
+
+#: src/Report.php:178 templates/myspace.html.twig:63
+msgid "Indicator"
+msgstr ""
+
+#: src/Report.php:178
+msgid "Current"
+msgstr ""
+
+#: src/Report.php:180 templates/dashboard.html.twig:61 templates/dashboard.html.twig:105
+msgid "Active risks"
+msgstr ""
+
+#: src/Report.php:182 templates/dashboard.html.twig:63
+msgid "Residual %s"
+msgstr ""
+
+#: src/Report.php:184 templates/dashboard.html.twig:154
+msgid "Outside risk appetite"
+msgstr ""
+
+#: src/Report.php:185 templates/dashboard.html.twig:65 templates/dashboard.html.twig:108 templates/risk_list.html.twig:20
+msgid "Maximum economic exposure"
+msgstr ""
+
+#: src/Report.php:193
+msgid "Treatment: %1$d at target, %2$d in progress, %3$d plans completed without reaching the target, %4$d above target without plan. Overdue actions: %5$d. KRIs in alert: %6$d."
+msgstr ""
+
+#: src/Report.php:202
+msgid "Net losses of the last 12 months: %1$s. Risks underestimated according to their loss history: %2$d."
+msgstr ""
+
+#: src/Report.php:208
+msgid "2. Changes since %s"
+msgstr ""
+
+#: src/Report.php:209
+msgid "Risks that increased"
+msgstr ""
+
+#: src/Report.php:209
+msgid "Risks that decreased"
+msgstr ""
+
+#: src/Report.php:209
+msgid "New risks"
+msgstr ""
+
+#: src/Report.php:210
+msgid "Risks that went outside the appetite"
+msgstr ""
+
+#: src/Report.php:210
+msgid "Risks back within the appetite"
+msgstr ""
+
+#: src/Report.php:211
+msgid "Closed or removed risks"
+msgstr ""
+
+#: src/Report.php:223
+msgid "3. Residual heat map"
+msgstr ""
+
+#: src/Report.php:224 templates/events_tab.html.twig:38 templates/risk_form.html.twig:35
+msgid "Probability"
+msgstr ""
+
+#: src/Report.php:224 templates/events_tab.html.twig:40 templates/risk_form.html.twig:36
+msgid "Impact"
+msgstr ""
+
+#: src/Report.php:242 templates/actions_tab.html.twig:27 templates/dashboard.html.twig:172 templates/myspace.html.twig:91 templates/reviews_tab.html.twig:30 templates/reviews_tab.html.twig:42 templates/risk_list.html.twig:29
+msgid "Residual"
+msgstr ""
+
+#: src/Report.php:242 templates/dashboard.html.twig:156 templates/myspace.html.twig:91 templates/risk_list.html.twig:29
+msgid "Position"
+msgstr ""
+
+#: src/Report.php:249
+msgid "4. Risks outside the appetite"
+msgstr ""
+
+#: src/Report.php:249 templates/dashboard.html.twig:161
+msgid "All residual risks are within appetite."
+msgstr ""
+
+#: src/Report.php:250
+msgid "5. Top 10 residual risks"
+msgstr ""
+
+#: src/Report.php:255
+msgid "6. Integrated view (corporate, information security and supplier risks)"
+msgstr ""
+
+#: src/Report.php:256 templates/consolidated.html.twig:25 templates/consolidated.html.twig:74
+msgid "Source"
+msgstr ""
+
+#: src/Report.php:260 templates/consolidated.html.twig:27
+msgid "Total"
+msgstr ""
+
+#: src/Report.php:270
+msgid "Corporate risks assessed below their linked risks"
+msgstr ""
+
+#: src/Report.php:33 templates/report.html.twig:19
+msgid "Board report"
+msgstr ""
+
 #: src/Review.php:104
 msgid "Today"
 msgstr ""
@@ -843,7 +991,7 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: src/Risk_Item.php:179 templates/items_tab.html.twig:18
+#: src/Risk_Item.php:179 templates/consolidated.html.twig:57 templates/items_tab.html.twig:18
 msgid "Corporate risk"
 msgstr ""
 
@@ -1027,6 +1175,16 @@ msgstr ""
 msgid "Critical"
 msgstr ""
 
+#: src/Snapshot.php:33
+msgid "Risk snapshot"
+msgid_plural "Risk snapshots"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Snapshot.php:38
+msgid "Quarterly snapshot of the corporate risk profile"
+msgstr ""
+
 #: src/Validator.php:80
 msgid "The field \"%s\" is mandatory."
 msgstr ""
@@ -1071,10 +1229,6 @@ msgstr ""
 msgid "Inherent"
 msgstr ""
 
-#: templates/actions_tab.html.twig:27 templates/dashboard.html.twig:172 templates/myspace.html.twig:91 templates/reviews_tab.html.twig:30 templates/reviews_tab.html.twig:42 templates/risk_list.html.twig:29
-msgid "Residual"
-msgstr ""
-
 #: templates/actions_tab.html.twig:28 templates/reviews_tab.html.twig:31 templates/reviews_tab.html.twig:42
 msgid "Target"
 msgstr ""
@@ -1107,12 +1261,68 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: templates/dashboard.html.twig:102
-msgid "Risks by entity"
+#: templates/consolidated.html.twig:18
+msgid "Corporate risks together with the information security and supplier risks, consolidated by residual level. Both registers keep their own methodology; this view gives the Board and the CRO a single picture."
 msgstr ""
 
-#: templates/dashboard.html.twig:105 templates/risk_list.html.twig:27
+#: templates/consolidated.html.twig:19
+msgid "You have no access to GRC Manager: only corporate risks are shown."
+msgstr ""
+
+#: templates/consolidated.html.twig:19
+msgid "GRC Manager is not active: only corporate risks are shown."
+msgstr ""
+
+#: templates/consolidated.html.twig:23
+msgid "Risks by source and level"
+msgstr ""
+
+#: templates/consolidated.html.twig:34
+msgid "Open register"
+msgstr ""
+
+#: templates/consolidated.html.twig:54
+msgid "Coherence between corporate and linked risks"
+msgstr ""
+
+#: templates/consolidated.html.twig:55
+msgid "A corporate risk aggregates the ISMS and supplier risks linked to it, so it should not be assessed at a lower level than them. Review the corporate assessment or the links."
+msgstr ""
+
+#: templates/consolidated.html.twig:57
+msgid "Corporate level"
+msgstr ""
+
+#: templates/consolidated.html.twig:57
+msgid "Highest linked level"
+msgstr ""
+
+#: templates/consolidated.html.twig:57
+msgid "Linked risks"
+msgstr ""
+
+#: templates/consolidated.html.twig:65
+msgid "All corporate risks are at least at the level of their linked risks."
+msgstr ""
+
+#: templates/consolidated.html.twig:72
+msgid "High and critical risks of all sources"
+msgstr ""
+
+#: templates/consolidated.html.twig:74 templates/event_items_tab.html.twig:18 templates/items_tab.html.twig:18
+msgid "Level"
+msgstr ""
+
+#: templates/consolidated.html.twig:74 templates/dashboard.html.twig:105 templates/risk_list.html.twig:27
 msgid "Entity"
+msgstr ""
+
+#: templates/consolidated.html.twig:80
+msgid "No high or critical risks."
+msgstr ""
+
+#: templates/dashboard.html.twig:102
+msgid "Risks by entity"
 msgstr ""
 
 #: templates/dashboard.html.twig:131
@@ -1127,7 +1337,7 @@ msgstr ""
 msgid "Risks and exposure by category"
 msgstr ""
 
-#: templates/dashboard.html.twig:142 templates/risk_list.html.twig:18
+#: templates/dashboard.html.twig:142 templates/report.html.twig:28 templates/risk_list.html.twig:18
 msgid "%d risk"
 msgid_plural "%d risks"
 msgstr[0] ""
@@ -1135,18 +1345,6 @@ msgstr[1] ""
 
 #: templates/dashboard.html.twig:148
 msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
-msgstr ""
-
-#: templates/dashboard.html.twig:154
-msgid "Outside risk appetite"
-msgstr ""
-
-#: templates/dashboard.html.twig:156 templates/myspace.html.twig:91 templates/risk_list.html.twig:29
-msgid "Position"
-msgstr ""
-
-#: templates/dashboard.html.twig:161
-msgid "All residual risks are within appetite."
 msgstr ""
 
 #: templates/dashboard.html.twig:170
@@ -1199,18 +1397,6 @@ msgstr ""
 
 #: templates/dashboard.html.twig:57
 msgid "Restricted view: only the risks you own, the risks of your groups and those where you have actions or indicators assigned are shown."
-msgstr ""
-
-#: templates/dashboard.html.twig:61 templates/dashboard.html.twig:105
-msgid "Active risks"
-msgstr ""
-
-#: templates/dashboard.html.twig:63
-msgid "Residual %s"
-msgstr ""
-
-#: templates/dashboard.html.twig:65 templates/dashboard.html.twig:108 templates/risk_list.html.twig:20
-msgid "Maximum economic exposure"
 msgstr ""
 
 #: templates/dashboard.html.twig:71
@@ -1333,10 +1519,6 @@ msgstr ""
 msgid "Item"
 msgstr ""
 
-#: templates/event_items_tab.html.twig:18 templates/items_tab.html.twig:18
-msgid "Level"
-msgstr ""
-
 #: templates/event_items_tab.html.twig:32 templates/events_tab.html.twig:71 templates/items_tab.html.twig:32
 msgid "Unlink"
 msgstr ""
@@ -1395,14 +1577,6 @@ msgstr ""
 
 #: templates/events_tab.html.twig:36
 msgid "Suggested by history"
-msgstr ""
-
-#: templates/events_tab.html.twig:38 templates/risk_form.html.twig:35
-msgid "Probability"
-msgstr ""
-
-#: templates/events_tab.html.twig:40 templates/risk_form.html.twig:36
-msgid "Impact"
 msgstr ""
 
 #: templates/events_tab.html.twig:42
@@ -1542,10 +1716,6 @@ msgid "KRIs I measure"
 msgstr ""
 
 #: templates/myspace.html.twig:63
-msgid "Indicator"
-msgstr ""
-
-#: templates/myspace.html.twig:63
 msgid "Last value"
 msgstr ""
 
@@ -1559,6 +1729,50 @@ msgstr ""
 
 #: templates/myspace.html.twig:89
 msgid "Risks I own"
+msgstr ""
+
+#: templates/report.html.twig:21
+msgid "Executive report of the corporate risk profile for the Board or the Risk Committee: summary, changes since the previous quarter, heat map, risks outside the appetite, top risks, treatment, losses and the integrated view with the ISMS and supplier risks."
+msgstr ""
+
+#: templates/report.html.twig:22
+msgid "select another entity in the GLPI entity selector to report on it"
+msgstr ""
+
+#: templates/report.html.twig:25
+msgid "Compare with"
+msgstr ""
+
+#: templates/report.html.twig:27
+msgid "No comparison"
+msgstr ""
+
+#: templates/report.html.twig:30
+msgid "Download PDF"
+msgstr ""
+
+#: templates/report.html.twig:37
+msgid "Quarterly snapshots"
+msgstr ""
+
+#: templates/report.html.twig:39
+msgid "A snapshot keeps the assessment of every active risk at a date. The automatic action \"ermsnapshot\" takes it at the beginning of each quarter; it can also be taken manually (it replaces the snapshot of the current quarter)."
+msgstr ""
+
+#: templates/report.html.twig:41
+msgid "Period"
+msgstr ""
+
+#: templates/report.html.twig:41
+msgid "Risks"
+msgstr ""
+
+#: templates/report.html.twig:44
+msgid "No snapshots yet."
+msgstr ""
+
+#: templates/report.html.twig:50
+msgid "Take snapshot of %s now"
 msgstr ""
 
 #: templates/reviews_tab.html.twig:17 templates/reviews_tab.html.twig:19

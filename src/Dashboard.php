@@ -89,7 +89,7 @@ class Dashboard extends CommonGLPI
      * @param list<array<string,mixed>> $risks
      * @return array{0: list<array<string,mixed>>, 1: list<array<string,mixed>>}
      */
-    private static function alerts(array $risks): array
+    public static function alerts(array $risks): array
     {
         global $DB;
         $byId = array_column($risks, null, 'id');

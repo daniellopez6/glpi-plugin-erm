@@ -1,0 +1,57 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="container-fluid">
+   <div class="row row-cards">
+      <div class="col-lg-6">
+         <div class="card h-100">
+            <div class="card-header"><h3 class="card-title"><i class="ti ti-file-type-pdf me-2"></i>{{ __('Board report', 'erm') }}</h3></div>
+            <div class="card-body">
+               <p class="text-muted">{{ __('Executive report of the corporate risk profile for the Board or the Risk Committee: summary, changes since the previous quarter, heat map, risks outside the appetite, top risks, treatment, losses and the integrated view with the ISMS and supplier risks.', 'erm') }}</p>
+               <p>{{ __('Entity: %s', 'erm')|format(entity) }} <span class="small text-muted">({{ __('select another entity in the GLPI entity selector to report on it', 'erm') }})</span></p>
+               <form method="get" action="{{ action }}" class="row g-2 align-items-end">
+                  <input type="hidden" name="pdf" value="1">
+                  <div class="col-md-7"><label class="form-label">{{ __('Compare with', 'erm') }}</label>
+                     <select name="compare" class="form-select">
+                        <option value="">{{ __('No comparison', 'erm') }}</option>
+                        {% for p, info in periods %}<option value="{{ p }}" {{ p == compare ? 'selected' }}>{{ labels[p] }} ({{ _n('%d risk', '%d risks', info.count, 'erm')|format(info.count) }})</option>{% endfor %}
+                     </select></div>
+                  <div class="col-md-5"><button type="submit" class="btn btn-primary w-100"><i class="ti ti-download me-1"></i>{{ __('Download PDF', 'erm') }}</button></div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-6">
+         <div class="card h-100">
+            <div class="card-header"><h3 class="card-title"><i class="ti ti-camera me-2"></i>{{ __('Quarterly snapshots', 'erm') }}</h3></div>
+            <div class="card-body">
+               <p class="text-muted small">{{ __('A snapshot keeps the assessment of every active risk at a date. The automatic action "ermsnapshot" takes it at the beginning of each quarter; it can also be taken manually (it replaces the snapshot of the current quarter).', 'erm') }}</p>
+               <table class="table table-sm">
+                  <thead><tr><th>{{ __('Period', 'erm') }}</th><th>{{ __('Date', 'erm') }}</th><th class="text-end">{{ __('Risks', 'erm') }}</th></tr></thead>
+                  <tbody>
+                  {% for p, info in periods %}<tr><td>{{ labels[p] }}</td><td>{{ info.date }}</td><td class="text-end">{{ info.count }}</td></tr>
+                  {% else %}<tr><td colspan="3" class="text-muted">{{ __('No snapshots yet.', 'erm') }}</td></tr>{% endfor %}
+                  </tbody>
+               </table>
+               {% if can_take %}
+               <form method="post" action="{{ action }}">
+                  <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                  <button type="submit" name="take_snapshot" class="btn btn-outline-primary"><i class="ti ti-camera me-1"></i>{{ __('Take snapshot of %s now', 'erm')|format(current) }}</button>
+               </form>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

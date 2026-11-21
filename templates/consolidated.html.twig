@@ -1,0 +1,84 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="container-fluid">
+   <div class="alert alert-info d-flex">
+      <i class="ti ti-stack-2 me-2 fs-2"></i>
+      <div>{{ __('Corporate risks together with the information security and supplier risks, consolidated by residual level. Both registers keep their own methodology; this view gives the Board and the CRO a single picture.', 'erm') }}
+      {% if not grc %}<br><b>{{ grc_installed ? __('You have no access to GRC Manager: only corporate risks are shown.', 'erm') : __('GRC Manager is not active: only corporate risks are shown.', 'erm') }}</b>{% endif %}</div>
+   </div>
+
+   <div class="card mb-3">
+      <div class="card-header"><h3 class="card-title">{{ __('Risks by source and level', 'erm') }}</h3></div>
+      <div class="table-responsive"><table class="table card-table table-vcenter">
+         <thead><tr><th>{{ __('Source', 'erm') }}</th>
+            {% for k, label in levels|reverse(true) %}<th class="text-center">{{ label }}</th>{% endfor %}
+            <th class="text-end">{{ __('Total', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% set totals = {} %}
+         {% for key, src in sources %}
+            {% if key == 'erm' or grc %}
+            <tr>
+               <td><b>{{ src.label }}</b>
+                  {% if key != 'erm' and grc_urls[key] %}<a href="{{ grc_urls[key] }}" class="ms-2 small">{{ __('Open register', 'erm') }}</a>{% endif %}</td>
+               {% for k, label in levels|reverse(true) %}
+                  {% set n = counts[key][k] %}
+                  <td class="text-center">
+                  {% if n %}
+                     {% if key == 'erm' %}<a href="{{ drill_url }}&level={{ k }}" class="badge text-decoration-none" style="background:{{ level_color[k] }};color:{{ k == 'medium' ? '#1d273b' : '#fff' }}">{{ n }}</a>
+                     {% else %}<span class="badge" style="background:{{ level_color[k] }};color:{{ k == 'medium' ? '#1d273b' : '#fff' }}">{{ n }}</span>{% endif %}
+                  {% else %}<span class="text-muted">0</span>{% endif %}
+                  </td>
+               {% endfor %}
+               <td class="text-end"><b>{{ counts[key].total }}</b></td>
+            </tr>
+            {% endif %}
+         {% endfor %}
+         </tbody>
+      </table></div>
+   </div>
+
+   {% if grc %}
+   <div class="card mb-3 {{ incoherent|length ? 'border-danger' : '' }}">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-arrows-diff me-2"></i>{{ __('Coherence between corporate and linked risks', 'erm') }} {% if incoherent|length %}<span class="badge bg-red-lt ms-2">{{ incoherent|length }}</span>{% endif %}</h3></div>
+      <div class="card-body pb-0 small text-muted">{{ __('A corporate risk aggregates the ISMS and supplier risks linked to it, so it should not be assessed at a lower level than them. Review the corporate assessment or the links.', 'erm') }}</div>
+      <div class="table-responsive"><table class="table card-table table-sm">
+         <thead><tr><th>{{ __('Corporate risk', 'erm') }}</th><th>{{ __('Corporate level', 'erm') }}</th><th>{{ __('Highest linked level', 'erm') }}</th><th>{{ __('Linked risks', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for i in incoherent %}
+            <tr><td><a href="{{ risk_url }}?id={{ i.risk.id }}"><b>{{ i.risk.code }}</b> {{ i.risk.name }}</a></td>
+               {# badges built by Scale::badge() (escaped) #}
+               <td>{{ i.level_badge|raw }}</td><td>{{ i.highest_badge|raw }}</td>
+               <td class="small">{% for l in i.linked %}{% if l.url %}<a href="{{ l.url }}">{{ l.title }}</a>{% else %}{{ l.title }}{% endif %} ({{ levels[l.level] ?? '-' }}){{ not loop.last ? ' · ' }}{% endfor %}</td></tr>
+         {% else %}
+            <tr><td colspan="4" class="text-muted">{{ __('All corporate risks are at least at the level of their linked risks.', 'erm') }}</td></tr>
+         {% endfor %}
+         </tbody></table></div>
+   </div>
+   {% endif %}
+
+   <div class="card">
+      <div class="card-header"><h3 class="card-title">{{ __('High and critical risks of all sources', 'erm') }} <span class="badge bg-orange-lt ms-2">{{ top|length }}</span></h3></div>
+      <div class="table-responsive"><table class="table card-table table-sm table-vcenter">
+         <thead><tr><th>{{ __('Level', 'erm') }}</th><th>{{ __('Risk', 'erm') }}</th><th>{{ __('Source', 'erm') }}</th><th>{{ __('Entity', 'erm') }}</th><th>{{ __('Risk owner', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for t in top %}
+            <tr><td>{{ t.badge|raw }}</td><td>{% if t.url %}<a href="{{ t.url }}">{{ t.title }}</a>{% else %}{{ t.title }}{% endif %}</td>
+               <td class="small">{{ t.source }}</td><td class="small">{{ t.entity }}</td><td class="small">{{ t.owner }}</td></tr>
+         {% else %}
+            <tr><td colspan="5" class="text-muted">{{ __('No high or critical risks.', 'erm') }}</td></tr>
+         {% endfor %}
+         </tbody></table></div>
+   </div>
+</div>

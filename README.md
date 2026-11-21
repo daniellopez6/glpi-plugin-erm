@@ -35,6 +35,8 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
   KRIs I measure, my risks and reviews).
 - **Ready-to-assign role profiles** (Risk manager, Risk owner, Treatment responsible, Risk Committee, Internal
   audit) without access to the inventory.
+- **Board report (PDF)** with quarterly snapshots and comparison with the previous quarter, and an **integrated
+  risk map** (corporate + ISMS + supplier risks when GRC Manager is present).
 - **Role based access** (per profile and entity): see all / see own risks, update all / update own, treatment,
   taxonomy & appetite, acceptance. Search, dashboard and selectors are filtered accordingly.
 - **Multi-company**: per entity risk code prefix and appetite/tolerance overrides (inherited by sub-entities), and a
@@ -47,7 +49,7 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
 |---|---|
 | GLPI | 12.0.x |
 | PHP | 8.2 or later |
-| GLPI GRC Manager | optional (menu and object integration when active) |
+| GLPI GRC Manager | **optional**: ERM works on its own. When GRC Manager is active, ERM places its menu next to it, links corporate risks with ISMS objects and adds ISMS and supplier risks to the integrated map and the Board report (read only) |
 
 No third-party runtime libraries.
 
