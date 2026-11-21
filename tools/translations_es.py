@@ -201,4 +201,5 @@ ES = {
  'Back to dashboard': 'Volver al tablero',
  'All active risks': 'Todos los riesgos activos',
  'No risks match this selection.': 'Ningún riesgo coincide con esta selección.',
+ 'The risk of the action is not valid.': 'El riesgo de la acción no es válido.',
 }

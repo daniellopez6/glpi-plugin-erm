@@ -186,17 +186,22 @@ class Action extends CommonDBChild
             Session::addMessageAfterRedirect(__('The action must have a description.', 'erm'), false, ERROR);
             return false;
         }
-        // Actions inherit the entity of their risk (entity restriction in the action register)
+        // Actions always inherit the entity of their risk (never taken from the request)
+        unset($input['entities_id'], $input['is_recursive']);
         $risk = new Risk();
-        if ($risk->getFromDB((int) ($input['plugin_erm_risks_id'] ?? 0))) {
-            $input['entities_id'] = $risk->fields['entities_id'];
-            $input['is_recursive'] = $risk->fields['is_recursive'];
+        if (!$risk->getFromDB((int) ($input['plugin_erm_risks_id'] ?? 0)) || !$risk->canViewItem()) {
+            Session::addMessageAfterRedirect(__('The risk of the action is not valid.', 'erm'), false, ERROR);
+            return false;
         }
+        $input['entities_id'] = $risk->fields['entities_id'];
+        $input['is_recursive'] = $risk->fields['is_recursive'];
         return $this->clean($input);
     }
 
     public function prepareInputForUpdate($input)
     {
+        // An action cannot be moved to another risk or entity
+        unset($input['plugin_erm_risks_id'], $input['entities_id'], $input['is_recursive']);
         $input = $this->clean($input);
         if ($input === false) {
             return false;

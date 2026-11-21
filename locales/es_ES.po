@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 16:30+0000\n"
+"POT-Creation-Date: 2026-11-21 16:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_ES\n"
@@ -31,6 +31,10 @@ msgstr "Plan de tratamiento"
 msgid "The action must have a description."
 msgstr "La acción debe tener una descripción."
 
+#: src/Action.php:193
+msgid "The risk of the action is not valid."
+msgstr "El riesgo de la acción no es válido."
+
 #: src/Action.php:44
 msgid "Treatment action"
 msgid_plural "Treatment plan"
@@ -41,7 +45,7 @@ msgstr[1] "Plan de tratamiento"
 msgid "Action plans"
 msgstr "Planes de acción"
 
-#: src/Action.php:89 templates/action_form.html.twig:24 templates/actions_tab.html.twig:19 templates/myspace.html.twig:36
+#: src/Action.php:89 templates/action_form.html.twig:23 templates/actions_tab.html.twig:19 templates/myspace.html.twig:36
 msgid "Action"
 msgstr "Acción"
 
@@ -49,12 +53,12 @@ msgstr "Acción"
 msgid "Risk code"
 msgstr "Código del riesgo"
 
-#: src/Action.php:92 templates/action_form.html.twig:26 templates/actions_tab.html.twig:19
+#: src/Action.php:92 templates/action_form.html.twig:25 templates/actions_tab.html.twig:19
 #: templates/actions_tab.html.twig:65 templates/myspace.html.twig:36
 msgid "Due date"
 msgstr "Vencimiento"
 
-#: src/Action.php:93 src/Risk.php:308 templates/action_form.html.twig:27 templates/actions_tab.html.twig:19
+#: src/Action.php:93 src/Risk.php:308 templates/action_form.html.twig:26 templates/actions_tab.html.twig:19
 #: templates/myspace.html.twig:36 templates/myspace.html.twig:91 templates/risk_form.html.twig:56
 #: templates/risk_list.html.twig:30
 msgid "Status"
@@ -66,16 +70,16 @@ msgstr "Estado"
 msgid "Risk"
 msgstr "Riesgo"
 
-#: src/Action.php:95 templates/action_form.html.twig:25 templates/actions_tab.html.twig:19
+#: src/Action.php:95 templates/action_form.html.twig:24 templates/actions_tab.html.twig:19
 #: templates/actions_tab.html.twig:64 templates/indicators_tab.html.twig:29
 msgid "Responsible"
 msgstr "Responsable"
 
-#: src/Action.php:96 templates/action_form.html.twig:28 templates/actions_tab.html.twig:19
+#: src/Action.php:96 templates/action_form.html.twig:27 templates/actions_tab.html.twig:19
 msgid "Done on"
 msgstr "Realizada el"
 
-#: src/Action.php:97 templates/action_form.html.twig:29 templates/actions_tab.html.twig:19
+#: src/Action.php:97 templates/action_form.html.twig:28 templates/actions_tab.html.twig:19
 #: templates/actions_tab.html.twig:66
 msgid "Estimated cost"
 msgstr "Costo estimado"
@@ -262,50 +266,50 @@ msgstr "Apetito"
 msgid "Tolerance"
 msgstr "Tolerancia"
 
-#: src/Dashboard.php:148 src/Dashboard.php:246
+#: src/Dashboard.php:148 src/Dashboard.php:249
 msgid "Uncategorized"
 msgstr "Sin categoría"
 
-#: src/Dashboard.php:236
+#: src/Dashboard.php:239
 #, python-format
 msgid "Residual level: %s"
 msgstr "Nivel residual: %s"
 
-#: src/Dashboard.php:240
+#: src/Dashboard.php:243
 msgid "Inherent: probability %1$s × impact %2$s"
 msgstr "Inherente: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:240
+#: src/Dashboard.php:243
 msgid "Residual: probability %1$s × impact %2$s"
 msgstr "Residual: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:246
+#: src/Dashboard.php:249
 #, python-format
 msgid "Category: %s"
 msgstr "Categoría: %s"
 
-#: src/Dashboard.php:249
+#: src/Dashboard.php:252
 #, python-format
 msgid "Entity: %s"
 msgstr "Entidad: %s"
 
-#: src/Dashboard.php:253 src/Scale.php:238
+#: src/Dashboard.php:256 src/Scale.php:238
 msgid "Above tolerance"
 msgstr "Sobre la tolerancia"
 
-#: src/Dashboard.php:254 src/Scale.php:241
+#: src/Dashboard.php:257 src/Scale.php:241
 msgid "Above appetite"
 msgstr "Sobre el apetito"
 
-#: src/Dashboard.php:255 templates/dashboard.html.twig:75
+#: src/Dashboard.php:258 templates/dashboard.html.twig:75
 msgid "Outside appetite"
 msgstr "Fuera del apetito"
 
-#: src/Dashboard.php:259 templates/dashboard.html.twig:75
+#: src/Dashboard.php:262 templates/dashboard.html.twig:75
 msgid "With overdue actions"
 msgstr "Con acciones vencidas"
 
-#: src/Dashboard.php:262 templates/dashboard.html.twig:76
+#: src/Dashboard.php:265 templates/dashboard.html.twig:76
 msgid "With KRIs in alert"
 msgstr "Con KRI en alerta"
 
@@ -753,11 +757,11 @@ msgstr "El campo \"%s\" es obligatorio."
 msgid "Invalid value in \"%s\"."
 msgstr "Valor inválido en \"%s\"."
 
-#: templates/action_form.html.twig:26
+#: templates/action_form.html.twig:25
 msgid "Overdue"
 msgstr "Vencida"
 
-#: templates/action_form.html.twig:29
+#: templates/action_form.html.twig:28
 msgid "In the currency of the organization."
 msgstr "En la moneda de la organización."
 

@@ -221,6 +221,9 @@ class Dashboard extends CommonGLPI
     public static function showList(array $query): void
     {
         $filters = DrillFilter::fromQuery($query);
+        if (isset($filters['entity']) && !Session::haveAccessToEntity($filters['entity'])) {
+            unset($filters['entity']);
+        }
         $risks = Risk::activeRisks();
         [$overdue, $kris] = self::alerts($risks);
         $rows = DrillFilter::apply(

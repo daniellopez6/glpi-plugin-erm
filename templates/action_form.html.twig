@@ -20,7 +20,6 @@
    {% if risk %}
    {{ fields.htmlField('', '<a href="' ~ risk.getLinkURL() ~ '"><b>' ~ risk.fields['code']|e ~ '</b> ' ~ risk.fields['name']|e ~ '</a>', __('Risk', 'erm')) }}
    {% endif %}
-   <input type="hidden" name="plugin_erm_risks_id" value="{{ item.fields['plugin_erm_risks_id'] }}">
    {{ fields.textareaField('name', item.fields['name'], __('Action', 'erm'), {'required': true, 'full_width': true}) }}
    {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], __('Responsible', 'erm'), {'right': 'all', 'entity': item.fields['entities_id']}) }}
    {{ fields.dateField('due_date', item.fields['due_date'], __('Due date', 'erm'), {'helper': overdue ? __('Overdue', 'erm') : ''}) }}

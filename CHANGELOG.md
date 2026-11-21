@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.4.1] - 2026-11-21
+### Security
+- Treatment actions can no longer be moved to another risk or entity through a crafted request; their entity is
+  always taken from the risk, and adding an action to a risk that cannot be viewed is rejected.
+- The drill-down list ignores an entity filter for entities the user has no access to.
+
 ## [1.4.0] - 2026-11-21
 ### Added
 - Dashboard drill-down: every figure (level cards, heat map cells, categories, per entity counters, outside

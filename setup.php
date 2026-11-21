@@ -32,7 +32,7 @@ use GlpiPlugin\Erm\Profile;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '1.4.0');
+define('PLUGIN_ERM_VERSION', '1.4.1');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
