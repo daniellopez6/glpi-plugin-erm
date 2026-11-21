@@ -227,12 +227,13 @@ class Indicator extends CommonDBChild
             return $input;
         }
         $input['source'] = 'savedsearch';
-        // $this->fields is empty when adding: the fallback is needed even if static analysis infers otherwise
-        $input['savedsearches_id'] = array_key_exists('savedsearches_id', $input)
-            ? (int) $input['savedsearches_id']
-            : (int) ($this->fields['savedsearches_id'] ?? 0); // @phpstan-ignore nullCoalesce.offset
+        if (array_key_exists('savedsearches_id', $input)) {
+            $input['savedsearches_id'] = (int) $input['savedsearches_id'];
+        } else {
+            $input['savedsearches_id'] = $this->isNewItem() ? 0 : (int) $this->fields['savedsearches_id'];
+        }
         $search = new \SavedSearch();
-        if (!$search->getFromDB((int) ($input['savedsearches_id'] ?? 0)) || !$search->canViewItem()) {
+        if (!$search->getFromDB($input['savedsearches_id']) || !$search->canViewItem()) {
             \Session::addMessageAfterRedirect(__('Select a saved search you can see for an automatic KRI.', 'erm'), false, ERROR);
             return false;
         }
