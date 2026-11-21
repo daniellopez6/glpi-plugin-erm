@@ -223,8 +223,12 @@ class Dashboard extends CommonGLPI
         $filters = DrillFilter::fromQuery($query);
         $risks = Risk::activeRisks();
         [$overdue, $kris] = self::alerts($risks);
-        $rows = DrillFilter::apply($risks, $filters, array_map('intval', array_column($overdue, 'risk_id')),
-            array_map('intval', array_column($kris, 'risk_id')));
+        $rows = DrillFilter::apply(
+            $risks,
+            $filters,
+            array_map('intval', array_column($overdue, 'risk_id')),
+            array_map('intval', array_column($kris, 'risk_id'))
+        );
 
         $chips = [];
         $levels = Scale::levels();
