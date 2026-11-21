@@ -7,6 +7,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.5.0] - 2026-11-21
+### Added
+- Loss event database (ISO 31000 6.4.3, Basel / BCRA operational loss data): losses, near misses and unexpected
+  gains with occurrence and detection dates, root cause, gross loss, recoveries and net loss; documents, notes and
+  history. New right "Loss events and incidents" (`plugin_erm_event`).
+- Events are linked with corporate risks and with GLPI tickets, problems and changes; an event can be recorded
+  directly from a ticket, problem, change or risk (prefilled).
+- Economic impact criteria per entity (minimum net loss of each impact level), inherited by sub-entities.
+- "Assessment vs. loss history" on each risk: annual frequency of loss events over the last 3 years, annual
+  probability (Poisson) and largest loss, compared with the assessed probability and impact.
+- Dashboard card with the risks underestimated according to their history (drill-down) and net losses of the last
+  12 months.
+- Unit tests for loss statistics (69 tests).
+
 ## [1.4.1] - 2026-11-21
 ### Security
 - Treatment actions can no longer be moved to another risk or entity through a crafted request; their entity is

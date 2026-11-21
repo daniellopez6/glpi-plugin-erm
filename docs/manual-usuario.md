@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.4.x · GLPI 12
+Versión del plugin: 1.5.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -15,6 +15,7 @@ están en la [guía de administración](guia-administracion.md).
 | **Riesgo residual** | Nivel del riesgo **después** de los controles existentes. Es el que se compara con el apetito. |
 | **Apetito** | Nivel residual máximo que la organización **desea** asumir en una categoría. |
 | **Tolerancia** | Nivel residual máximo **admisible**. Superarlo exige acción inmediata. |
+| **Evento de pérdida** | Algo que ocurrió: un incidente con pérdida, una **casi pérdida** (ocurrió pero no costó) o una ganancia inesperada. Es la evidencia de que el riesgo se materializa. |
 | **Riesgo propio** | Un riesgo del que sos dueño, de tu área, o donde tenés una acción o un indicador asignado. |
 
 ## 2. Dónde está
@@ -25,6 +26,7 @@ Menú **GRC y cumplimiento** (o **Gestión** si GRC Manager no está instalado):
 - **Mi espacio ERM**: mis acciones, mis indicadores y mis riesgos.
 - **Registro de riesgos corporativos**: lista y búsqueda.
 - **Planes de acción**: todas las acciones de tratamiento.
+- **Eventos de pérdida**: base de incidentes con efecto económico, casi pérdidas y ganancias inesperadas.
 - **Categorías y apetito (ERM)**: taxonomía, apetito y tolerancia.
 
 Lo que ves depende de tu perfil: con "ver propios" sólo aparecen tus riesgos, y un aviso lo indica en el tablero.
@@ -106,7 +108,41 @@ contrato, aplicación, equipo, proyecto, grupo, cambio) y el elemento. Desde eso
 **Riesgos corporativos** muestra el camino inverso. Ejemplo: el riesgo de ciberataque corporativo vinculado a los
 riesgos de ransomware y phishing del SGSI.
 
-## 9. Mi espacio ERM
+## 9. Eventos de pérdida e historial
+
+La ISO 31000 pide que el análisis se apoye en información confiable. Los eventos de pérdida son esa evidencia.
+
+**Registrar un evento**: menú **Eventos de pérdida → Agregar**, o mejor desde donde se gestionó: pestaña
+**Eventos de pérdida → Registrar evento de pérdida** de un ticket, problema, cambio o riesgo. El formulario se
+completa con los datos del origen (nombre, descripción, fecha, entidad) y el evento queda vinculado.
+
+![Registrar desde un ticket](screenshots/event-from-ticket.png)
+
+- **Tipo**: pérdida, casi pérdida o ganancia inesperada. Sólo las pérdidas cuentan para la probabilidad; las
+  casi pérdidas muestran que el riesgo está activo.
+- **Fechas** de ocurrencia (obligatoria) y de detección.
+- **Pérdida bruta y recuperos** (seguros, reclamos). La **pérdida neta** se calcula sola.
+- **Causa raíz**, para aprender del evento.
+- Pestaña **Riesgos y elementos vinculados**: un evento puede materializar varios riesgos y estar asociado a
+  varios tickets.
+
+**Qué dice el historial** (pestaña **Eventos de pérdida** del riesgo):
+
+![Historial del riesgo](screenshots/risk-loss-history.png)
+
+- **Frecuencia anual**: eventos con pérdida de los últimos 3 años, dividido 3.
+- **Probabilidad anual**: probabilidad de que ocurra al menos un evento en el año (1 − e^−frecuencia), llevada a
+  la escala: 1 evento en 3 años ≈ 28% (Posible); 4 eventos en 3 años ≈ 74% (Probable).
+- **Impacto sugerido**: la mayor pérdida neta frente a los **criterios de impacto económico** de la entidad.
+- Se compara con la evaluación **residual**. Si el historial sugiere un nivel mayor, aparece una alerta: revisá
+  la evaluación, o dejá documentado por qué el historial ya no es representativo (por ejemplo, se reforzaron los
+  controles después de los eventos).
+
+El sistema **sugiere**, no cambia la evaluación: la decisión es del dueño del riesgo.
+
+![Registro de eventos](screenshots/loss-events.png)
+
+## 10. Mi espacio ERM
 
 Pantalla personal con lo que tenés que hacer:
 
@@ -117,7 +153,7 @@ Pantalla personal con lo que tenés que hacer:
 - **Riesgos a mi cargo** (como dueño o por tu área), con su nivel, la posición frente al apetito y la próxima
   revisión.
 
-## 10. Tablero
+## 11. Tablero
 
 ![Tablero](screenshots/dashboard.png)
 
@@ -133,20 +169,23 @@ Pantalla personal con lo que tenés que hacer:
 
 ![Detalle desde el tablero](screenshots/drilldown.png)
 
+- **Evaluación vs. historial de pérdidas**: los riesgos cuya evaluación es menor que lo que sugiere su historial,
+  y las pérdidas netas de los últimos 12 meses.
 - **Riesgos por entidad**: si tu perfil ve varias empresas, una tabla compara sus indicadores; el nombre de cada
   entidad lleva al registro filtrado. Para trabajar sobre una sola empresa, elegila en el selector de entidad de GLPI.
 
-## 11. Categorías y apetito
+## 12. Categorías y apetito
 
 **Categorías y apetito (ERM)** (requiere el permiso de configuración para modificar): cada categoría tiene
 apetito, tolerancia y declaración de apetito por defecto. Si una subcategoría no los define, **hereda** los de la
 superior. Cada empresa puede ajustarlos en la pestaña "Riesgos corporativos (ERM)" de su entidad.
 Cambiar el apetito actualiza inmediatamente la posición de todos los riesgos de esa categoría.
 
-## 12. Buenas prácticas
+## 13. Buenas prácticas
 
 - Revisá cada riesgo al menos una vez al año (campo "Próxima revisión") y siempre ante un cambio relevante.
 - Un riesgo sobre la tolerancia debe tener un plan de tratamiento con fechas, o una aceptación formal justificada.
+- Registrá **todos** los eventos, también las casi pérdidas: sin datos, la probabilidad es sólo una opinión.
 - Usá los KRI para anticipar: un indicador que se acerca al umbral de alerta es una señal para el dueño.
 - Los riesgos de seguridad de la información se gestionan en detalle en el SGSI (GRC Manager); en el ERM,
   vinculalos a un riesgo corporativo agregado (por ejemplo, "Ciberataque con paralización del negocio").

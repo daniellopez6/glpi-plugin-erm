@@ -26,13 +26,15 @@ use GlpiPlugin\Erm\Action;
 use GlpiPlugin\Erm\Category;
 use GlpiPlugin\Erm\Dashboard;
 use GlpiPlugin\Erm\EntityConfig;
+use GlpiPlugin\Erm\Event;
+use GlpiPlugin\Erm\Event_Item;
 use GlpiPlugin\Erm\Indicator;
 use GlpiPlugin\Erm\MySpace;
 use GlpiPlugin\Erm\Profile;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '1.4.1');
+define('PLUGIN_ERM_VERSION', '1.5.0');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -52,11 +54,14 @@ function plugin_init_erm(): void
     Plugin::registerClass(Risk_Item::class, ['addtabon' => array_merge([Risk::class], Risk_Item::getLinkableItemtypes())]);
     Plugin::registerClass(Risk::class, ['document_types' => true]);
     Plugin::registerClass(EntityConfig::class, ['addtabon' => ['Entity']]);
+    Plugin::registerClass(Event::class, ['document_types' => true]);
+    Plugin::registerClass(Event_Item::class, ['addtabon' => array_merge([Event::class], Event_Item::getLinkableItemtypes())]);
     $CFG_GLPI['document_types'][] = Risk::class;
+    $CFG_GLPI['document_types'][] = Event::class;
 
     // Same menu sector as GRC Manager when active; otherwise "Management".
     $sector = Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'management';
-    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, MySpace::class, Risk::class, Action::class, Category::class]];
+    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, MySpace::class, Risk::class, Action::class, Event::class, Category::class]];
 }
 
 function plugin_version_erm(): array

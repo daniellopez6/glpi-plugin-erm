@@ -65,6 +65,27 @@
       <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">{{ __('Maximum economic exposure', 'erm') }}</div><div class="h3 m-0">{{ exposure }}</div></div></div></div>
    </div>
 
+   {% if events %}
+   <div class="card mb-3 {{ underestimated|length ? 'border-danger' : '' }}">
+      <div class="card-header">
+         <h3 class="card-title"><i class="ti ti-chart-histogram me-2"></i>{{ __('Assessment vs. loss history', 'erm') }}
+            {% if underestimated|length %}<a href="{{ drill_url }}&history=1" class="badge bg-red-lt ms-2">{{ underestimated|length }}</a>{% endif %}</h3>
+         <div class="card-actions"><span class="text-muted me-3">{{ __('Net losses, last 12 months', 'erm') }}: <b>{{ net_loss_12m }}</b></span><a href="{{ events_url }}">{{ __('Loss event register', 'erm') }}</a></div>
+      </div>
+      <div class="table-responsive"><table class="table card-table table-sm">
+         <thead><tr><th>{{ __('Code', 'erm') }}</th><th>{{ __('Risk', 'erm') }}</th><th class="text-end">{{ __('Loss events', 'erm') }}</th><th>{{ __('Probability (assessed → history)', 'erm') }}</th><th>{{ __('Impact (assessed → history)', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for u in underestimated %}
+            <tr><td>{{ u.code }}</td><td><a href="{{ risk_url }}?id={{ u.id }}&forcetab=GlpiPlugin%5CErm%5CEvent_Item$1">{{ u.name }}</a></td><td class="text-end">{{ u.losses }}</td>
+               {% for d in [u.prob, u.impact] %}
+               <td>{% if d[1] %}<span class="{{ d[2] == 'underestimated' ? 'text-danger fw-bold' : '' }}">{{ d[0] }} → {{ d[1] }}</span>{% else %}-{% endif %}</td>
+               {% endfor %}
+            </tr>
+         {% else %}<tr><td colspan="5" class="text-muted">{{ __('No risk is underestimated according to its loss history.', 'erm') }}</td></tr>{% endfor %}
+         </tbody></table></div>
+   </div>
+   {% endif %}
+
    {% if by_entity|length %}
    <div class="card mb-3">
       <div class="card-header"><h3 class="card-title"><i class="ti ti-building-community me-2"></i>{{ __('Risks by entity', 'erm') }}</h3></div>

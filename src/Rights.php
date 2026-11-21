@@ -28,6 +28,7 @@ use Session;
  * - plugin_erm_treatment  Treatment and monitoring: actions and KRI measurements (CREATE, UPDATE, PURGE).
  * - plugin_erm_config     Category taxonomy, appetite and tolerance.
  * - plugin_erm_accept     Formal risk acceptance (UPDATE). The risk owner cannot accept it.
+ * - plugin_erm_event      Loss event database: READ, CREATE, UPDATE, DELETE, PURGE, notes.
  *
  * A risk is "own" when the user is its owner, belongs to its responsible group or is responsible for
  * one of its actions or indicators.
@@ -38,10 +39,11 @@ final class Rights
     public const TREATMENT = 'plugin_erm_treatment';
     public const CONFIG    = 'plugin_erm_config';
     public const ACCEPT    = 'plugin_erm_accept';
+    public const EVENT     = 'plugin_erm_event';
 
     public static function all(): array
     {
-        return [self::RISK, self::TREATMENT, self::CONFIG, self::ACCEPT];
+        return [self::RISK, self::TREATMENT, self::CONFIG, self::ACCEPT, self::EVENT];
     }
 
     public static function canReadAll(): bool
@@ -101,13 +103,17 @@ final class Rights
         $own = READ_OWNED | UPDATE_OWNED;
         return match ($profile) {
             'Super-Admin' => [self::RISK => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE, self::TREATMENT => ALLSTANDARDRIGHT,
-                             self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => UPDATE],
+                             self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => UPDATE,
+                             self::EVENT => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE],
             'Admin'       => [self::RISK => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE, self::TREATMENT => ALLSTANDARDRIGHT,
-                             self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => 0],
-            'Supervisor'  => [self::RISK => READ | UPDATE | CREATE, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => READ, self::ACCEPT => 0],
-            'Technician'  => [self::RISK => $own, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => 0, self::ACCEPT => 0],
-            'Observer', 'Read-Only' => [self::RISK => READ, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0],
-            default       => [self::RISK => 0, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0],
+                             self::CONFIG => ALLSTANDARDRIGHT, self::ACCEPT => 0,
+                             self::EVENT => ALLSTANDARDRIGHT | READNOTE | UPDATENOTE],
+            'Supervisor'  => [self::RISK => READ | UPDATE | CREATE, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => READ, self::ACCEPT => 0,
+                             self::EVENT => READ | UPDATE | CREATE],
+            'Technician'  => [self::RISK => $own, self::TREATMENT => READ | UPDATE | CREATE, self::CONFIG => 0, self::ACCEPT => 0,
+                             self::EVENT => READ | CREATE],
+            'Observer', 'Read-Only' => [self::RISK => READ, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0, self::EVENT => READ],
+            default       => [self::RISK => 0, self::TREATMENT => 0, self::CONFIG => 0, self::ACCEPT => 0, self::EVENT => 0],
         };
     }
 }

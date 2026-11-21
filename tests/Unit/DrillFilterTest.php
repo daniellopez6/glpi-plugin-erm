@@ -93,6 +93,12 @@ final class DrillFilterTest extends TestCase
         $this->assertSame([2], $this->ids(DrillFilter::apply($this->risks(), ['outside' => 'above_appetite'])));
     }
 
+    public function testUnderestimatedByHistory(): void
+    {
+        $this->assertSame([2], $this->ids(DrillFilter::apply($this->risks(), ['history' => 1], [], [], [2])));
+        $this->assertSame(['history' => 1], DrillFilter::fromQuery(['history' => '1']));
+    }
+
     public function testOverdueAndKri(): void
     {
         $this->assertSame([3], $this->ids(DrillFilter::apply($this->risks(), ['overdue' => 1], [3], [1])));

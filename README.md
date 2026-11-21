@@ -17,6 +17,9 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
 - Levels: 1-4 low, 5-9 medium, 10-16 high, 20-25 critical; automatic position against appetite/tolerance.
 - **Treatment plans** (owner, due date, cost, status, overdue highlight).
 - **Key Risk Indicators (KRI)** with warning/critical thresholds, direction and history chart.
+- **Loss event database**: losses, near misses and gains linked with risks and with tickets, problems and changes.
+  The loss history **suggests the probability and impact** of each risk (annual frequency over 3 years and largest
+  loss against the entity's economic impact criteria) and flags underestimated risks.
 - **Formal risk acceptance with segregation of duties**: only profiles with the acceptance right can accept,
   never the risk owner; who and when are recorded automatically.
 - **Related items**: link corporate risks with GRC Manager risks, business processes, controls, objectives and

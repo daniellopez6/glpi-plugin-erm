@@ -35,6 +35,11 @@ class EntityConfig extends CommonDBTM
     private static ?array $overrides = null;
     /** @var array<int, array{parent:int, appetite_level:string, tolerance_level:string}>|null */
     private static ?array $categories = null;
+    /** @var array<int, array<int,float|null>> impact thresholds by entity */
+    private static array $thresholds = [];
+
+    /** Impact levels that have a minimum amount (level 1 "Insignificant" starts at 0). */
+    public const THRESHOLD_LEVELS = [2, 3, 4, 5];
 
     public static function getTypeName($nb = 0)
     {
@@ -79,7 +84,16 @@ class EntityConfig extends CommonDBTM
                 'eff_tolerance'     => Scale::badge($effTol ?: null),
             ];
         }
+        $own = self::ownThresholds($entityId);
+        $effective = self::impactThresholds($entityId);
+        $thresholds = [];
+        foreach (self::THRESHOLD_LEVELS as $lvl) {
+            $thresholds[] = ['level' => $lvl, 'label' => Scale::impacts()[$lvl], 'value' => $own[$lvl],
+                             'effective' => $effective[$lvl] !== null ? Scale::money($effective[$lvl]) : ''];
+        }
         TemplateRenderer::getInstance()->display('@erm/entity_config.html.twig', [
+            'thresholds' => $thresholds,
+            'inherited_thresholds' => !array_filter($own, fn($v) => $v !== null) && array_filter($effective, fn($v) => $v !== null),
             'entity_id'  => $entityId,
             'prefix'     => self::ownPrefix($entityId),
             'eff_prefix' => self::prefixFor($entityId),
@@ -175,6 +189,45 @@ class EntityConfig extends CommonDBTM
     {
         self::$overrides = null;
         self::$categories = null;
+        self::$thresholds = [];
+    }
+
+    /**
+     * Minimum amounts of impact levels 2-5 defined on the entity itself.
+     *
+     * @return array<int,float|null>
+     */
+    public static function ownThresholds(int $entityId): array
+    {
+        $config = new self();
+        $found = $config->getFromDBByCrit(['entities_id' => $entityId]);
+        $out = [];
+        foreach (self::THRESHOLD_LEVELS as $lvl) {
+            $v = $found ? ($config->fields["impact_{$lvl}"] ?? null) : null;
+            $out[$lvl] = $v === null || $v === '' ? null : (float) $v;
+        }
+        return $out;
+    }
+
+    /**
+     * Economic impact criteria of an entity: its own, or those of the closest parent defining any.
+     *
+     * @return array<int,float|null>
+     */
+    public static function impactThresholds(int $entityId): array
+    {
+        if (!isset(self::$thresholds[$entityId])) {
+            $result = array_fill_keys(self::THRESHOLD_LEVELS, null);
+            foreach (self::entityChain($entityId) as $id) {
+                $own = self::ownThresholds($id);
+                if (array_filter($own, fn($v) => $v !== null)) {
+                    $result = $own;
+                    break;
+                }
+            }
+            self::$thresholds[$entityId] = $result;
+        }
+        return self::$thresholds[$entityId];
     }
 
     /** Prefix defined on the entity itself ('' when inherited). */
@@ -206,11 +259,29 @@ class EntityConfig extends CommonDBTM
         global $DB;
         $prefix = trim((string) ($post['code_prefix'] ?? ''));
         $prefix = $prefix === '' ? '' : Numbering::normalizePrefix($prefix);
+        $values = ['code_prefix' => $prefix];
+        $previous = null;
+        foreach (self::THRESHOLD_LEVELS as $lvl) {
+            $raw = trim((string) ($post['impact'][$lvl] ?? ''));
+            $amount = $raw === '' ? 'NULL' : Validator::decimal($raw);
+            if ($amount === false || ($amount !== 'NULL' && (float) $amount < 0)) {
+                Session::addMessageAfterRedirect(sprintf(__('Invalid amount for impact "%s".', 'erm'), Scale::impacts()[$lvl]), false, ERROR);
+                return;
+            }
+            if ($amount !== 'NULL') {
+                if ($previous !== null && (float) $amount <= $previous) {
+                    Session::addMessageAfterRedirect(__('The minimum amounts must increase with the impact level.', 'erm'), false, ERROR);
+                    return;
+                }
+                $previous = (float) $amount;
+            }
+            $values["impact_{$lvl}"] = $amount;
+        }
         $config = new self();
         if ($config->getFromDBByCrit(['entities_id' => $entityId])) {
-            $config->update(['id' => $config->getID(), 'code_prefix' => $prefix]);
-        } elseif ($prefix !== '') {
-            $config->add(['entities_id' => $entityId, 'code_prefix' => $prefix]);
+            $config->update(['id' => $config->getID()] + $values);
+        } elseif ($prefix !== '' || array_filter($values, fn($v) => $v !== 'NULL' && $v !== '')) {
+            $config->add(['entities_id' => $entityId] + $values);
         }
         $levels = array_keys(Scale::levels());
         foreach ((array) ($post['appetite'] ?? []) as $categoryId => $values) {

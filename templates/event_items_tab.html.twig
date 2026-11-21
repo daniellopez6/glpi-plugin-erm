@@ -1,0 +1,54 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="card">
+   <div class="table-responsive">
+      <table class="table table-hover card-table">
+         <thead><tr><th>{{ __('Type', 'erm') }}</th><th>{{ __('Item', 'erm') }}</th><th>{{ __('Level', 'erm') }}</th><th>{{ __('Comment', 'erm') }}</th>{% if can_edit %}<th></th>{% endif %}</tr></thead>
+         <tbody>
+         {% for r in rows %}
+            <tr>
+               <td><i class="{{ r.icon }} me-1"></i>{{ r.type }}</td>
+               {# link: GLPI getLink() (escaped); level: Scale::badge() (escaped) #}
+               <td>{{ r.link|raw }}</td>
+               <td>{{ r.level|raw }}</td>
+               <td>{{ r.comment }}</td>
+               {% if can_edit %}
+               <td>
+                  <form method="post" action="{{ action }}">
+                     <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                     <input type="hidden" name="id" value="{{ r.id }}">
+                     <button type="submit" name="purge" class="btn btn-sm btn-ghost-danger" title="{{ __('Unlink', 'erm') }}"><i class="ti ti-unlink"></i></button>
+                  </form>
+               </td>
+               {% endif %}
+            </tr>
+         {% else %}
+            <tr><td colspan="5" class="text-muted">{{ __('Link the event with the corporate risks it materializes, and with the tickets, problems or changes where it was handled.', 'erm') }}</td></tr>
+         {% endfor %}
+         </tbody>
+      </table>
+   </div>
+   {% if can_edit %}
+   <div class="card-footer">
+      <form method="post" action="{{ action }}" class="row g-2 align-items-end">
+         <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+         <input type="hidden" name="plugin_erm_events_id" value="{{ event_id }}">
+         <div class="col-md-7"><label class="form-label">{{ __('Link with', 'erm') }}</label>{{ selector|raw }}</div>
+         <div class="col-md-3"><label class="form-label">{{ __('Comment', 'erm') }}</label><input type="text" name="comment" maxlength="255" class="form-control"></div>
+         <div class="col-md-2"><button type="submit" name="add" class="btn btn-primary w-100"><i class="ti ti-link"></i> {{ __('Link', 'erm') }}</button></div>
+      </form>
+   </div>
+   {% endif %}
+</div>

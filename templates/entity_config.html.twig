@@ -27,6 +27,22 @@
          </div>
       </div>
    </div>
+   <div class="card mb-3">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-cash me-2"></i>{{ __('Economic impact criteria', 'erm') }}</h3></div>
+      <div class="card-body">
+         <div class="text-muted small mb-2">{{ __('Minimum net loss of each impact level, in the currency of the organization. They give the risk assessment a common yardstick and let the plugin suggest the impact from the loss history. Leave all empty to inherit the criteria of the parent entity.', 'erm') }}</div>
+         {% if inherited_thresholds %}<div class="small mb-2"><span class="badge bg-blue-lt">{{ __('Inherited from the parent entity', 'erm') }}</span></div>{% endif %}
+         <div class="row g-2">
+            <div class="col-md"><label class="form-label">{{ __('1 - Insignificant', 'erm') }}</label><input type="text" class="form-control" value="0" disabled></div>
+            {% for t in thresholds %}
+            <div class="col-md">
+               <label class="form-label">{{ t.label }} ({{ __('from', 'erm') }})</label>
+               <input type="text" inputmode="decimal" name="impact[{{ t.level }}]" value="{{ t.value is not null ? t.value : '' }}" placeholder="{{ t.effective }}" class="form-control" {{ can_edit ? '' : 'disabled' }}>
+            </div>
+            {% endfor %}
+         </div>
+      </div>
+   </div>
    <div class="card">
       <div class="card-header"><h3 class="card-title"><i class="ti ti-gauge me-2"></i>{{ __('Risk appetite of this entity', 'erm') }}</h3></div>
       <div class="card-body text-muted small pb-0">

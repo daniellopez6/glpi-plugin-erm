@@ -93,6 +93,7 @@ class Risk extends CommonDBTM
         $this->addDefaultFormTab($tabs);
         $this->addStandardTab(Action::class, $tabs, $options);
         $this->addStandardTab(Indicator::class, $tabs, $options);
+        $this->addStandardTab(Event_Item::class, $tabs, $options);
         $this->addStandardTab(Risk_Item::class, $tabs, $options);
         $this->addStandardTab(Document_Item::class, $tabs, $options);
         $this->addStandardTab('Notepad', $tabs, $options);

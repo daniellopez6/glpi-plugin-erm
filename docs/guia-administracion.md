@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.4.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 1.5.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -41,6 +41,7 @@ Versión del plugin: 1.4.x · GLPI 12.0.x · PHP 8.2+
 | **Registro de riesgos corporativos** (`plugin_erm`) | Ver todos · Ver propios · Actualizar · Actualizar propios · Crear · Papelera · Purgar · Leer/Actualizar notas | "Propios" limita la lista, el tablero, los selectores y el acceso directo a los riesgos donde el usuario es dueño, pertenece al área responsable o tiene una acción o KRI asignado. |
 | **Tratamiento y seguimiento** (`plugin_erm_treatment`) | Crear · Actualizar · Purgar | Acciones, indicadores y mediciones de los riesgos que el usuario puede ver. El registro "Planes de acción" respeta la misma visibilidad: con "Ver propios", sólo las acciones de sus riesgos o asignadas al usuario. |
 | **Categorías, apetito y tolerancia** (`plugin_erm_config`) | Ver todos · Actualizar · Crear · Papelera · Purgar | Taxonomía y apetito. La taxonomía se puede **consultar** también con permiso de lectura del registro. |
+| **Eventos de pérdida e incidentes** (`plugin_erm_event`) | Ver todos · Actualizar · Crear · Papelera · Purgar · Leer/Actualizar notas | Registrar eventos, vincularlos con riesgos y tickets. Para que la mesa de ayuda pueda reportar eventos alcanza con "Ver todos + Crear". |
 | **Aceptación formal de riesgos** (`plugin_erm_accept`) | Aceptar riesgos | Aceptar o revocar una aceptación. Nunca sobre un riesgo propio. Con sólo este permiso, el usuario edita decisión, estado, justificación y fechas de revisión. |
 
 Sin ningún permiso, el usuario no ve el menú, el tablero, el registro ni la pestaña "Riesgos corporativos" en
@@ -48,13 +49,14 @@ otros objetos.
 
 ### Configuración sugerida
 
-| Rol | Registro | Tratamiento | Categorías | Aceptación |
-|---|---|---|---|---|
-| Colaborador (autoservicio) | — | — | — | — |
-| Dueño de riesgo | Ver propios + Actualizar propios | Crear + Actualizar | — | — |
-| Gestor de riesgos / CRO | Todo | Todo | Todo | — |
-| Comité de riesgos / Directorio | Ver todos + Leer notas | — | Ver + Actualizar | Aceptar |
-| Auditoría interna | Ver todos + Leer notas | — | Ver | — |
+| Rol | Registro | Tratamiento | Categorías | Aceptación | Eventos |
+|---|---|---|---|---|---|
+| Colaborador (autoservicio) | — | — | — | — | — |
+| Mesa de ayuda / técnicos | Ver propios | Crear + Actualizar | — | — | Ver + Crear |
+| Dueño de riesgo | Ver propios + Actualizar propios | Crear + Actualizar | — | — | Ver + Crear |
+| Gestor de riesgos / CRO | Todo | Todo | Todo | — | Todo |
+| Comité de riesgos / Directorio | Ver todos + Leer notas | — | Ver + Actualizar | Aceptar | Ver |
+| Auditoría interna | Ver todos + Leer notas | — | Ver | — | Ver + Leer notas |
 
 Valores que asigna la instalación a los perfiles estándar: Super-Admin (todo, incluida la aceptación), Admin
 (todo menos aceptar), Supervisor (ver, actualizar y crear), Technician (ver/actualizar propios y tratamiento),
@@ -75,6 +77,12 @@ tolerancia") se configura por empresa:
   propia declaración de apetito. Lo que se deja en "Heredado" toma el valor de la entidad superior o el de la
   categoría. La columna "Vigente" muestra el resultado.
 ![Configuración ERM de la entidad](screenshots/entity-config.png)
+
+- **Criterios de impacto económico**: pérdida neta mínima de cada nivel de impacto (Menor, Moderado, Mayor,
+  Catastrófico) en la moneda de la organización. Dan una vara común a la evaluación y permiten sugerir el impacto
+  desde el historial de pérdidas. Vacíos = se heredan de la entidad superior. Los montos deben crecer con el nivel.
+
+![Criterios de impacto](screenshots/impact-criteria.png)
 
 - **Categorías propias**: una empresa puede tener subcategorías propias creándolas en su entidad (por ejemplo,
   "Habilitaciones sanitarias" para una clínica).

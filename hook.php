@@ -146,6 +146,10 @@ function plugin_erm_install(): bool
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `entities_id` int {$sign} NOT NULL DEFAULT '0',
             `code_prefix` varchar(16) NOT NULL DEFAULT '',
+            `impact_2` decimal(20,2) DEFAULT NULL,
+            `impact_3` decimal(20,2) DEFAULT NULL,
+            `impact_4` decimal(20,2) DEFAULT NULL,
+            `impact_5` decimal(20,2) DEFAULT NULL,
             `date_creation` timestamp NULL DEFAULT NULL,
             `date_mod` timestamp NULL DEFAULT NULL,
             PRIMARY KEY (`id`),
@@ -161,6 +165,41 @@ function plugin_erm_install(): bool
             PRIMARY KEY (`id`),
             UNIQUE KEY `unicity` (`entities_id`,`plugin_erm_categories_id`),
             KEY `plugin_erm_categories_id` (`plugin_erm_categories_id`)",
+        'glpi_plugin_erm_events' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `entities_id` int {$sign} NOT NULL DEFAULT '0',
+            `is_recursive` tinyint NOT NULL DEFAULT '0',
+            `is_deleted` tinyint NOT NULL DEFAULT '0',
+            `name` varchar(255) NOT NULL DEFAULT '',
+            `description` text,
+            `root_cause` text,
+            `event_type` varchar(16) NOT NULL DEFAULT 'loss',
+            `status` varchar(16) NOT NULL DEFAULT 'open',
+            `occurrence_date` date DEFAULT NULL,
+            `detection_date` date DEFAULT NULL,
+            `plugin_erm_categories_id` int {$sign} NOT NULL DEFAULT '0',
+            `users_id` int {$sign} NOT NULL DEFAULT '0',
+            `gross_loss` decimal(20,2) DEFAULT NULL,
+            `recoveries` decimal(20,2) DEFAULT NULL,
+            `net_loss` decimal(20,2) DEFAULT NULL,
+            `date_creation` timestamp NULL DEFAULT NULL,
+            `date_mod` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `entities_id` (`entities_id`),
+            KEY `is_deleted` (`is_deleted`),
+            KEY `occurrence_date` (`occurrence_date`),
+            KEY `plugin_erm_categories_id` (`plugin_erm_categories_id`),
+            KEY `users_id` (`users_id`)",
+        'glpi_plugin_erm_events_items' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `plugin_erm_events_id` int {$sign} NOT NULL DEFAULT '0',
+            `itemtype` varchar(255) NOT NULL DEFAULT '',
+            `items_id` int {$sign} NOT NULL DEFAULT '0',
+            `comment` varchar(255) NOT NULL DEFAULT '',
+            `date_creation` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `unicity` (`plugin_erm_events_id`,`itemtype`,`items_id`),
+            KEY `item` (`itemtype`,`items_id`)",
         'glpi_plugin_erm_risks_items' => "
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
@@ -193,6 +232,14 @@ function plugin_erm_install(): bool
         ], ['r.id' => ['>', 0]], ['INNER JOIN' => ['glpi_plugin_erm_risks AS r' => ['ON' => ['glpi_plugin_erm_actions' => 'plugin_erm_risks_id', 'r' => 'id']]]]);
     }
 
+    // 1.5.0: economic impact criteria per entity
+    foreach ([2, 3, 4, 5] as $lvl) {
+        if (!$DB->fieldExists('glpi_plugin_erm_entityconfigs', "impact_{$lvl}")) {
+            $migration->addField('glpi_plugin_erm_entityconfigs', "impact_{$lvl}", 'decimal(20,2) DEFAULT NULL');
+        }
+    }
+    $migration->migrationOneTable('glpi_plugin_erm_entityconfigs');
+
     // Rights (1.1.0): register, treatment, configuration and acceptance. Only missing rights are created;
     // values already set by an administrator are never overwritten.
     foreach (Rights::all() as $right) {
@@ -214,6 +261,14 @@ function plugin_erm_install(): bool
     if (countElementsInTable('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Action', 'users_id' => 0]) === 0) {
         foreach ([3, 6, 7, 4, 5, 8, 11] as $rank => $num) {
             $DB->insert('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Action', 'num' => $num, 'rank' => $rank + 1,
+                                                   'users_id' => 0, 'interface' => 'central']);
+        }
+    }
+
+    // Default columns of the loss event register (date, type, category, net loss, status, reported by)
+    if (countElementsInTable('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Event', 'users_id' => 0]) === 0) {
+        foreach ([3, 5, 10, 9, 6, 11] as $rank => $num) {
+            $DB->insert('glpi_displaypreferences', ['itemtype' => 'GlpiPlugin\\Erm\\Event', 'num' => $num, 'rank' => $rank + 1,
                                                    'users_id' => 0, 'interface' => 'central']);
         }
     }
@@ -241,12 +296,13 @@ function plugin_erm_uninstall(): bool
     foreach (
         ['glpi_plugin_erm_categories', 'glpi_plugin_erm_risks', 'glpi_plugin_erm_actions', 'glpi_plugin_erm_indicators',
               'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items',
-              'glpi_plugin_erm_entityconfigs', 'glpi_plugin_erm_appetites'] as $table
+              'glpi_plugin_erm_entityconfigs', 'glpi_plugin_erm_appetites', 'glpi_plugin_erm_events',
+              'glpi_plugin_erm_events_items'] as $table
     ) {
         $DB->dropTable($table, true);
     }
     ProfileRight::deleteProfileRights(Rights::all());
-    foreach (['GlpiPlugin\\Erm\\Risk', 'GlpiPlugin\\Erm\\Category', 'GlpiPlugin\\Erm\\Action'] as $itemtype) {
+    foreach (['GlpiPlugin\\Erm\\Risk', 'GlpiPlugin\\Erm\\Category', 'GlpiPlugin\\Erm\\Action', 'GlpiPlugin\\Erm\\Event'] as $itemtype) {
         $DB->delete('glpi_displaypreferences', ['itemtype' => $itemtype]);
         $DB->delete('glpi_documents_items', ['itemtype' => $itemtype]);
         $DB->delete('glpi_logs', ['itemtype' => $itemtype]);

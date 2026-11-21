@@ -124,6 +124,14 @@ class Dashboard extends CommonGLPI
     {
         $risks = Risk::activeRisks();
         [$overdue, $kris] = self::alerts($risks);
+        $underestimated = [];
+        if (Event::canView()) {
+            foreach (Event::historyOf($risks) as $rid => $h) {
+                if ($h['underestimated']) {
+                    $underestimated[$rid] = $h;
+                }
+            }
+        }
         $heat = ['inherent' => [], 'residual' => []];
         $byLevel = array_fill_keys(Scale::LEVELS, 0);
         $byCat = [];
@@ -210,6 +218,18 @@ class Dashboard extends CommonGLPI
            'grc'         => class_exists('GlpiPlugin\\Grcmanager\\Risk'),
            'only_own'    => Rights::onlyOwn(),
            'by_entity'   => count($byEntity) > 1 ? $byEntity : [],
+           'events'      => Event::canView(),
+           'events_url'  => Event::getSearchURL(),
+           'net_loss_12m' => Event::canView() ? Scale::money(Event::netLossSince(date('Y-m-d', strtotime('-12 months')))) : '',
+           'underestimated' => array_values(array_filter(array_map(function ($r) use ($underestimated) {
+            if (!isset($underestimated[(int) $r['id']])) {
+                return null;
+            }
+               $h = $underestimated[(int) $r['id']];
+               return ['id' => $r['id'], 'code' => $r['code'], 'name' => $r['name'], 'losses' => $h['losses'],
+                       'prob' => [$h['assessed_probability'], $h['prob_level'], $h['prob_check']],
+                       'impact' => [$h['assessed_impact'], $h['impact_level'], $h['impact_check']]];
+           }, $risks))),
         ]);
     }
 
@@ -226,11 +246,16 @@ class Dashboard extends CommonGLPI
         }
         $risks = Risk::activeRisks();
         [$overdue, $kris] = self::alerts($risks);
+        $historyIds = [];
+        if (isset($filters['history']) && Event::canView()) {
+            $historyIds = array_keys(array_filter(Event::historyOf($risks), fn($h) => $h['underestimated']));
+        }
         $rows = DrillFilter::apply(
             $risks,
             $filters,
             array_map('intval', array_column($overdue, 'risk_id')),
-            array_map('intval', array_column($kris, 'risk_id'))
+            array_map('intval', array_column($kris, 'risk_id')),
+            array_map('intval', $historyIds)
         );
 
         $chips = [];
@@ -263,6 +288,9 @@ class Dashboard extends CommonGLPI
         }
         if (isset($filters['kri'])) {
             $chips[] = __('With KRIs in alert', 'erm');
+        }
+        if (isset($filters['history'])) {
+            $chips[] = __('Underestimated according to loss history', 'erm');
         }
 
         foreach ($rows as &$r) {

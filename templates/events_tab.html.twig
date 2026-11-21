@@ -1,0 +1,93 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{% set check_badge = {'underestimated': 'bg-red-lt', 'overestimated': 'bg-blue-lt', 'consistent': 'bg-green-lt', 'no_data': 'bg-secondary-lt'} %}
+{% set check_label = {
+   'underestimated': __('History suggests a higher level', 'erm'),
+   'overestimated': __('History suggests a lower level', 'erm'),
+   'consistent': __('Consistent with history', 'erm'),
+   'no_data': __('Not enough data', 'erm')} %}
+
+{% if history %}
+<div class="card mb-3">
+   <div class="card-header"><h3 class="card-title"><i class="ti ti-chart-histogram me-2"></i>{{ __('Assessment vs. loss history (last %d years)', 'erm')|format(window) }}</h3></div>
+   <div class="card-body">
+      {% if history.prob_check == 'underestimated' or history.impact_check == 'underestimated' %}
+      <div class="alert alert-danger"><i class="ti ti-alert-triangle me-2"></i>{{ __('The loss history suggests that this risk is underestimated. Review the assessment, or document why the history is not representative (e.g. the controls have changed).', 'erm') }}</div>
+      {% endif %}
+      <div class="row g-3">
+         <div class="col-md-3"><div class="text-muted small">{{ __('Loss events', 'erm') }}</div><div class="h2 m-0">{{ history.losses }}</div><div class="small text-muted">{{ __('since %s', 'erm')|format(history.since) }} · {{ __('near misses: %d', 'erm')|format(history.near_misses) }}</div></div>
+         <div class="col-md-3"><div class="text-muted small">{{ __('Annual frequency', 'erm') }}</div><div class="h2 m-0">{{ history.frequency|number_format(2) }}</div><div class="small text-muted">{{ __('annual probability: %d%%', 'erm')|format(history.probability_pct) }}</div></div>
+         <div class="col-md-3"><div class="text-muted small">{{ __('Largest net loss', 'erm') }}</div><div class="h2 m-0">{{ history.max_loss|formatted_number }}</div></div>
+         <div class="col-md-3"><div class="text-muted small">{{ __('Total net loss', 'erm') }}</div><div class="h2 m-0">{{ history.total_loss|formatted_number }}</div></div>
+      </div>
+      <table class="table table-sm mt-3 mb-0">
+         <thead><tr><th></th><th>{{ __('Assessed', 'erm') }}</th><th>{{ __('Suggested by history', 'erm') }}</th><th></th></tr></thead>
+         <tbody>
+            <tr><th>{{ __('Probability', 'erm') }}</th><td>{{ history.assessed_probability_label }}</td><td>{{ history.prob_label ?: '-' }}</td>
+                <td><span class="badge {{ check_badge[history.prob_check] }}">{{ check_label[history.prob_check] }}</span></td></tr>
+            <tr><th>{{ __('Impact', 'erm') }}</th><td>{{ history.assessed_impact_label }}</td><td>{{ history.impact_label ?: '-' }}</td>
+                <td><span class="badge {{ check_badge[history.impact_check] }}">{{ check_label[history.impact_check] }}</span>
+                {% if not history.has_thresholds %}<div class="small text-muted">{{ __('Define the economic impact criteria of the entity to get a suggestion.', 'erm') }}</div>{% endif %}</td></tr>
+         </tbody>
+      </table>
+      <div class="small text-muted mt-2">{{ __('Compared with the residual assessment (inherent when not assessed). Probability: loss events per year converted to the probability of at least one event in a year. Impact: largest net loss against the economic impact criteria of the entity.', 'erm') }}</div>
+   </div>
+</div>
+{% endif %}
+
+<div class="card">
+   <div class="card-header">
+      <h3 class="card-title"><i class="ti ti-flame me-2"></i>{{ __('Loss events', 'erm') }}</h3>
+      {% if can_create %}<div class="card-actions"><a href="{{ new_url }}" class="btn btn-primary btn-sm"><i class="ti ti-plus"></i> {{ __('Record a loss event', 'erm') }}</a></div>{% endif %}
+   </div>
+   <div class="table-responsive">
+      <table class="table table-hover card-table table-vcenter">
+         <thead><tr><th>{{ __('Occurrence date', 'erm') }}</th><th>{{ __('Event', 'erm') }}</th><th>{{ __('Event type', 'erm') }}</th><th class="text-end">{{ __('Net loss', 'erm') }}</th><th>{{ __('Status', 'erm') }}</th><th></th></tr></thead>
+         <tbody>
+         {% for e in rows %}
+            <tr>
+               <td class="text-nowrap">{{ e.occurrence_date }}</td>
+               <td><a href="{{ event_url }}?id={{ e.id }}">{{ e.name }}</a></td>
+               <td><span class="badge {{ e.event_type == 'loss' ? 'bg-red-lt' : (e.event_type == 'gain' ? 'bg-green-lt' : 'bg-orange-lt') }}">{{ e.type_label }}</span></td>
+               <td class="text-end">{{ e.net_loss is not null ? e.net_loss|formatted_number : '-' }}</td>
+               <td class="small">{{ e.status_label }}</td>
+               <td>
+               {% if e.can_unlink %}
+                  <form method="post" action="{{ action }}">
+                     <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                     <input type="hidden" name="id" value="{{ e.link_id }}">
+                     <button type="submit" name="purge" class="btn btn-sm btn-ghost-danger" title="{{ __('Unlink', 'erm') }}"><i class="ti ti-unlink"></i></button>
+                  </form>
+               {% endif %}
+               </td>
+            </tr>
+         {% else %}
+            <tr><td colspan="6" class="text-muted">{{ __('No loss events recorded.', 'erm') }}</td></tr>
+         {% endfor %}
+         </tbody>
+      </table>
+   </div>
+   {% if can_link %}
+   <div class="card-footer">
+      <form method="post" action="{{ action }}" class="row g-2 align-items-end">
+         <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+         <input type="hidden" name="itemtype" value="{{ itemtype }}">
+         <input type="hidden" name="items_id" value="{{ items_id }}">
+         <div class="col-md-8"><label class="form-label">{{ __('Link an existing event', 'erm') }}</label>{{ dropdown|raw }}</div>
+         <div class="col-md-4"><button type="submit" name="add" class="btn btn-outline-primary w-100"><i class="ti ti-link"></i> {{ __('Link', 'erm') }}</button></div>
+      </form>
+   </div>
+   {% endif %}
+</div>

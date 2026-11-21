@@ -75,6 +75,14 @@ class Profile extends CommonGLPI
                'rights'   => [READ => $read, UPDATE => $update, CREATE => $create, DELETE => $trash, PURGE => $purge],
            ],
            [
+               'itemtype' => Event::class,
+               'label'    => __('Loss events and incidents', 'erm'),
+               'field'    => Rights::EVENT,
+               'rights'   => [READ => $read, UPDATE => $update, CREATE => $create, DELETE => $trash, PURGE => $purge,
+                              READNOTE => ['short' => __('Read notes', 'erm'), 'long' => __('Read the notes', 'erm')],
+                              UPDATENOTE => ['short' => __('Update notes', 'erm'), 'long' => __('Update the notes', 'erm')]],
+           ],
+           [
                'itemtype' => Risk::class,
                'label'    => __('Formal risk acceptance (Committee / Board)', 'erm'),
                'field'    => Rights::ACCEPT,

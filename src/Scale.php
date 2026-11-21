@@ -214,6 +214,25 @@ final class Scale
      *
      * @return array<string,string>
      */
+    /** Loss event types (Basel / ISO 31000 loss data). */
+    public static function eventTypes(): array
+    {
+        return [
+           'loss'      => __('Loss', 'erm'),
+           'near_miss' => __('Near miss', 'erm'),
+           'gain'      => __('Unexpected gain', 'erm'),
+        ];
+    }
+
+    public static function eventStatuses(): array
+    {
+        return [
+           'open'     => __('Open', 'erm'),
+           'analysis' => __('Under analysis', 'erm'),
+           'closed'   => __('Closed', 'erm'),
+        ];
+    }
+
     public static function actionStatuses(): array
     {
         return [
