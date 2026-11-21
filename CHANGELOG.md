@@ -7,6 +7,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.7.0] - 2026-11-21
+### Added
+- Ready-to-assign role profiles created at installation: Risk manager, Risk owner, Treatment responsible, Risk
+  Committee and Internal audit. They use the standard interface without any inventory right (risk management only)
+  plus the minimum GLPI rights each role needs (documents, knowledge base, and tickets/problems/changes read access
+  to link incidents for the manager, owners and audit). Each profile is created once, recognised by a marker in its
+  comment, and never modified afterwards.
+
+### Changed
+- When installed from the command line, texts (taxonomy, profiles, notifications) are created in the default
+  language of GLPI.
+
 ## [1.6.0] - 2026-11-21
 ### Added
 - Target risk (probability, impact, level and date to reach with the treatment).

@@ -25,12 +25,19 @@ use GlpiPlugin\Erm\Action;
 use GlpiPlugin\Erm\Category;
 use GlpiPlugin\Erm\NotificationTargetRisk;
 use GlpiPlugin\Erm\Notifier;
+use GlpiPlugin\Erm\Profile as ErmProfile;
 use GlpiPlugin\Erm\Rights;
 use GlpiPlugin\Erm\Risk;
 
 function plugin_erm_install(): bool
 {
-    global $DB;
+    global $DB, $CFG_GLPI;
+
+    // From the command line, create texts (taxonomy, profiles, notifications) in the default language of GLPI
+    if (isCommandLine() && !empty($CFG_GLPI['language'])) {
+        Session::loadLanguage($CFG_GLPI['language']);
+        Plugin::loadLang('erm', $CFG_GLPI['language']);
+    }
 
     $migration = new Migration(PLUGIN_ERM_VERSION);
     $charset   = DBConnection::getDefaultCharset();
@@ -336,6 +343,9 @@ function plugin_erm_install(): bool
     if (countElementsInTable(Category::getTable()) === 0) {
         Category::createDefaultTaxonomy();
     }
+
+    // 1.7.0: ready-to-assign role profiles (created once, never overwritten)
+    ErmProfile::createRoleProfiles();
 
     // 1.6.0: daily e-mail alerts and assignment notices
     CronTask::register(Notifier::class, 'ermalerts', DAY_TIMESTAMP, [

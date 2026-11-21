@@ -33,6 +33,8 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
   risks, overdue actions and KRIs in alert. **Every figure is clickable** and opens the risks behind it.
 - **Action plan register** searchable across all risks, and a personal **"My ERM workspace"** (my actions, the
   KRIs I measure, my risks and reviews).
+- **Ready-to-assign role profiles** (Risk manager, Risk owner, Treatment responsible, Risk Committee, Internal
+  audit) without access to the inventory.
 - **Role based access** (per profile and entity): see all / see own risks, update all / update own, treatment,
   taxonomy & appetite, acceptance. Search, dashboard and selectors are filtered accordingly.
 - **Multi-company**: per entity risk code prefix and appetite/tolerance overrides (inherited by sub-entities), and a

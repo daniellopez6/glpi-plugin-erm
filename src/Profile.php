@@ -20,6 +20,7 @@ namespace GlpiPlugin\Erm;
 use CommonGLPI;
 use Glpi\Application\View\TemplateRenderer;
 use Profile as GlpiProfile;
+use ProfileRight;
 
 /**
  * "Corporate risks (ERM)" tab on the profile form: matrix with the four plugin rights.
@@ -89,6 +90,90 @@ class Profile extends CommonGLPI
                'rights'   => [UPDATE => ['short' => __('Accept risks', 'erm'), 'long' => __('Accept or revoke the acceptance of a risk (never an own risk)', 'erm')]],
            ],
         ];
+    }
+
+    /**
+     * Ready-to-assign role profiles created at installation. Each one is recognised by a marker in its comment,
+     * so it is created only once and never modified afterwards (administrators can adapt or rename it).
+     *
+     * @return array<string, array{name:string, comment:string, rights:array<string,int>}>
+     */
+    public static function roleProfiles(): array
+    {
+        $own = READ_OWNED | UPDATE_OWNED;
+        $all = ALLSTANDARDRIGHT;
+        $notes = READNOTE | UPDATENOTE;
+        // Minimal GLPI navigation: no inventory (assets) at all
+        $base = ['knowbase' => READ, 'personalization' => READ | UPDATE, 'password_update' => 1, 'document' => READ | CREATE];
+        $itil = ['ticket' => \Ticket::READALL, 'problem' => READ, 'change' => READ];
+        return [
+            'manager' => [
+                'name'    => 'ERM - ' . __('Risk manager', 'erm'),
+                'comment' => __('Manages the corporate risk process: register, treatment, taxonomy and appetite, loss events and entity settings. Does not formally accept risks. No access to the inventory.', 'erm'),
+                'rights'  => $base + $itil + ['entity' => READ, 'user' => READ, 'group' => READ,
+                    Rights::RISK => $all | $notes, Rights::TREATMENT => $all, Rights::CONFIG => $all,
+                    Rights::ACCEPT => 0, Rights::EVENT => $all | $notes],
+            ],
+            'owner' => [
+                'name'    => 'ERM - ' . __('Risk owner', 'erm'),
+                'comment' => __('Sees and updates only own risks (owner, owner group or responsible of actions/KRIs), manages their treatment and reports loss events. No access to the inventory.', 'erm'),
+                'rights'  => $base + $itil + [Rights::RISK => $own, Rights::TREATMENT => CREATE | UPDATE, Rights::CONFIG => 0,
+                    Rights::ACCEPT => 0, Rights::EVENT => READ | CREATE],
+            ],
+            'treatment' => [
+                'name'    => 'ERM - ' . __('Treatment responsible', 'erm'),
+                'comment' => __('Executes treatment actions and measures KRIs: sees the risks where they have actions or indicators, updates them and reports loss events.', 'erm'),
+                'rights'  => $base + [Rights::RISK => READ_OWNED, Rights::TREATMENT => UPDATE | CREATE, Rights::CONFIG => 0,
+                    Rights::ACCEPT => 0, Rights::EVENT => READ | CREATE],
+            ],
+            'committee' => [
+                'name'    => 'ERM - ' . __('Risk Committee', 'erm'),
+                'comment' => __('Board or Risk Committee: sees the whole register, approves appetite and tolerance and formally accepts risks (never own risks).', 'erm'),
+                'rights'  => ['knowbase' => READ, 'personalization' => READ | UPDATE, 'password_update' => 1, 'document' => READ,
+                    Rights::RISK => READ | READNOTE, Rights::TREATMENT => 0, Rights::CONFIG => READ | UPDATE,
+                    Rights::ACCEPT => UPDATE, Rights::EVENT => READ],
+            ],
+            'audit' => [
+                'name'    => 'ERM - ' . __('Internal audit', 'erm'),
+                'comment' => __('Read-only access to the whole register, notes, appetite, treatment plans, reviews and loss events, with the related tickets as evidence.', 'erm'),
+                'rights'  => ['knowbase' => READ, 'personalization' => READ | UPDATE, 'password_update' => 1, 'document' => READ] + $itil
+                    + [Rights::RISK => READ | READNOTE, Rights::TREATMENT => 0, Rights::CONFIG => READ,
+                       Rights::ACCEPT => 0, Rights::EVENT => READ | READNOTE],
+            ],
+        ];
+    }
+
+    /** Marker stored in the comment of a role profile. */
+    public static function marker(string $key): string
+    {
+        return '[erm:' . $key . ']';
+    }
+
+    /**
+     * Creates the missing role profiles.
+     *
+     * @return list<string> names of the created profiles
+     */
+    public static function createRoleProfiles(): array
+    {
+        $created = [];
+        foreach (self::roleProfiles() as $key => $def) {
+            $marker = self::marker($key);
+            if (countElementsInTable(GlpiProfile::getTable(), ['comment' => ['LIKE', '%' . $marker . '%']]) > 0) {
+                continue;
+            }
+            $profile = new GlpiProfile();
+            $id = $profile->add([
+                'name'      => $def['name'],
+                'interface' => 'central',
+                'comment'   => $def['comment'] . ' ' . $marker,
+            ]);
+            if ($id) {
+                ProfileRight::updateProfileRights((int) $id, $def['rights']);
+                $created[] = $def['name'];
+            }
+        }
+        return $created;
     }
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)

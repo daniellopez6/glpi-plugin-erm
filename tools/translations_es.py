@@ -326,4 +326,13 @@ ES = {
  'Target level': 'Nivel objetivo',
  'Level the treatment plan has to reach. Usually within the appetite of the category.': 'Nivel que el plan de tratamiento debe alcanzar. Normalmente, dentro del apetito de la categoría.',
  'Target date': 'Fecha objetivo',
+ 'Risk manager': 'Gestor de riesgos',
+ 'Manages the corporate risk process: register, treatment, taxonomy and appetite, loss events and entity settings. Does not formally accept risks. No access to the inventory.': 'Administra el proceso de gestión de riesgos corporativos: registro, tratamiento, taxonomía y apetito, eventos de pérdida y configuración por entidad. No acepta formalmente riesgos. Sin acceso al inventario.',
+ 'Sees and updates only own risks (owner, owner group or responsible of actions/KRIs), manages their treatment and reports loss events. No access to the inventory.': 'Ve y actualiza sólo sus riesgos (dueño, área o responsable de acciones/KRI), gestiona su tratamiento y reporta eventos de pérdida. Sin acceso al inventario.',
+ 'Treatment responsible': 'Responsable de tratamiento',
+ 'Executes treatment actions and measures KRIs: sees the risks where they have actions or indicators, updates them and reports loss events.': 'Ejecuta acciones de tratamiento y mide KRI: ve los riesgos donde tiene acciones o indicadores, los actualiza y reporta eventos de pérdida.',
+ 'Risk Committee': 'Comité de riesgos',
+ 'Board or Risk Committee: sees the whole register, approves appetite and tolerance and formally accepts risks (never own risks).': 'Directorio o Comité de riesgos: ve todo el registro, aprueba el apetito y la tolerancia y acepta formalmente riesgos (nunca los propios).',
+ 'Internal audit': 'Auditoría interna',
+ 'Read-only access to the whole register, notes, appetite, treatment plans, reviews and loss events, with the related tickets as evidence.': 'Acceso de sólo lectura a todo el registro, notas, apetito, planes de tratamiento, revisiones y eventos de pérdida, con los tickets relacionados como evidencia.',
 }

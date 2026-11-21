@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.6.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 1.7.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -46,6 +46,26 @@ Versión del plugin: 1.6.x · GLPI 12.0.x · PHP 8.2+
 
 Sin ningún permiso, el usuario no ve el menú, el tablero, el registro ni la pestaña "Riesgos corporativos" en
 otros objetos.
+
+### Perfiles listos para asignar
+
+La instalación crea cinco perfiles de **interfaz estándar sin acceso al inventario** (equipos, software, redes,
+etc.): sólo gestión de riesgos y lo mínimo de GLPI para cada rol. Se asignan en **Administración → Usuarios →
+(usuario) → Autorizaciones**, por entidad.
+
+| Perfil | Para quién | Registro | Tratamiento | Categorías | Aceptación | Eventos | GLPI |
+|---|---|---|---|---|---|---|---|
+| ERM - Gestor de riesgos | Responsable del proceso (CRO) | Todo + notas | Todo | Todo | — | Todo + notas | Documentos, tickets/problemas/cambios (lectura), entidades, usuarios y grupos (lectura) |
+| ERM - Dueño de riesgo | Gerentes dueños de riesgos | Ver y actualizar propios | Crear + Actualizar | — | — | Ver + Crear | Documentos, tickets/problemas/cambios (lectura) |
+| ERM - Responsable de tratamiento | Quien ejecuta acciones o mide KRI | Ver propios | Crear + Actualizar | — | — | Ver + Crear | Documentos |
+| ERM - Comité de riesgos | Directorio / Comité | Ver todos + notas | — | Ver + Actualizar | Aceptar | Ver | Documentos (lectura) |
+| ERM - Auditoría interna | Auditores | Ver todos + notas | — | Ver | — | Ver + notas | Documentos y tickets/problemas/cambios (lectura) |
+
+Todos incluyen base de conocimientos, preferencias personales y cambio de contraseña. Cada perfil se crea **una
+sola vez** (se reconoce por una marca `[erm:...]` en el comentario, aunque se le cambie el nombre) y la instalación
+**nunca lo modifica**: se puede adaptar libremente. Si se borra, se vuelve a crear en la próxima actualización;
+para evitarlo, conservá la marca en otro perfil. La desinstalación no borra los perfiles (pueden tener usuarios
+asignados).
 
 ### Configuración sugerida
 

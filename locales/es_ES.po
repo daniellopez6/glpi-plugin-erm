@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 17:22+0000\n"
+"POT-Creation-Date: 2026-11-21 17:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_ES\n"
@@ -23,15 +23,15 @@ msgstr "Configuración ERM guardada."
 msgid "Review recorded."
 msgstr "Revisión registrada."
 
-#: hook.php:374 hook.php:375 src/NotificationTargetRisk.php:122 src/Notifier.php:32
+#: hook.php:384 hook.php:385 src/NotificationTargetRisk.php:122 src/Notifier.php:32
 msgid "Corporate risk alerts"
 msgstr "Alertas de riesgos corporativos"
 
-#: hook.php:379 hook.php:380 src/NotificationTargetRisk.php:42
+#: hook.php:389 hook.php:390 src/NotificationTargetRisk.php:42
 msgid "A corporate risk has been assigned to you"
 msgstr "Se te asignó un riesgo corporativo"
 
-#: hook.php:384 hook.php:385 src/NotificationTargetRisk.php:43
+#: hook.php:394 hook.php:395 src/NotificationTargetRisk.php:43
 msgid "A treatment action has been assigned to you"
 msgstr "Se te asignó una acción de tratamiento"
 
@@ -343,7 +343,7 @@ msgstr "Riesgos corporativos"
 msgid "Treatment not effective or without plan"
 msgstr "Tratamiento ineficaz o sin plan"
 
-#: src/Dashboard.php:38 src/EntityConfig.php:57 src/Profile.php:35 templates/profile_rights.html.twig:20
+#: src/Dashboard.php:38 src/EntityConfig.php:57 src/Profile.php:36 templates/profile_rights.html.twig:20
 msgid "Corporate risks (ERM)"
 msgstr "Riesgos corporativos (ERM)"
 
@@ -573,8 +573,8 @@ msgstr "Evaluación por debajo del historial de pérdidas"
 msgid "Treatment completed without reaching the target"
 msgstr "Tratamiento terminado sin alcanzar el objetivo"
 
-#: src/NotificationTargetRisk.php:67 src/NotificationTargetRisk.php:154 src/Risk.php:313 templates/risk_form.html.twig:28
-#: templates/risk_list.html.twig:28
+#: src/NotificationTargetRisk.php:67 src/NotificationTargetRisk.php:154 src/Profile.php:118 src/Risk.php:313
+#: templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
 msgid "Risk owner"
 msgstr "Dueño del riesgo"
 
@@ -607,87 +607,143 @@ msgstr "%d eventos de pérdida en %d años"
 msgid "Corporate risk e-mail alerts (overdue actions and reviews, KRIs, risks above tolerance)"
 msgstr "Alertas por correo de riesgos corporativos (acciones y revisiones vencidas, KRI, riesgos sobre la tolerancia)"
 
-#: src/Profile.php:48
+#: src/Profile.php:111
+msgid "Risk manager"
+msgstr "Gestor de riesgos"
+
+#: src/Profile.php:112
+msgid ""
+"Manages the corporate risk process: register, treatment, taxonomy and appetite, loss events and entity settings. Does"
+" not formally accept risks. No access to the inventory."
+msgstr ""
+"Administra el proceso de gestión de riesgos corporativos: registro, tratamiento, taxonomía y apetito, eventos de "
+"pérdida y configuración por entidad. No acepta formalmente riesgos. Sin acceso al inventario."
+
+#: src/Profile.php:119
+msgid ""
+"Sees and updates only own risks (owner, owner group or responsible of actions/KRIs), manages their treatment and "
+"reports loss events. No access to the inventory."
+msgstr ""
+"Ve y actualiza sólo sus riesgos (dueño, área o responsable de acciones/KRI), gestiona su tratamiento y reporta "
+"eventos de pérdida. Sin acceso al inventario."
+
+#: src/Profile.php:124
+msgid "Treatment responsible"
+msgstr "Responsable de tratamiento"
+
+#: src/Profile.php:125
+msgid ""
+"Executes treatment actions and measures KRIs: sees the risks where they have actions or indicators, updates them and "
+"reports loss events."
+msgstr ""
+"Ejecuta acciones de tratamiento y mide KRI: ve los riesgos donde tiene acciones o indicadores, los actualiza y "
+"reporta eventos de pérdida."
+
+#: src/Profile.php:130
+msgid "Risk Committee"
+msgstr "Comité de riesgos"
+
+#: src/Profile.php:131
+msgid ""
+"Board or Risk Committee: sees the whole register, approves appetite and tolerance and formally accepts risks (never "
+"own risks)."
+msgstr ""
+"Directorio o Comité de riesgos: ve todo el registro, aprueba el apetito y la tolerancia y acepta formalmente riesgos "
+"(nunca los propios)."
+
+#: src/Profile.php:137
+msgid "Internal audit"
+msgstr "Auditoría interna"
+
+#: src/Profile.php:138
+msgid ""
+"Read-only access to the whole register, notes, appetite, treatment plans, reviews and loss events, with the related "
+"tickets as evidence."
+msgstr ""
+"Acceso de sólo lectura a todo el registro, notas, apetito, planes de tratamiento, revisiones y eventos de pérdida, "
+"con los tickets relacionados como evidencia."
+
+#: src/Profile.php:49
 msgid "See all"
 msgstr "Ver todos"
 
-#: src/Profile.php:48
+#: src/Profile.php:49
 msgid "See all items"
 msgstr "Ver todos los elementos"
 
-#: src/Profile.php:49
+#: src/Profile.php:50
 msgid "See own"
 msgstr "Ver propios"
 
-#: src/Profile.php:49
+#: src/Profile.php:50
 msgid "See only own risks (owner, owner group or responsible of actions/KRIs)"
 msgstr "Ver sólo los riesgos propios (dueño, área o responsable de acciones/KRI)"
 
-#: src/Profile.php:50
+#: src/Profile.php:51
 msgid "Update the items the user can see"
 msgstr "Modificar los elementos que puede ver"
 
-#: src/Profile.php:51
+#: src/Profile.php:52
 msgid "Update own"
 msgstr "Actualizar propios"
 
-#: src/Profile.php:51
+#: src/Profile.php:52
 msgid "Update only own risks"
 msgstr "Modificar sólo los riesgos propios"
 
-#: src/Profile.php:52
+#: src/Profile.php:53
 msgid "Create items"
 msgstr "Crear elementos"
 
-#: src/Profile.php:53
+#: src/Profile.php:54
 msgid "Put in trashbin"
 msgstr "Enviar a la papelera"
 
-#: src/Profile.php:54
+#: src/Profile.php:55
 msgid "Delete permanently"
 msgstr "Eliminar definitivamente"
 
-#: src/Profile.php:58 src/Risk.php:48
+#: src/Profile.php:59 src/Risk.php:48
 msgid "Corporate risk register"
 msgstr "Registro de riesgos corporativos"
 
-#: src/Profile.php:62 src/Profile.php:82
+#: src/Profile.php:63 src/Profile.php:83
 msgid "Read notes"
 msgstr "Leer notas"
 
-#: src/Profile.php:62 src/Profile.php:82
+#: src/Profile.php:63 src/Profile.php:83
 msgid "Read the notes"
 msgstr "Leer las notas"
 
-#: src/Profile.php:63 src/Profile.php:83
+#: src/Profile.php:64 src/Profile.php:84
 msgid "Update notes"
 msgstr "Actualizar notas"
 
-#: src/Profile.php:63 src/Profile.php:83
+#: src/Profile.php:64 src/Profile.php:84
 msgid "Update the notes"
 msgstr "Modificar las notas"
 
-#: src/Profile.php:67
+#: src/Profile.php:68
 msgid "Treatment and monitoring (actions, KRIs and measurements)"
 msgstr "Tratamiento y seguimiento (acciones, KRI y mediciones)"
 
-#: src/Profile.php:73
+#: src/Profile.php:74
 msgid "Categories, appetite and tolerance"
 msgstr "Categorías, apetito y tolerancia"
 
-#: src/Profile.php:79
+#: src/Profile.php:80
 msgid "Loss events and incidents"
 msgstr "Eventos de pérdida e incidentes"
 
-#: src/Profile.php:87
+#: src/Profile.php:88
 msgid "Formal risk acceptance (Committee / Board)"
 msgstr "Aceptación formal de riesgos (Comité / Directorio)"
 
-#: src/Profile.php:89
+#: src/Profile.php:90
 msgid "Accept risks"
 msgstr "Aceptar riesgos"
 
-#: src/Profile.php:89
+#: src/Profile.php:90
 msgid "Accept or revoke the acceptance of a risk (never an own risk)"
 msgstr "Aceptar o revocar la aceptación de un riesgo (nunca el propio)"
 
