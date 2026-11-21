@@ -14,6 +14,7 @@
  * (at your option) any later version. See LICENSE for the full text.
  * -------------------------------------------------------------------------
  */
+
 namespace GlpiPlugin\Erm\Tests\Unit;
 
 use GlpiPlugin\Erm\Consolidation;
