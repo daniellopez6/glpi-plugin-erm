@@ -229,6 +229,12 @@ class Indicator extends CommonDBChild
             \Session::addMessageAfterRedirect(__('Select a saved search you can see for an automatic KRI.', 'erm'), false, ERROR);
             return false;
         }
+        // The automatic action runs the search with the rights of its owner: only own saved searches can be used,
+        // unless the user manages the ERM configuration (otherwise counts outside the user's scope could be exposed)
+        if ((int) $search->fields['users_id'] !== (int) \Session::getLoginUserID() && !\Session::haveRight(Rights::CONFIG, UPDATE)) {
+            \Session::addMessageAfterRedirect(__('An automatic KRI can only use one of your own saved searches.', 'erm'), false, ERROR);
+            return false;
+        }
         return $input;
     }
 

@@ -439,4 +439,5 @@ ES = {
  'No validity date': 'Sin fecha de validez',
  'Acceptance valid until': 'Aceptación válida hasta',
  'Set by the Risk Committee when accepting (12 months by default). Extending it records a new acceptance.': 'La fija el Comité de riesgos al aceptar (12 meses por defecto). Extenderla registra una nueva aceptación.',
+ 'An automatic KRI can only use one of your own saved searches.': 'Un KRI automático sólo puede usar una de tus búsquedas guardadas.',
 }

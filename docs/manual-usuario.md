@@ -102,7 +102,8 @@ Pestaña **Indicadores (KRI)**:
 Los KRI en alerta o críticos aparecen en el tablero.
 
 **KRI automáticos**: al crear el indicador, elegí la fuente "Búsqueda guardada de GLPI" y una búsqueda guardada
-(por ejemplo, incidentes abiertos de una categoría). El valor es la cantidad de resultados: se mide solo según la
+propia (por ejemplo, incidentes abiertos de una categoría); quien administra la configuración del ERM puede usar
+cualquier búsqueda visible. El valor es la cantidad de resultados: se mide solo según la
 frecuencia (acción automática ermkri) o con **Medir ahora**.
 
 ![Indicadores](screenshots/kri.png)

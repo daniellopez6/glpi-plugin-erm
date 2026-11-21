@@ -7,7 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
-## [1.9.0] - 2026-11-21
+## [1.9.1] - 2026-11-21
+### Security
+- An automatic KRI can only use the user's own saved searches (users with the ERM configuration right can use any
+  visible one): the automatic action runs the search with the rights of its owner.
+
+## [1.9.0] - 2026-11-21 (not released, superseded by 1.9.1)
 ### Added
 - Formal acceptance with validity: "Acceptance valid until" (12 months by default), set only by the acceptance right;
   extending it records a new acceptance (who and when, never the risk owner). Alerts when it expires within 30 days
