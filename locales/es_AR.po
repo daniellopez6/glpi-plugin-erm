@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 23:33+0000\n"
+"POT-Creation-Date: 2026-11-21 23:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_AR\n"
@@ -169,7 +169,7 @@ msgstr "La evaluación debe aprobarla alguien con permiso de aprobación distint
 msgid "AI: %1$s - %2$s"
 msgstr "IA: %1$s - %2$s"
 
-#: src/AiAssessment.php:219
+#: src/AiAssessment.php:224
 #, python-format
 msgid "Impact assessment of %s"
 msgstr "Evaluación de impacto del %s"

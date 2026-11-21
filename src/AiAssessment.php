@@ -203,7 +203,7 @@ class AiAssessment extends CommonDBChild
         $worst = AiImpact::worstDimension($scores);
         $dims = AiImpact::dimensions();
         $risk = new Risk();
-        $id = $risk->add([
+        $data = [
             'name'                     => sprintf(__('AI: %1$s - %2$s', 'erm'), $system->fields['name'], $dims[$worst] ?? ''),
             'entities_id'              => $system->fields['entities_id'],
             'plugin_erm_categories_id' => Category::aiRootId(),
@@ -213,7 +213,12 @@ class AiAssessment extends CommonDBChild
             'consequences'             => (string) ($this->fields["notes_$worst"] ?? ''),
             'existing_controls'        => (string) $this->fields['mitigations'],
             'status'                   => 'identified',
-        ]);
+        ];
+        // The user must be allowed to create risks in the entity of the AI system
+        if (!$risk->can(-1, CREATE, $data)) {
+            return 0;
+        }
+        $id = $risk->add($data);
         if ($id) {
             (new Risk_Item())->add(['plugin_erm_risks_id' => $id, 'itemtype' => AiSystem::class, 'items_id' => $system->getID(),
                                     'comment' => sprintf(__('Impact assessment of %s', 'erm'), $this->fields['assessment_date'])]);
