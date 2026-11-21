@@ -168,7 +168,20 @@ class Action extends CommonDBChild
             $r['overdue'] = $r['due_date'] && $r['due_date'] < $today && !in_array($r['status'], ['done', 'cancelled'], true);
             $rows[] = $r;
         }
+        $closed = count(array_filter($rows, fn($r) => in_array($r['status'], ['done', 'cancelled'], true)));
+        $residual = (int) ($item->fields['residual_score'] ?: $item->fields['inherent_score']);
+        $evalKey = TreatmentEval::evaluate(count($rows), $closed, $residual, (int) $item->fields['target_score']);
         TemplateRenderer::getInstance()->display('@erm/actions_tab.html.twig', [
+           'eval'     => [
+               'key'      => $evalKey,
+               'progress' => TreatmentEval::progress(count($rows), $closed),
+               'closed'   => $closed,
+               'total'    => count($rows),
+               'inherent' => Scale::badge($item->fields['inherent_level'], (int) $item->fields['inherent_score'] ?: null),
+               'residual' => Scale::badge($item->fields['residual_level'], (int) $item->fields['residual_score'] ?: null),
+               'target'   => Scale::badge($item->fields['target_level'], (int) $item->fields['target_score'] ?: null),
+               'target_date' => $item->fields['target_date'],
+           ],
            'risk'     => $item,
            'rows'     => $rows,
            'statuses' => Scale::actionStatuses(),
@@ -196,6 +209,20 @@ class Action extends CommonDBChild
         $input['entities_id'] = $risk->fields['entities_id'];
         $input['is_recursive'] = $risk->fields['is_recursive'];
         return $this->clean($input);
+    }
+
+    public function post_addItem()
+    {
+        Notifier::actionAssigned($this);
+        parent::post_addItem();
+    }
+
+    public function post_updateItem($history = true)
+    {
+        if (in_array('users_id', $this->updates, true)) {
+            Notifier::actionAssigned($this);
+        }
+        parent::post_updateItem($history);
     }
 
     public function prepareInputForUpdate($input)

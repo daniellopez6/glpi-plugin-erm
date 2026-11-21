@@ -7,6 +7,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.6.0] - 2026-11-21
+### Added
+- Target risk (probability, impact, level and date to reach with the treatment).
+- Risk reviews (ISO 31000 6.6): each review keeps a snapshot of the assessment, conclusion, participants (6.2
+  consultation) and next review date; reviews cannot be modified. "Evolution of the risk" chart (inherent, residual
+  and target over time).
+- Treatment effectiveness (6.5): plan progress and residual vs. target (target reached, in progress, plan completed
+  without reaching the target, above target without plan), on the treatment tab, the dashboard and the drill-down.
+- E-mail notifications (GLPI notifications, "Corporate risk" type):
+  - immediate notice when a risk is assigned to its owner and when a treatment action is assigned;
+  - daily digest per risk (automatic action "ermalerts"): actions overdue or due within 7 days, review overdue or due
+    within 14 days, residual above appetite or tolerance, KRIs in alert or with a pending measurement, treatment
+    completed without reaching the target and assessment below the loss history. Each alert is repeated at most
+    once a week. Recipients: risk owner, responsible group, action and KRI responsibles (configurable).
+- Unit tests for treatment evaluation and alert rules (74 tests).
+
 ## [1.5.1] - 2026-11-21
 ### Security
 - The loss history statistics of a risk only use events of the entities visible to the user.

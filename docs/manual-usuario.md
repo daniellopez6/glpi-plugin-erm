@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.5.x · GLPI 12
+Versión del plugin: 1.6.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -51,15 +51,26 @@ impacto legal, reputacional y operativo, no sólo el económico. Los importes se
    velocidad de materialización y el impacto económico mínimo y máximo (acepta `1.500.000,50` o `1500000.5`, en la moneda de la organización).
 4. **Controles existentes y riesgo residual**: describí los controles, su eficacia y la tendencia; luego
    probabilidad e impacto residuales. Se muestra la **posición frente al apetito** de la categoría.
-5. **Tratamiento**: elegí la decisión (Mitigar, Transferir, Evitar, Aceptar), el estado, la justificación y las
+5. **Riesgo objetivo**: probabilidad e impacto que el plan de tratamiento tiene que alcanzar, y la fecha.
+   Normalmente, dentro del apetito de la categoría.
+6. **Tratamiento**: elegí la decisión (Mitigar, Transferir, Evitar, Aceptar), el estado, la justificación y las
    fechas de revisión.
-6. **Guardar**.
+7. **Guardar**.
 
 ![Ficha del riesgo](screenshots/risk-form.png)
 
 ## 5. Plan de tratamiento
 
-Pestaña **Plan de tratamiento** del riesgo:
+Pestaña **Plan de tratamiento** del riesgo. Arriba, la **eficacia del tratamiento**: inherente → residual →
+objetivo, el avance del plan (acciones cerradas) y el estado:
+
+| Estado | Significado |
+|---|---|
+| Objetivo alcanzado | El residual ya está en el nivel objetivo o por debajo. |
+| Tratamiento en curso | Quedan acciones abiertas. |
+| Plan terminado sin alcanzar el objetivo | Todas las acciones se cerraron pero el residual no bajó: hay que revisar el plan o los controles. |
+| Sobre el objetivo sin plan | El residual supera el objetivo y no hay acciones. |
+
 
 - **Agregar**: descripción, responsable, vencimiento y costo estimado.
 - **Actualizar**: cambiá el estado (Planificada, En curso, Realizada, Cancelada). Al marcar "Realizada" se
@@ -108,7 +119,31 @@ contrato, aplicación, equipo, proyecto, grupo, cambio) y el elemento. Desde eso
 **Riesgos corporativos** muestra el camino inverso. Ejemplo: el riesgo de ciberataque corporativo vinculado a los
 riesgos de ransomware y phishing del SGSI.
 
-## 9. Eventos de pérdida e historial
+## 9. Revisiones del riesgo
+
+Pestaña **Revisiones**: cada revisión periódica (taller, comité) queda registrada como evidencia.
+
+1. Si la evaluación cambió, actualizala primero en la pestaña principal.
+2. En **Revisiones**, completá fecha, **conclusión** (evaluación confirmada, actualizada, escalada al Comité o
+   propuesta para cierre), **participantes**, comentarios y la **próxima revisión**.
+3. **Registrar revisión**: se guarda una foto de la evaluación de ese momento (inherente, residual, objetivo, estado
+   y decisión). Las revisiones no se pueden modificar. La fecha de última y próxima revisión del riesgo se actualizan.
+
+El gráfico **Evolución del riesgo** muestra cómo cambiaron el inherente, el residual y el objetivo en cada revisión.
+
+## 10. Avisos por correo
+
+Si el administrador activó las notificaciones de GLPI, el plugin avisa por correo:
+
+- **Al asignarte un riesgo** como dueño, o **una acción de tratamiento** como responsable (no si te lo asignás vos).
+- **Resumen diario** por riesgo, a su dueño y a los responsables de las acciones e indicadores involucrados:
+  acciones vencidas o que vencen en 7 días, revisión vencida o en los próximos 14 días, residual sobre el apetito o
+  la tolerancia, KRI en alerta o con medición pendiente, plan terminado sin alcanzar el objetivo y evaluación por
+  debajo del historial de pérdidas. La misma alerta se repite como máximo una vez por semana.
+
+Todo eso también está siempre a la vista en **Mi espacio ERM** y en el tablero.
+
+## 11. Eventos de pérdida e historial
 
 La ISO 31000 pide que el análisis se apoye en información confiable. Los eventos de pérdida son esa evidencia.
 
@@ -142,7 +177,7 @@ El sistema **sugiere**, no cambia la evaluación: la decisión es del dueño del
 
 ![Registro de eventos](screenshots/loss-events.png)
 
-## 10. Mi espacio ERM
+## 12. Mi espacio ERM
 
 Pantalla personal con lo que tenés que hacer:
 
@@ -153,7 +188,7 @@ Pantalla personal con lo que tenés que hacer:
 - **Riesgos a mi cargo** (como dueño o por tu área), con su nivel, la posición frente al apetito y la próxima
   revisión.
 
-## 11. Tablero
+## 13. Tablero
 
 ![Tablero](screenshots/dashboard.png)
 
@@ -171,17 +206,19 @@ Pantalla personal con lo que tenés que hacer:
 
 - **Evaluación vs. historial de pérdidas**: los riesgos cuya evaluación es menor que lo que sugiere su historial,
   y las pérdidas netas de los últimos 12 meses.
+- **Eficacia del tratamiento**: cuántos riesgos alcanzaron el objetivo, están en curso, terminaron el plan sin
+  alcanzarlo o están sobre el objetivo sin plan ("Ver riesgos a atender" abre la lista).
 - **Riesgos por entidad**: si tu perfil ve varias empresas, una tabla compara sus indicadores; el nombre de cada
   entidad lleva al registro filtrado. Para trabajar sobre una sola empresa, elegila en el selector de entidad de GLPI.
 
-## 12. Categorías y apetito
+## 14. Categorías y apetito
 
 **Categorías y apetito (ERM)** (requiere el permiso de configuración para modificar): cada categoría tiene
 apetito, tolerancia y declaración de apetito por defecto. Si una subcategoría no los define, **hereda** los de la
 superior. Cada empresa puede ajustarlos en la pestaña "Riesgos corporativos (ERM)" de su entidad.
 Cambiar el apetito actualiza inmediatamente la posición de todos los riesgos de esa categoría.
 
-## 13. Buenas prácticas
+## 15. Buenas prácticas
 
 - Revisá cada riesgo al menos una vez al año (campo "Próxima revisión") y siempre ante un cambio relevante.
 - Un riesgo sobre la tolerancia debe tener un plan de tratamiento con fechas, o una aceptación formal justificada.

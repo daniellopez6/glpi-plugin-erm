@@ -24,7 +24,10 @@ namespace GlpiPlugin\Erm;
 final class DrillFilter
 {
     /** Query parameters understood by the drill-down list. */
-    public const KEYS = ['level', 'heat', 'p', 'i', 'category', 'entity', 'outside', 'overdue', 'kri', 'history'];
+    public const KEYS = ['level', 'heat', 'p', 'i', 'category', 'entity', 'outside', 'overdue', 'kri', 'history', 'treatment'];
+
+    /** Filters that select risks from a precomputed list of ids. */
+    public const ID_FILTERS = ['overdue', 'kri', 'history', 'treatment'];
 
     /**
      * Keeps only the known, well-formed parameters.
@@ -54,7 +57,7 @@ final class DrillFilter
         if (in_array($query['outside'] ?? '', ['any', 'above_appetite', 'above_tolerance'], true)) {
             $f['outside'] = $query['outside'];
         }
-        foreach (['overdue', 'kri', 'history'] as $flag) {
+        foreach (self::ID_FILTERS as $flag) {
             if (!empty($query[$flag])) {
                 $f[$flag] = 1;
             }
@@ -77,14 +80,12 @@ final class DrillFilter
     /**
      * @param list<array<string,mixed>> $risks       risks as returned by Risk::activeRisks()
      * @param array<string,string|int>  $f           filters from fromQuery()
-     * @param list<int>                 $overdueIds  risks with overdue actions
-     * @param list<int>                 $kriIds      risks with KRIs in alert
-     * @param list<int>                 $historyIds  risks underestimated according to their loss history
+     * @param array<string, list<int>>  $idSets      for each id filter (overdue, kri, history, treatment), the matching risk ids
      * @return list<array<string,mixed>>
      */
-    public static function apply(array $risks, array $f, array $overdueIds = [], array $kriIds = [], array $historyIds = []): array
+    public static function apply(array $risks, array $f, array $idSets = []): array
     {
-        return array_values(array_filter($risks, static function (array $r) use ($f, $overdueIds, $kriIds, $historyIds): bool {
+        return array_values(array_filter($risks, static function (array $r) use ($f, $idSets): bool {
             if (isset($f['level']) && self::level($r) !== $f['level']) {
                 return false;
             }
@@ -107,14 +108,10 @@ final class DrillFilter
                     return false;
                 }
             }
-            if (isset($f['overdue']) && !in_array((int) $r['id'], $overdueIds, true)) {
-                return false;
-            }
-            if (isset($f['kri']) && !in_array((int) $r['id'], $kriIds, true)) {
-                return false;
-            }
-            if (isset($f['history']) && !in_array((int) $r['id'], $historyIds, true)) {
-                return false;
+            foreach (self::ID_FILTERS as $flag) {
+                if (isset($f[$flag]) && !in_array((int) $r['id'], $idSets[$flag] ?? [], true)) {
+                    return false;
+                }
             }
             return true;
         }));

@@ -20,6 +20,10 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
 - **Loss event database**: losses, near misses and gains linked with risks and with tickets, problems and changes.
   The loss history **suggests the probability and impact** of each risk (annual frequency over 3 years and largest
   loss against the entity's economic impact criteria) and flags underestimated risks.
+- **Target risk, periodic reviews and treatment effectiveness**: every review keeps a snapshot of the assessment
+  (evolution chart); the plugin flags treatment plans that finished without reaching the target.
+- **E-mail notifications**: notice to the owner of a new risk and to the responsible of a new action, and a daily
+  digest of overdue actions and reviews, KRIs in alert and risks above appetite or tolerance.
 - **Formal risk acceptance with segregation of duties**: only profiles with the acceptance right can accept,
   never the risk owner; who and when are recorded automatically.
 - **Related items**: link corporate risks with GRC Manager risks, business processes, controls, objectives and

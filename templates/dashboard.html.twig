@@ -65,6 +65,17 @@
       <div class="col-sm-6 col-lg-2"><div class="card card-sm"><div class="card-body"><div class="text-muted">{{ __('Maximum economic exposure', 'erm') }}</div><div class="h3 m-0">{{ exposure }}</div></div></div></div>
    </div>
 
+   {% set tc = treatment_counts %}
+   <div class="card mb-3">
+      <div class="card-header"><h3 class="card-title"><i class="ti ti-target-arrow me-2"></i>{{ __('Treatment effectiveness', 'erm') }}</h3>
+         {% if (tc.ineffective ?? 0) + (tc.no_plan ?? 0) %}<div class="card-actions"><a href="{{ drill_url }}&treatment=1">{{ __('See risks to act on', 'erm') }}</a></div>{% endif %}</div>
+      <div class="card-body row text-center g-2">
+         {% for k, label in {'reached': __('Target reached', 'erm'), 'in_progress': __('Treatment in progress', 'erm'), 'ineffective': __('Plan completed, target not reached', 'erm'), 'no_plan': __('Above target without plan', 'erm'), 'no_target': __('Without target', 'erm')} %}
+         <div class="col"><div class="h2 m-0 {{ k in ['ineffective', 'no_plan'] and (tc[k] ?? 0) ? 'text-danger' : '' }}">{{ tc[k] ?? 0 }}</div><div class="small text-muted">{{ label }}</div></div>
+         {% endfor %}
+      </div>
+   </div>
+
    {% if events %}
    <div class="card mb-3 {{ underestimated|length ? 'border-danger' : '' }}">
       <div class="card-header">

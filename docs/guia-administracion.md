@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.5.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 1.6.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -92,13 +92,38 @@ nivel, fuera del apetito, acciones vencidas, KRI en alerta y exposición), con a
 
 ![Riesgos por entidad](screenshots/dashboard-entities.png)
 
-## 5. Integración con GLPI GRC Manager (opcional)
+## 5. Notificaciones por correo
+
+La instalación crea tres notificaciones del tipo **Riesgo corporativo** (Configuración → Notificaciones →
+Notificaciones), con su plantilla, y la acción automática **ermalerts** (Configuración → Acciones automáticas,
+diaria entre las 6 y las 8):
+
+| Notificación | Cuándo | Destinatarios por defecto |
+|---|---|---|
+| Alertas de riesgos corporativos | Resumen diario por riesgo (ermalerts) | Dueño del riesgo, responsables de las acciones y de los KRI alertados |
+| Se te asignó un riesgo corporativo | Al crear el riesgo o cambiar el dueño | Dueño del riesgo |
+| Se te asignó una acción de tratamiento | Al crear la acción o cambiar el responsable | Responsable de la acción |
+
+También está disponible el destinatario "Área responsable del riesgo". Los textos se crean en el idioma de quien
+instala; se pueden editar en las plantillas. La misma alerta se repite como máximo una vez por semana
+(tabla `glpi_plugin_erm_alerts`).
+
+Para que se envíen:
+
+1. **Configuración → Notificaciones**: activar el seguimiento por notificaciones y por correo, y configurar el
+   servidor SMTP (pestaña Configuración de correo electrónico).
+2. **Configuración → General → URL de la aplicación**: la dirección real de GLPI (se usa en los enlaces del
+   correo).
+3. El cron de GLPI debe estar activo (`php bin/console glpi:cron` cada minuto), porque ermalerts corre en modo
+   externo.
+
+## 6. Integración con GLPI GRC Manager (opcional)
 
 Si GRC Manager está activo, el plugin se ubica en su menú "GRC y cumplimiento" y permite vincular riesgos
 corporativos con riesgos, procesos de negocio, controles, objetivos, obligaciones y riesgos de proveedores del
 SGSI. No es un requisito: sin GRC Manager el plugin funciona y su menú aparece en **Gestión**.
 
-## 6. API REST
+## 7. API REST
 
 Los objetos están disponibles en la API v1 de GLPI con los nombres de clase completos (codificados en la URL):
 `GlpiPlugin\Erm\Risk`, `Category`, `Action`, `Indicator`, `IndicatorValue`, `Risk_Item`. La API respeta los mismos
@@ -108,22 +133,23 @@ permisos y validaciones que la interfaz. Ejemplo:
 GET /api.php/v1/GlpiPlugin%5CErm%5CRisk?range=0-49
 ```
 
-## 7. Desinstalación
+## 8. Desinstalación
 
 **Configuración → Complementos → ERM → Desinstalar** (o `php bin/console plugin:uninstall erm`).
-**Elimina todas las tablas y datos del plugin**, sus permisos, preferencias de visualización, vínculos de
+**Elimina todas las tablas y datos del plugin**, sus notificaciones y acción automática, sus permisos, preferencias de visualización, vínculos de
 documentos e historial. Hacé un backup antes.
 
-## 8. Idiomas
+## 9. Idiomas
 
 El plugin está en inglés, español de Argentina (`es_AR`) y español de España (`es_ES`); se muestra en el idioma
 de cada usuario. Para agregar un idioma, crear un `.po` a partir de `locales/erm.pot` y compilarlo a `.mo`.
 
-## 9. Solución de problemas
+## 10. Solución de problemas
 
 | Síntoma | Causa y solución |
 |---|---|
 | No aparece el menú después de instalar | El menú se guarda en la sesión: cerrar sesión y volver a entrar. |
 | Cambios de pantalla no se ven después de actualizar | Ejecutar `php bin/console cache:clear` (plantillas compiladas). |
 | "No tenés permiso para realizar esta acción" | Revisar la matriz del perfil y la entidad del usuario; con "Ver propios" sólo se accede a riesgos propios. |
+| No llegan los correos | Revisar que las notificaciones y el correo estén activos, el SMTP, la cola (Administración → Cola de notificaciones), que el usuario tenga correo y perfil en la entidad del riesgo, y que el cron de GLPI corra. |
 | Un usuario del Comité no puede aceptar | Necesita el permiso "Aceptar riesgos", la decisión debe ser "Aceptar" y no puede ser el dueño del riesgo. |

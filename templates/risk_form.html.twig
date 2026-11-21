@@ -49,6 +49,12 @@
    {% if appetite_badge %}
       {{ fields.htmlField('', appetite_badge, __('Position against appetite', 'erm')) }}
    {% endif %}
+
+   {{ fields.smallTitle(__('Target risk (after treatment)', 'erm'), 'ti ti-target-arrow') }}
+   {{ fields.dropdownArrayField('target_probability', item.fields['target_probability'] ?? 0, probabilities, __('Target probability', 'erm')) }}
+   {{ fields.dropdownArrayField('target_impact', item.fields['target_impact'] ?? 0, impacts, __('Target impact', 'erm')) }}
+   {{ fields.htmlField('', target_badge, __('Target level', 'erm'), {'helper': __('Level the treatment plan has to reach. Usually within the appetite of the category.', 'erm')}) }}
+   {{ fields.dateField('target_date', item.fields['target_date'], __('Target date', 'erm')) }}
    </fieldset>
 
    {{ fields.smallTitle(__('Treatment and acceptance', 'erm'), 'ti ti-checklist') }}

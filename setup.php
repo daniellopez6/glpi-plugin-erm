@@ -31,10 +31,11 @@ use GlpiPlugin\Erm\Event_Item;
 use GlpiPlugin\Erm\Indicator;
 use GlpiPlugin\Erm\MySpace;
 use GlpiPlugin\Erm\Profile;
+use GlpiPlugin\Erm\Review;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '1.5.1');
+define('PLUGIN_ERM_VERSION', '1.6.0');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -52,7 +53,8 @@ function plugin_init_erm(): void
     Plugin::registerClass(Action::class, ['addtabon' => [Risk::class]]);
     Plugin::registerClass(Indicator::class, ['addtabon' => [Risk::class]]);
     Plugin::registerClass(Risk_Item::class, ['addtabon' => array_merge([Risk::class], Risk_Item::getLinkableItemtypes())]);
-    Plugin::registerClass(Risk::class, ['document_types' => true]);
+    Plugin::registerClass(Risk::class, ['document_types' => true, 'notificationtemplates_types' => true]);
+    Plugin::registerClass(Review::class, ['addtabon' => [Risk::class]]);
     Plugin::registerClass(EntityConfig::class, ['addtabon' => ['Entity']]);
     Plugin::registerClass(Event::class, ['document_types' => true]);
     Plugin::registerClass(Event_Item::class, ['addtabon' => array_merge([Event::class], Event_Item::getLinkableItemtypes())]);

@@ -23,6 +23,8 @@ use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use GlpiPlugin\Erm\Action;
 use GlpiPlugin\Erm\Category;
+use GlpiPlugin\Erm\NotificationTargetRisk;
+use GlpiPlugin\Erm\Notifier;
 use GlpiPlugin\Erm\Rights;
 use GlpiPlugin\Erm\Risk;
 
@@ -79,6 +81,11 @@ function plugin_erm_install(): bool
             `residual_impact` tinyint NOT NULL DEFAULT '0',
             `residual_score` tinyint NOT NULL DEFAULT '0',
             `residual_level` varchar(16) NOT NULL DEFAULT '',
+            `target_probability` tinyint NOT NULL DEFAULT '0',
+            `target_impact` tinyint NOT NULL DEFAULT '0',
+            `target_score` tinyint NOT NULL DEFAULT '0',
+            `target_level` varchar(16) NOT NULL DEFAULT '',
+            `target_date` date DEFAULT NULL,
             `economic_impact_min` decimal(20,2) DEFAULT NULL,
             `economic_impact_max` decimal(20,2) DEFAULT NULL,
             `velocity` varchar(16) NOT NULL DEFAULT '',
@@ -200,6 +207,39 @@ function plugin_erm_install(): bool
             PRIMARY KEY (`id`),
             UNIQUE KEY `unicity` (`plugin_erm_events_id`,`itemtype`,`items_id`),
             KEY `item` (`itemtype`,`items_id`)",
+        'glpi_plugin_erm_reviews' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
+            `review_date` date DEFAULT NULL,
+            `users_id` int {$sign} NOT NULL DEFAULT '0',
+            `participants` text,
+            `conclusion` varchar(16) NOT NULL DEFAULT 'unchanged',
+            `comment` text,
+            `inherent_probability` tinyint NOT NULL DEFAULT '0',
+            `inherent_impact` tinyint NOT NULL DEFAULT '0',
+            `inherent_score` tinyint NOT NULL DEFAULT '0',
+            `inherent_level` varchar(16) NOT NULL DEFAULT '',
+            `residual_probability` tinyint NOT NULL DEFAULT '0',
+            `residual_impact` tinyint NOT NULL DEFAULT '0',
+            `residual_score` tinyint NOT NULL DEFAULT '0',
+            `residual_level` varchar(16) NOT NULL DEFAULT '',
+            `target_score` tinyint NOT NULL DEFAULT '0',
+            `target_level` varchar(16) NOT NULL DEFAULT '',
+            `status` varchar(16) NOT NULL DEFAULT '',
+            `treatment` varchar(16) NOT NULL DEFAULT '',
+            `next_review_date` date DEFAULT NULL,
+            `date_creation` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `plugin_erm_risks_id` (`plugin_erm_risks_id`),
+            KEY `review_date` (`review_date`)",
+        'glpi_plugin_erm_alerts' => "
+            `id` int {$sign} NOT NULL AUTO_INCREMENT,
+            `itemtype` varchar(255) NOT NULL DEFAULT '',
+            `items_id` int {$sign} NOT NULL DEFAULT '0',
+            `alert_type` varchar(32) NOT NULL DEFAULT '',
+            `date_sent` timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `unicity` (`itemtype`,`items_id`,`alert_type`)",
         'glpi_plugin_erm_risks_items' => "
             `id` int {$sign} NOT NULL AUTO_INCREMENT,
             `plugin_erm_risks_id` int {$sign} NOT NULL DEFAULT '0',
@@ -231,6 +271,18 @@ function plugin_erm_install(): bool
             'glpi_plugin_erm_actions.is_recursive' => new QueryExpression($DB->quoteName('r.is_recursive')),
         ], ['r.id' => ['>', 0]], ['INNER JOIN' => ['glpi_plugin_erm_risks AS r' => ['ON' => ['glpi_plugin_erm_actions' => 'plugin_erm_risks_id', 'r' => 'id']]]]);
     }
+
+    // 1.6.0: target risk
+    foreach (
+        ['target_probability' => "tinyint NOT NULL DEFAULT '0'", 'target_impact' => "tinyint NOT NULL DEFAULT '0'",
+              'target_score' => "tinyint NOT NULL DEFAULT '0'", 'target_level' => "varchar(16) NOT NULL DEFAULT ''",
+        'target_date' => 'date DEFAULT NULL'] as $field => $def
+    ) {
+        if (!$DB->fieldExists('glpi_plugin_erm_risks', $field)) {
+            $migration->addField('glpi_plugin_erm_risks', $field, $def, ['after' => 'residual_level']);
+        }
+    }
+    $migration->migrationOneTable('glpi_plugin_erm_risks');
 
     // 1.5.0: economic impact criteria per entity
     foreach ([2, 3, 4, 5] as $lvl) {
@@ -285,19 +337,98 @@ function plugin_erm_install(): bool
         Category::createDefaultTaxonomy();
     }
 
+    // 1.6.0: daily e-mail alerts and assignment notices
+    CronTask::register(Notifier::class, 'ermalerts', DAY_TIMESTAMP, [
+        'mode'    => CronTask::MODE_EXTERNAL,
+        'state'   => CronTask::STATE_WAITING,
+        'hourmin' => 6,
+        'hourmax' => 8,
+        'comment' => '',
+    ]);
+    plugin_erm_install_notifications();
+
     $migration->executeMigration();
     return true;
+}
+
+/**
+ * Creates the notification templates and notifications of the plugin (once; never overwrites admin changes).
+ * Texts are created in the language of the user running the installation.
+ */
+function plugin_erm_install_notifications(): void
+{
+    global $DB;
+
+    $now = date('Y-m-d H:i:s');
+    $itemtype = Risk::class;
+    $alertsText = "##FOREACHalerts##\n- ##alert.type##: ##alert.label## ##IFalert.date##(##alert.date##)##ENDIFalert.date## ##IFalert.responsible##- ##alert.responsible####ENDIFalert.responsible##\n##ENDFOREACHalerts##";
+    $alertsHtml = '<ul>##FOREACHalerts##<li><b>##alert.type##</b>: ##alert.label## ##IFalert.date##(##alert.date##)##ENDIFalert.date## '
+        . '##IFalert.responsible##- ##alert.responsible####ENDIFalert.responsible##</li>##ENDFOREACHalerts##</ul>';
+    $header = "##erm.code## ##erm.name##\n##lang.erm.entity##: ##erm.entity##\n##lang.erm.owner##: ##erm.owner##\n\n";
+    $headerHtml = '<p><b>##erm.code## ##erm.name##</b><br>##lang.erm.entity##: ##erm.entity##<br>##lang.erm.owner##: ##erm.owner##</p>';
+    $footer = "\n##erm.url##";
+    $footerHtml = '<p><a href="##erm.url##">##erm.url##</a></p>';
+
+    $definitions = [
+        NotificationTargetRisk::EVENT => [
+            'name'    => __('Corporate risk alerts', 'erm'),
+            'subject' => '##erm.code## - ' . __('Corporate risk alerts', 'erm') . ' (##erm.alerts.number##)',
+            'targets' => [NotificationTargetRisk::RISK_OWNER, NotificationTargetRisk::ACTION_RESPONSIBLES, NotificationTargetRisk::KRI_RESPONSIBLES],
+        ],
+        NotificationTargetRisk::EVENT_OWNER => [
+            'name'    => __('A corporate risk has been assigned to you', 'erm'),
+            'subject' => __('A corporate risk has been assigned to you', 'erm') . ': ##erm.code##',
+            'targets' => [NotificationTargetRisk::RISK_OWNER],
+        ],
+        NotificationTargetRisk::EVENT_ACTION => [
+            'name'    => __('A treatment action has been assigned to you', 'erm'),
+            'subject' => __('A treatment action has been assigned to you', 'erm') . ' (##erm.code##)',
+            'targets' => [NotificationTargetRisk::ACTION_RESPONSIBLES],
+        ],
+    ];
+    foreach ($definitions as $event => $def) {
+        if (countElementsInTable('glpi_notifications', ['itemtype' => $itemtype, 'event' => $event]) > 0) {
+            continue;
+        }
+        $name = 'ERM - ' . $def['name'];
+        $DB->insert('glpi_notificationtemplates', ['name' => $name, 'itemtype' => $itemtype, 'date_mod' => $now, 'date_creation' => $now]);
+        $templateId = $DB->insertId();
+        $DB->insert('glpi_notificationtemplatetranslations', [
+            'notificationtemplates_id' => $templateId, 'language' => '', 'subject' => $def['subject'],
+            'content_text' => $header . $alertsText . $footer,
+            'content_html' => $headerHtml . $alertsHtml . $footerHtml,
+        ]);
+        $DB->insert('glpi_notifications', ['name' => $name, 'entities_id' => 0, 'itemtype' => $itemtype, 'event' => $event,
+                                          'is_recursive' => 1, 'is_active' => 1, 'date_mod' => $now, 'date_creation' => $now]);
+        $notificationId = $DB->insertId();
+        $DB->insert('glpi_notifications_notificationtemplates', ['notifications_id' => $notificationId, 'mode' => 'mailing',
+                                                                'notificationtemplates_id' => $templateId]);
+        foreach ($def['targets'] as $target) {
+            $DB->insert('glpi_notificationtargets', ['items_id' => $target, 'type' => Notification::USER_TYPE, 'notifications_id' => $notificationId]);
+        }
+    }
 }
 
 function plugin_erm_uninstall(): bool
 {
     global $DB;
 
+    CronTask::unregister('erm');
+    foreach ($DB->request(['FROM' => 'glpi_notifications', 'WHERE' => ['itemtype' => Risk::class]]) as $n) {
+        $DB->delete('glpi_notificationtargets', ['notifications_id' => $n['id']]);
+        $DB->delete('glpi_notifications_notificationtemplates', ['notifications_id' => $n['id']]);
+    }
+    $DB->delete('glpi_notifications', ['itemtype' => Risk::class]);
+    foreach ($DB->request(['FROM' => 'glpi_notificationtemplates', 'WHERE' => ['itemtype' => Risk::class]]) as $t) {
+        $DB->delete('glpi_notificationtemplatetranslations', ['notificationtemplates_id' => $t['id']]);
+    }
+    $DB->delete('glpi_notificationtemplates', ['itemtype' => Risk::class]);
+
     foreach (
         ['glpi_plugin_erm_categories', 'glpi_plugin_erm_risks', 'glpi_plugin_erm_actions', 'glpi_plugin_erm_indicators',
               'glpi_plugin_erm_indicatorvalues', 'glpi_plugin_erm_risks_items',
               'glpi_plugin_erm_entityconfigs', 'glpi_plugin_erm_appetites', 'glpi_plugin_erm_events',
-              'glpi_plugin_erm_events_items'] as $table
+              'glpi_plugin_erm_events_items', 'glpi_plugin_erm_reviews', 'glpi_plugin_erm_alerts'] as $table
     ) {
         $DB->dropTable($table, true);
     }

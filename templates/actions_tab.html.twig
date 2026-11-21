@@ -12,6 +12,29 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
+{% set eval_labels = {
+   'reached': [__('Target reached', 'erm'), 'bg-green-lt'],
+   'in_progress': [__('Treatment in progress', 'erm'), 'bg-blue-lt'],
+   'ineffective': [__('Plan completed, target not reached: review the plan or the controls', 'erm'), 'bg-red-lt'],
+   'no_plan': [__('Above target without plan', 'erm'), 'bg-red-lt'],
+   'no_target': [__('Define the target risk in the main tab to measure the effectiveness of the treatment.', 'erm'), 'bg-secondary-lt']} %}
+<div class="card mb-3">
+   <div class="card-header"><h3 class="card-title"><i class="ti ti-target-arrow me-2"></i>{{ __('Treatment effectiveness', 'erm') }}</h3></div>
+   <div class="card-body">
+      <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+         {# badges built by Scale::badge() (escaped) #}
+         <span class="small text-muted">{{ __('Inherent', 'erm') }}</span> {{ eval.inherent|raw }} <i class="ti ti-arrow-right"></i>
+         <span class="small text-muted">{{ __('Residual', 'erm') }}</span> {{ eval.residual|raw }} <i class="ti ti-arrow-right"></i>
+         <span class="small text-muted">{{ __('Target', 'erm') }}</span> {{ eval.target|raw }}
+         {% if eval.target_date %}<span class="small text-muted">({{ eval.target_date }})</span>{% endif %}
+         <span class="badge {{ eval_labels[eval.key][1] }} ms-auto">{{ eval_labels[eval.key][0] }}</span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+         <div class="progress flex-grow-1" style="height:10px"><div class="progress-bar bg-primary" style="width:{{ eval.progress }}%"></div></div>
+         <span class="small text-muted text-nowrap">{{ __('%1$d of %2$d actions closed', 'erm')|format(eval.closed, eval.total) }}</span>
+      </div>
+   </div>
+</div>
 <div class="card">
    <div class="card-header"><h3 class="card-title"><i class="ti ti-list-check me-2"></i>{{ __('Treatment plan', 'erm') }}</h3></div>
    <div class="table-responsive">

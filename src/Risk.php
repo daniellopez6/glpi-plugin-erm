@@ -91,6 +91,7 @@ class Risk extends CommonDBTM
     {
         $tabs = [];
         $this->addDefaultFormTab($tabs);
+        $this->addStandardTab(Review::class, $tabs, $options);
         $this->addStandardTab(Action::class, $tabs, $options);
         $this->addStandardTab(Indicator::class, $tabs, $options);
         $this->addStandardTab(Event_Item::class, $tabs, $options);
@@ -104,7 +105,7 @@ class Risk extends CommonDBTM
     // ------------------------------------------------------------------ computation
     private function compute(array $input): array|false
     {
-        foreach (['inherent_probability', 'inherent_impact', 'residual_probability', 'residual_impact'] as $f) {
+        foreach (['inherent_probability', 'inherent_impact', 'residual_probability', 'residual_impact', 'target_probability', 'target_impact'] as $f) {
             if (array_key_exists($f, $input)) {
                 $input[$f] = Validator::range($input[$f], 0, 5);
             }
@@ -115,7 +116,7 @@ class Risk extends CommonDBTM
             }
         }
         $merged = $input + $this->fields;
-        foreach (['inherent', 'residual'] as $kind) {
+        foreach (['inherent', 'residual', 'target'] as $kind) {
             $p = (int) ($merged["{$kind}_probability"] ?? 0);
             $i = (int) ($merged["{$kind}_impact"] ?? 0);
             if (array_key_exists("{$kind}_probability", $input) || array_key_exists("{$kind}_impact", $input)) {
@@ -124,7 +125,7 @@ class Risk extends CommonDBTM
             }
         }
         $input = Validator::apply($input, ['economic_impact_min' => 'decimal', 'economic_impact_max' => 'decimal',
-                                          'review_date' => 'date', 'last_review_date' => 'date']);
+                                          'review_date' => 'date', 'last_review_date' => 'date', 'target_date' => 'date']);
         if ($input === false) {
             return false;
         }
@@ -264,9 +265,18 @@ class Risk extends CommonDBTM
         return $input;
     }
 
+    public function post_addItem()
+    {
+        Notifier::ownerAssigned($this);
+        parent::post_addItem();
+    }
+
     public function post_updateItem($history = true)
     {
         global $DB;
+        if (in_array('users_id', $this->updates, true)) {
+            Notifier::ownerAssigned($this);
+        }
         // Keep the entity of the treatment actions aligned with their risk
         if (array_intersect($this->updates, ['entities_id', 'is_recursive'])) {
             $DB->update(Action::getTable(), [
@@ -279,6 +289,7 @@ class Risk extends CommonDBTM
 
     public function cleanDBonPurge()
     {
+        $this->deleteChildrenAndRelationsFromDb([Review::class]);
         $this->deleteChildrenAndRelationsFromDb([Action::class, Indicator::class, Risk_Item::class]);
     }
 
@@ -383,6 +394,7 @@ class Risk extends CommonDBTM
            'inherent_badge' => Scale::badge($this->fields['inherent_level'] ?? '', (int) ($this->fields['inherent_score'] ?? 0) ?: null),
            'residual_badge' => Scale::badge($this->fields['residual_level'] ?? '', (int) ($this->fields['residual_score'] ?? 0) ?: null),
            'appetite_badge' => $this->isNewItem() ? '' : Scale::appetiteBadge($pos),
+           'target_badge'   => Scale::badge($this->fields['target_level'] ?? '', (int) ($this->fields['target_score'] ?? 0) ?: null),
         ]);
         return true;
     }

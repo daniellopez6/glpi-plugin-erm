@@ -1,0 +1,75 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{% if chart %}
+<div class="card mb-3">
+   <div class="card-header"><h3 class="card-title"><i class="ti ti-chart-line me-2"></i>{{ __('Evolution of the risk', 'erm') }}</h3></div>
+   <div class="card-body">
+      <svg viewBox="0 0 {{ chart.w }} {{ chart.h + 20 }}" style="width:100%;max-width:900px" role="img" aria-label="{{ __('Evolution of the risk', 'erm') }}">
+         {% for b in chart.bands %}<rect x="{{ chart.pad }}" y="{{ b.y }}" width="{{ chart.w - 2 * chart.pad }}" height="{{ b.h }}" fill="{{ b.color }}" opacity=".08"/>{% endfor %}
+         {% for key, s in chart.series %}
+            {% if s.points|length > 1 %}<polyline points="{{ s.path }}" fill="none" stroke="{{ s.color }}" stroke-width="{{ key == 'residual' ? 3 : 2 }}" {{ key == 'target' ? 'stroke-dasharray="6 4"' : '' }}/>{% endif %}
+            {% for p in s.points %}<circle cx="{{ p.x }}" cy="{{ p.y }}" r="4" fill="{{ s.color }}"><title>{{ p.v }}</title></circle>
+               {% if key == 'residual' %}<text x="{{ p.x }}" y="{{ p.y - 8 }}" text-anchor="middle" font-size="11" fill="currentColor">{{ p.v }}</text>{% endif %}{% endfor %}
+         {% endfor %}
+         {% for l in chart.labels %}<text x="{{ l.x }}" y="{{ chart.h + 5 }}" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7">{{ l.text }}</text>{% endfor %}
+      </svg>
+      <div class="small d-flex gap-3 mt-1">
+         <span><span class="d-inline-block me-1" style="width:14px;height:3px;background:#adb5bd;vertical-align:middle"></span>{{ __('Inherent', 'erm') }}</span>
+         <span><span class="d-inline-block me-1" style="width:14px;height:3px;background:#f76707;vertical-align:middle"></span>{{ __('Residual', 'erm') }}</span>
+         <span><span class="d-inline-block me-1" style="width:14px;height:3px;background:#2fb344;vertical-align:middle"></span>{{ __('Target', 'erm') }}</span>
+         <span class="text-muted">{{ __('Score = probability × impact (1-25)', 'erm') }}</span>
+      </div>
+   </div>
+</div>
+{% endif %}
+
+<div class="card">
+   <div class="card-header"><h3 class="card-title"><i class="ti ti-history-toggle me-2"></i>{{ __('Reviews', 'erm') }}</h3></div>
+   <div class="table-responsive">
+      <table class="table card-table table-vcenter">
+         <thead><tr><th>{{ __('Date', 'erm') }}</th><th>{{ __('Reviewed by', 'erm') }}</th><th>{{ __('Inherent', 'erm') }}</th><th>{{ __('Residual', 'erm') }}</th><th>{{ __('Target', 'erm') }}</th><th>{{ __('Conclusion', 'erm') }}</th><th>{{ __('Next review', 'erm') }}</th></tr></thead>
+         <tbody>
+         {% for r in rows %}
+            <tr>
+               <td class="text-nowrap">{{ r.review_date }}</td>
+               <td class="small">{{ r.reviewer }}{% if r.participants %}<div class="text-muted">{{ __('With: %s', 'erm')|format(r.participants) }}</div>{% endif %}</td>
+               {# badges built by Scale::badge() (escaped) #}
+               <td>{{ r.inherent_badge|raw }}</td><td>{{ r.residual_badge|raw }}</td><td>{{ r.target_badge|raw }}</td>
+               <td><b class="small">{{ r.conclusion_label }}</b><div class="small">{{ r.comment|nl2br }}</div></td>
+               <td class="small text-nowrap">{{ r.next_review_date }}</td>
+            </tr>
+         {% else %}
+            <tr><td colspan="7" class="text-muted">{{ __('No reviews recorded. Each review keeps a snapshot of the assessment as evidence of the monitoring of the risk.', 'erm') }}</td></tr>
+         {% endfor %}
+         </tbody>
+      </table>
+   </div>
+   {% if can_review %}
+   <div class="card-footer">
+      <form method="post" action="{{ action }}" class="row g-2 align-items-end">
+         <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+         <input type="hidden" name="plugin_erm_risks_id" value="{{ risk.getID() }}">
+         <div class="col-12 text-muted small">{{ __('Update the assessment in the main tab first if it changed; the review keeps a snapshot of the current assessment.', 'erm') }}</div>
+         <div class="col-md-2"><label class="form-label">{{ __('Date', 'erm') }}</label><input type="date" name="review_date" value="{{ today }}" class="form-control" required></div>
+         <div class="col-md-3"><label class="form-label">{{ __('Conclusion', 'erm') }}</label>
+            <select name="conclusion" class="form-select">{% for k, v in conclusions %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+         <div class="col-md-4"><label class="form-label">{{ __('Participants', 'erm') }}</label><input type="text" name="participants" class="form-control" placeholder="{{ __('Who was consulted (workshop, committee...)', 'erm') }}"></div>
+         <div class="col-md-3"><label class="form-label">{{ __('Next review', 'erm') }}</label><input type="date" name="next_review_date" value="{{ next_default }}" class="form-control"></div>
+         <div class="col-md-10"><label class="form-label">{{ __('Comments and rationale', 'erm') }}</label><textarea name="comment" rows="2" class="form-control" required></textarea></div>
+         <div class="col-md-2"><button type="submit" name="add" class="btn btn-primary w-100"><i class="ti ti-check"></i> {{ __('Record review', 'erm') }}</button></div>
+      </form>
+   </div>
+   {% endif %}
+</div>

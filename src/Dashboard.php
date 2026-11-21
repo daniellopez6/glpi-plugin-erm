@@ -120,6 +120,41 @@ class Dashboard extends CommonGLPI
         return [$overdue, $kris];
     }
 
+    /**
+     * Treatment evaluation of each risk (TreatmentEval).
+     *
+     * @param list<array<string,mixed>> $risks
+     * @return array<int,string>
+     */
+    public static function treatments(array $risks): array
+    {
+        global $DB;
+        $ids = array_map('intval', array_column($risks, 'id'));
+        $counts = [];
+        if ($ids) {
+            $iter = $DB->request([
+                'SELECT' => ['plugin_erm_risks_id', 'status', 'COUNT' => 'id AS n'],
+                'FROM'   => Action::getTable(),
+                'WHERE'  => ['plugin_erm_risks_id' => $ids],
+                'GROUPBY' => ['plugin_erm_risks_id', 'status'],
+            ]);
+            foreach ($iter as $row) {
+                $rid = (int) $row['plugin_erm_risks_id'];
+                $counts[$rid] ??= [0, 0];
+                $counts[$rid][0] += (int) $row['n'];
+                if (in_array($row['status'], ['done', 'cancelled'], true)) {
+                    $counts[$rid][1] += (int) $row['n'];
+                }
+            }
+        }
+        $out = [];
+        foreach ($risks as $r) {
+            [$total, $closed] = $counts[(int) $r['id']] ?? [0, 0];
+            $out[(int) $r['id']] = TreatmentEval::evaluate($total, $closed, (int) ($r['residual_score'] ?: $r['inherent_score']), (int) $r['target_score']);
+        }
+        return $out;
+    }
+
     public static function show(): void
     {
         $risks = Risk::activeRisks();
@@ -218,6 +253,7 @@ class Dashboard extends CommonGLPI
            'grc'         => class_exists('GlpiPlugin\\Grcmanager\\Risk'),
            'only_own'    => Rights::onlyOwn(),
            'by_entity'   => count($byEntity) > 1 ? $byEntity : [],
+           'treatment_counts' => array_count_values(self::treatments($risks)),
            'events'      => Event::canView(),
            'events_url'  => Event::getSearchURL(),
            'net_loss_12m' => Event::canView() ? Scale::money(Event::netLossSince(date('Y-m-d', strtotime('-12 months')))) : '',
@@ -246,17 +282,16 @@ class Dashboard extends CommonGLPI
         }
         $risks = Risk::activeRisks();
         [$overdue, $kris] = self::alerts($risks);
-        $historyIds = [];
+        $idSets = [
+            'overdue'   => array_map('intval', array_column($overdue, 'risk_id')),
+            'kri'       => array_map('intval', array_column($kris, 'risk_id')),
+            'history'   => [],
+            'treatment' => array_keys(array_filter(self::treatments($risks), fn($t) => in_array($t, ['ineffective', 'no_plan'], true))),
+        ];
         if (isset($filters['history']) && Event::canView()) {
-            $historyIds = array_keys(array_filter(Event::historyOf($risks), fn($h) => $h['underestimated']));
+            $idSets['history'] = array_keys(array_filter(Event::historyOf($risks), fn($h) => $h['underestimated']));
         }
-        $rows = DrillFilter::apply(
-            $risks,
-            $filters,
-            array_map('intval', array_column($overdue, 'risk_id')),
-            array_map('intval', array_column($kris, 'risk_id')),
-            array_map('intval', $historyIds)
-        );
+        $rows = DrillFilter::apply($risks, $filters, $idSets);
 
         $chips = [];
         $levels = Scale::levels();
@@ -291,6 +326,9 @@ class Dashboard extends CommonGLPI
         }
         if (isset($filters['history'])) {
             $chips[] = __('Underestimated according to loss history', 'erm');
+        }
+        if (isset($filters['treatment'])) {
+            $chips[] = __('Treatment not effective or without plan', 'erm');
         }
 
         foreach ($rows as &$r) {
