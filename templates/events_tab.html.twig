@@ -42,6 +42,24 @@
                 {% if not history.has_thresholds %}<div class="small text-muted">{{ __('Define the economic impact criteria of the entity to get a suggestion.', 'erm') }}</div>{% endif %}</td></tr>
          </tbody>
       </table>
+      {% set q = history.quant %}
+      <h4 class="mt-3 mb-1">{{ __('Quantitative analysis', 'erm') }}</h4>
+      <table class="table table-sm mb-0">
+         <tbody>
+            <tr><th>{{ __('Expected annual loss according to the assessment', 'erm') }}</th><td class="text-end">{{ q.assessed is not null ? q.assessed|formatted_number : '-' }}</td>
+               <td class="small text-muted">{{ __('Middle of the probability band × middle of the economic impact range', 'erm') }}</td></tr>
+            <tr><th>{{ __('Expected annual loss according to history', 'erm') }}</th><td class="text-end">{{ q.historical is not null ? q.historical|formatted_number : '-' }}</td>
+               <td class="small text-muted">{{ __('Annual frequency × average net loss', 'erm') }}</td></tr>
+            {% if q.simulation %}
+            <tr><th>{{ __('Annual loss, Monte Carlo simulation', 'erm') }}</th>
+               <td class="text-end small">{{ __('median', 'erm') }} {{ q.simulation.p50|formatted_number }}<br>P90 <b>{{ q.simulation.p90|formatted_number }}</b><br>P99 {{ q.simulation.p99|formatted_number }}</td>
+               <td class="small text-muted">{{ __('%d simulated years: number of events per year (Poisson with the observed frequency) and losses resampled from the history. P90: in 9 out of 10 years the loss is lower.', 'erm')|format(q.simulation.years) }}</td></tr>
+            {% endif %}
+         </tbody>
+      </table>
+      {% if q.assessed is not null and q.historical is not null and q.historical > q.assessed * 1.5 %}
+      <div class="small text-danger mt-1">{{ __('The expected loss according to history is much higher than the one implied by the assessment.', 'erm') }}</div>
+      {% endif %}
       <div class="small text-muted mt-2">{{ __('Compared with the residual assessment (inherent when not assessed). Probability: loss events per year converted to the probability of at least one event in a year. Impact: largest net loss against the economic impact criteria of the entity.', 'erm') }}</div>
    </div>
 </div>

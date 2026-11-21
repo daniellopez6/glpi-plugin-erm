@@ -7,6 +7,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.9.0] - 2026-11-21
+### Added
+- Formal acceptance with validity: "Acceptance valid until" (12 months by default), set only by the acceptance right;
+  extending it records a new acceptance (who and when, never the risk owner). Alerts when it expires within 30 days
+  or has expired; "Acceptances to renew" on the dashboard with drill-down. Existing acceptances are migrated.
+- Tests of the ISMS controls (GLPI GRC Manager, read only): the risk form summarises the last test of the controls
+  linked to the risk or to its linked ISMS risks (effective, partial, ineffective, not tested); daily alert when a
+  control failed its last test.
+- Automatic KRIs: a KRI can take its value from a GLPI saved search (number of results), measured by the automatic
+  action "ermkri" according to its frequency (with the rights of the saved search owner) or on demand.
+- Quantitative analysis: expected annual loss according to the assessment and to the loss history, and Monte Carlo
+  simulation of the annual loss (median, P90, P99) on the loss events tab; portfolio expected annual loss on the
+  dashboard.
+- Unit tests for acceptance validity, control evaluation and quantitative analysis (82 tests).
+
 ## [1.8.1] - 2026-11-21
 ### Security
 - A manual snapshot only replaces the snapshot of the user's active entities (the automatic action still covers all

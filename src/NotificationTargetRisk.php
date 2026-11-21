@@ -63,6 +63,9 @@ class NotificationTargetRisk extends NotificationTarget
             'above_tolerance' => __('Residual risk above tolerance', 'erm'),
             'history'         => __('Assessment below the loss history', 'erm'),
             'ineffective'     => __('Treatment completed without reaching the target', 'erm'),
+            'acceptance_expiring' => __('Risk acceptance expires soon', 'erm'),
+            'acceptance_expired'  => __('Risk acceptance expired', 'erm'),
+            'control_failed'  => __('Linked ISMS control failed its last test', 'erm'),
         ];
     }
 

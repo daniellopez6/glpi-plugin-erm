@@ -183,6 +183,19 @@ class Notifier extends CommonGLPI
                 }
             }
         }
+        // Formal acceptance about to expire or expired
+        foreach ($byId as $id => $r) {
+            $state = AcceptanceState::state((string) $r['status'], $r['acceptance_valid_until'] ?? null, $today);
+            if (in_array($state, ['expiring', 'expired'], true)) {
+                $add($id, 'acceptance_' . $state, __('Formal acceptance of the risk', 'erm'), $r['acceptance_valid_until'], (int) $r['users_id'], Risk::class, $id);
+            }
+        }
+        // ISMS controls protecting the risk that failed their last test (GRC Manager)
+        foreach (ControlFeed::summaryByRisk(array_keys($byId)) as $id => $c) {
+            if ($c['ineffective'] > 0) {
+                $add($id, 'control_failed', implode(', ', $c['failing_codes']), null, (int) $byId[$id]['users_id'], Risk::class, $id);
+            }
+        }
         // Treatment completed without reaching the target
         foreach (Dashboard::treatments($risks) as $id => $eval) {
             if ($eval === 'ineffective') {

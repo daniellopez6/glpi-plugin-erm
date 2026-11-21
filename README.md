@@ -24,8 +24,10 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
   (evolution chart); the plugin flags treatment plans that finished without reaching the target.
 - **E-mail notifications**: notice to the owner of a new risk and to the responsible of a new action, and a daily
   digest of overdue actions and reviews, KRIs in alert and risks above appetite or tolerance.
-- **Formal risk acceptance with segregation of duties**: only profiles with the acceptance right can accept,
-  never the risk owner; who and when are recorded automatically.
+- **Formal risk acceptance with segregation of duties and validity**: only profiles with the acceptance right can
+  accept, never the risk owner; who and when are recorded automatically; acceptances expire and must be renewed.
+- **Quantitative analysis**: expected annual loss and Monte Carlo simulation from the loss history.
+- **Automatic KRIs** from GLPI saved searches, and **ISMS control test results** (GRC Manager) on each risk.
 - **Related items**: link corporate risks with GRC Manager risks, business processes, controls, objectives and
   obligations, and with suppliers, contracts, appliances, computers, projects, groups and changes. A reverse tab
   "Corporate risks" is added to those objects.

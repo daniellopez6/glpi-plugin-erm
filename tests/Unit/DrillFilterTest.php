@@ -98,6 +98,7 @@ final class DrillFilterTest extends TestCase
         $this->assertSame([2], $this->ids(DrillFilter::apply($this->risks(), ['history' => 1], ['history' => [2]])));
         $this->assertSame(['history' => 1], DrillFilter::fromQuery(['history' => '1']));
         $this->assertSame([], $this->ids(DrillFilter::apply($this->risks(), ['treatment' => 1])));
+        $this->assertSame([3], $this->ids(DrillFilter::apply($this->risks(), ['acceptance' => 1], ['acceptance' => [3]])));
     }
 
     public function testOverdueAndKri(): void

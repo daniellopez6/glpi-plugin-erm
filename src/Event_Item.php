@@ -172,6 +172,19 @@ class Event_Item extends CommonDBTM
             $history['impact_label'] = $history['impact_level'] ? Scale::impacts()[$history['impact_level']] : '';
             $history['probability_pct'] = round($history['probability'] * 100);
             $history['has_thresholds'] = (bool) array_filter(EntityConfig::impactThresholds((int) $item->fields['entities_id']), fn($v) => $v !== null);
+            // Quantitative analysis: expected annual loss (assessment and history) and Monte Carlo simulation
+            $losses = array_map(
+                fn($e) => (float) $e['net_loss'],
+                array_filter($rows, fn($e) => $e['event_type'] === 'loss' && $e['occurrence_date'] > $history['since'] && $e['net_loss'] !== null)
+            );
+            $prob = (int) ($item->fields['residual_probability'] ?: $item->fields['inherent_probability']);
+            $min = $item->fields['economic_impact_min'] !== null ? (float) $item->fields['economic_impact_min'] : null;
+            $max = $item->fields['economic_impact_max'] !== null ? (float) $item->fields['economic_impact_max'] : null;
+            $history['quant'] = [
+                'assessed'   => QuantStats::assessedAle($prob, $min, $max),
+                'historical' => QuantStats::historicalAle($history['frequency'], array_values($losses)),
+                'simulation' => QuantStats::simulate($history['frequency'], array_values($losses)),
+            ];
         }
         $canLink = Event::canUpdate();
         $dropdown = '';

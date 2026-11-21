@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.8.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 1.9.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -150,6 +150,10 @@ está activo:
   sólo para usuarios con permiso de lectura en GRC Manager.
 
 ERM nunca escribe en las tablas de GRC Manager.
+
+La acción automática **ermkri** (diaria, entre la 1 y las 5) mide los KRI automáticos cuya próxima medición
+corresponde, ejecutando su búsqueda guardada con los permisos del dueño de la búsqueda (igual que las alertas de
+búsquedas guardadas de GLPI).
 
 La acción automática **ermsnapshot** (diaria, entre las 2 y las 5) toma la foto trimestral del perfil de riesgos
 la primera vez que corre en cada trimestre.

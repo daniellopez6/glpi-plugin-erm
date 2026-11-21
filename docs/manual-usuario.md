@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 1.8.x · GLPI 12
+Versión del plugin: 1.9.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -52,7 +52,9 @@ impacto legal, reputacional y operativo, no sólo el económico. Los importes se
 3. **Evaluación inherente**: probabilidad e impacto sin controles. El nivel se calcula al guardar. Completá la
    velocidad de materialización y el impacto económico mínimo y máximo (acepta `1.500.000,50` o `1500000.5`, en la moneda de la organización).
 4. **Controles existentes y riesgo residual**: describí los controles, su eficacia y la tendencia; luego
-   probabilidad e impacto residuales. Se muestra la **posición frente al apetito** de la categoría.
+   probabilidad e impacto residuales. Si GRC Manager está instalado, la ficha muestra el resultado de la última
+   prueba de los controles del SGSI vinculados al riesgo (directamente o a través de los riesgos del SGSI
+   vinculados): si alguno falló, revisá la eficacia y el residual. Se muestra la **posición frente al apetito** de la categoría.
 5. **Riesgo objetivo**: probabilidad e impacto que el plan de tratamiento tiene que alcanzar, y la fecha.
    Normalmente, dentro del apetito de la categoría.
 6. **Tratamiento**: elegí la decisión (Mitigar, Transferir, Evitar, Aceptar), el estado, la justificación y las
@@ -99,6 +101,10 @@ Pestaña **Indicadores (KRI)**:
 
 Los KRI en alerta o críticos aparecen en el tablero.
 
+**KRI automáticos**: al crear el indicador, elegí la fuente "Búsqueda guardada de GLPI" y una búsqueda guardada
+(por ejemplo, incidentes abiertos de una categoría). El valor es la cantidad de resultados: se mide solo según la
+frecuencia (acción automática ermkri) o con **Medir ahora**.
+
 ![Indicadores](screenshots/kri.png)
 
 ## 7. Aceptación formal de un riesgo
@@ -109,6 +115,10 @@ Aceptar un riesgo es una decisión de la Dirección o del Comité de riesgos:
 2. Un usuario con el permiso **Aceptación de riesgos** abre el riesgo, deja la decisión "Aceptar", cambia el
    estado a **Aceptado** y guarda.
 3. El sistema registra automáticamente **quién y cuándo** aceptó.
+
+**Validez**: la aceptación vale hasta la fecha "Aceptación válida hasta" (12 meses por defecto, la fija el Comité).
+30 días antes el dueño recibe un aviso y el tablero la muestra en "Aceptaciones a renovar". Para renovarla, el Comité
+extiende la fecha: queda registrada como una nueva aceptación.
 
 Reglas: el **dueño no puede aceptar su propio riesgo**; sin el permiso, la opción "Aceptado" no aparece; revocar
 una aceptación también requiere el permiso. El Comité sólo puede modificar la decisión, el estado, la
@@ -195,6 +205,17 @@ completa con los datos del origen (nombre, descripción, fecha, entidad) y el ev
   controles después de los eventos).
 
 El sistema **sugiere**, no cambia la evaluación: la decisión es del dueño del riesgo.
+
+**Análisis cuantitativo** (misma pestaña):
+
+- **Pérdida esperada anual según la evaluación**: centro de la franja de probabilidad × centro del rango de impacto
+  económico.
+- **Pérdida esperada anual según el historial**: frecuencia anual × pérdida neta promedio de los eventos.
+- **Simulación Monte Carlo**: 10.000 años simulados con la frecuencia observada y las pérdidas registradas; muestra
+  la mediana, el **P90** (en 9 de cada 10 años la pérdida es menor) y el P99. Sirve para dimensionar seguros,
+  previsiones o el apetito en dinero.
+
+Si la pérdida esperada según el historial es mucho mayor que la de la evaluación, aparece un aviso.
 
 ![Registro de eventos](screenshots/loss-events.png)
 

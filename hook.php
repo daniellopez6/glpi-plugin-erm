@@ -22,7 +22,9 @@
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use GlpiPlugin\Erm\Action;
+use GlpiPlugin\Erm\AcceptanceState;
 use GlpiPlugin\Erm\Category;
+use GlpiPlugin\Erm\Indicator;
 use GlpiPlugin\Erm\NotificationTargetRisk;
 use GlpiPlugin\Erm\Notifier;
 use GlpiPlugin\Erm\Profile as ErmProfile;
@@ -103,6 +105,7 @@ function plugin_erm_install(): bool
             `justification` text,
             `users_id_acceptance` int {$sign} NOT NULL DEFAULT '0',
             `date_acceptance` timestamp NULL DEFAULT NULL,
+            `acceptance_valid_until` date DEFAULT NULL,
             `review_date` date DEFAULT NULL,
             `last_review_date` date DEFAULT NULL,
             `date_creation` timestamp NULL DEFAULT NULL,
@@ -142,6 +145,8 @@ function plugin_erm_install(): bool
             `threshold_warning` decimal(20,2) DEFAULT NULL,
             `threshold_critical` decimal(20,2) DEFAULT NULL,
             `frequency` varchar(16) NOT NULL DEFAULT 'monthly',
+            `source` varchar(16) NOT NULL DEFAULT 'manual',
+            `savedsearches_id` int {$sign} NOT NULL DEFAULT '0',
             `users_id` int {$sign} NOT NULL DEFAULT '0',
             `comment` text,
             `date_creation` timestamp NULL DEFAULT NULL,
@@ -303,6 +308,21 @@ function plugin_erm_install(): bool
         ], ['r.id' => ['>', 0]], ['INNER JOIN' => ['glpi_plugin_erm_risks AS r' => ['ON' => ['glpi_plugin_erm_actions' => 'plugin_erm_risks_id', 'r' => 'id']]]]);
     }
 
+    // 1.9.0: acceptance validity and automatic KRIs
+    if (!$DB->fieldExists('glpi_plugin_erm_risks', 'acceptance_valid_until')) {
+        $migration->addField('glpi_plugin_erm_risks', 'acceptance_valid_until', 'date DEFAULT NULL', ['after' => 'date_acceptance']);
+        $migration->migrationOneTable('glpi_plugin_erm_risks');
+        // Existing acceptances get the default validity from their acceptance date
+        $DB->doQuery("UPDATE `glpi_plugin_erm_risks` SET `acceptance_valid_until` = DATE_ADD(DATE(`date_acceptance`), INTERVAL "
+            . AcceptanceState::VALIDITY_MONTHS . " MONTH) WHERE `status` = 'accepted' AND `date_acceptance` IS NOT NULL");
+    }
+    foreach (['source' => "varchar(16) NOT NULL DEFAULT 'manual'", 'savedsearches_id' => "int {$sign} NOT NULL DEFAULT '0'"] as $field => $def) {
+        if (!$DB->fieldExists('glpi_plugin_erm_indicators', $field)) {
+            $migration->addField('glpi_plugin_erm_indicators', $field, $def, ['after' => 'frequency']);
+        }
+    }
+    $migration->migrationOneTable('glpi_plugin_erm_indicators');
+
     // 1.6.0: target risk
     foreach (
         ['target_probability' => "tinyint NOT NULL DEFAULT '0'", 'target_impact' => "tinyint NOT NULL DEFAULT '0'",
@@ -380,6 +400,13 @@ function plugin_erm_install(): bool
         'comment' => '',
     ]);
     plugin_erm_install_notifications();
+    CronTask::register(Indicator::class, 'ermkri', DAY_TIMESTAMP, [
+        'mode'    => CronTask::MODE_EXTERNAL,
+        'state'   => CronTask::STATE_WAITING,
+        'hourmin' => 1,
+        'hourmax' => 5,
+        'comment' => '',
+    ]);
     CronTask::register(Snapshot::class, 'ermsnapshot', DAY_TIMESTAMP, [
         'mode'    => CronTask::MODE_EXTERNAL,
         'state'   => CronTask::STATE_WAITING,

@@ -42,6 +42,16 @@
    {{ fields.smallTitle(__('Existing controls and residual risk', 'erm'), 'ti ti-shield-check') }}
    {{ fields.textareaField('existing_controls', item.fields['existing_controls'], __('Existing controls', 'erm'), {'full_width': true}) }}
    {{ fields.dropdownArrayField('control_effectiveness', item.fields['control_effectiveness'], effectiveness, __('Control effectiveness', 'erm')) }}
+   {% if grc_controls and controls %}
+      {% set cbadge = {'failing': 'bg-red-lt', 'partial': 'bg-orange-lt', 'effective': 'bg-green-lt', 'untested': 'bg-secondary-lt', 'none': 'bg-secondary-lt'} %}
+      {% set clabel = {'failing': __('Some controls failed their last test', 'erm'), 'partial': __('Some controls are partially effective', 'erm'), 'effective': __('All tested controls are effective', 'erm'), 'untested': __('Controls not tested yet', 'erm'), 'none': '-'} %}
+      {% set chtml %}<span class="badge {{ cbadge[controls.status] }}">{{ clabel[controls.status] }}</span>
+         <div class="small mt-1">{{ __('%1$d controls: %2$d effective, %3$d partial, %4$d ineffective, %5$d not tested', 'erm')|format(controls.total, controls.effective, controls.partial, controls.ineffective, controls.untested) }}
+         {% if controls.failing_codes|length %}<br><b>{{ __('Ineffective', 'erm') }}:</b> {{ controls.failing_codes|join(', ') }}{% endif %}
+         {% if controls.partial_codes|length %}<br><b>{{ __('Partial', 'erm') }}:</b> {{ controls.partial_codes|join(', ') }}{% endif %}</div>
+         {% if controls.status in ['failing', 'partial'] %}<div class="small text-danger">{{ __('Check that the control effectiveness and the residual assessment reflect these results.', 'erm') }}</div>{% endif %}{% endset %}
+      {{ fields.htmlField('', chtml, __('Tests of the ISMS controls (GRC Manager)', 'erm'), {'full_width': true}) }}
+   {% endif %}
    {{ fields.dropdownArrayField('trend', item.fields['trend'], trends, __('Trend', 'erm')) }}
    {{ fields.dropdownArrayField('residual_probability', item.fields['residual_probability'] ?? 0, probabilities, __('Residual probability', 'erm')) }}
    {{ fields.dropdownArrayField('residual_impact', item.fields['residual_impact'] ?? 0, impacts, __('Residual impact', 'erm')) }}
@@ -66,6 +76,13 @@
          ? __('To accept: decision "Accept" and status "Accepted". Who and when are recorded automatically. The risk owner cannot accept it.', 'erm')
          : __('Only the Risk Committee or the Board ("Accept risks" right) can formally accept a risk.', 'erm')
    }) }}
+   {% if item.fields['status'] == 'accepted' or can_accept %}
+      {% set astate = {'valid': ['bg-green-lt', __('Valid', 'erm')], 'expiring': ['bg-orange-lt', __('Expires soon', 'erm')], 'expired': ['bg-red-lt', __('Expired: the risk must be accepted again', 'erm')], 'no_date': ['bg-secondary-lt', __('No validity date', 'erm')], 'none': ['', '']} %}
+      {{ fields.dateField('acceptance_valid_until', item.fields['acceptance_valid_until'], __('Acceptance valid until', 'erm'), {
+         'readonly': not can_accept,
+         'helper': (astate[acceptance_state][1] ? astate[acceptance_state][1] ~ '. ' : '') ~ __('Set by the Risk Committee when accepting (12 months by default). Extending it records a new acceptance.', 'erm')
+      }) }}
+   {% endif %}
    {{ fields.dateField('review_date', item.fields['review_date'], __('Next review', 'erm')) }}
    {{ fields.dateField('last_review_date', item.fields['last_review_date'], __('Last review', 'erm')) }}
 {% endblock %}

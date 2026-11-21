@@ -155,6 +155,39 @@ class Dashboard extends CommonGLPI
         return $out;
     }
 
+    /**
+     * Accepted risks whose acceptance expired or expires within 30 days.
+     *
+     * @param list<array<string,mixed>> $risks
+     * @return list<int>
+     */
+    public static function acceptancesToRenew(array $risks): array
+    {
+        $today = date('Y-m-d');
+        return array_values(array_map('intval', array_column(array_filter(
+            $risks,
+            fn($r) => in_array(AcceptanceState::state((string) $r['status'], $r['acceptance_valid_until'] ?? null, $today), ['expired', 'expiring'], true)
+        ), 'id')));
+    }
+
+    /**
+     * Expected annual loss of the portfolio according to the assessment (sum of QuantStats::assessedAle).
+     *
+     * @param list<array<string,mixed>> $risks
+     */
+    public static function portfolioAle(array $risks): float
+    {
+        $sum = 0.0;
+        foreach ($risks as $r) {
+            $sum += QuantStats::assessedAle(
+                (int) ($r['residual_probability'] ?: $r['inherent_probability']),
+                $r['economic_impact_min'] !== null ? (float) $r['economic_impact_min'] : null,
+                $r['economic_impact_max'] !== null ? (float) $r['economic_impact_max'] : null
+            ) ?? 0.0;
+        }
+        return $sum;
+    }
+
     public static function show(): void
     {
         $risks = Risk::activeRisks();
@@ -254,6 +287,8 @@ class Dashboard extends CommonGLPI
            'only_own'    => Rights::onlyOwn(),
            'by_entity'   => count($byEntity) > 1 ? $byEntity : [],
            'treatment_counts' => array_count_values(self::treatments($risks)),
+           'acceptances_to_renew' => count(self::acceptancesToRenew($risks)),
+           'portfolio_ale' => Scale::money(self::portfolioAle($risks)),
            'events'      => Event::canView(),
            'events_url'  => Event::getSearchURL(),
            'net_loss_12m' => Event::canView() ? Scale::money(Event::netLossSince(date('Y-m-d', strtotime('-12 months')))) : '',
@@ -287,6 +322,7 @@ class Dashboard extends CommonGLPI
             'kri'       => array_map('intval', array_column($kris, 'risk_id')),
             'history'   => [],
             'treatment' => array_keys(array_filter(self::treatments($risks), fn($t) => in_array($t, ['ineffective', 'no_plan'], true))),
+            'acceptance' => self::acceptancesToRenew($risks),
         ];
         if (isset($filters['history']) && Event::canView()) {
             $idSets['history'] = array_keys(array_filter(Event::historyOf($risks), fn($h) => $h['underestimated']));
@@ -329,6 +365,9 @@ class Dashboard extends CommonGLPI
         }
         if (isset($filters['treatment'])) {
             $chips[] = __('Treatment not effective or without plan', 'erm');
+        }
+        if (isset($filters['acceptance'])) {
+            $chips[] = __('Acceptance expired or expiring', 'erm');
         }
 
         foreach ($rows as &$r) {

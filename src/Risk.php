@@ -69,7 +69,7 @@ class Risk extends CommonDBTM
     }
 
     /** Fields that a user with only the acceptance right can update. */
-    private const ACCEPTANCE_FIELDS = ['id', 'status', 'treatment', 'justification', 'review_date', 'last_review_date'];
+    private const ACCEPTANCE_FIELDS = ['id', 'status', 'treatment', 'justification', 'review_date', 'last_review_date', 'acceptance_valid_until'];
 
     public function canViewItem(): bool
     {
@@ -174,11 +174,42 @@ class Risk extends CommonDBTM
 
        // Acceptance fields are never taken from the request.
         unset($input['users_id_acceptance'], $input['date_acceptance']);
+        $internal = Session::getLoginUserID() === false;
+        $today = date('Y-m-d');
+
+        // Validity of the acceptance: only the acceptance right can change it, and a new date must be in the future
+        if (array_key_exists('acceptance_valid_until', $input)) {
+            $until = Validator::date((string) $input['acceptance_valid_until']);
+            $currentUntil = $current['acceptance_valid_until'] ?? null;
+            if (!$willAccept || (!$internal && !Rights::canAccept()) || $until === 'NULL' || $until === $currentUntil) {
+                unset($input['acceptance_valid_until']);
+            } elseif ($until === false || $until <= $today) {
+                Session::addMessageAfterRedirect(__('The acceptance must be valid until a future date.', 'erm'), false, ERROR);
+                return false;
+            } else {
+                $input['acceptance_valid_until'] = $until;
+            }
+        }
 
         if ($willAccept === $wasAccepted) {
+            // Re-acceptance: extending the validity of an accepted risk records who and when, like an acceptance
+            if (
+                $willAccept && !$internal && isset($input['acceptance_valid_until'])
+                && $input['acceptance_valid_until'] !== ($current['acceptance_valid_until'] ?? null)
+            ) {
+                if ($owner === (int) Session::getLoginUserID()) {
+                    Session::addMessageAfterRedirect(__('The risk owner cannot accept their own risk (segregation of duties).', 'erm'), false, ERROR);
+                    return false;
+                }
+                $input['users_id_acceptance'] = (int) Session::getLoginUserID();
+                $input['date_acceptance'] = $_SESSION['glpi_currenttime'] ?? date('Y-m-d H:i:s');
+            }
             return $input;
         }
-        if (Session::getLoginUserID() === false) {
+        if ($internal) {
+            if ($willAccept && empty($input['acceptance_valid_until'])) {
+                $input['acceptance_valid_until'] = AcceptanceState::defaultUntil($today);
+            }
             return $input; // internal processes (installation, CLI)
         }
         if (!Rights::canAccept()) {
@@ -198,9 +229,13 @@ class Risk extends CommonDBTM
         if ($willAccept) {
             $input['users_id_acceptance'] = (int) Session::getLoginUserID();
             $input['date_acceptance'] = $_SESSION['glpi_currenttime'] ?? date('Y-m-d H:i:s');
+            if (empty($input['acceptance_valid_until'])) {
+                $input['acceptance_valid_until'] = AcceptanceState::defaultUntil($today);
+            }
         } else {
             $input['users_id_acceptance'] = 0;
             $input['date_acceptance'] = 'NULL';
+            $input['acceptance_valid_until'] = 'NULL';
         }
         return $input;
     }
@@ -395,6 +430,9 @@ class Risk extends CommonDBTM
            'residual_badge' => Scale::badge($this->fields['residual_level'] ?? '', (int) ($this->fields['residual_score'] ?? 0) ?: null),
            'appetite_badge' => $this->isNewItem() ? '' : Scale::appetiteBadge($pos),
            'target_badge'   => Scale::badge($this->fields['target_level'] ?? '', (int) ($this->fields['target_score'] ?? 0) ?: null),
+           'acceptance_state' => AcceptanceState::state((string) ($this->fields['status'] ?? ''), $this->fields['acceptance_valid_until'] ?? null, date('Y-m-d')),
+           'controls'       => $this->isNewItem() ? null : (ControlFeed::summaryByRisk([$this->getID()])[$this->getID()] ?? null),
+           'grc_controls'   => ControlFeed::available(),
         ]);
         return true;
     }
