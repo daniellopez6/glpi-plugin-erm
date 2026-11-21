@@ -15,7 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
   - AI impact assessment (42001 6.1.4 / 8.4, ISO/IEC 42005 criteria): nine dimensions (bias, privacy, transparency,
     security, reliability and hallucinations, human oversight, misuse, societal impact, legal) with score and
     rationale, overall level, mitigations and residual impact, next assessment. Draft, submitted, approved or
-    rejected; the approver must not be the author; approved assessments are read only. A corporate risk can be
+    rejected; submitted and approved assessments are read only, and nobody who wrote or edited an assessment may
+    approve it (editors are recorded). A corporate risk can be
     created from an approved assessment.
   - Governance gaps: systems in development or production of limited or high AI Act class without a current
     approved assessment, and prohibited practices; AI governance card on the dashboard.

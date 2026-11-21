@@ -319,6 +319,7 @@ function plugin_erm_install(): bool
             `mitigations` text,
             `residual_level` varchar(16) NOT NULL DEFAULT '',
             `next_assessment_date` date DEFAULT NULL,
+            `editors` varchar(255) NOT NULL DEFAULT '',
             `users_id_approval` int {$sign} NOT NULL DEFAULT '0',
             `date_approval` timestamp NULL DEFAULT NULL,
             `approval_comment` text,
@@ -379,6 +380,12 @@ function plugin_erm_install(): bool
             'glpi_plugin_erm_actions.entities_id'  => new QueryExpression($DB->quoteName('r.entities_id')),
             'glpi_plugin_erm_actions.is_recursive' => new QueryExpression($DB->quoteName('r.is_recursive')),
         ], ['r.id' => ['>', 0]], ['INNER JOIN' => ['glpi_plugin_erm_risks AS r' => ['ON' => ['glpi_plugin_erm_actions' => 'plugin_erm_risks_id', 'r' => 'id']]]]);
+    }
+
+    // 2.0.0: editors of AI impact assessments (segregation of duties)
+    if ($DB->tableExists('glpi_plugin_erm_aiassessments') && !$DB->fieldExists('glpi_plugin_erm_aiassessments', 'editors')) {
+        $migration->addField('glpi_plugin_erm_aiassessments', 'editors', "varchar(255) NOT NULL DEFAULT ''", ['after' => 'next_assessment_date']);
+        $migration->migrationOneTable('glpi_plugin_erm_aiassessments');
     }
 
     // 1.9.0: acceptance validity and automatic KRIs

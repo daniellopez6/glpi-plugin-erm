@@ -595,4 +595,7 @@ ES = {
  'AI systems': 'Sistemas de IA',
  'Limited or high risk (AI Act)': 'Riesgo limitado o alto (AI Act)',
  'Governance gaps': 'Brechas de gobierno',
+ 'A submitted assessment cannot be modified: it must be approved or rejected first.': 'Una evaluación enviada no se puede modificar: primero debe aprobarse o rechazarse.',
+ 'The assessment must be approved by someone with the approval right who did not write or edit it.': 'La evaluación debe aprobarla alguien con permiso de aprobación que no la haya escrito ni editado.',
+ 'You wrote or edited this assessment: another person with the approval right must approve it.': 'Escribiste o editaste esta evaluación: debe aprobarla otra persona con permiso de aprobación.',
 }

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: erm\n"
-"POT-Creation-Date: 2026-11-21 23:35+0000\n"
+"POT-Creation-Date: 2026-11-21 23:38+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,11 +13,11 @@ msgstr ""
 msgid "Assessment submitted for approval."
 msgstr ""
 
-#: front/aiassessment.form.php:38 src/AiAssessment.php:186
+#: front/aiassessment.form.php:38 src/AiAssessment.php:211
 msgid "Assessment approved"
 msgstr ""
 
-#: front/aiassessment.form.php:38 src/AiAssessment.php:186
+#: front/aiassessment.form.php:38 src/AiAssessment.php:211
 msgid "Assessment rejected"
 msgstr ""
 
@@ -53,19 +53,19 @@ msgstr ""
 msgid "Review recorded."
 msgstr ""
 
-#: hook.php:533 hook.php:534 src/NotificationTargetRisk.php:129 src/Notifier.php:32
+#: hook.php:540 hook.php:541 src/NotificationTargetRisk.php:129 src/Notifier.php:32
 msgid "Corporate risk alerts"
 msgstr ""
 
-#: hook.php:538 hook.php:539 src/NotificationTargetRisk.php:43
+#: hook.php:545 hook.php:546 src/NotificationTargetRisk.php:43
 msgid "A corporate risk has been assigned to you"
 msgstr ""
 
-#: hook.php:543 hook.php:544 src/NotificationTargetRisk.php:45
+#: hook.php:550 hook.php:551 src/NotificationTargetRisk.php:45
 msgid "A treatment action of your risk has been completed"
 msgstr ""
 
-#: hook.php:548 hook.php:549 src/NotificationTargetRisk.php:44
+#: hook.php:555 hook.php:556 src/NotificationTargetRisk.php:44
 msgid "A treatment action has been assigned to you"
 msgstr ""
 
@@ -131,27 +131,31 @@ msgstr ""
 msgid "Residual level of the risk"
 msgstr ""
 
-#: src/AiAssessment.php:115
+#: src/AiAssessment.php:116
 msgid "An approved assessment cannot be modified: create a new one."
 msgstr ""
 
-#: src/AiAssessment.php:159
+#: src/AiAssessment.php:121
+msgid "A submitted assessment cannot be modified: it must be approved or rejected first."
+msgstr ""
+
+#: src/AiAssessment.php:168
 msgid "Score at least one dimension before submitting the assessment."
 msgstr ""
 
-#: src/AiAssessment.php:171
+#: src/AiAssessment.php:192
 msgid "Only a submitted assessment can be approved or rejected."
 msgstr ""
 
-#: src/AiAssessment.php:175
-msgid "The assessment must be approved by someone with the approval right other than its author."
+#: src/AiAssessment.php:200
+msgid "The assessment must be approved by someone with the approval right who did not write or edit it."
 msgstr ""
 
-#: src/AiAssessment.php:207
+#: src/AiAssessment.php:232
 msgid "AI: %1$s - %2$s"
 msgstr ""
 
-#: src/AiAssessment.php:224
+#: src/AiAssessment.php:249
 msgid "Impact assessment of %s"
 msgstr ""
 
@@ -1784,7 +1788,7 @@ msgid "Reject"
 msgstr ""
 
 #: templates/aiassessment_form.html.twig:58
-msgid "You authored this assessment: another person with the approval right must approve it."
+msgid "You wrote or edited this assessment: another person with the approval right must approve it."
 msgstr ""
 
 #: templates/aiassessment_form.html.twig:61

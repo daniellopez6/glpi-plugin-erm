@@ -104,6 +104,7 @@ class AiAssessment extends CommonDBChild
         $input['entities_id'] = $system->fields['entities_id'];
         $input['is_recursive'] = $system->fields['is_recursive'];
         $input['users_id'] = (int) Session::getLoginUserID();
+        $input['editors'] = (string) Session::getLoginUserID();
         $input['status'] = 'draft';
         unset($input['users_id_approval'], $input['date_approval']);
         return $this->clean($input);
@@ -115,16 +116,24 @@ class AiAssessment extends CommonDBChild
             Session::addMessageAfterRedirect(__('An approved assessment cannot be modified: create a new one.', 'erm'), false, ERROR);
             return false;
         }
+        // A submitted assessment is frozen until it is approved or rejected: the approver decides on what was submitted
+        if (($this->fields['status'] ?? '') === 'submitted') {
+            Session::addMessageAfterRedirect(__('A submitted assessment cannot be modified: it must be approved or rejected first.', 'erm'), false, ERROR);
+            return false;
+        }
         // The workflow fields only change through the dedicated actions
         unset(
             $input['status'],
             $input['users_id'],
             $input['users_id_approval'],
             $input['date_approval'],
+            $input['editors'],
             $input['plugin_erm_aisystems_id'],
             $input['entities_id'],
             $input['is_recursive']
         );
+        // Everyone who edits the assessment is recorded: none of them may approve it
+        $input['editors'] = implode(',', array_unique(array_merge(self::editorsOf($this->fields), [(int) Session::getLoginUserID()])));
         if (!empty($input['_submit'])) {
             $input['status'] = 'submitted';
         }
@@ -163,7 +172,19 @@ class AiAssessment extends CommonDBChild
     }
 
     /**
-     * Approves or rejects a submitted assessment (approval right, never the assessor).
+     * Users who created or edited the assessment.
+     *
+     * @return list<int>
+     */
+    public static function editorsOf(array $fields): array
+    {
+        $ids = array_map('intval', array_filter(explode(',', (string) ($fields['editors'] ?? ''))));
+        $ids[] = (int) ($fields['users_id'] ?? 0);
+        return array_values(array_unique(array_filter($ids)));
+    }
+
+    /**
+     * Approves or rejects a submitted assessment (approval right, never its author or an editor).
      */
     public function decide(bool $approve, string $comment): bool
     {
@@ -171,8 +192,12 @@ class AiAssessment extends CommonDBChild
             Session::addMessageAfterRedirect(__('Only a submitted assessment can be approved or rejected.', 'erm'), false, ERROR);
             return false;
         }
-        if (!self::canApproveRight() || !AiImpact::canApprove((int) $this->fields['users_id'], (int) Session::getLoginUserID())) {
-            Session::addMessageAfterRedirect(__('The assessment must be approved by someone with the approval right other than its author.', 'erm'), false, ERROR);
+        $approver = (int) Session::getLoginUserID();
+        if (
+            !self::canApproveRight() || !AiImpact::canApprove((int) $this->fields['users_id'], $approver)
+            || in_array($approver, self::editorsOf($this->fields), true)
+        ) {
+            Session::addMessageAfterRedirect(__('The assessment must be approved by someone with the approval right who did not write or edit it.', 'erm'), false, ERROR);
             return false;
         }
         global $DB;
@@ -237,10 +262,11 @@ class AiAssessment extends CommonDBChild
         $system = new AiSystem();
         $system->getFromDB((int) $this->fields['plugin_erm_aisystems_id']);
         $status = (string) ($this->fields['status'] ?? 'draft');
-        $isAuthor = (int) ($this->fields['users_id'] ?? 0) === (int) Session::getLoginUserID();
+        $isAuthor = in_array((int) Session::getLoginUserID(), self::editorsOf($this->fields), true);
         TemplateRenderer::getInstance()->display('@erm/aiassessment_form.html.twig', [
             'item'         => $this,
-            'params'       => $options + ['canedit' => $status !== 'approved' && Session::haveRight(Rights::AI, $this->isNewItem() ? CREATE : UPDATE)],
+            'params'       => $options + ['canedit' => !in_array($status, ['approved', 'submitted'], true)
+                && Session::haveRight(Rights::AI, $this->isNewItem() ? CREATE : UPDATE)],
             'system'       => $system->isNewItem() ? null : $system,
             'dimensions'   => AiImpact::dimensions(),
             'scores'       => AiImpact::scores(),
