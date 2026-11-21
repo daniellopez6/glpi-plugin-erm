@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.9.2] - 2026-11-21
+### Security
+- The saved search of an automatic KRI is also validated when only the saved search is changed (for example through
+  the API).
+
 ## [1.9.1] - 2026-11-21
 ### Security
 - An automatic KRI can only use the user's own saved searches (users with the ERM configuration right can use any

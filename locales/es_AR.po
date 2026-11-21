@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 23:06+0000\n"
+"POT-Creation-Date: 2026-11-21 23:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_AR\n"
@@ -484,11 +484,11 @@ msgstr "Indicadores (KRI)"
 msgid "The indicator must have a name."
 msgstr "El indicador debe tener un nombre."
 
-#: src/Indicator.php:229
+#: src/Indicator.php:236
 msgid "Select a saved search you can see for an automatic KRI."
 msgstr "Elegí una búsqueda guardada que puedas ver para el KRI automático."
 
-#: src/Indicator.php:235
+#: src/Indicator.php:242
 msgid "An automatic KRI can only use one of your own saved searches."
 msgstr "Un KRI automático sólo puede usar una de tus búsquedas guardadas."
 

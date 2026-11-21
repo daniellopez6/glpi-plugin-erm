@@ -216,14 +216,21 @@ class Indicator extends CommonDBChild
      */
     private function checkSource(array $input): array|false
     {
-        if (!array_key_exists('source', $input)) {
+        // Validate whenever the source or the saved search changes, using the resulting source
+        if (!array_key_exists('source', $input) && !array_key_exists('savedsearches_id', $input)) {
             return $input;
         }
-        if ($input['source'] !== 'savedsearch') {
+        $source = (string) ($input['source'] ?? ($this->fields['source'] ?? 'manual'));
+        if ($source !== 'savedsearch') {
             $input['source'] = 'manual';
             $input['savedsearches_id'] = 0;
             return $input;
         }
+        $input['source'] = 'savedsearch';
+        // $this->fields is empty when adding: the fallback is needed even if static analysis infers otherwise
+        $input['savedsearches_id'] = array_key_exists('savedsearches_id', $input)
+            ? (int) $input['savedsearches_id']
+            : (int) ($this->fields['savedsearches_id'] ?? 0); // @phpstan-ignore nullCoalesce.offset
         $search = new \SavedSearch();
         if (!$search->getFromDB((int) ($input['savedsearches_id'] ?? 0)) || !$search->canViewItem()) {
             \Session::addMessageAfterRedirect(__('Select a saved search you can see for an automatic KRI.', 'erm'), false, ERROR);
