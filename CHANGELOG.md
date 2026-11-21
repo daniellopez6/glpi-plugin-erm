@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.0.1] - 2026-11-22
+### Security
+- The list of editors of an AI impact assessment is stored in a TEXT column and an update that would exceed it is
+  refused, so it can never be truncated (which could allow an editor to approve).
+
 ## [2.0.0] - 2026-11-22
 ### Added
 - AI governance (ISO/IEC 42001, EU AI Act):

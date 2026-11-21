@@ -319,7 +319,7 @@ function plugin_erm_install(): bool
             `mitigations` text,
             `residual_level` varchar(16) NOT NULL DEFAULT '',
             `next_assessment_date` date DEFAULT NULL,
-            `editors` varchar(255) NOT NULL DEFAULT '',
+            `editors` text,
             `users_id_approval` int {$sign} NOT NULL DEFAULT '0',
             `date_approval` timestamp NULL DEFAULT NULL,
             `approval_comment` text,
@@ -384,8 +384,18 @@ function plugin_erm_install(): bool
 
     // 2.0.0: editors of AI impact assessments (segregation of duties)
     if ($DB->tableExists('glpi_plugin_erm_aiassessments') && !$DB->fieldExists('glpi_plugin_erm_aiassessments', 'editors')) {
-        $migration->addField('glpi_plugin_erm_aiassessments', 'editors', "varchar(255) NOT NULL DEFAULT ''", ['after' => 'next_assessment_date']);
+        $migration->addField('glpi_plugin_erm_aiassessments', 'editors', 'text', ['after' => 'next_assessment_date']);
         $migration->migrationOneTable('glpi_plugin_erm_aiassessments');
+    }
+    // 2.0.1: the list of editors must never be truncated
+    if ($DB->tableExists('glpi_plugin_erm_aiassessments')) {
+        $type = $DB->request(['SELECT' => 'DATA_TYPE', 'FROM' => 'information_schema.COLUMNS', 'WHERE' => [
+            'TABLE_SCHEMA' => $DB->dbdefault, 'TABLE_NAME' => 'glpi_plugin_erm_aiassessments', 'COLUMN_NAME' => 'editors',
+        ]])->current()['DATA_TYPE'] ?? '';
+        if ($type === 'varchar') {
+            $migration->changeField('glpi_plugin_erm_aiassessments', 'editors', 'editors', 'text');
+            $migration->migrationOneTable('glpi_plugin_erm_aiassessments');
+        }
     }
 
     // 1.9.0: acceptance validity and automatic KRIs

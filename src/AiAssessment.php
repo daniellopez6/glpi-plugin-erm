@@ -35,6 +35,9 @@ class AiAssessment extends CommonDBChild
     public static int $checkParentRights = self::HAVE_VIEW_RIGHT_ON_ITEM;
     public bool $dohistory = true;
 
+    /** Maximum length of the list of editors (TEXT column); beyond it the update is refused. */
+    public const EDITORS_MAX_LENGTH = 60000;
+
     public static function getTypeName($nb = 0)
     {
         return _n('AI impact assessment', 'AI impact assessments', $nb, 'erm');
@@ -133,7 +136,13 @@ class AiAssessment extends CommonDBChild
             $input['is_recursive']
         );
         // Everyone who edits the assessment is recorded: none of them may approve it
-        $input['editors'] = implode(',', array_unique(array_merge(self::editorsOf($this->fields), [(int) Session::getLoginUserID()])));
+        $editors = implode(',', array_unique(array_merge(self::editorsOf($this->fields), [(int) Session::getLoginUserID()])));
+        if (strlen($editors) > self::EDITORS_MAX_LENGTH) {
+            // Fail closed: an editor list that could not be stored completely would weaken the segregation of duties
+            Session::addMessageAfterRedirect(__('Too many people edited this assessment: create a new one.', 'erm'), false, ERROR);
+            return false;
+        }
+        $input['editors'] = $editors;
         if (!empty($input['_submit'])) {
             $input['status'] = 'submitted';
         }

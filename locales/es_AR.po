@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 23:38+0000\n"
+"POT-Creation-Date: 2026-11-21 23:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_AR\n"
@@ -19,11 +19,11 @@ msgstr ""
 msgid "Assessment submitted for approval."
 msgstr "Evaluación enviada a aprobación."
 
-#: front/aiassessment.form.php:38 src/AiAssessment.php:211
+#: front/aiassessment.form.php:38 src/AiAssessment.php:220
 msgid "Assessment approved"
 msgstr "Evaluación aprobada"
 
-#: front/aiassessment.form.php:38 src/AiAssessment.php:211
+#: front/aiassessment.form.php:38 src/AiAssessment.php:220
 msgid "Assessment rejected"
 msgstr "Evaluación rechazada"
 
@@ -59,19 +59,19 @@ msgstr "Foto de %1$s tomada (%2$d riesgos)."
 msgid "Review recorded."
 msgstr "Revisión registrada."
 
-#: hook.php:540 hook.php:541 src/NotificationTargetRisk.php:129 src/Notifier.php:32
+#: hook.php:550 hook.php:551 src/NotificationTargetRisk.php:129 src/Notifier.php:32
 msgid "Corporate risk alerts"
 msgstr "Alertas de riesgos corporativos"
 
-#: hook.php:545 hook.php:546 src/NotificationTargetRisk.php:43
+#: hook.php:555 hook.php:556 src/NotificationTargetRisk.php:43
 msgid "A corporate risk has been assigned to you"
 msgstr "Se te asignó un riesgo corporativo"
 
-#: hook.php:550 hook.php:551 src/NotificationTargetRisk.php:45
+#: hook.php:560 hook.php:561 src/NotificationTargetRisk.php:45
 msgid "A treatment action of your risk has been completed"
 msgstr "Se cumplió una acción de tratamiento de tu riesgo"
 
-#: hook.php:555 hook.php:556 src/NotificationTargetRisk.php:44
+#: hook.php:565 hook.php:566 src/NotificationTargetRisk.php:44
 msgid "A treatment action has been assigned to you"
 msgstr "Se te asignó una acción de tratamiento"
 
@@ -149,54 +149,58 @@ msgstr "Costo estimado"
 msgid "Residual level of the risk"
 msgstr "Nivel residual del riesgo"
 
-#: src/AiAssessment.php:116
+#: src/AiAssessment.php:119
 msgid "An approved assessment cannot be modified: create a new one."
 msgstr "Una evaluación aprobada no se puede modificar: creá una nueva."
 
-#: src/AiAssessment.php:121
+#: src/AiAssessment.php:124
 msgid "A submitted assessment cannot be modified: it must be approved or rejected first."
 msgstr "Una evaluación enviada no se puede modificar: primero debe aprobarse o rechazarse."
 
-#: src/AiAssessment.php:168
+#: src/AiAssessment.php:142
+msgid "Too many people edited this assessment: create a new one."
+msgstr "Demasiadas personas editaron esta evaluación: creá una nueva."
+
+#: src/AiAssessment.php:177
 msgid "Score at least one dimension before submitting the assessment."
 msgstr "Puntuá al menos una dimensión antes de enviar la evaluación."
 
-#: src/AiAssessment.php:192
+#: src/AiAssessment.php:201
 msgid "Only a submitted assessment can be approved or rejected."
 msgstr "Sólo se puede aprobar o rechazar una evaluación enviada."
 
-#: src/AiAssessment.php:200
+#: src/AiAssessment.php:209
 msgid "The assessment must be approved by someone with the approval right who did not write or edit it."
 msgstr "La evaluación debe aprobarla alguien con permiso de aprobación que no la haya escrito ni editado."
 
-#: src/AiAssessment.php:232
+#: src/AiAssessment.php:241
 msgid "AI: %1$s - %2$s"
 msgstr "IA: %1$s - %2$s"
 
-#: src/AiAssessment.php:249
+#: src/AiAssessment.php:258
 #, python-format
 msgid "Impact assessment of %s"
 msgstr "Evaluación de impacto del %s"
 
-#: src/AiAssessment.php:40
+#: src/AiAssessment.php:43
 msgid "AI impact assessment"
 msgid_plural "AI impact assessments"
 msgstr[0] "Evaluación de impacto de IA"
 msgstr[1] "Evaluaciones de impacto de IA"
 
-#: src/AiAssessment.php:55
+#: src/AiAssessment.php:58
 msgid "Draft"
 msgstr "Borrador"
 
-#: src/AiAssessment.php:55
+#: src/AiAssessment.php:58
 msgid "Submitted for approval"
 msgstr "Enviada a aprobación"
 
-#: src/AiAssessment.php:56
+#: src/AiAssessment.php:59
 msgid "Approved"
 msgstr "Aprobada"
 
-#: src/AiAssessment.php:56
+#: src/AiAssessment.php:59
 msgid "Rejected"
 msgstr "Rechazada"
 
