@@ -335,4 +335,10 @@ ES = {
  'Board or Risk Committee: sees the whole register, approves appetite and tolerance and formally accepts risks (never own risks).': 'Directorio o Comité de riesgos: ve todo el registro, aprueba el apetito y la tolerancia y acepta formalmente riesgos (nunca los propios).',
  'Internal audit': 'Auditoría interna',
  'Read-only access to the whole register, notes, appetite, treatment plans, reviews and loss events, with the related tickets as evidence.': 'Acceso de sólo lectura a todo el registro, notas, apetito, planes de tratamiento, revisiones y eventos de pérdida, con los tickets relacionados como evidencia.',
+ 'A treatment action of your risk has been completed': 'Se cumplió una acción de tratamiento de tu riesgo',
+ 'Treatment action completed': 'Acción de tratamiento cumplida',
+ 'Treatment plan completed': 'Plan de tratamiento completo',
+ 'All actions are closed and the risk is at its target level.': 'Todas las acciones están cerradas y el riesgo está en su nivel objetivo.',
+ 'All actions are closed but the residual risk is above the target: update the assessment if the controls improved, or review the plan.': 'Todas las acciones están cerradas pero el riesgo residual supera el objetivo: actualizá la evaluación si los controles mejoraron o revisá el plan.',
+ 'All actions are closed. Update the residual assessment and record a review.': 'Todas las acciones están cerradas. Actualizá la evaluación residual y registrá una revisión.',
 }

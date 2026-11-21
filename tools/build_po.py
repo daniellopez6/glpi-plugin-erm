@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translations_es import ES  # noqa: E402
 
-ES_ES = [("tenés", "tienes"), ("Elegí", "Elige"), ("sos", "eres"), ("Dejalo", "Déjalo"), ("Ajustá", "Ajusta"), ("No sos dueño", "No eres dueño"), ("No tenés", "No tienes"), ("Dejalos", "Déjalos"), ("Revisá", "Revisa"), ("documentá", "documenta"), ("Definí", "Define"), ("Vinculá", "Vincula"), ("Sos dueño", "Eres dueño"), ("asignada a vos", "asignada a ti"), ("Describí", "Describe"), ("revisá", "revisa"), ("Definí", "Define"), ("actualizala", "actualízala")]
+ES_ES = [("tenés", "tienes"), ("Elegí", "Elige"), ("sos", "eres"), ("Dejalo", "Déjalo"), ("Ajustá", "Ajusta"), ("No sos dueño", "No eres dueño"), ("No tenés", "No tienes"), ("Dejalos", "Déjalos"), ("Revisá", "Revisa"), ("documentá", "documenta"), ("Definí", "Define"), ("Vinculá", "Vincula"), ("Sos dueño", "Eres dueño"), ("asignada a vos", "asignada a ti"), ("Describí", "Describe"), ("revisá", "revisa"), ("Definí", "Define"), ("actualizala", "actualízala"), ("de tu riesgo", "de tu riesgo"), ("actualizá", "actualiza"), ("revisá el plan", "revisa el plan"), ("Actualizá", "Actualiza"), ("registrá", "registra")]
 
 
 def build(lang: str, table: dict, replace: list) -> None:

@@ -222,6 +222,9 @@ class Action extends CommonDBChild
         if (in_array('users_id', $this->updates, true)) {
             Notifier::actionAssigned($this);
         }
+        if (in_array('status', $this->updates, true) && $this->fields['status'] === 'done') {
+            Notifier::actionCompleted($this);
+        }
         parent::post_updateItem($history);
     }
 

@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [1.7.1] - 2026-11-21
+### Added
+- Notice to the risk owner when a treatment action is completed (not when the owners completes it); when it was the
+  last open action, it also says whether the risk reached its target. New notification "A treatment action of your
+  risk has been completed".
+
 ## [1.7.0] - 2026-11-21
 ### Added
 - Ready-to-assign role profiles created at installation: Risk manager, Risk owner, Treatment responsible, Risk

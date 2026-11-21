@@ -136,6 +136,8 @@ El gráfico **Evolución del riesgo** muestra cómo cambiaron el inherente, el r
 Si el administrador activó las notificaciones de GLPI, el plugin avisa por correo:
 
 - **Al asignarte un riesgo** como dueño, o **una acción de tratamiento** como responsable (no si te lo asignás vos).
+- **Cuando se cumple una acción de tu riesgo** (si sos el dueño). Si era la última acción abierta, el aviso dice si
+  el riesgo alcanzó su objetivo o si hay que revisar la evaluación o el plan.
 - **Resumen diario** por riesgo, a su dueño y a los responsables de las acciones e indicadores involucrados:
   acciones vencidas o que vencen en 7 días, revisión vencida o en los próximos 14 días, residual sobre el apetito o
   la tolerancia, KRI en alerta o con medición pendiente, plan terminado sin alcanzar el objetivo y evaluación por

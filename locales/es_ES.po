@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 17:36+0000\n"
+"POT-Creation-Date: 2026-11-21 17:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_ES\n"
@@ -23,15 +23,19 @@ msgstr "Configuración ERM guardada."
 msgid "Review recorded."
 msgstr "Revisión registrada."
 
-#: hook.php:384 hook.php:385 src/NotificationTargetRisk.php:122 src/Notifier.php:32
+#: hook.php:384 hook.php:385 src/NotificationTargetRisk.php:126 src/Notifier.php:32
 msgid "Corporate risk alerts"
 msgstr "Alertas de riesgos corporativos"
 
-#: hook.php:389 hook.php:390 src/NotificationTargetRisk.php:42
+#: hook.php:389 hook.php:390 src/NotificationTargetRisk.php:43
 msgid "A corporate risk has been assigned to you"
 msgstr "Se te asignó un riesgo corporativo"
 
-#: hook.php:394 hook.php:395 src/NotificationTargetRisk.php:43
+#: hook.php:394 hook.php:395 src/NotificationTargetRisk.php:45
+msgid "A treatment action of your risk has been completed"
+msgstr "Se cumplió una acción de tratamiento de tu riesgo"
+
+#: hook.php:399 hook.php:400 src/NotificationTargetRisk.php:44
 msgid "A treatment action has been assigned to you"
 msgstr "Se te asignó una acción de tratamiento"
 
@@ -81,14 +85,14 @@ msgstr "Vencimiento"
 msgid "Status"
 msgstr "Estado"
 
-#: src/Action.php:94 src/NotificationTargetRisk.php:153 src/Risk.php:309 templates/action_form.html.twig:21
+#: src/Action.php:94 src/NotificationTargetRisk.php:157 src/Risk.php:309 templates/action_form.html.twig:21
 #: templates/dashboard.html.twig:87 templates/dashboard.html.twig:156 templates/dashboard.html.twig:172
 #: templates/myspace.html.twig:36 templates/myspace.html.twig:63 templates/myspace.html.twig:91
 #: templates/risk_form.html.twig:26 templates/risk_list.html.twig:26
 msgid "Risk"
 msgstr "Riesgo"
 
-#: src/Action.php:95 src/NotificationTargetRisk.php:157 templates/action_form.html.twig:24
+#: src/Action.php:95 src/NotificationTargetRisk.php:161 templates/action_form.html.twig:24
 #: templates/actions_tab.html.twig:42 templates/actions_tab.html.twig:87 templates/indicators_tab.html.twig:29
 msgid "Responsible"
 msgstr "Responsable"
@@ -288,7 +292,7 @@ msgstr "Tolerancia"
 msgid "Uncategorized"
 msgstr "Sin categoría"
 
-#: src/Dashboard.php:299 src/Notifier.php:131
+#: src/Dashboard.php:299 src/Notifier.php:173
 #, python-format
 msgid "Residual level: %s"
 msgstr "Nivel residual: %s"
@@ -368,7 +372,7 @@ msgstr "La fecha de ocurrencia es obligatoria."
 msgid "The detection date cannot be earlier than the occurrence date."
 msgstr "La fecha de detección no puede ser anterior a la de ocurrencia."
 
-#: src/Event.php:162 src/NotificationTargetRisk.php:153 templates/event_form.html.twig:27 templates/event_form.html.twig:28
+#: src/Event.php:162 src/NotificationTargetRisk.php:157 templates/event_form.html.twig:27 templates/event_form.html.twig:28
 #: templates/events_tab.html.twig:57
 msgid "Event"
 msgstr "Evento"
@@ -490,115 +494,139 @@ msgstr "Fecha de medición inválida."
 msgid "My ERM workspace"
 msgstr "Mi espacio ERM"
 
-#: src/NotificationTargetRisk.php:153 src/Risk.php:311 templates/dashboard.html.twig:87 templates/dashboard.html.twig:156
+#: src/NotificationTargetRisk.php:157 src/Risk.php:311 templates/dashboard.html.twig:87 templates/dashboard.html.twig:156
 #: templates/dashboard.html.twig:172 templates/items_tab.html.twig:18 templates/myspace.html.twig:91
 #: templates/risk_form.html.twig:25 templates/risk_list.html.twig:26
 msgid "Code"
 msgstr "Código"
 
-#: src/NotificationTargetRisk.php:155 src/Risk.php:316 templates/risk_form.html.twig:48
+#: src/NotificationTargetRisk.php:159 src/Risk.php:316 templates/risk_form.html.twig:48
 msgid "Residual level"
 msgstr "Nivel residual"
 
-#: src/NotificationTargetRisk.php:155
+#: src/NotificationTargetRisk.php:159
 msgid "Number of alerts"
 msgstr "Cantidad de alertas"
 
-#: src/NotificationTargetRisk.php:156
+#: src/NotificationTargetRisk.php:160
 msgid "Alert"
 msgstr "Alerta"
 
-#: src/NotificationTargetRisk.php:156
+#: src/NotificationTargetRisk.php:160
 msgid "Detail"
 msgstr "Detalle"
 
-#: src/NotificationTargetRisk.php:156 templates/indicators_tab.html.twig:47 templates/reviews_tab.html.twig:42
+#: src/NotificationTargetRisk.php:160 templates/indicators_tab.html.twig:47 templates/reviews_tab.html.twig:42
 #: templates/reviews_tab.html.twig:65
 msgid "Date"
 msgstr "Fecha"
 
-#: src/NotificationTargetRisk.php:163
+#: src/NotificationTargetRisk.php:167
 msgid "Alerts"
 msgstr "Alertas"
 
-#: src/NotificationTargetRisk.php:41
+#: src/NotificationTargetRisk.php:42
 msgid "Corporate risk alerts (daily digest)"
 msgstr "Alertas de riesgos corporativos (resumen diario)"
 
-#: src/NotificationTargetRisk.php:50
+#: src/NotificationTargetRisk.php:52
 msgid "You are the owner of this risk"
 msgstr "Eres dueño de este riesgo"
 
-#: src/NotificationTargetRisk.php:51
+#: src/NotificationTargetRisk.php:53
 msgid "Treatment action assigned to you"
 msgstr "Acción de tratamiento asignada a ti"
 
-#: src/NotificationTargetRisk.php:52
+#: src/NotificationTargetRisk.php:54
+msgid "Treatment action completed"
+msgstr "Acción de tratamiento cumplida"
+
+#: src/NotificationTargetRisk.php:55
+msgid "Treatment plan completed"
+msgstr "Plan de tratamiento completo"
+
+#: src/NotificationTargetRisk.php:56
 msgid "Overdue treatment action"
 msgstr "Acción de tratamiento vencida"
 
-#: src/NotificationTargetRisk.php:53
+#: src/NotificationTargetRisk.php:57
 msgid "Treatment action due soon"
 msgstr "Acción de tratamiento por vencer"
 
-#: src/NotificationTargetRisk.php:54
+#: src/NotificationTargetRisk.php:58
 msgid "Risk review overdue"
 msgstr "Revisión del riesgo vencida"
 
-#: src/NotificationTargetRisk.php:55
+#: src/NotificationTargetRisk.php:59
 msgid "Risk review due soon"
 msgstr "Revisión del riesgo próxima"
 
-#: src/NotificationTargetRisk.php:56
+#: src/NotificationTargetRisk.php:60
 msgid "Residual risk above appetite"
 msgstr "Riesgo residual sobre el apetito"
 
-#: src/NotificationTargetRisk.php:57
+#: src/NotificationTargetRisk.php:61
 msgid "KRI in alert"
 msgstr "KRI en alerta"
 
-#: src/NotificationTargetRisk.php:58
+#: src/NotificationTargetRisk.php:62
 msgid "KRI measurement pending"
 msgstr "Medición de KRI pendiente"
 
-#: src/NotificationTargetRisk.php:59
+#: src/NotificationTargetRisk.php:63
 msgid "Residual risk above tolerance"
 msgstr "Riesgo residual sobre la tolerancia"
 
-#: src/NotificationTargetRisk.php:60
+#: src/NotificationTargetRisk.php:64
 msgid "Assessment below the loss history"
 msgstr "Evaluación por debajo del historial de pérdidas"
 
-#: src/NotificationTargetRisk.php:61
+#: src/NotificationTargetRisk.php:65
 msgid "Treatment completed without reaching the target"
 msgstr "Tratamiento terminado sin alcanzar el objetivo"
 
-#: src/NotificationTargetRisk.php:67 src/NotificationTargetRisk.php:154 src/Profile.php:118 src/Risk.php:313
+#: src/NotificationTargetRisk.php:71 src/NotificationTargetRisk.php:158 src/Profile.php:118 src/Risk.php:313
 #: templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
 msgid "Risk owner"
 msgstr "Dueño del riesgo"
 
-#: src/NotificationTargetRisk.php:68
+#: src/NotificationTargetRisk.php:72
 msgid "Responsible group of the risk"
 msgstr "Área responsable del riesgo"
 
-#: src/NotificationTargetRisk.php:69
+#: src/NotificationTargetRisk.php:73
 msgid "Responsibles of the alerted actions"
 msgstr "Responsables de las acciones alertadas"
 
-#: src/NotificationTargetRisk.php:70
+#: src/NotificationTargetRisk.php:74
 msgid "Responsibles of the alerted KRIs"
 msgstr "Responsables de los KRI alertados"
 
-#: src/Notifier.php:125
+#: src/Notifier.php:127
+msgid "All actions are closed and the risk is at its target level."
+msgstr "Todas las acciones están cerradas y el riesgo está en su nivel objetivo."
+
+#: src/Notifier.php:128
+msgid ""
+"All actions are closed but the residual risk is above the target: update the assessment if the controls improved, or "
+"review the plan."
+msgstr ""
+"Todas las acciones están cerradas pero el riesgo residual supera el objetivo: actualiza la evaluación si los "
+"controles mejoraron o revisa el plan."
+
+#: src/Notifier.php:129
+msgid "All actions are closed. Update the residual assessment and record a review."
+msgstr "Todas las acciones están cerradas. Actualiza la evaluación residual y registra una revisión."
+
+#: src/Notifier.php:167
 msgid "Review of the risk"
 msgstr "Revisión del riesgo"
 
-#: src/Notifier.php:147
+#: src/Notifier.php:189
 msgid "All actions are closed but the residual risk is above the target"
 msgstr "Todas las acciones están cerradas pero el riesgo residual supera el objetivo"
 
-#: src/Notifier.php:153
+#: src/Notifier.php:195
 #, python-format
 msgid "%d loss events in %d years"
 msgstr "%d eventos de pérdida en %d años"

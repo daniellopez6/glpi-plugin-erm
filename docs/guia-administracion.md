@@ -114,7 +114,7 @@ nivel, fuera del apetito, acciones vencidas, KRI en alerta y exposición), con a
 
 ## 5. Notificaciones por correo
 
-La instalación crea tres notificaciones del tipo **Riesgo corporativo** (Configuración → Notificaciones →
+La instalación crea cuatro notificaciones del tipo **Riesgo corporativo** (Configuración → Notificaciones →
 Notificaciones), con su plantilla, y la acción automática **ermalerts** (Configuración → Acciones automáticas,
 diaria entre las 6 y las 8):
 
@@ -123,6 +123,7 @@ diaria entre las 6 y las 8):
 | Alertas de riesgos corporativos | Resumen diario por riesgo (ermalerts) | Dueño del riesgo, responsables de las acciones y de los KRI alertados |
 | Se te asignó un riesgo corporativo | Al crear el riesgo o cambiar el dueño | Dueño del riesgo |
 | Se te asignó una acción de tratamiento | Al crear la acción o cambiar el responsable | Responsable de la acción |
+| Se cumplió una acción de tratamiento de tu riesgo | Al marcar una acción como Realizada (si es la última, informa si el riesgo alcanzó el objetivo) | Dueño del riesgo |
 
 También está disponible el destinatario "Área responsable del riesgo". Los textos se crean en el idioma de quien
 instala; se pueden editar en las plantillas. La misma alerta se repite como máximo una vez por semana

@@ -390,6 +390,11 @@ function plugin_erm_install_notifications(): void
             'subject' => __('A corporate risk has been assigned to you', 'erm') . ': ##erm.code##',
             'targets' => [NotificationTargetRisk::RISK_OWNER],
         ],
+        NotificationTargetRisk::EVENT_ACTION_DONE => [
+            'name'    => __('A treatment action of your risk has been completed', 'erm'),
+            'subject' => __('A treatment action of your risk has been completed', 'erm') . ' (##erm.code##)',
+            'targets' => [NotificationTargetRisk::RISK_OWNER],
+        ],
         NotificationTargetRisk::EVENT_ACTION => [
             'name'    => __('A treatment action has been assigned to you', 'erm'),
             'subject' => __('A treatment action has been assigned to you', 'erm') . ' (##erm.code##)',

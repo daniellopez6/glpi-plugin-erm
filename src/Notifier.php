@@ -93,6 +93,48 @@ class Notifier extends CommonGLPI
     }
 
     /**
+     * Notice to the risk owner when a treatment action is completed (not when the owner completed it). When it was
+     * the last open action, the notice also says whether the risk reached its target.
+     */
+    public static function actionCompleted(Action $action): void
+    {
+        global $DB;
+        $risk = new Risk();
+        if (!$risk->getFromDB((int) $action->fields['plugin_erm_risks_id'])) {
+            return;
+        }
+        $owner = (int) $risk->fields['users_id'];
+        if ($owner <= 0 || $owner === (int) \Session::getLoginUserID()) {
+            return;
+        }
+        $alerts = [[
+            'type' => 'action_done', 'label' => (string) $action->fields['name'],
+            'date' => $action->fields['completion_date'] ?: date('Y-m-d'),
+            'users_id' => (int) $action->fields['users_id'], 'itemtype' => Action::class, 'items_id' => $action->getID(),
+        ]];
+        $total = countElementsInTable(Action::getTable(), ['plugin_erm_risks_id' => $risk->getID()]);
+        $open = countElementsInTable(Action::getTable(), ['plugin_erm_risks_id' => $risk->getID(), 'NOT' => ['status' => ['done', 'cancelled']]]);
+        if ($total > 0 && $open === 0) {
+            $eval = TreatmentEval::evaluate(
+                $total,
+                $total,
+                (int) ($risk->fields['residual_score'] ?: $risk->fields['inherent_score']),
+                (int) $risk->fields['target_score']
+            );
+            $alerts[] = [
+                'type' => 'plan_completed',
+                'label' => match ($eval) {
+                    'reached'     => __('All actions are closed and the risk is at its target level.', 'erm'),
+                    'ineffective' => __('All actions are closed but the residual risk is above the target: update the assessment if the controls improved, or review the plan.', 'erm'),
+                    default       => __('All actions are closed. Update the residual assessment and record a review.', 'erm'),
+                },
+                'date' => $risk->fields['target_date'], 'users_id' => $owner, 'itemtype' => Risk::class, 'items_id' => $risk->getID(),
+            ];
+        }
+        NotificationEvent::raiseEvent(NotificationTargetRisk::EVENT_ACTION_DONE, $risk, ['alerts' => $alerts, 'entities_id' => $risk->fields['entities_id']]);
+    }
+
+    /**
      * Current alerts of every active risk (all entities: the cron runs without user restrictions).
      *
      * @return array<int, list<array{type:string, label:string, date:?string, users_id:int, itemtype:string, items_id:int}>>

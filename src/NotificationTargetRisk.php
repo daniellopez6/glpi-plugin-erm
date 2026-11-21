@@ -29,6 +29,7 @@ class NotificationTargetRisk extends NotificationTarget
     public const EVENT = 'erm_alert';
     public const EVENT_OWNER = 'erm_owner_assigned';
     public const EVENT_ACTION = 'erm_action_assigned';
+    public const EVENT_ACTION_DONE = 'erm_action_done';
 
     public const RISK_OWNER = 4101;
     public const RISK_GROUP = 4102;
@@ -41,6 +42,7 @@ class NotificationTargetRisk extends NotificationTarget
             self::EVENT        => __('Corporate risk alerts (daily digest)', 'erm'),
             self::EVENT_OWNER  => __('A corporate risk has been assigned to you', 'erm'),
             self::EVENT_ACTION => __('A treatment action has been assigned to you', 'erm'),
+            self::EVENT_ACTION_DONE => __('A treatment action of your risk has been completed', 'erm'),
         ];
     }
 
@@ -49,6 +51,8 @@ class NotificationTargetRisk extends NotificationTarget
         return [
             'owner_assigned'  => __('You are the owner of this risk', 'erm'),
             'action_assigned' => __('Treatment action assigned to you', 'erm'),
+            'action_done'     => __('Treatment action completed', 'erm'),
+            'plan_completed'  => __('Treatment plan completed', 'erm'),
             'action_overdue'  => __('Overdue treatment action', 'erm'),
             'action_due'      => __('Treatment action due soon', 'erm'),
             'review_overdue'  => __('Risk review overdue', 'erm'),
