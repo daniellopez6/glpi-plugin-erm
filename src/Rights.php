@@ -73,6 +73,51 @@ final class Rights
         return Session::haveRight(self::ACCEPT, UPDATE);
     }
 
+    /**
+     * Active users who can formally accept risks of an entity (profile with the "Accept risks" right on the entity or,
+     * recursively, on an ancestor), excluding a user (the risk owner) and, when others exist, Super-Admin profiles.
+     *
+     * @return list<int>
+     */
+    public static function acceptorsOf(int $entityId, int $exclude = 0): array
+    {
+        global $DB;
+        $ancestors = array_map('intval', array_values(getAncestorsOf('glpi_entities', $entityId)));
+        $rows = $DB->request([
+            'SELECT'     => ['glpi_profiles_users.users_id', 'glpi_profiles.interface', 'glpi_profiles.name'],
+            'DISTINCT'   => true,
+            'FROM'       => 'glpi_profilerights',
+            'INNER JOIN' => [
+                'glpi_profiles'       => ['ON' => ['glpi_profilerights' => 'profiles_id', 'glpi_profiles' => 'id']],
+                'glpi_profiles_users' => ['ON' => ['glpi_profilerights' => 'profiles_id', 'glpi_profiles_users' => 'profiles_id']],
+                'glpi_users'          => ['ON' => ['glpi_profiles_users' => 'users_id', 'glpi_users' => 'id']],
+            ],
+            'WHERE'      => [
+                'glpi_profilerights.name' => self::ACCEPT,
+                new \Glpi\DBAL\QueryExpression($DB->quoteName('glpi_profilerights.rights') . ' & ' . UPDATE . ' > 0'),
+                'glpi_users.is_active'    => 1,
+                'glpi_users.is_deleted'   => 0,
+                'OR' => array_filter([
+                    ['glpi_profiles_users.entities_id' => $entityId],
+                    $ancestors ? ['glpi_profiles_users.entities_id' => $ancestors, 'glpi_profiles_users.is_recursive' => 1] : null,
+                ]),
+            ],
+        ]);
+        $all = [];
+        $named = [];
+        foreach ($rows as $r) {
+            $uid = (int) $r['users_id'];
+            if ($uid === $exclude) {
+                continue;
+            }
+            $all[$uid] = true;
+            if ($r['name'] !== 'Super-Admin') {
+                $named[$uid] = true;
+            }
+        }
+        return array_keys($named ?: $all);
+    }
+
     /** SQL criteria (DBmysqlIterator) restricting to own risks. */
     public static function ownCriteria(string $table = 'glpi_plugin_erm_risks'): array
     {

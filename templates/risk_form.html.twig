@@ -95,6 +95,10 @@
    {{ fields.dropdownArrayField('treatment', item.fields['treatment'], treatments, __('Treatment decision', 'erm'), {'helper': __('Mitigate: actions that reduce probability or impact. Transfer: insurance or contracts. Avoid: stop the activity. Accept: live with it, with justification and approval of the Committee.', 'erm')}) }}
    {{ fields.dropdownArrayField('status', item.fields['status'] ?: 'identified', statuses, __('Status', 'erm')) }}
    {{ fields.textareaField('justification', item.fields['justification'], __('Decision justification', 'erm'), {'full_width': true}) }}
+   {% if plan_summary %}
+   {# built by Risk::treatmentPlanSummary() (escaped) #}
+   {{ fields.htmlField('', plan_summary, __('Who does what', 'erm'), {'full_width': true}) }}
+   {% endif %}
    {{ fields.htmlField('', acceptance, __('Formal acceptance', 'erm'), {
       'helper': can_accept
          ? __('To accept: decision "Accept" and status "Accepted". Who and when are recorded automatically. The risk owner cannot accept it.', 'erm')

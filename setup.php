@@ -41,7 +41,7 @@ use GlpiPlugin\Erm\Review;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '2.3.0');
+define('PLUGIN_ERM_VERSION', '2.3.1');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 

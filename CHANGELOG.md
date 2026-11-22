@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.3.1] - 2026-11-22
+### Changed
+- Risk form, "Treatment and acceptance": new "Who does what" summary (the risk owner accountable for the treatment and
+  each action with its responsible, due date and status, with a link to the treatment plan).
+- Formal acceptance in plain words: who accepted and until when; "does not apply" when the decision is not "Accept";
+  when pending, who can accept it (users with the "Accept risks" right in the entity, never the risk owner).
+
 ## [2.3.0] - 2026-11-22
 ### Added
 - "Getting started" checklist on the dashboard for ERM administrators (impact criteria, appetite, profiles assigned,

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-22 06:03+0000\n"
+"POT-Creation-Date: 2026-11-22 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_ES\n"
@@ -1783,7 +1783,7 @@ msgstr "Escalado al Comité de riesgos"
 msgid "Proposed for closure"
 msgstr "Propuesto para cierre"
 
-#: src/Rights.php:117
+#: src/Rights.php:162
 msgid "You cannot move this item to an entity you have no access to."
 msgstr "No puedes mover este elemento a una entidad a la que no tienes acceso."
 
@@ -1857,7 +1857,7 @@ msgid "Trend"
 msgstr "Tendencia"
 
 #: src/Risk.php:366 templates/myspace.html.twig:96 templates/reviews_tab.html.twig:48 templates/reviews_tab.html.twig:75
-#: templates/risk_form.html.twig:110 templates/risk_list.html.twig:30
+#: templates/risk_form.html.twig:114 templates/risk_list.html.twig:30
 msgid "Next review"
 msgstr "Próxima revisión"
 
@@ -1871,20 +1871,72 @@ msgid_plural "Corporate risks"
 msgstr[0] "Riesgo corporativo"
 msgstr[1] "Riesgos corporativos"
 
-#: src/Risk.php:414
+#: src/Risk.php:409
+#, python-format
+msgid "valid until %s"
+msgstr "vigente hasta el %s"
+
+#: src/Risk.php:411
+msgid "Accepted by %1$s on %2$s"
+msgstr "Aceptado por %1$s el %2$s"
+
+#: src/Risk.php:417
+msgid "Does not apply: only risks with the decision \"Accept\" are formally accepted."
+msgstr "No corresponde: sólo se aceptan formalmente los riesgos con la decisión \"Aceptar\"."
+
+#: src/Risk.php:420
 msgid "Pending"
 msgstr "Pendiente"
 
-#: src/Risk.php:464
+#: src/Risk.php:422
+#, python-format
+msgid "It must be accepted by the Risk Committee or the Board. Can accept it: %s."
+msgstr "Lo debe aceptar el Comité de riesgos o el Directorio. Pueden aceptarlo: %s."
+
+#: src/Risk.php:423
+msgid "It must be accepted by the Risk Committee or the Board, but nobody has the \"Accept risks\" right in this entity."
+msgstr "Lo debe aceptar el Comité de riesgos o el Directorio, pero nadie tiene el derecho \"Aceptar riesgos\" en esta entidad."
+
+#: src/Risk.php:432
+#, python-format
+msgid "Accountable for the treatment: %s (risk owner)"
+msgstr "Responsable del tratamiento: %s (dueño del riesgo)"
+
+#: src/Risk.php:433
+msgid "Accountable for the treatment: nobody yet - assign a risk owner"
+msgstr "Responsable del tratamiento: nadie todavía - asigna un dueño del riesgo"
+
+#: src/Risk.php:442 templates/actions_tab.html.twig:54 templates/myspace.html.twig:47
+msgid "overdue"
+msgstr "vencida"
+
+#: src/Risk.php:443
+msgid "no responsible"
+msgstr "sin responsable"
+
+#: src/Risk.php:444
+#, python-format
+msgid "due %s"
+msgstr "vence el %s"
+
+#: src/Risk.php:449
+msgid "No actions yet: add them in the treatment plan."
+msgstr "Todavía no hay acciones: agrégalas en el plan de tratamiento."
+
+#: src/Risk.php:450
+msgid "Open the treatment plan"
+msgstr "Abrir el plan de tratamiento"
+
+#: src/Risk.php:507
 msgid "%1$s from %2$s"
 msgstr "%1$s desde %2$s"
 
-#: src/Risk.php:467
+#: src/Risk.php:510
 #, python-format
 msgid "Economic criteria of your company: %s."
 msgstr "Criterios económicos de tu empresa: %s."
 
-#: src/Risk.php:468
+#: src/Risk.php:511
 msgid ""
 "Take the worst consequence among money, customers, regulators, reputation and people: a regulatory sanction or a "
 "public incident can be \"Major\" even with a small loss."
@@ -2232,10 +2284,6 @@ msgstr "Objetivo"
 #: templates/actions_tab.html.twig:40
 msgid "%1$d of %2$d actions closed"
 msgstr "%1$d de %2$d acciones cerradas"
-
-#: templates/actions_tab.html.twig:54 templates/myspace.html.twig:47
-msgid "overdue"
-msgstr "vencida"
 
 #: templates/actions_tab.html.twig:65 templates/entity_config.html.twig:82 templates/myspace.html.twig:56
 msgid "Save"
@@ -3454,6 +3502,14 @@ msgid "Record review"
 msgstr "Registrar revisión"
 
 #: templates/risk_form.html.twig:100
+msgid "Who does what"
+msgstr "Quién hace qué"
+
+#: templates/risk_form.html.twig:102
+msgid "Formal acceptance"
+msgstr "Aceptación formal"
+
+#: templates/risk_form.html.twig:104
 msgid ""
 "To accept: decision \"Accept\" and status \"Accepted\". Who and when are recorded automatically. The risk owner "
 "cannot accept it."
@@ -3461,39 +3517,39 @@ msgstr ""
 "Para aceptar: decisión \"Aceptar\" y estado \"Aceptado\". Se registra automáticamente quién y cuándo. El dueño del "
 "riesgo no puede aceptarlo."
 
-#: templates/risk_form.html.twig:101
+#: templates/risk_form.html.twig:105
 msgid "Only the Risk Committee or the Board (\"Accept risks\" right) can formally accept a risk."
 msgstr "Sólo el Comité de riesgos o el Directorio (permiso \"Aceptar riesgos\") puede aceptar formalmente un riesgo."
 
-#: templates/risk_form.html.twig:104
+#: templates/risk_form.html.twig:108
 msgid "Valid"
 msgstr "Vigente"
 
-#: templates/risk_form.html.twig:104
+#: templates/risk_form.html.twig:108
 msgid "Expires soon"
 msgstr "Vence pronto"
 
-#: templates/risk_form.html.twig:104
+#: templates/risk_form.html.twig:108
 msgid "Expired: the risk must be accepted again"
 msgstr "Vencida: el riesgo debe aceptarse nuevamente"
 
-#: templates/risk_form.html.twig:104
+#: templates/risk_form.html.twig:108
 msgid "No validity date"
 msgstr "Sin fecha de validez"
 
-#: templates/risk_form.html.twig:105
+#: templates/risk_form.html.twig:109
 msgid "Acceptance valid until"
 msgstr "Aceptación válida hasta"
 
-#: templates/risk_form.html.twig:107
+#: templates/risk_form.html.twig:111
 msgid "Set by the Risk Committee when accepting (12 months by default). Extending it records a new acceptance."
 msgstr "La fija el Comité de riesgos al aceptar (12 meses por defecto). Extenderla registra una nueva aceptación."
 
-#: templates/risk_form.html.twig:110
+#: templates/risk_form.html.twig:114
 msgid "At least once a year, and sooner for high or critical risks."
 msgstr "Al menos una vez al año, y antes para los riesgos altos o críticos."
 
-#: templates/risk_form.html.twig:111
+#: templates/risk_form.html.twig:115
 msgid "Last review"
 msgstr "Última revisión"
 
@@ -3728,10 +3784,6 @@ msgstr ""
 #: templates/risk_form.html.twig:97
 msgid "Decision justification"
 msgstr "Justificación de la decisión"
-
-#: templates/risk_form.html.twig:98
-msgid "Formal acceptance"
-msgstr "Aceptación formal"
 
 #: templates/risk_library.html.twig:18
 msgid "Start from scratch"

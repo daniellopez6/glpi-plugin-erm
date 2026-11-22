@@ -402,6 +402,54 @@ class Risk extends CommonDBTM
         return parent::getSpecificValueToSelect($field, $name, $values, $options);
     }
 
+    /** Formal acceptance in plain words: who accepted, who has to accept, or why it does not apply (escaped HTML). */
+    public function acceptanceText(): string
+    {
+        if (!empty($this->fields['users_id_acceptance'])) {
+            $until = $this->fields['acceptance_valid_until'] ? ', ' . sprintf(__('valid until %s', 'erm'), \Html::convDate($this->fields['acceptance_valid_until'])) : '';
+            return '<i class="ti ti-gavel me-1"></i>' . htmlescape(sprintf(
+                __('Accepted by %1$s on %2$s', 'erm'),
+                getUserName((int) $this->fields['users_id_acceptance']),
+                \Html::convDateTime($this->fields['date_acceptance'])
+            ) . $until);
+        }
+        if (($this->fields['treatment'] ?? '') !== 'accept') {
+            return '<span class="text-muted">' . htmlescape(__('Does not apply: only risks with the decision "Accept" are formally accepted.', 'erm')) . '</span>';
+        }
+        $names = array_map(fn($u) => getUserName($u), array_slice(Rights::acceptorsOf((int) $this->fields['entities_id'], (int) $this->fields['users_id']), 0, 6));
+        return '<span class="badge bg-orange-lt me-1">' . htmlescape(__('Pending', 'erm')) . '</span>'
+            . htmlescape($names
+                ? sprintf(__('It must be accepted by the Risk Committee or the Board. Can accept it: %s.', 'erm'), implode(', ', $names))
+                : __('It must be accepted by the Risk Committee or the Board, but nobody has the "Accept risks" right in this entity.', 'erm'));
+    }
+
+    /** Who is in charge of the treatment and its plan, in short (escaped HTML), with a link to the treatment tab. */
+    public function treatmentPlanSummary(): string
+    {
+        global $DB;
+        $owner = (int) $this->fields['users_id'];
+        $out = '<div><i class="ti ti-user me-1"></i>' . htmlescape($owner
+            ? sprintf(__('Accountable for the treatment: %s (risk owner)', 'erm'), getUserName($owner))
+            : __('Accountable for the treatment: nobody yet - assign a risk owner', 'erm')) . '</div>';
+        if (!in_array($this->fields['treatment'] ?? '', ['mitigate', 'transfer'], true)) {
+            return $out;
+        }
+        $today = date('Y-m-d');
+        $items = [];
+        foreach ($DB->request(['FROM' => Action::getTable(), 'WHERE' => ['plugin_erm_risks_id' => $this->getID()], 'ORDER' => ['due_date', 'id']]) as $a) {
+            $open = !in_array($a['status'], ['done', 'cancelled'], true);
+            $badge = !$open ? '<span class="badge bg-green-lt ms-1">' . htmlescape(Scale::actionStatuses()[$a['status']] ?? $a['status']) . '</span>'
+                : ($a['due_date'] && $a['due_date'] < $today ? '<span class="badge bg-red-lt ms-1">' . htmlescape(__('overdue', 'erm')) . '</span>' : '');
+            $items[] = '<li>' . htmlescape($a['name']) . ' - <b>' . htmlescape($a['users_id'] ? getUserName((int) $a['users_id']) : __('no responsible', 'erm')) . '</b>'
+                . ($a['due_date'] ? ', ' . htmlescape(sprintf(__('due %s', 'erm'), \Html::convDate($a['due_date']))) : '') . $badge . '</li>';
+        }
+        $tab = htmlescape($this->getLinkURL() . '&forcetab=' . rawurlencode(Action::class . '$1'));
+        $out .= $items
+            ? '<ul class="mb-1 mt-1">' . implode('', $items) . '</ul>'
+            : '<div class="text-danger">' . htmlescape(__('No actions yet: add them in the treatment plan.', 'erm')) . '</div>';
+        return $out . '<a href="' . $tab . '"><i class="ti ti-list-check me-1"></i>' . htmlescape(__('Open the treatment plan', 'erm')) . '</a>';
+    }
+
     // ------------------------------------------------------------------ formulario
     public function showForm($ID, array $options = [])
     {
@@ -411,14 +459,8 @@ class Risk extends CommonDBTM
         if (!Rights::canAccept() && ($this->fields['status'] ?? '') !== 'accepted') {
             unset($statuses['accepted']);
         }
-        $acceptance = __('Pending', 'erm');
-        if (!empty($this->fields['users_id_acceptance'])) {
-            $acceptance = sprintf(
-                '%s - %s',
-                htmlescape(getUserName((int) $this->fields['users_id_acceptance'])),
-                htmlescape(\Html::convDateTime($this->fields['date_acceptance']))
-            );
-        }
+        $acceptance = $this->isNewItem() ? '' : $this->acceptanceText();
+        $plan = $this->isNewItem() ? '' : $this->treatmentPlanSummary();
         TemplateRenderer::getInstance()->display('@erm/risk_form.html.twig', [
            'item'          => $this,
            'params'        => $options,
@@ -429,6 +471,7 @@ class Risk extends CommonDBTM
            'can_accept'    => Rights::canAccept(),
            'acceptance_only' => !$this->isNewItem() && $this->canUpdateItem() && !$this->canEditAssessment(),
            'acceptance'    => $acceptance,
+           'plan_summary'  => $plan,
            'effectiveness' => Scale::effectiveness(),
            'velocities'    => Scale::velocities(),
            'trends'        => Scale::trends(),
