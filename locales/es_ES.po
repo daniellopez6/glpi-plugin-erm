@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-22 02:12+0000\n"
+"POT-Creation-Date: 2026-11-22 05:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_ES\n"
@@ -97,7 +97,7 @@ msgid_plural "Treatment plan"
 msgstr[0] "Acción de tratamiento"
 msgstr[1] "Plan de tratamiento"
 
-#: src/Action.php:54 src/Action.php:88 src/Dashboard.php:67
+#: src/Action.php:54 src/Action.php:88 src/Dashboard.php:69
 msgid "Action plans"
 msgstr "Planes de acción"
 
@@ -725,7 +725,7 @@ msgstr "Riesgos de proveedores"
 msgid "Integrated risk map"
 msgstr "Mapa integral de riesgos"
 
-#: src/Dashboard.php:251 src/Dashboard.php:377
+#: src/Dashboard.php:253 src/Dashboard.php:379
 msgid "Uncategorized"
 msgstr "Sin categoría"
 
@@ -733,60 +733,64 @@ msgstr "Sin categoría"
 msgid "Corporate risks"
 msgstr "Riesgos corporativos"
 
-#: src/Dashboard.php:367 src/Notifier.php:173
+#: src/Dashboard.php:369 src/Notifier.php:173
 #, python-format
 msgid "Residual level: %s"
 msgstr "Nivel residual: %s"
 
-#: src/Dashboard.php:371
+#: src/Dashboard.php:373
 msgid "Inherent: probability %1$s × impact %2$s"
 msgstr "Inherente: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:371
+#: src/Dashboard.php:373
 msgid "Residual: probability %1$s × impact %2$s"
 msgstr "Residual: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:377
+#: src/Dashboard.php:379
 #, python-format
 msgid "Category: %s"
 msgstr "Categoría: %s"
 
-#: src/Dashboard.php:380 src/Report.php:170 templates/report.html.twig:22
+#: src/Dashboard.php:382 src/Report.php:170 templates/report.html.twig:22
 #, python-format
 msgid "Entity: %s"
 msgstr "Entidad: %s"
 
-#: src/Dashboard.php:384 src/Scale.php:257
+#: src/Dashboard.php:386 src/Scale.php:257
 msgid "Above tolerance"
 msgstr "Sobre la tolerancia"
 
-#: src/Dashboard.php:385 src/Scale.php:260
+#: src/Dashboard.php:387 src/Scale.php:260
 msgid "Above appetite"
 msgstr "Sobre el apetito"
 
-#: src/Dashboard.php:386 templates/dashboard.html.twig:130
+#: src/Dashboard.php:388 templates/dashboard.html.twig:130
 msgid "Outside appetite"
 msgstr "Fuera del apetito"
 
-#: src/Dashboard.php:390 templates/dashboard.html.twig:130
+#: src/Dashboard.php:392 templates/dashboard.html.twig:130
 msgid "With overdue actions"
 msgstr "Con acciones vencidas"
 
-#: src/Dashboard.php:393 templates/dashboard.html.twig:131
+#: src/Dashboard.php:395 templates/dashboard.html.twig:131
 msgid "With KRIs in alert"
 msgstr "Con KRI en alerta"
 
-#: src/Dashboard.php:396
+#: src/Dashboard.php:398
 msgid "Underestimated according to loss history"
 msgstr "Subestimados según el historial de pérdidas"
 
-#: src/Dashboard.php:399
+#: src/Dashboard.php:401
 msgid "Treatment not effective or without plan"
 msgstr "Tratamiento ineficaz o sin plan"
 
-#: src/Dashboard.php:402
+#: src/Dashboard.php:404
 msgid "Acceptance expired or expiring"
 msgstr "Aceptación vencida o por vencer"
+
+#: src/Dashboard.php:59
+msgid "Corporate GRC"
+msgstr "GRC Corporativo"
 
 #: src/EntityConfig.php:275
 #, python-format

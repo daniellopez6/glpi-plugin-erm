@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: erm\n"
-"POT-Creation-Date: 2026-11-22 02:12+0000\n"
+"POT-Creation-Date: 2026-11-22 05:18+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -91,7 +91,7 @@ msgid_plural "Treatment plan"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Action.php:54 src/Action.php:88 src/Dashboard.php:67
+#: src/Action.php:54 src/Action.php:88 src/Dashboard.php:69
 msgid "Action plans"
 msgstr ""
 
@@ -691,7 +691,7 @@ msgstr ""
 msgid "Integrated risk map"
 msgstr ""
 
-#: src/Dashboard.php:251 src/Dashboard.php:377
+#: src/Dashboard.php:253 src/Dashboard.php:379
 msgid "Uncategorized"
 msgstr ""
 
@@ -699,56 +699,60 @@ msgstr ""
 msgid "Corporate risks"
 msgstr ""
 
-#: src/Dashboard.php:367 src/Notifier.php:173
+#: src/Dashboard.php:369 src/Notifier.php:173
 msgid "Residual level: %s"
 msgstr ""
 
-#: src/Dashboard.php:371
+#: src/Dashboard.php:373
 msgid "Inherent: probability %1$s × impact %2$s"
 msgstr ""
 
-#: src/Dashboard.php:371
+#: src/Dashboard.php:373
 msgid "Residual: probability %1$s × impact %2$s"
 msgstr ""
 
-#: src/Dashboard.php:377
+#: src/Dashboard.php:379
 msgid "Category: %s"
 msgstr ""
 
-#: src/Dashboard.php:380 src/Report.php:170 templates/report.html.twig:22
+#: src/Dashboard.php:382 src/Report.php:170 templates/report.html.twig:22
 msgid "Entity: %s"
 msgstr ""
 
-#: src/Dashboard.php:384 src/Scale.php:257
+#: src/Dashboard.php:386 src/Scale.php:257
 msgid "Above tolerance"
 msgstr ""
 
-#: src/Dashboard.php:385 src/Scale.php:260
+#: src/Dashboard.php:387 src/Scale.php:260
 msgid "Above appetite"
 msgstr ""
 
-#: src/Dashboard.php:386 templates/dashboard.html.twig:130
+#: src/Dashboard.php:388 templates/dashboard.html.twig:130
 msgid "Outside appetite"
 msgstr ""
 
-#: src/Dashboard.php:390 templates/dashboard.html.twig:130
+#: src/Dashboard.php:392 templates/dashboard.html.twig:130
 msgid "With overdue actions"
 msgstr ""
 
-#: src/Dashboard.php:393 templates/dashboard.html.twig:131
+#: src/Dashboard.php:395 templates/dashboard.html.twig:131
 msgid "With KRIs in alert"
 msgstr ""
 
-#: src/Dashboard.php:396
+#: src/Dashboard.php:398
 msgid "Underestimated according to loss history"
 msgstr ""
 
-#: src/Dashboard.php:399
+#: src/Dashboard.php:401
 msgid "Treatment not effective or without plan"
 msgstr ""
 
-#: src/Dashboard.php:402
+#: src/Dashboard.php:404
 msgid "Acceptance expired or expiring"
+msgstr ""
+
+#: src/Dashboard.php:59
+msgid "Corporate GRC"
 msgstr ""
 
 #: src/EntityConfig.php:275

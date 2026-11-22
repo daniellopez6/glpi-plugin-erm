@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.0.3] - 2026-11-22
+### Changed
+- Without GLPI GRC Manager, the plugin's own top-level menu is called "Corporate GRC"; its first entry opens the
+  dashboard.
+
 ## [2.0.2] - 2026-11-22
 ### Security
 - REST API lists of KRIs, measurements, reviews and links (tables without their own entity) only return the rows of

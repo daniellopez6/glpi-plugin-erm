@@ -601,4 +601,5 @@ ES = {
  'Too many people edited this assessment: create a new one.': 'Demasiadas personas editaron esta evaluación: creá una nueva.',
  'You cannot move this item to an entity you have no access to.': 'No podés mover este elemento a una entidad a la que no tenés acceso.',
  'You are not allowed to update this risk.': 'No tenés permiso para actualizar este riesgo.',
+ 'Corporate GRC': 'GRC Corporativo',
 }

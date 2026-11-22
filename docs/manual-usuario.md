@@ -20,7 +20,7 @@ están en la [guía de administración](guia-administracion.md).
 
 ## 2. Dónde está
 
-Menú **Riesgos corporativos (ERM)** (o **GRC y cumplimiento** si también está instalado GLPI GRC Manager):
+Menú **GRC Corporativo** (o **GRC y cumplimiento** si también está instalado GLPI GRC Manager):
 
 - **Riesgos corporativos (ERM)**: tablero.
 - **Mi espacio ERM**: mis acciones, mis indicadores y mis riesgos.

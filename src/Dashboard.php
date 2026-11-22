@@ -53,8 +53,10 @@ class Dashboard extends CommonGLPI
         if (!Risk::canView()) {
             return false;
         }
+        // Without GRC Manager the plugin has its own top-level menu, titled after this first entry
+        $standalone = plugin_erm_sector() === 'erm';
         return [
-           'title' => self::getMenuName(),
+           'title' => $standalone ? __('Corporate GRC', 'erm') : self::getMenuName(),
            'page'  => self::getSearchURL(false),
            'icon'  => self::getIcon(),
            'options' => [
