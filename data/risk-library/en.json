@@ -1,0 +1,280 @@
+{
+ "version": 1,
+ "templates": [
+  {
+   "key": "ransomware",
+   "category": "operational.technology",
+   "treatment": "mitigate",
+   "name": "Ransomware that stops contact center operations",
+   "description": "An attack encrypts servers and workstations and stops customer service and collections.",
+   "causes": "Phishing of agents; outdated patches; remote access without MFA; backups reachable from the network.",
+   "consequences": "Service interruption; SLA breaches and penalties; data loss or exposure; recovery costs; reputational damage.",
+   "controls": "EDR on every device; MFA on remote access; immutable and tested backups; network segmentation; anti-phishing training.",
+   "kris": "% of devices with active EDR; critical patches pending > 30 days; result of the last restore test."
+  },
+  {
+   "key": "platform_outage",
+   "category": "operational.continuity",
+   "treatment": "mitigate",
+   "name": "Prolonged outage of the telephony or omnichannel platform",
+   "description": "The contact center platform (voice, chat, messaging) is down for hours.",
+   "causes": "Single provider without redundancy; untested changes; connectivity or power failure.",
+   "consequences": "Lost calls and contacts; SLA breaches with clients; contractual penalties; complaints.",
+   "controls": "Contract with SLA and credits; alternative link and site; tested continuity plan; change management.",
+   "kris": "Monthly platform availability; minutes of downtime; recovery time in the last plan test."
+  },
+  {
+   "key": "data_leak",
+   "category": "operational.technology",
+   "treatment": "mitigate",
+   "name": "Leak of personal data of our clients' customers",
+   "description": "Data of debtors or end users (IDs, debts, call recordings) is exposed or obtained by third parties.",
+   "causes": "Excessive access rights; uncontrolled exports; unencrypted recordings; suppliers without controls.",
+   "consequences": "Breach of data protection law; complaints to the regulator; loss of financial clients; reputational damage.",
+   "controls": "Role-based access and periodic review; DLP; encrypted recordings; confidentiality clauses; access logging.",
+   "kris": "Privileged accesses reviewed in the quarter; DLP alerts; personal data incidents."
+  },
+  {
+   "key": "cloud_provider",
+   "category": "operational.third_parties",
+   "treatment": "mitigate",
+   "name": "Failure or exit of a critical technology provider",
+   "description": "A cloud, CRM or telephony provider stops the service or changes conditions.",
+   "causes": "Dependence on a single provider; contracts without exit clauses; no supplier monitoring.",
+   "consequences": "Service interruption; urgent migration costs; breaches with clients.",
+   "controls": "Annual assessment of critical suppliers; continuity and exit clauses; exit plan; SLA monitoring.",
+   "kris": "Critical suppliers without a current assessment; supplier SLA breaches."
+  },
+  {
+   "key": "site_outage",
+   "category": "operational.continuity",
+   "treatment": "mitigate",
+   "name": "Unavailability of the operations site",
+   "description": "The building is inaccessible or without power or connectivity (outage, flood, strike).",
+   "causes": "Single site; no generator or alternative link; dependence on on-site work.",
+   "consequences": "Agents unable to work; service level drop; penalties.",
+   "controls": "Remote work enabled and tested; generator and UPS; redundant links; continuity plan.",
+   "kris": "% of agents enabled for remote work; result of the last drill."
+  },
+  {
+   "key": "agent_turnover",
+   "category": "operational.people",
+   "treatment": "mitigate",
+   "name": "High agent turnover and absenteeism",
+   "description": "Turnover or absenteeism exceed the plan and the required staffing is not covered.",
+   "causes": "Working conditions; demand peaks; insufficient training; competitive labour market.",
+   "consequences": "Service level drop; SLA breaches; recruitment and training costs.",
+   "controls": "Workforce planning (WFM); retention plan; initial and ongoing training; replacement pool.",
+   "kris": "Monthly agent turnover; absenteeism; service level per campaign."
+  },
+  {
+   "key": "key_person",
+   "category": "operational.people",
+   "treatment": "mitigate",
+   "name": "Dependence on key people",
+   "description": "Critical knowledge (systems, clients, processes) concentrated in a few people.",
+   "causes": "Lack of documentation; no trained backups; middle management turnover.",
+   "consequences": "Delays or errors when that person is absent; loss of knowledge.",
+   "controls": "Process documentation; designated and trained backups; job rotation.",
+   "kris": "Critical processes without a designated backup."
+  },
+  {
+   "key": "wrong_information",
+   "category": "operational.processes",
+   "treatment": "mitigate",
+   "name": "Wrong information given to end users",
+   "description": "Agents or bots give wrong amounts, deadlines or conditions.",
+   "causes": "Outdated scripts; outdated customer data; no quality control.",
+   "consequences": "Complaints; rework; consumer protection sanctions; loss of client trust.",
+   "controls": "Quality monitoring of interactions; scripts approved by the client; data taken online from the client's system.",
+   "kris": "% of interactions with errors in quality monitoring; complaints about wrong information."
+  },
+  {
+   "key": "sla_breach",
+   "category": "operational.processes",
+   "treatment": "mitigate",
+   "name": "Breach of contracted service levels",
+   "description": "Service level, handling time or quality fall below what was agreed with the client.",
+   "causes": "Wrong demand forecast; insufficient staffing; technology failures.",
+   "consequences": "Penalties; loss of contracts; damage to the business relationship.",
+   "controls": "Capacity management; real-time alerts; daily KPI follow-up with the client.",
+   "kris": "Daily service level; penalties of the month."
+  },
+  {
+   "key": "data_protection",
+   "category": "compliance.regulatory",
+   "treatment": "mitigate",
+   "name": "Breach of personal data protection regulations",
+   "description": "Processing of personal data does not comply with the applicable data protection law and regulator rules.",
+   "causes": "Unregistered databases; no consent or purpose; data subject rights not answered on time.",
+   "consequences": "Regulator sanctions; complaints of data subjects; requirements of financial clients.",
+   "controls": "Record of processing activities; data subject rights procedure; supplier assessment; training.",
+   "kris": "Data subject requests answered late; databases without current registration."
+  },
+  {
+   "key": "collection_practices",
+   "category": "compliance.consumer",
+   "treatment": "mitigate",
+   "name": "Collection practices contrary to consumer protection rules",
+   "description": "Collection uses abusive practices: hours, frequency, pressure or disclosure to third parties.",
+   "causes": "Aggressive targets; no control of scripts and hours; automation without limits.",
+   "consequences": "Complaints and sanctions; lawsuits; loss of the financial client; reputational damage.",
+   "controls": "Collection code; automatic limits on hours and frequency; call monitoring; training.",
+   "kris": "Complaints about collection practices; out-of-hours contacts detected."
+  },
+  {
+   "key": "client_requirements",
+   "category": "compliance.litigation",
+   "treatment": "mitigate",
+   "name": "Breach of contractual and regulatory requirements of financial clients",
+   "description": "We do not meet the security, continuity or audit requirements that banks and lenders pass on to their suppliers.",
+   "causes": "Requirements not identified; scattered evidence; unprepared client audits.",
+   "consequences": "Audit findings; penalties; contract termination or non-renewal.",
+   "controls": "Requirements matrix per client; centralised evidence; prior internal audits; compliance owner per account.",
+   "kris": "Open findings of client audits; requirements without evidence."
+  },
+  {
+   "key": "internal_fraud",
+   "category": "fraud.internal",
+   "treatment": "mitigate",
+   "name": "Misuse of data or fraud by agents",
+   "description": "An agent uses customer data for personal or third-party purposes, or diverts payments.",
+   "causes": "Broad access; no monitoring; financial pressure; no segregation of duties.",
+   "consequences": "Losses; lawsuits; breach of confidentiality; loss of the client.",
+   "controls": "Least privilege; data masking; recording and monitoring; payment controls; whistleblowing channel.",
+   "kris": "Alerts of anomalous access; reports received."
+  },
+  {
+   "key": "social_engineering",
+   "category": "fraud.external",
+   "treatment": "mitigate",
+   "name": "Fraud by social engineering or phone impersonation",
+   "description": "Third parties impersonate customers or users to obtain data or change information.",
+   "causes": "Weak identity validation; untrained agents; exception processes.",
+   "consequences": "Fraud against end users; client complaints; reputational damage.",
+   "controls": "Multi-factor identity validation; anti-fraud scripts; pattern alerts; training.",
+   "kris": "Impersonation attempts detected; confirmed fraud cases."
+  },
+  {
+   "key": "social_media",
+   "category": "reputational",
+   "treatment": "mitigate",
+   "name": "Public exposure due to poor service or a leaked recording",
+   "description": "A case of poor service or a recording goes viral on social networks or media.",
+   "causes": "Inappropriate treatment; leaked recordings; late response to complaints.",
+   "consequences": "Damage to our brand and the client's; loss of contracts.",
+   "controls": "Quality monitoring; crisis and spokesperson protocol; access control to recordings.",
+   "kris": "Negative mentions on social media; escalated complaints."
+  },
+  {
+   "key": "client_concentration",
+   "category": "financial.credit",
+   "treatment": "mitigate",
+   "name": "Revenue concentration in few clients",
+   "description": "A relevant share of revenue depends on one or two clients.",
+   "causes": "Concentrated commercial strategy; short-term contracts.",
+   "consequences": "Sharp revenue drop if a client leaves or reduces volume; idle capacity.",
+   "controls": "Commercial diversification; longer contracts; satisfaction follow-up of key clients.",
+   "kris": "% of revenue of the main client; satisfaction index of key clients."
+  },
+  {
+   "key": "fx_costs",
+   "category": "financial.market",
+   "treatment": "mitigate",
+   "name": "Increase of costs in foreign currency",
+   "description": "Licences, cloud and AI services in foreign currency increase with the exchange rate and are not passed on to prices.",
+   "causes": "Client contracts in local currency without adjustment; technology costs in foreign currency.",
+   "consequences": "Margin loss; postponed projects.",
+   "controls": "Adjustment clauses in contracts; currency hedging; cost follow-up per client.",
+   "kris": "Margin per client; foreign-currency costs over revenue."
+  },
+  {
+   "key": "ai_disruption",
+   "category": "strategic.business",
+   "treatment": "mitigate",
+   "name": "Business disruption by AI automation",
+   "description": "Clients replace human service with their own or competitors' AI agents.",
+   "causes": "Fast adoption of conversational AI; value proposition based on agent volume.",
+   "consequences": "Volume and revenue drop; need to reskill staff.",
+   "controls": "Strategy of own AI services; reskilling of agents; innovation agreements with clients.",
+   "kris": "% of revenue from AI services; human vs. automated volume."
+  },
+  {
+   "key": "ai_hallucination",
+   "category": "ai.reliability",
+   "treatment": "mitigate",
+   "name": "Wrong answers of an AI assistant (hallucinations)",
+   "description": "The chatbot or voicebot makes up information, amounts or conditions and gives it to the end user.",
+   "causes": "Unrestricted generative model; information not taken from official sources; no testing.",
+   "consequences": "Complaints; harm to users; sanctions; loss of client trust.",
+   "controls": "Answers based only on data of the client's system (RAG); topic limits; hand-over to humans; testing and monitoring of answers.",
+   "kris": "% of audited answers with errors; hand-overs to humans due to bot errors."
+  },
+  {
+   "key": "ai_bias",
+   "category": "ai.bias",
+   "treatment": "mitigate",
+   "name": "Bias or discrimination in AI models",
+   "description": "A scoring, routing or prioritisation model treats some groups of people worse.",
+   "causes": "Biased training data; proxy variables (area, age); no fairness testing.",
+   "consequences": "Discrimination; complaints and sanctions; reputational damage.",
+   "controls": "Bias testing by segment; human review of adverse decisions; model documentation.",
+   "kris": "Outcome differences between segments; complaints about unequal treatment."
+  },
+  {
+   "key": "ai_data_leak",
+   "category": "ai.privacy",
+   "treatment": "mitigate",
+   "name": "Exposure of personal data to AI providers",
+   "description": "Agents or systems send customer data to external AI services that store it or use it for training.",
+   "causes": "Use of unapproved AI tools; contracts without data clauses; no anonymisation.",
+   "consequences": "Breach of data protection and contracts; loss of clients.",
+   "controls": "AI usage policy; approved tools with enterprise contract; anonymisation; blocking of unauthorised services.",
+   "kris": "Use of unauthorised AI tools detected; AI-related data incidents."
+  },
+  {
+   "key": "prompt_injection",
+   "category": "ai.misuse",
+   "treatment": "mitigate",
+   "name": "Manipulation of an AI assistant (prompt injection)",
+   "description": "A user manipulates the bot to reveal data, bypass controls or act outside its role.",
+   "causes": "Bot with broad access to data or actions; no guardrails; insufficient security testing.",
+   "consequences": "Data leak; unauthorised operations; reputational damage.",
+   "controls": "Least access for the bot; input and output guardrails; periodic security testing (red team); monitoring.",
+   "kris": "Manipulation attempts detected; open findings of security tests."
+  },
+  {
+   "key": "ai_transparency",
+   "category": "ai.transparency",
+   "treatment": "mitigate",
+   "name": "Lack of transparency when interacting with AI",
+   "description": "The end user does not know they are talking to an automated system or cannot ask for a person.",
+   "causes": "Experience designed without notice; no hand-over option.",
+   "consequences": "Breach of transparency obligations (AI Act art. 50 and client requirements); complaints.",
+   "controls": "Notice at the start of every interaction; option to talk to a person; interaction logging.",
+   "kris": "% of interactions with AI notice; requests to talk to a human."
+  },
+  {
+   "key": "ai_provider",
+   "category": "ai.providers",
+   "treatment": "mitigate",
+   "name": "Dependence on a single AI model provider",
+   "description": "AI services depend on one provider or model that can change price, conditions or quality.",
+   "causes": "Integration tied to one provider; no tested alternatives.",
+   "consequences": "Service interruption or degradation; cost increase; changes in model behaviour.",
+   "controls": "Abstraction layer to switch models; periodic evaluation of alternatives; regression testing of new versions.",
+   "kris": "Cost per interaction; AI provider incidents."
+  },
+  {
+   "key": "climate",
+   "category": "esg.climate",
+   "treatment": "mitigate",
+   "name": "Extreme weather events affecting operations",
+   "description": "Storms, floods or heat waves cut power or connectivity or prevent reaching the site.",
+   "causes": "Site location; infrastructure without redundancy.",
+   "consequences": "Service interruption; material damage; risk to staff.",
+   "controls": "Remote work; power backup; insurance; emergency plan.",
+   "kris": "Hours of interruption due to weather events."
+  }
+ ]
+}

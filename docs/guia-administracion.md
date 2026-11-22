@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 2.0.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 2.2.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -176,18 +176,29 @@ permisos y validaciones que la interfaz. Ejemplo:
 GET /api.php/v1/GlpiPlugin%5CErm%5CRisk?range=0-49
 ```
 
-## 9. Desinstalación
+## 9. Biblioteca de riesgos
+
+Las plantillas del asistente están en `data/risk-library/es.json` (español) y `en.json` (resto de los idiomas). Cada
+plantilla tiene una clave, la clave de su categoría (por ejemplo `operational.technology` o `ai.reliability`), la
+decisión de tratamiento sugerida, el nombre, la descripción, las causas, las consecuencias, los controles y los KRI.
+Se pueden editar o ampliar para la realidad de la organización (conviene versionar los cambios, porque una
+actualización del plugin reemplaza estos archivos).
+
+Las categorías estándar se reconocen por una clave interna, aunque se cambie su nombre. Si una categoría se creó o
+renombró antes de la versión 2.2, sus plantillas usan la categoría principal.
+
+## 10. Desinstalación
 
 **Configuración → Complementos → ERM → Desinstalar** (o `php bin/console plugin:uninstall erm`).
 **Elimina todas las tablas y datos del plugin**, sus notificaciones y acción automática, sus permisos, preferencias de visualización, vínculos de
 documentos e historial. Hacé un backup antes.
 
-## 10. Idiomas
+## 11. Idiomas
 
 El plugin está en inglés, español de Argentina (`es_AR`) y español de España (`es_ES`); se muestra en el idioma
 de cada usuario. Para agregar un idioma, crear un `.po` a partir de `locales/erm.pot` y compilarlo a `.mo`.
 
-## 11. Solución de problemas
+## 12. Solución de problemas
 
 | Síntoma | Causa y solución |
 |---|---|

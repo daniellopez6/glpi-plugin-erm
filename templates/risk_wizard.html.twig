@@ -1,0 +1,99 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{% macro step(n, title, icon) %}<div class="card-header"><h3 class="card-title"><span class="badge bg-primary me-2">{{ n }}</span><i class="{{ icon }} me-1"></i>{{ title }}</h3></div>{% endmacro %}
+{% import _self as w %}
+<div class="container-fluid" style="max-width:980px">
+   <div class="d-flex align-items-center mb-3">
+      <h2 class="m-0"><i class="ti ti-wand me-2"></i>{{ __('Register a risk step by step', 'erm') }}</h2>
+      <a href="{{ library_url }}" class="btn btn-outline-primary ms-auto"><i class="ti ti-books me-1"></i>{{ __('Start from the risk library', 'erm') }}</a>
+   </div>
+   <p class="text-muted">{{ __('Answer in your own words; no methodology knowledge is needed. You can complete or correct everything later in the risk form.', 'erm') }} {{ __('Entity: %s', 'erm')|format(entity) }}</p>
+   {% if template %}
+   <div class="alert alert-info"><i class="ti ti-books me-1"></i>{{ __('Template from the library: %s. Adapt it to your situation before saving.', 'erm')|format(template.name) }}</div>
+   {% endif %}
+
+   <form method="post" action="{{ action }}">
+      <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+
+      <div class="card mb-3">
+         {{ w.step(1, __('What could happen?', 'erm'), 'ti ti-alert-triangle') }}
+         <div class="card-body row g-3">
+            <div class="col-12"><label class="form-label required">{{ __('Describe the event in one sentence', 'erm') }}</label>
+               <input type="text" name="name" maxlength="255" class="form-control" required value="{{ template.name ?? '' }}" placeholder="{{ __('Example: Failure of the telephony provider that stops customer service for hours', 'erm') }}">
+               <div class="form-hint">{{ __('Say what could happen and to what, not just a topic ("Providers" is a topic; "Failure of provider X that stops collections" is a risk).', 'erm') }}</div></div>
+            <div class="col-md-6"><label class="form-label">{{ __('Area or type of risk', 'erm') }}</label>{{ category_dropdown|raw }}</div>
+            <div class="col-md-6"><label class="form-label">{{ __('Who is responsible for managing it?', 'erm') }}</label>{{ owner_dropdown|raw }}</div>
+            <div class="col-12"><label class="form-label">{{ __('More details (optional)', 'erm') }}</label><textarea name="description" rows="2" class="form-control">{{ template.description ?? '' }}</textarea></div>
+         </div>
+      </div>
+
+      <div class="card mb-3">
+         {{ w.step(2, __('Why could it happen and what would it cause?', 'erm'), 'ti ti-arrows-split') }}
+         <div class="card-body row g-3">
+            <div class="col-md-6"><label class="form-label">{{ __('Why could it happen? (causes)', 'erm') }}</label><textarea name="causes" rows="4" class="form-control">{{ template.causes ?? '' }}</textarea></div>
+            <div class="col-md-6"><label class="form-label">{{ __('What would happen if it occurs? (consequences)', 'erm') }}</label><textarea name="consequences" rows="4" class="form-control">{{ template.consequences ?? '' }}</textarea></div>
+         </div>
+      </div>
+
+      <div class="card mb-3">
+         {{ w.step(3, __('How likely and how serious, if nothing protected us?', 'erm'), 'ti ti-flame') }}
+         <div class="card-body row g-3">
+            <div class="col-md-6"><label class="form-label">{{ __('How often could it happen?', 'erm') }}</label>
+               {% for k, v in probabilities %}<label class="form-check"><input class="form-check-input" type="radio" name="inherent_probability" value="{{ k }}"><span class="form-check-label">{{ v }}</span></label>{% endfor %}</div>
+            <div class="col-md-6"><label class="form-label">{{ __('How serious would it be? (think of the worst reasonable case)', 'erm') }}</label>
+               {% for k, v in impacts %}<label class="form-check"><input class="form-check-input" type="radio" name="inherent_impact" value="{{ k }}"><span class="form-check-label">{{ v }}</span></label>{% endfor %}</div>
+            <div class="col-12 form-hint">{{ __('This is the "inherent" risk: imagine there were no controls. If you are not sure, choose your best estimate.', 'erm') }}</div>
+         </div>
+      </div>
+
+      <div class="card mb-3">
+         {{ w.step(4, __('What protects us today?', 'erm'), 'ti ti-shield-check') }}
+         <div class="card-body row g-3">
+            <div class="col-12"><label class="form-label">{{ __('Controls that work today (procedures, systems, approvals, insurance...)', 'erm') }}</label>
+               <textarea name="existing_controls" rows="3" class="form-control"></textarea>
+               {% if template %}<div class="form-hint"><i class="ti ti-bulb me-1"></i>{{ __('Usual controls for this risk: %s', 'erm')|format(template.controls) }}</div>{% endif %}</div>
+            <div class="col-md-4"><label class="form-label">{{ __('Do those controls work?', 'erm') }}</label>
+               {% for k, v in {'tested': __('Yes, they are tested and work', 'erm'), 'believe': __('I think so, but they were never tested', 'erm'), 'partial': __('Only partially', 'erm'), 'none': __('There are no controls', 'erm')} %}
+               <label class="form-check"><input class="form-check-input" type="radio" name="controls_work" value="{{ k }}"><span class="form-check-label">{{ v }}</span></label>{% endfor %}</div>
+            <div class="col-md-4"><label class="form-label">{{ __('With those controls, how often?', 'erm') }}</label>
+               <select name="residual_probability" class="form-select"><option value="same">{{ __('Same as without controls', 'erm') }}</option>{% for k, v in probabilities %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+            <div class="col-md-4"><label class="form-label">{{ __('With those controls, how serious?', 'erm') }}</label>
+               <select name="residual_impact" class="form-select"><option value="same">{{ __('Same as without controls', 'erm') }}</option>{% for k, v in impacts %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+            <div class="col-12 form-hint">{{ __('This is the "residual" risk, the one compared with what the company is willing to accept (appetite). It can never be worse than without controls.', 'erm') }}</div>
+         </div>
+      </div>
+
+      <div class="card mb-3">
+         {{ w.step(5, __('What are we going to do?', 'erm'), 'ti ti-checklist') }}
+         <div class="card-body row g-3">
+            <div class="col-md-6">
+               {% for k, v in {'mitigate': __('Reduce it with actions', 'erm'), 'transfer': __('Pass it to a third party (insurance, contract)', 'erm'), 'avoid': __('Stop the activity that causes it', 'erm'), 'accept': __('Live with it as it is (the Committee decides)', 'erm'), '': __('I do not know yet', 'erm')} %}
+               <label class="form-check"><input class="form-check-input" type="radio" name="treatment" value="{{ k }}" {{ (template and template.treatment == k) or (not template and k == '') ? 'checked' }}><span class="form-check-label">{{ v }}</span></label>{% endfor %}
+            </div>
+            <div class="col-md-6"><label class="form-label">{{ __('Why? (required to accept a risk)', 'erm') }}</label><textarea name="justification" rows="3" class="form-control"></textarea></div>
+            {% if can_add_action %}
+            <div class="col-12"><label class="form-label">{{ __('First action (optional)', 'erm') }}</label></div>
+            <div class="col-md-6"><input type="text" name="action_name" class="form-control" placeholder="{{ __('What will be done?', 'erm') }}"></div>
+            <div class="col-md-3">{{ action_owner_dropdown|raw }}</div>
+            <div class="col-md-3"><input type="date" name="action_due_date" class="form-control" title="{{ __('Due date', 'erm') }}"></div>
+            {% if template %}<div class="col-12 form-hint"><i class="ti ti-bulb me-1"></i>{{ __('Indicators that usually warn about this risk: %s', 'erm')|format(template.kris) }}</div>{% endif %}
+            {% endif %}
+            <div class="col-md-4"><label class="form-label">{{ __('When should it be reviewed?', 'erm') }}</label><input type="date" name="review_date" value="{{ review_default }}" class="form-control"></div>
+         </div>
+      </div>
+
+      <div class="text-end mb-4"><button type="submit" name="create" class="btn btn-primary btn-lg"><i class="ti ti-device-floppy me-1"></i>{{ __('Register the risk', 'erm') }}</button></div>
+   </form>
+</div>

@@ -1,6 +1,6 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 2.1.x · GLPI 12
+Versión del plugin: 2.2.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
@@ -15,6 +15,23 @@ No hace falta conocer la metodología para empezar:
 - La ficha muestra **sugerencias para mejorar el riesgo** cuando falta información o algo no es coherente (por
   ejemplo, un residual mayor que el inherente o una decisión de mitigar sin acciones). No bloquean el guardado.
 - El tablero cuenta los riesgos **con sugerencias de calidad**; un clic abre la lista.
+
+### Registrar un riesgo paso a paso (asistente)
+
+En el tablero o en "Mi espacio ERM", **Registrar un riesgo paso a paso** abre un asistente con cinco preguntas en
+lenguaje simple:
+
+1. ¿Qué podría pasar? (el evento, el área y quién lo gestiona)
+2. ¿Por qué podría pasar y qué provocaría? (causas y consecuencias)
+3. ¿Qué tan probable y qué tan grave, si nada nos protegiera? (con los montos de tu empresa)
+4. ¿Qué nos protege hoy? (controles, si funcionan, y cómo queda el riesgo con ellos)
+5. ¿Qué vamos a hacer? (decisión, primera acción y fecha de revisión)
+
+El asistente completa la ficha del riesgo; después se puede ajustar todo en la ficha.
+
+**Biblioteca de riesgos**: 25 riesgos típicos de un contact center con clientes financieros y servicios de IA, con
+causas, consecuencias, controles e indicadores habituales. **Usar esta plantilla** abre el asistente con los datos
+precargados para adaptarlos.
 
 ## 1. Conceptos
 

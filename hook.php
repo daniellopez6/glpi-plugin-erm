@@ -506,6 +506,8 @@ function plugin_erm_install(): bool
         // 2.0.0: "Artificial intelligence" branch for existing installations
         Category::createAiTaxonomy();
     }
+    // 2.2.0: internal keys of the standard categories (risk library)
+    Category::assignTaxonomyKeys();
 
     // 1.7.0: ready-to-assign role profiles (created once, never overwritten)
     ErmProfile::createRoleProfiles();

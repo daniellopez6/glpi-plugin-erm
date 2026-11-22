@@ -1,0 +1,280 @@
+{
+ "version": 1,
+ "templates": [
+  {
+   "key": "ransomware",
+   "category": "operational.technology",
+   "treatment": "mitigate",
+   "name": "Ransomware que paraliza la operación del contact center",
+   "description": "Un ataque cifra servidores y puestos de trabajo y detiene la atención y la cobranza.",
+   "causes": "Phishing a agentes; parches atrasados; accesos remotos sin MFA; copias de seguridad alcanzables desde la red.",
+   "consequences": "Interrupción del servicio a clientes; incumplimiento de SLA y penalidades; pérdida o exposición de datos; costos de recuperación; daño reputacional.",
+   "controls": "EDR en todos los equipos; MFA en accesos remotos; copias de seguridad inmutables y probadas; segmentación de red; capacitación antiphishing.",
+   "kris": "% de equipos con EDR activo; parches críticos pendientes > 30 días; resultado de la última prueba de restauración."
+  },
+  {
+   "key": "platform_outage",
+   "category": "operational.continuity",
+   "treatment": "mitigate",
+   "name": "Caída prolongada de la plataforma de telefonía u omnicanal",
+   "description": "La plataforma de contact center (voz, chat, WhatsApp) queda fuera de servicio por horas.",
+   "causes": "Proveedor único sin redundancia; cambios sin pruebas; falla de conectividad o de energía.",
+   "consequences": "Llamadas y contactos perdidos; incumplimiento de SLA con clientes; penalidades contractuales; reclamos.",
+   "controls": "Contrato con SLA y créditos; enlace y sitio alternativos; plan de continuidad probado; gestión de cambios.",
+   "kris": "Disponibilidad mensual de la plataforma; minutos de indisponibilidad; tiempo de recuperación en la última prueba del plan."
+  },
+  {
+   "key": "data_leak",
+   "category": "operational.technology",
+   "treatment": "mitigate",
+   "name": "Filtración de datos personales de clientes de nuestros clientes",
+   "description": "Datos de deudores o usuarios finales (DNI, deudas, grabaciones) quedan expuestos o en manos de terceros.",
+   "causes": "Accesos excesivos; exportaciones sin control; grabaciones sin cifrar; proveedores sin controles.",
+   "consequences": "Incumplimiento de la Ley 25.326; reclamos ante la AAIP; pérdida de clientes financieros; daño reputacional.",
+   "controls": "Control de accesos por rol y revisión periódica; DLP; cifrado de grabaciones; cláusulas de confidencialidad; registro de accesos.",
+   "kris": "Accesos privilegiados revisados en el trimestre; alertas de DLP; incidentes de datos personales."
+  },
+  {
+   "key": "cloud_provider",
+   "category": "operational.third_parties",
+   "treatment": "mitigate",
+   "name": "Falla o salida de un proveedor tecnológico crítico",
+   "description": "Un proveedor de nube, CRM o telefonía deja de prestar el servicio o cambia condiciones.",
+   "causes": "Dependencia de un único proveedor; contratos sin cláusulas de salida; falta de seguimiento del proveedor.",
+   "consequences": "Interrupción de servicios; costos de migración urgente; incumplimientos con clientes.",
+   "controls": "Evaluación anual de proveedores críticos; cláusulas de continuidad y salida; plan de salida; seguimiento de SLA.",
+   "kris": "Proveedores críticos sin evaluación vigente; incumplimientos de SLA del proveedor."
+  },
+  {
+   "key": "site_outage",
+   "category": "operational.continuity",
+   "treatment": "mitigate",
+   "name": "Indisponibilidad del sitio de operación",
+   "description": "El edificio queda inaccesible o sin energía ni conectividad (corte, inundación, conflicto gremial).",
+   "causes": "Sitio único; falta de grupo electrógeno o enlace alternativo; dependencia del trabajo presencial.",
+   "consequences": "Agentes sin poder trabajar; caída del nivel de servicio; penalidades.",
+   "controls": "Teletrabajo habilitado y probado; grupo electrógeno y UPS; enlaces redundantes; plan de continuidad.",
+   "kris": "% de agentes habilitados para teletrabajo; resultado del último simulacro."
+  },
+  {
+   "key": "agent_turnover",
+   "category": "operational.people",
+   "treatment": "mitigate",
+   "name": "Alta rotación y ausentismo de agentes",
+   "description": "La rotación o el ausentismo superan lo previsto y no se cubre la dotación necesaria.",
+   "causes": "Condiciones laborales; picos de demanda; capacitación insuficiente; mercado laboral competitivo.",
+   "consequences": "Caída del nivel de servicio; incumplimiento de SLA; costos de reclutamiento y capacitación.",
+   "controls": "Planificación de dotación (WFM); plan de retención; capacitación inicial y continua; bolsa de reemplazos.",
+   "kris": "Rotación mensual de agentes; ausentismo; nivel de servicio por campaña."
+  },
+  {
+   "key": "key_person",
+   "category": "operational.people",
+   "treatment": "mitigate",
+   "name": "Dependencia de personal clave",
+   "description": "Conocimiento crítico (sistemas, clientes, procesos) concentrado en pocas personas.",
+   "causes": "Falta de documentación; ausencia de reemplazos formados; rotación de mandos medios.",
+   "consequences": "Demoras o errores cuando esa persona falta; pérdida de conocimiento.",
+   "controls": "Documentación de procesos; reemplazos designados y entrenados; rotación de tareas.",
+   "kris": "Procesos críticos sin reemplazo designado."
+  },
+  {
+   "key": "wrong_information",
+   "category": "operational.processes",
+   "treatment": "mitigate",
+   "name": "Información incorrecta brindada a los usuarios finales",
+   "description": "Los agentes o los bots informan montos, plazos o condiciones equivocados.",
+   "causes": "Guiones desactualizados; datos del cliente desactualizados; falta de control de calidad.",
+   "consequences": "Reclamos; reprocesos; sanciones por defensa del consumidor; pérdida de confianza del cliente.",
+   "controls": "Control de calidad de interacciones; guiones aprobados por el cliente; datos tomados en línea del sistema del cliente.",
+   "kris": "% de interacciones con error en el monitoreo de calidad; reclamos por información incorrecta."
+  },
+  {
+   "key": "sla_breach",
+   "category": "operational.processes",
+   "treatment": "mitigate",
+   "name": "Incumplimiento de los niveles de servicio contratados",
+   "description": "El nivel de servicio, el tiempo de atención o la calidad quedan por debajo de lo pactado con el cliente.",
+   "causes": "Pronóstico de demanda errado; dotación insuficiente; fallas tecnológicas.",
+   "consequences": "Penalidades; pérdida de contratos; daño a la relación comercial.",
+   "controls": "Gestión de capacidad; alertas en tiempo real; seguimiento diario de indicadores con el cliente.",
+   "kris": "Nivel de servicio diario; penalidades del mes."
+  },
+  {
+   "key": "data_protection",
+   "category": "compliance.regulatory",
+   "treatment": "mitigate",
+   "name": "Incumplimiento de la normativa de protección de datos personales",
+   "description": "El tratamiento de datos no cumple con la Ley 25.326 y las disposiciones de la AAIP.",
+   "causes": "Bases no inscriptas; falta de consentimiento o finalidad; derechos de los titulares no atendidos a tiempo.",
+   "consequences": "Sanciones de la AAIP; reclamos de titulares; exigencias de clientes financieros.",
+   "controls": "Registro de tratamientos; procedimiento de derechos de los titulares; evaluación de proveedores; capacitación.",
+   "kris": "Pedidos de titulares fuera de plazo; bases sin inscripción vigente."
+  },
+  {
+   "key": "collection_practices",
+   "category": "compliance.consumer",
+   "treatment": "mitigate",
+   "name": "Prácticas de cobranza contrarias a las normas de defensa del consumidor",
+   "description": "La gestión de cobranza usa prácticas abusivas: horarios, frecuencia, presiones o información a terceros.",
+   "causes": "Metas agresivas; falta de control de guiones y horarios; automatizaciones sin límites.",
+   "consequences": "Denuncias y sanciones; demandas; pérdida del cliente financiero; daño reputacional.",
+   "controls": "Código de cobranza; límites automáticos de horarios y frecuencia; monitoreo de llamadas; capacitación.",
+   "kris": "Reclamos por prácticas de cobranza; contactos fuera de horario detectados."
+  },
+  {
+   "key": "client_requirements",
+   "category": "compliance.litigation",
+   "treatment": "mitigate",
+   "name": "Incumplimiento de requisitos contractuales y regulatorios de clientes financieros",
+   "description": "No cumplimos las exigencias de seguridad, continuidad o auditoría que los bancos y financieras trasladan a sus proveedores.",
+   "causes": "Requisitos no relevados; evidencia dispersa; auditorías de clientes sin preparación.",
+   "consequences": "Observaciones de auditoría; penalidades; rescisión o no renovación de contratos.",
+   "controls": "Matriz de requisitos por cliente; evidencia centralizada; auditorías internas previas; responsable de cumplimiento por cuenta.",
+   "kris": "Observaciones abiertas de auditorías de clientes; requisitos sin evidencia."
+  },
+  {
+   "key": "internal_fraud",
+   "category": "fraud.internal",
+   "treatment": "mitigate",
+   "name": "Uso indebido de datos o fraude por parte de agentes",
+   "description": "Un agente usa datos de clientes para fines propios o de terceros, o desvía pagos.",
+   "causes": "Accesos amplios; falta de monitoreo; presión económica; ausencia de segregación.",
+   "consequences": "Pérdidas; denuncias; incumplimiento de confidencialidad; pérdida del cliente.",
+   "controls": "Accesos mínimos; enmascarado de datos; grabación y monitoreo; controles de pagos; canal de denuncias.",
+   "kris": "Alertas de accesos anómalos; denuncias recibidas."
+  },
+  {
+   "key": "social_engineering",
+   "category": "fraud.external",
+   "treatment": "mitigate",
+   "name": "Fraude por ingeniería social o suplantación telefónica",
+   "description": "Terceros se hacen pasar por clientes o usuarios para obtener datos o modificar información.",
+   "causes": "Validación de identidad débil; agentes sin entrenamiento; procesos de excepción.",
+   "consequences": "Fraudes a usuarios finales; reclamos del cliente; daño reputacional.",
+   "controls": "Validación de identidad por varios factores; guiones anti fraude; alertas por patrones; capacitación.",
+   "kris": "Intentos de suplantación detectados; casos de fraude confirmados."
+  },
+  {
+   "key": "social_media",
+   "category": "reputational",
+   "treatment": "mitigate",
+   "name": "Exposición pública por una mala atención o una grabación difundida",
+   "description": "Un caso de mala atención o una grabación se viraliza en redes o medios.",
+   "causes": "Trato inadecuado; filtración de grabaciones; respuesta tardía a reclamos.",
+   "consequences": "Daño a la marca propia y del cliente; pérdida de contratos.",
+   "controls": "Monitoreo de calidad; protocolo de crisis y vocería; control de acceso a grabaciones.",
+   "kris": "Menciones negativas en redes; reclamos escalados."
+  },
+  {
+   "key": "client_concentration",
+   "category": "financial.credit",
+   "treatment": "mitigate",
+   "name": "Concentración de ingresos en pocos clientes",
+   "description": "Una parte relevante de la facturación depende de uno o dos clientes.",
+   "causes": "Estrategia comercial concentrada; contratos de corto plazo.",
+   "consequences": "Caída fuerte de ingresos si un cliente se va o reduce volumen; capacidad ociosa.",
+   "controls": "Diversificación comercial; contratos de mayor plazo; seguimiento de la satisfacción de clientes clave.",
+   "kris": "% de facturación del principal cliente; índice de satisfacción de clientes clave."
+  },
+  {
+   "key": "fx_costs",
+   "category": "financial.market",
+   "treatment": "mitigate",
+   "name": "Aumento de costos dolarizados",
+   "description": "Licencias, nube y servicios de IA en dólares aumentan con el tipo de cambio y no se trasladan a precios.",
+   "causes": "Contratos con clientes en pesos sin ajuste; costos tecnológicos en dólares.",
+   "consequences": "Pérdida de margen; proyectos postergados.",
+   "controls": "Cláusulas de ajuste en contratos; cobertura cambiaria; seguimiento de costos por cliente.",
+   "kris": "Margen por cliente; costos en dólares sobre ingresos."
+  },
+  {
+   "key": "ai_disruption",
+   "category": "strategic.business",
+   "treatment": "mitigate",
+   "name": "Disrupción del negocio por la automatización con IA",
+   "description": "Los clientes reemplazan atención humana por agentes de IA propios o de competidores.",
+   "causes": "Adopción acelerada de IA conversacional; propuesta de valor basada en volumen de agentes.",
+   "consequences": "Caída de volumen e ingresos; necesidad de reconvertir personal.",
+   "controls": "Estrategia de servicios con IA propios; reconversión de agentes; acuerdos de innovación con clientes.",
+   "kris": "% de ingresos de servicios con IA; volumen humano vs. automatizado."
+  },
+  {
+   "key": "ai_hallucination",
+   "category": "ai.reliability",
+   "treatment": "mitigate",
+   "name": "Respuestas incorrectas de un asistente de IA (alucinaciones)",
+   "description": "El chatbot o voicebot inventa información, montos o condiciones y se la da al usuario final.",
+   "causes": "Modelo generativo sin restricciones; información no tomada de fuentes oficiales; falta de pruebas.",
+   "consequences": "Reclamos; perjuicio al usuario; sanciones; pérdida de confianza del cliente.",
+   "controls": "Respuestas basadas sólo en datos del sistema del cliente (RAG); límites de temas; derivación a humano; pruebas y monitoreo de respuestas.",
+   "kris": "% de respuestas auditadas con error; derivaciones a humano por error del bot."
+  },
+  {
+   "key": "ai_bias",
+   "category": "ai.bias",
+   "treatment": "mitigate",
+   "name": "Sesgo o discriminación en modelos de IA",
+   "description": "Un modelo de scoring, enrutamiento o priorización trata peor a ciertos grupos de personas.",
+   "causes": "Datos de entrenamiento sesgados; variables sustitutas (zona, edad); falta de pruebas de equidad.",
+   "consequences": "Discriminación; reclamos y sanciones; daño reputacional.",
+   "controls": "Pruebas de sesgo por segmento; revisión humana de decisiones adversas; documentación del modelo.",
+   "kris": "Diferencias de resultado entre segmentos; reclamos por trato desigual."
+  },
+  {
+   "key": "ai_data_leak",
+   "category": "ai.privacy",
+   "treatment": "mitigate",
+   "name": "Exposición de datos personales a proveedores de IA",
+   "description": "Agentes o sistemas envían datos de clientes a servicios de IA externos que los guardan o usan para entrenar.",
+   "causes": "Uso de herramientas de IA no aprobadas; contratos sin cláusulas de datos; falta de anonimización.",
+   "consequences": "Incumplimiento de protección de datos y de contratos; pérdida de clientes.",
+   "controls": "Política de uso de IA; herramientas aprobadas con contrato empresarial; anonimización; bloqueo de servicios no autorizados.",
+   "kris": "Uso de herramientas de IA no autorizadas detectado; incidentes de datos con IA."
+  },
+  {
+   "key": "prompt_injection",
+   "category": "ai.misuse",
+   "treatment": "mitigate",
+   "name": "Manipulación de un asistente de IA (inyección de instrucciones)",
+   "description": "Un usuario manipula al bot para que revele datos, saltee controles o actúe fuera de su función.",
+   "causes": "Bot con acceso amplio a datos o acciones; falta de barreras; pruebas de seguridad insuficientes.",
+   "consequences": "Fuga de datos; operaciones no autorizadas; daño reputacional.",
+   "controls": "Mínimo acceso del bot; barreras de entrada y salida; pruebas de seguridad (red team) periódicas; monitoreo.",
+   "kris": "Intentos de manipulación detectados; hallazgos abiertos de pruebas de seguridad."
+  },
+  {
+   "key": "ai_transparency",
+   "category": "ai.transparency",
+   "treatment": "mitigate",
+   "name": "Falta de transparencia al interactuar con IA",
+   "description": "El usuario final no sabe que habla con un sistema automático o no puede pedir una persona.",
+   "causes": "Diseño de la experiencia sin aviso; falta de opción de derivación.",
+   "consequences": "Incumplimiento de obligaciones de transparencia (AI Act art. 50 y exigencias de clientes); reclamos.",
+   "controls": "Aviso al inicio de cada interacción; opción de hablar con una persona; registro de interacciones.",
+   "kris": "% de interacciones con aviso de IA; pedidos de derivación a humano."
+  },
+  {
+   "key": "ai_provider",
+   "category": "ai.providers",
+   "treatment": "mitigate",
+   "name": "Dependencia de un único proveedor de modelos de IA",
+   "description": "Los servicios con IA dependen de un solo proveedor o modelo que puede cambiar precio, condiciones o calidad.",
+   "causes": "Integración atada a un proveedor; falta de alternativas probadas.",
+   "consequences": "Interrupción o degradación del servicio; aumento de costos; cambios de comportamiento del modelo.",
+   "controls": "Capa de abstracción para cambiar de modelo; evaluación periódica de alternativas; pruebas de regresión ante nuevas versiones.",
+   "kris": "Costo por interacción; incidentes del proveedor de IA."
+  },
+  {
+   "key": "climate",
+   "category": "esg.climate",
+   "treatment": "mitigate",
+   "name": "Eventos climáticos extremos que afectan la operación",
+   "description": "Tormentas, inundaciones u olas de calor cortan energía o conectividad o impiden llegar al sitio.",
+   "causes": "Ubicación del sitio; infraestructura sin redundancia.",
+   "consequences": "Interrupción del servicio; daños materiales; riesgo para el personal.",
+   "controls": "Teletrabajo; respaldo de energía; seguros; plan de emergencias.",
+   "kris": "Horas de interrupción por eventos climáticos."
+  }
+ ]
+}

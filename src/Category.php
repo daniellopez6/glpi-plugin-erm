@@ -146,15 +146,65 @@ class Category extends CommonTreeDropdown
                __('Environmental, social and climate risks are managed progressively.', 'erm'),
                [__('Climate (physical and transition)', 'erm'), __('Social', 'erm')]],
         ];
-        foreach ($tree as [$name, $app, $tol, $stmt, $children]) {
+        // Internal keys in the same order as the tree (TAXONOMY), so that any installation language gets them
+        $rootKeys = array_values(array_filter(array_keys(self::TAXONOMY), fn($k) => !str_contains($k, '.') && $k !== 'ai'));
+        foreach ($tree as $i => [$name, $app, $tol, $stmt, $children]) {
+            $rootKey = $rootKeys[$i] ?? '';
+            $childKeys = array_values(array_filter(array_keys(self::TAXONOMY), fn($k) => str_starts_with($k, $rootKey . '.')));
             $pid = (new self())->add(['name' => $name, 'plugin_erm_categories_id' => 0, 'entities_id' => 0, 'is_recursive' => 1,
-                                     'appetite_level' => $app, 'tolerance_level' => $tol, 'appetite_statement' => $stmt]);
-            foreach ($children as $child) {
-                (new self())->add(['name' => $child, 'plugin_erm_categories_id' => $pid, 'entities_id' => 0, 'is_recursive' => 1]);
+                                     'appetite_level' => $app, 'tolerance_level' => $tol, 'appetite_statement' => $stmt,
+                                     'erm_key' => $rootKey]);
+            foreach ($children as $j => $child) {
+                (new self())->add(['name' => $child, 'plugin_erm_categories_id' => $pid, 'entities_id' => 0, 'is_recursive' => 1,
+                                   'erm_key' => $childKeys[$j] ?? '']);
             }
         }
         self::createAiTaxonomy();
+        self::assignTaxonomyKeys();
     }
+
+    /**
+     * Internal keys of the standard taxonomy with their names in English and Spanish (used to recognise the
+     * categories of existing installations and to place the risk library templates).
+     *
+     * @var array<string, array{0:string, 1:string}>
+     */
+    public const TAXONOMY = [
+        'strategic' => ['Strategic', 'Estratégico'],
+        'strategic.business' => ['Business model and competition', 'Modelo de negocio y competencia'],
+        'strategic.projects' => ['Strategic projects and initiatives', 'Proyectos e iniciativas estratégicas'],
+        'strategic.governance' => ['Corporate governance', 'Gobierno corporativo'],
+        'financial' => ['Financial', 'Financiero'],
+        'financial.credit' => ['Credit and counterparty', 'Crédito y contraparte'],
+        'financial.liquidity' => ['Liquidity and funding', 'Liquidez y fondeo'],
+        'financial.market' => ['Market (interest and exchange rates)', 'Mercado (tasa y tipo de cambio)'],
+        'financial.capital' => ['Capital and solvency', 'Capital y solvencia'],
+        'operational' => ['Operational', 'Operacional'],
+        'operational.processes' => ['Processes', 'Procesos'],
+        'operational.people' => ['People', 'Personas'],
+        'operational.technology' => ['Technology and information security', 'Tecnología y seguridad de la información'],
+        'operational.third_parties' => ['Third parties and suppliers', 'Terceros y proveedores'],
+        'operational.continuity' => ['Business continuity', 'Continuidad del negocio'],
+        'compliance' => ['Compliance and legal', 'Cumplimiento y legal'],
+        'compliance.regulatory' => ['Regulatory', 'Regulatorio'],
+        'compliance.aml' => ['Anti-money laundering (AML/CFT)', 'Prevención de lavado de activos (PLA/FT)'],
+        'compliance.consumer' => ['Consumer protection', 'Protección del consumidor'],
+        'compliance.litigation' => ['Litigation and contracts', 'Litigios y contratos'],
+        'fraud' => ['Fraud', 'Fraude'],
+        'fraud.internal' => ['Internal fraud', 'Fraude interno'],
+        'fraud.external' => ['External fraud', 'Fraude externo'],
+        'reputational' => ['Reputational', 'Reputacional'],
+        'esg' => ['ESG and climate', 'ESG y climático'],
+        'esg.climate' => ['Climate (physical and transition)', 'Climático (físico y de transición)'],
+        'esg.social' => ['Social', 'Social'],
+        'ai' => ['Artificial intelligence', 'Inteligencia artificial'],
+        'ai.bias' => ['Bias and discrimination', 'Sesgo y discriminación'],
+        'ai.privacy' => ['Privacy and personal data', 'Privacidad y datos personales'],
+        'ai.reliability' => ['Reliability, accuracy and hallucinations', 'Fiabilidad, exactitud y alucinaciones'],
+        'ai.misuse' => ['Misuse, attacks and prompt injection', 'Uso indebido, ataques e inyección de instrucciones'],
+        'ai.transparency' => ['Transparency and accountability', 'Transparencia y rendición de cuentas'],
+        'ai.providers' => ['Dependence on AI providers and models', 'Dependencia de proveedores y modelos de IA'],
+    ];
 
     /** Marker used by 2.0.x in the comment of the AI root category (migrated to the erm_key field in 2.1.0). */
     public const AI_MARKER = '[erm:ai]';
@@ -174,13 +224,53 @@ class Category extends CommonTreeDropdown
             'comment' => __('Risks of the AI systems of the organization (ISO/IEC 42001, AI Act).', 'erm'),
             'erm_key' => 'ai',
         ]);
-        foreach (
-            [__('Bias and discrimination', 'erm'), __('Privacy and personal data', 'erm'), __('Reliability, accuracy and hallucinations', 'erm'),
-                  __('Misuse, attacks and prompt injection', 'erm'), __('Transparency and accountability', 'erm'),
-            __('Dependence on AI providers and models', 'erm')] as $child
-        ) {
-            (new self())->add(['name' => $child, 'plugin_erm_categories_id' => $pid, 'entities_id' => 0, 'is_recursive' => 1]);
+        $children = [
+            'ai.bias'         => __('Bias and discrimination', 'erm'),
+            'ai.privacy'      => __('Privacy and personal data', 'erm'),
+            'ai.reliability'  => __('Reliability, accuracy and hallucinations', 'erm'),
+            'ai.misuse'       => __('Misuse, attacks and prompt injection', 'erm'),
+            'ai.transparency' => __('Transparency and accountability', 'erm'),
+            'ai.providers'    => __('Dependence on AI providers and models', 'erm'),
+        ];
+        foreach ($children as $key => $child) {
+            (new self())->add(['name' => $child, 'plugin_erm_categories_id' => $pid, 'entities_id' => 0, 'is_recursive' => 1, 'erm_key' => $key]);
         }
+    }
+
+    /** Id of the category with an internal key (0 when missing). */
+    public static function idByKey(string $key): int
+    {
+        global $DB;
+        $row = $DB->request(['SELECT' => 'id', 'FROM' => self::getTable(), 'WHERE' => ['erm_key' => $key], 'LIMIT' => 1])->current();
+        return (int) ($row['id'] ?? 0);
+    }
+
+    /**
+     * Gives their internal key to the standard categories of an existing installation, recognised by their English
+     * or Spanish name (renamed categories are left without key).
+     */
+    public static function assignTaxonomyKeys(): int
+    {
+        global $DB;
+        $n = 0;
+        foreach (self::TAXONOMY as $key => [$en, $es]) {
+            if (self::idByKey($key) > 0) {
+                continue;
+            }
+            $parentKey = str_contains($key, '.') ? substr($key, 0, (int) strpos($key, '.')) : '';
+            $parentId = $parentKey === '' ? 0 : self::idByKey($parentKey);
+            if ($parentKey !== '' && $parentId === 0) {
+                continue;
+            }
+            $row = $DB->request(['SELECT' => 'id', 'FROM' => self::getTable(), 'WHERE' => [
+                'erm_key' => '', 'plugin_erm_categories_id' => $parentId, 'name' => [$en, $es],
+            ], 'LIMIT' => 1])->current();
+            if ($row) {
+                $DB->update(self::getTable(), ['erm_key' => $key], ['id' => $row['id']]);
+                $n++;
+            }
+        }
+        return $n;
     }
 
     /** Id of the "Artificial intelligence" root category (0 when missing). */

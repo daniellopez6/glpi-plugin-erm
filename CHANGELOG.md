@@ -7,6 +7,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.2.0] - 2026-11-22
+### Added
+- Risk wizard: guided registration in five plain-language steps (what could happen, why and what it would cause, how
+  likely and how serious without controls, what protects us today, what we are going to do), with the economic
+  criteria of the entity in the impact answers; it creates the risk and its first treatment action.
+- Risk library: 25 ready-to-adapt templates of a contact center with financial clients and AI services (operations,
+  people, suppliers, continuity, data protection, consumer protection, fraud, reputation, finance, strategy, AI and
+  climate), with causes, consequences, usual controls and KRIs, in English and Spanish (data/risk-library).
+- Access to the wizard and the library from the dashboard, the new risk form and "My ERM workspace".
+- Internal keys for the standard risk categories (set on creation, recognised by name on existing installations).
+- Unit tests for the wizard mapping and the library content (91 tests).
+
 ## [2.1.0] - 2026-11-22
 ### Added
 - Guidance for users who do not know the methodology:

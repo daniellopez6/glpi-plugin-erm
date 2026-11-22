@@ -28,6 +28,13 @@
       __('6. Follow up: actions, indicators (KRIs), loss events and a review at least once a year.', 'erm')
    ], __('Tip: if you do not know a value, choose your best estimate and write why in the description; the review will refine it.', 'erm')) }}
    </div>
+   {% if item.isNewItem() %}
+   <div class="alert alert-info col-12 d-flex align-items-center"><i class="ti ti-wand me-2"></i>
+      <div class="flex-grow-1">{{ __('First time? The wizard asks simple questions and fills in this form for you, and the library has ready-made examples.', 'erm') }}</div>
+      <a href="{{ wizard_url }}" class="btn btn-sm btn-primary ms-2">{{ __('Use the wizard', 'erm') }}</a>
+      <a href="{{ library_url }}" class="btn btn-sm btn-outline-primary ms-2">{{ __('Risk library', 'erm') }}</a>
+   </div>
+   {% endif %}
    {% if quality|length %}
    <div class="alert alert-warning col-12">
       <div class="fw-bold mb-1"><i class="ti ti-checklist me-1"></i>{{ __('Suggestions to improve this risk', 'erm') }}</div>

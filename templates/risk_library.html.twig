@@ -1,0 +1,42 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="container-fluid">
+   <div class="d-flex align-items-center mb-2">
+      <h2 class="m-0"><i class="ti ti-books me-2"></i>{{ __('Risk library', 'erm') }}</h2>
+      <a href="{{ wizard_url }}" class="btn btn-outline-primary ms-auto"><i class="ti ti-wand me-1"></i>{{ __('Start from scratch', 'erm') }}</a>
+   </div>
+   <p class="text-muted">{{ __('Typical risks of a contact center with financial clients and AI services. Choose one, adapt it to your situation in the wizard and save it: it avoids starting from a blank page.', 'erm') }}</p>
+   {% for key, g in groups %}
+   <h3 class="mt-3">{{ g.name }}</h3>
+   <div class="row row-cards">
+      {% for t in g.templates %}
+      <div class="col-md-6 col-xl-4">
+         <div class="card h-100">
+            <div class="card-body">
+               <h4 class="card-title mb-1">{{ t.name }}</h4>
+               <div class="small text-muted mb-2">{{ t.description }}</div>
+               <div class="small"><b>{{ __('Consequences', 'erm') }}:</b> {{ t.consequences }}</div>
+               <div class="small mt-1"><b>{{ __('Usual controls', 'erm') }}:</b> {{ t.controls }}</div>
+            </div>
+            <div class="card-footer d-flex align-items-center">
+               <span class="badge bg-secondary-lt">{{ treatments[t.treatment] ?? '' }}</span>
+               <a href="{{ wizard_url }}?template={{ t.key|url_encode }}" class="btn btn-sm btn-primary ms-auto"><i class="ti ti-wand me-1"></i>{{ __('Use this template', 'erm') }}</a>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+   {% endfor %}
+</div>

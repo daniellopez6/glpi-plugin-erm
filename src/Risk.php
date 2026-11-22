@@ -442,6 +442,8 @@ class Risk extends CommonDBTM
                $pos[0],
                date('Y-m-d')
            )))),
+           'wizard_url'     => RiskWizard::getWizardURL(),
+           'library_url'    => RiskWizard::getLibraryURL(),
            'impact_help'    => self::impactHelp((int) ($this->fields['entities_id'] ?? ($_SESSION['glpiactive_entity'] ?? 0))),
            'acceptance_state' => AcceptanceState::state((string) ($this->fields['status'] ?? ''), $this->fields['acceptance_valid_until'] ?? null, date('Y-m-d')),
            'controls'       => $this->isNewItem() ? null : (ControlFeed::summaryByRisk([$this->getID()])[$this->getID()] ?? null),
