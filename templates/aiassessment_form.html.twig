@@ -28,7 +28,7 @@
    {{ fields.dateField('assessment_date', item.fields['assessment_date'], __('Assessment date', 'erm')) }}
    {{ fields.dateField('next_assessment_date', item.fields['next_assessment_date'], __('Next assessment', 'erm')) }}
 
-   {{ fields.smallTitle(__('Impact by dimension', 'erm'), 'ti ti-adjustments') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Impact by dimension', 'erm'), 'ti ti-adjustments') }}</div>
    <div class="col-12 text-muted small mb-2">{{ __('For each dimension, score the potential impact on people and on the organization if the system fails, is misused or behaves unexpectedly, and explain why. The overall level follows the worst dimension.', 'erm') }}</div>
    {% for key, label in dimensions %}
       {{ fields.dropdownArrayField('score_' ~ key, item.fields['score_' ~ key] ?? 0, scores, label) }}
@@ -39,12 +39,12 @@
    {{ fields.htmlField('', overall, __('Overall impact level', 'erm')) }}
    {% endif %}
 
-   {{ fields.smallTitle(__('Treatment', 'erm'), 'ti ti-shield-check') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Treatment', 'erm'), 'ti ti-shield-check') }}</div>
    {{ fields.textareaField('mitigations', item.fields['mitigations'], __('Mitigations and controls', 'erm'), {'full_width': true, 'helper': __('E.g. human review of outputs, disclosure that the customer talks to an AI, guardrails against prompt injection, bias testing, logging, kill switch.', 'erm')}) }}
    {{ fields.dropdownArrayField('residual_level', item.fields['residual_level'] ?? '', levels, __('Residual impact after mitigations', 'erm')) }}
 
    {% if not item.isNewItem() %}
-      {{ fields.smallTitle(__('Approval', 'erm'), 'ti ti-gavel') }}
+      <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Approval', 'erm'), 'ti ti-gavel') }}</div>
       {% if item.fields['approval_comment'] %}{{ fields.htmlField('', item.fields['approval_comment']|e|nl2br, __('Approval comment', 'erm')) }}{% endif %}
       <div class="col-12 d-flex flex-wrap gap-2 align-items-end">
          {% if can_submit %}

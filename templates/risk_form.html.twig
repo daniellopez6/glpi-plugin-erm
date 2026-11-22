@@ -45,7 +45,7 @@
    <div class="alert alert-info col-12"><i class="ti ti-gavel me-2"></i>{{ __('Your profile (Risk Committee) can only record the treatment decision, the status and the justification. The assessment is maintained by the risk owner.', 'erm') }}</div>
    {% endif %}
    <fieldset {{ acceptance_only ? 'disabled' }} style="display:contents">
-   {{ fields.smallTitle(__('Identification', 'erm'), 'ti ti-id') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Identification', 'erm'), 'ti ti-id') }}</div>
    {{ fields.textField('code', item.fields['code'], __('Code', 'erm'), {'helper': __('Assigned automatically (RC-001...) when left empty.', 'erm')}) }}
    {{ fields.textField('name', item.fields['name'], __('Risk', 'erm'), {'required': true, 'helper': __('Write it as an event: what could happen and to what. Example: "Fraud with stolen identities in digital loan origination".', 'erm')}) }}
    {{ fields.dropdownField('GlpiPlugin\\Erm\\Category', 'plugin_erm_categories_id', item.fields['plugin_erm_categories_id'], __('Category', 'erm'), {'entity': item.fields['entities_id'], 'helper': __('The category defines the appetite and tolerance the risk is compared with.', 'erm')}) }}
@@ -55,7 +55,7 @@
    {{ fields.textareaField('causes', item.fields['causes'], __('Causes', 'erm'), {'full_width': true, 'helper': __('Why could it happen? Example: identity validation without biometrics, single supplier, staff turnover.', 'erm')}) }}
    {{ fields.textareaField('consequences', item.fields['consequences'], __('Consequences', 'erm'), {'full_width': true, 'helper': __('What would it cause? Losses, customer complaints, regulatory sanctions, service interruption, reputational damage.', 'erm')}) }}
 
-   {{ fields.smallTitle(__('Inherent assessment (without controls)', 'erm'), 'ti ti-flame') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Inherent assessment (without controls)', 'erm'), 'ti ti-flame') }}</div>
    {{ fields.dropdownArrayField('inherent_probability', item.fields['inherent_probability'] ?? 0, probabilities, __('Probability', 'erm'), {'helper': __('Chance of it happening in a year without controls. If it already happened recently, it is at least "Possible".', 'erm')}) }}
    {{ fields.dropdownArrayField('inherent_impact', item.fields['inherent_impact'] ?? 0, impacts, __('Impact', 'erm'), {'helper': impact_help}) }}
    {{ fields.htmlField('', inherent_badge, __('Inherent level', 'erm')) }}
@@ -63,7 +63,7 @@
    {{ fields.numberField('economic_impact_min', item.fields['economic_impact_min'], __('Minimum economic impact', 'erm'), {'step': 'any'}) }}
    {{ fields.numberField('economic_impact_max', item.fields['economic_impact_max'], __('Maximum economic impact', 'erm'), {'step': 'any', 'helper': __('Reasonable worst case in money (losses, fines, recovery costs). It feeds the exposure and the expected annual loss.', 'erm')}) }}
 
-   {{ fields.smallTitle(__('Existing controls and residual risk', 'erm'), 'ti ti-shield-check') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Existing controls and residual risk', 'erm'), 'ti ti-shield-check') }}</div>
    {{ fields.textareaField('existing_controls', item.fields['existing_controls'], __('Existing controls', 'erm'), {'full_width': true, 'helper': __('Only what works today (not what is planned): procedures, approvals, systems, insurance, monitoring.', 'erm')}) }}
    {{ fields.dropdownArrayField('control_effectiveness', item.fields['control_effectiveness'], effectiveness, __('Control effectiveness', 'erm'), {'helper': __('High only if the controls are tested and work; if they were never tested, choose Medium or Low.', 'erm')}) }}
    {% if grc_controls and controls %}
@@ -84,14 +84,14 @@
       {{ fields.htmlField('', appetite_badge, __('Position against appetite', 'erm')) }}
    {% endif %}
 
-   {{ fields.smallTitle(__('Target risk (after treatment)', 'erm'), 'ti ti-target-arrow') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Target risk (after treatment)', 'erm'), 'ti ti-target-arrow') }}</div>
    {{ fields.dropdownArrayField('target_probability', item.fields['target_probability'] ?? 0, probabilities, __('Target probability', 'erm')) }}
    {{ fields.dropdownArrayField('target_impact', item.fields['target_impact'] ?? 0, impacts, __('Target impact', 'erm')) }}
    {{ fields.htmlField('', target_badge, __('Target level', 'erm'), {'helper': __('Level the treatment plan has to reach. Usually within the appetite of the category.', 'erm')}) }}
    {{ fields.dateField('target_date', item.fields['target_date'], __('Target date', 'erm')) }}
    </fieldset>
 
-   {{ fields.smallTitle(__('Treatment and acceptance', 'erm'), 'ti ti-checklist') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Treatment and acceptance', 'erm'), 'ti ti-checklist') }}</div>
    {{ fields.dropdownArrayField('treatment', item.fields['treatment'], treatments, __('Treatment decision', 'erm'), {'helper': __('Mitigate: actions that reduce probability or impact. Transfer: insurance or contracts. Avoid: stop the activity. Accept: live with it, with justification and approval of the Committee.', 'erm')}) }}
    {{ fields.dropdownArrayField('status', item.fields['status'] ?: 'identified', statuses, __('Status', 'erm')) }}
    {{ fields.textareaField('justification', item.fields['justification'], __('Decision justification', 'erm'), {'full_width': true}) }}

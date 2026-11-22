@@ -24,7 +24,7 @@
    {% endif %}
    {% if item.isNewItem() %}<input type="hidden" name="entities_id" value="{{ item.fields['entities_id'] }}">{% endif %}
 
-   {{ fields.smallTitle(__('Event', 'erm'), 'ti ti-flame') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Event', 'erm'), 'ti ti-flame') }}</div>
    {{ fields.textField('name', item.fields['name'], __('Event', 'erm'), {'required': true}) }}
    {{ fields.dropdownArrayField('event_type', item.fields['event_type'] ?: 'loss', types, __('Event type', 'erm'), {'helper': __('Near miss: the event happened but caused no loss. It does not count for the probability but shows that the risk is active.', 'erm')}) }}
    {{ fields.dateField('occurrence_date', item.fields['occurrence_date'], __('Occurrence date', 'erm'), {'required': true}) }}
@@ -35,7 +35,7 @@
    {{ fields.textareaField('description', item.fields['description'], __('What happened', 'erm'), {'full_width': true}) }}
    {{ fields.textareaField('root_cause', item.fields['root_cause'], __('Root cause', 'erm'), {'full_width': true}) }}
 
-   {{ fields.smallTitle(__('Economic effect', 'erm'), 'ti ti-cash') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Economic effect', 'erm'), 'ti ti-cash') }}</div>
    {{ fields.textField('gross_loss', item.fields['gross_loss'], __('Gross loss', 'erm'), {'helper': __('In the currency of the organization.', 'erm')}) }}
    {{ fields.textField('recoveries', item.fields['recoveries'], __('Recoveries', 'erm'), {'helper': __('Insurance, claims, recovered amounts.', 'erm')}) }}
    {{ fields.htmlField('', item.fields['net_loss'] is not null and item.fields['net_loss'] != '' ? '<b>' ~ item.fields['net_loss']|formatted_number ~ '</b>' : '-', __('Net loss', 'erm'), {'helper': __('Calculated: gross loss - recoveries.', 'erm')}) }}

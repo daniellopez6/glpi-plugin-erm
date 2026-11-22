@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.3.2] - 2026-11-22
+### Fixed
+- Section titles of the risk, loss event, AI system and AI assessment forms were placed next to the previous field
+  (for example "Existing controls and residual risk" in the right column); each title now takes its own line.
+
 ## [2.3.1] - 2026-11-22
 ### Changed
 - Risk form, "Treatment and acceptance": new "Who does what" summary (the risk owner accountable for the treatment and

@@ -20,7 +20,7 @@
    {% if gap != 'none' %}
    <div class="alert alert-danger col-12"><i class="ti ti-alert-triangle me-2"></i>{{ gap_label }}</div>
    {% endif %}
-   {{ fields.smallTitle(__('Identification', 'erm'), 'ti ti-brain') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Identification', 'erm'), 'ti ti-brain') }}</div>
    {{ fields.textField('name', item.fields['name'], __('Name'), {'required': true}) }}
    {{ fields.dropdownArrayField('status', item.fields['status'] ?: 'planned', statuses, __('Status', 'erm')) }}
    {{ fields.textareaField('purpose', item.fields['purpose'], __('Purpose and use case', 'erm'), {'full_width': true, 'helper': __('What the system does, for which process and for whom. Example: voicebot that answers balance inquiries of the customers of a client bank.', 'erm')}) }}
@@ -31,14 +31,14 @@
    {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], __('Owner', 'erm'), {'right': 'all', 'entity': item.fields['entities_id']}) }}
    {{ fields.dropdownField('Group', 'groups_id', item.fields['groups_id'], __('Responsible group', 'erm'), {'entity': item.fields['entities_id']}) }}
 
-   {{ fields.smallTitle(__('Data, people and oversight', 'erm'), 'ti ti-users') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Data, people and oversight', 'erm'), 'ti ti-users') }}</div>
    {{ fields.dropdownYesNo('personal_data', item.fields['personal_data'], __('Processes personal data', 'erm')) }}
    {{ fields.dropdownYesNo('sensitive_data', item.fields['sensitive_data'], __('Processes sensitive data (health, biometrics, financial...)', 'erm')) }}
    {{ fields.dropdownArrayField('affected', '', affected, __('Affected people', 'erm'), {'multiple': true, 'values': selected_affected}) }}
    {{ fields.dropdownArrayField('human_oversight', item.fields['human_oversight'], oversight, __('Human oversight', 'erm')) }}
    {{ fields.textareaField('data_description', item.fields['data_description'], __('Data used (training, inputs, outputs)', 'erm'), {'full_width': true}) }}
 
-   {{ fields.smallTitle(__('Regulatory classification', 'erm'), 'ti ti-scale') }}
+   <div class="col-12 w-100 erm-section">{{ fields.smallTitle(__('Regulatory classification', 'erm'), 'ti ti-scale') }}</div>
    {{ fields.dropdownArrayField('aiact_role', item.fields['aiact_role'], roles, __('Role (AI Act)', 'erm')) }}
    {{ fields.dropdownArrayField('aiact_class', item.fields['aiact_class'] ?: 'unassessed', classes, __('AI Act class', 'erm'), {'helper': __('High risk: e.g. credit scoring, recruitment, access to essential services. Limited: chatbots and voicebots that interact with people, generated content (transparency duties).', 'erm')}) }}
    {% if not item.isNewItem() %}
