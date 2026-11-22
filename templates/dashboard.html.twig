@@ -36,6 +36,7 @@
 </div>
 {% endmacro %}
 {% import _self as m %}
+{% import '@erm/_help.html.twig' as help %}
 <style>
    .erm-drill { cursor: pointer; }
    a.erm-card { color: inherit; text-decoration: none; display: block; height: 100%; }
@@ -45,7 +46,13 @@
 </style>
 
 <div class="container-fluid">
-   <div class="alert alert-info d-flex">
+   {{ help.box(__('How to read this dashboard', 'erm'), [
+   __('Every number can be clicked: it opens the list of the risks behind it.', 'erm'),
+   __('Heat maps: rows are probability and columns impact. Compare the inherent map (without controls) with the residual one (with controls) to see what the controls achieve.', 'erm'),
+   __('Outside appetite: residual risks above the level the company is willing to accept in that category; they need treatment or a formal acceptance.', 'erm'),
+   __('Quality suggestions: risks with incomplete or inconsistent information; open them to see what to improve.', 'erm')
+]) }}
+<div class="alert alert-info d-flex">
       <i class="ti ti-info-circle me-2 fs-2"></i>
       <div>
          <b>{{ __('Enterprise risk management (ERM)', 'erm') }}</b>:
@@ -92,6 +99,7 @@
       <div class="card-header"><h3 class="card-title"><i class="ti ti-target-arrow me-2"></i>{{ __('Treatment effectiveness', 'erm') }}</h3>
          {% if (tc.ineffective ?? 0) + (tc.no_plan ?? 0) %}<div class="card-actions"><a href="{{ drill_url }}&treatment=1">{{ __('See risks to act on', 'erm') }}</a></div>{% endif %}</div>
       <div class="card-body row text-center g-2">
+         <div class="col"><a href="{{ drill_url }}&quality=1" class="text-reset text-decoration-none"><div class="h2 m-0 {{ quality_count ? 'text-warning' : '' }}">{{ quality_count }}</div><div class="small text-muted">{{ __('With quality suggestions', 'erm') }}</div></a></div>
          <div class="col"><a href="{{ drill_url }}&acceptance=1" class="text-reset text-decoration-none"><div class="h2 m-0 {{ acceptances_to_renew ? 'text-danger' : '' }}">{{ acceptances_to_renew }}</div><div class="small text-muted">{{ __('Acceptances to renew', 'erm') }}</div></a></div>
          {% for k, label in {'reached': __('Target reached', 'erm'), 'in_progress': __('Treatment in progress', 'erm'), 'ineffective': __('Plan completed, target not reached', 'erm'), 'no_plan': __('Above target without plan', 'erm'), 'no_target': __('Without target', 'erm')} %}
          <div class="col"><div class="h2 m-0 {{ k in ['ineffective', 'no_plan'] and (tc[k] ?? 0) ? 'text-danger' : '' }}">{{ tc[k] ?? 0 }}</div><div class="small text-muted">{{ label }}</div></div>

@@ -436,11 +436,34 @@ class Risk extends CommonDBTM
            'residual_badge' => Scale::badge($this->fields['residual_level'] ?? '', (int) ($this->fields['residual_score'] ?? 0) ?: null),
            'appetite_badge' => $this->isNewItem() ? '' : Scale::appetiteBadge($pos),
            'target_badge'   => Scale::badge($this->fields['target_level'] ?? '', (int) ($this->fields['target_score'] ?? 0) ?: null),
+           'quality'        => $this->isNewItem() ? [] : array_values(array_intersect_key(MethodChecks::messages(), array_flip(MethodChecks::check(
+               $this->fields,
+               countElementsInTable(Action::getTable(), ['plugin_erm_risks_id' => $this->getID()]),
+               $pos[0],
+               date('Y-m-d')
+           )))),
+           'impact_help'    => self::impactHelp((int) ($this->fields['entities_id'] ?? ($_SESSION['glpiactive_entity'] ?? 0))),
            'acceptance_state' => AcceptanceState::state((string) ($this->fields['status'] ?? ''), $this->fields['acceptance_valid_until'] ?? null, date('Y-m-d')),
            'controls'       => $this->isNewItem() ? null : (ControlFeed::summaryByRisk([$this->getID()])[$this->getID()] ?? null),
            'grc_controls'   => ControlFeed::available(),
         ]);
         return true;
+    }
+
+    /**
+     * Impact scale explained with the economic criteria of the entity (or generic guidance when not defined).
+     */
+    public static function impactHelp(int $entityId): string
+    {
+        $thresholds = EntityConfig::impactThresholds($entityId);
+        $parts = [];
+        foreach ($thresholds as $level => $min) {
+            if ($min !== null) {
+                $parts[] = sprintf(__('%1$s from %2$s', 'erm'), Scale::impacts()[$level], Scale::money($min));
+            }
+        }
+        $money = $parts ? sprintf(__('Economic criteria of your company: %s.', 'erm'), implode(' · ', $parts)) . ' ' : '';
+        return $money . __('Take the worst consequence among money, customers, regulators, reputation and people: a regulatory sanction or a public incident can be "Major" even with a small loss.', 'erm');
     }
 
     /** Active risks of the visible entities, with their category. */

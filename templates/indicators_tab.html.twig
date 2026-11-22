@@ -1,3 +1,9 @@
+{% import '@erm/_help.html.twig' as help %}
+{{ help.box(__('What is a key risk indicator (KRI)?', 'erm'), [
+   __('A KRI is a number that warns before the risk happens. You define a warning and a critical threshold and record its value periodically.', 'erm'),
+   __('Choose indicators that move before the loss: for credit fraud, the number of applications rejected by the identity check; for liquidity, days of coverage.', 'erm'),
+   __('Automatic KRIs take their value from a GLPI saved search (for example, open security incidents) and are measured by themselves.', 'erm')
+], __('Example: "Average days to collect from health insurers" - warning 60, critical 90 - monthly.', 'erm')) }}
 {#
  # -------------------------------------------------------------------------
  # ERM - Enterprise Risk Management plugin for GLPI
@@ -61,7 +67,7 @@
    </div>
 </div>
 {% else %}
-<div class="alert alert-info">{{ __('This risk has no key risk indicators (KRI) yet.', 'erm') }}</div>
+<div class="alert alert-info">{{ __('This risk has no key risk indicators (KRI) yet. Add one or two numbers that would show this risk is getting worse.', 'erm') }}</div>
 {% endfor %}
 {% if can_edit %}
 <div class="card">

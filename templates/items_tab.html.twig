@@ -12,6 +12,11 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
+{% import '@erm/_help.html.twig' as help %}
+{% if reverse is not defined or not reverse %}{{ help.box(__('What are related items for?', 'erm'), [
+   __('Link the risk with what it affects or what protects it: suppliers, contracts, applications, equipment, projects, AI systems and, with GRC Manager, ISMS risks, processes and controls.', 'erm'),
+   __('Links let you see the risk from each object (a "Corporate risks" tab appears there) and feed the integrated map and the control test results.', 'erm')
+]) }}{% endif %}
 <div class="card">
    <div class="table-responsive">
       <table class="table table-hover card-table">

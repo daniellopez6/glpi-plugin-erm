@@ -63,6 +63,7 @@ function plugin_erm_install(): bool
             `appetite_level` varchar(16) NOT NULL DEFAULT '',
             `tolerance_level` varchar(16) NOT NULL DEFAULT '',
             `appetite_statement` text,
+            `erm_key` varchar(32) NOT NULL DEFAULT '',
             `date_creation` timestamp NULL DEFAULT NULL,
             `date_mod` timestamp NULL DEFAULT NULL,
             PRIMARY KEY (`id`),
@@ -380,6 +381,16 @@ function plugin_erm_install(): bool
             'glpi_plugin_erm_actions.entities_id'  => new QueryExpression($DB->quoteName('r.entities_id')),
             'glpi_plugin_erm_actions.is_recursive' => new QueryExpression($DB->quoteName('r.is_recursive')),
         ], ['r.id' => ['>', 0]], ['INNER JOIN' => ['glpi_plugin_erm_risks AS r' => ['ON' => ['glpi_plugin_erm_actions' => 'plugin_erm_risks_id', 'r' => 'id']]]]);
+    }
+
+    // 2.1.0: internal key of the system categories (the 2.0.x marker in the comment was visible to users)
+    if (!$DB->fieldExists('glpi_plugin_erm_categories', 'erm_key')) {
+        $migration->addField('glpi_plugin_erm_categories', 'erm_key', "varchar(32) NOT NULL DEFAULT ''");
+        $migration->migrationOneTable('glpi_plugin_erm_categories');
+        $DB->update('glpi_plugin_erm_categories', [
+            'erm_key' => 'ai',
+            'comment' => __('Risks of the AI systems of the organization (ISO/IEC 42001, AI Act).', 'erm'),
+        ], ['comment' => ['LIKE', '%' . Category::AI_MARKER . '%']]);
     }
 
     // 2.0.0: editors of AI impact assessments (segregation of duties)

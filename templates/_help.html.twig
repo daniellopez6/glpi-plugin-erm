@@ -1,0 +1,27 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+{# Collapsible contextual help ("What is this for?"), without JavaScript #}
+{% macro box(title, lines, example = '') %}
+<details class="card card-sm mb-3 erm-help" style="border-left:4px solid #206bc4">
+   <summary class="card-body py-2" style="cursor:pointer;list-style:none">
+      <i class="ti ti-help-circle text-primary me-1"></i><b>{{ title }}</b>
+      <span class="small text-muted ms-1">{{ __('(click to read)', 'erm') }}</span>
+   </summary>
+   <div class="card-body pt-0 small">
+      <ul class="mb-1">{% for l in lines %}<li>{{ l }}</li>{% endfor %}</ul>
+      {% if example %}<div class="text-muted"><i class="ti ti-bulb me-1"></i>{{ example }}</div>{% endif %}
+   </div>
+</details>
+{% endmacro %}

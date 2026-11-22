@@ -12,6 +12,12 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
+{% import '@erm/_help.html.twig' as help %}
+{{ help.box(__('What is an AI impact assessment?', 'erm'), [
+   __('It analyses what could go wrong with the AI system for people and for the company: bias, privacy, wrong answers (hallucinations), misuse, lack of human oversight, legal breaches.', 'erm'),
+   __('Score each dimension from 1 to 5 and explain why; the overall level follows the worst one. Then describe the mitigations.', 'erm'),
+   __('Another person with the approval right (AI or Risk Committee) approves it. Limited and high risk systems need an approved assessment before production.', 'erm')
+]) }}
 <div class="card">
    <div class="card-header">
       <h3 class="card-title"><i class="ti ti-clipboard-check me-2"></i>{{ __('AI impact assessments', 'erm') }}</h3>

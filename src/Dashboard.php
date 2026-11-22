@@ -158,6 +158,31 @@ class Dashboard extends CommonGLPI
     }
 
     /**
+     * Risks with methodology quality suggestions (MethodChecks).
+     *
+     * @param list<array<string,mixed>> $risks rows of Risk::activeRisks()
+     * @return list<int>
+     */
+    public static function qualityIssues(array $risks): array
+    {
+        global $DB;
+        $ids = array_map('intval', array_column($risks, 'id'));
+        $actions = [];
+        if ($ids) {
+            $iter = $DB->request(['SELECT' => ['plugin_erm_risks_id', 'COUNT' => 'id AS n'], 'FROM' => Action::getTable(),
+                                  'WHERE' => ['plugin_erm_risks_id' => $ids], 'GROUPBY' => 'plugin_erm_risks_id']);
+            foreach ($iter as $row) {
+                $actions[(int) $row['plugin_erm_risks_id']] = (int) $row['n'];
+            }
+        }
+        $today = date('Y-m-d');
+        return array_values(array_map('intval', array_column(array_filter(
+            $risks,
+            fn($r) => MethodChecks::check($r, $actions[(int) $r['id']] ?? 0, $r['appetite'][0] ?? '', $today) !== []
+        ), 'id')));
+    }
+
+    /**
      * Accepted risks whose acceptance expired or expires within 30 days.
      *
      * @param list<array<string,mixed>> $risks
@@ -317,6 +342,7 @@ class Dashboard extends CommonGLPI
            'by_entity'   => count($byEntity) > 1 ? $byEntity : [],
            'treatment_counts' => array_count_values(self::treatments($risks)),
            'acceptances_to_renew' => count(self::acceptancesToRenew($risks)),
+           'quality_count' => count(self::qualityIssues($risks)),
            'portfolio_ale' => Scale::money(self::portfolioAle($risks)),
            'ai'          => self::aiGovernance(),
            'ai_url'      => AiSystem::getSearchURL(),
@@ -357,6 +383,7 @@ class Dashboard extends CommonGLPI
             'history'   => [],
             'treatment' => array_keys(array_filter(self::treatments($risks), fn($t) => in_array($t, ['ineffective', 'no_plan'], true))),
             'acceptance' => self::acceptancesToRenew($risks),
+            'quality'    => self::qualityIssues($risks),
         ];
         if (isset($filters['history']) && Event::canView()) {
             $idSets['history'] = array_keys(array_filter(Event::historyOf($risks), fn($h) => $h['underestimated']));
@@ -399,6 +426,9 @@ class Dashboard extends CommonGLPI
         }
         if (isset($filters['treatment'])) {
             $chips[] = __('Treatment not effective or without plan', 'erm');
+        }
+        if (isset($filters['quality'])) {
+            $chips[] = __('With quality suggestions', 'erm');
         }
         if (isset($filters['acceptance'])) {
             $chips[] = __('Acceptance expired or expiring', 'erm');

@@ -19,6 +19,12 @@
    'consistent': __('Consistent with history', 'erm'),
    'no_data': __('Not enough data', 'erm')} %}
 
+{% import '@erm/_help.html.twig' as help %}
+{{ help.box(__('Why record loss events?', 'erm'), [
+   __('A loss event is something that actually happened: a loss, a near miss (it almost happened) or an unexpected gain.', 'erm'),
+   __('Events are the evidence of the risk: with them the tool calculates how often it really happens and suggests the probability and the impact.', 'erm'),
+   __('Record the events from the ticket, problem or change where they were handled: the form is prefilled and the event stays linked.', 'erm')
+], __('Example: "Loan granted with a forged ID - net loss 18,000,000 - root cause: identity check without biometrics".', 'erm')) }}
 {% if history %}
 <div class="card mb-3">
    <div class="card-header"><h3 class="card-title"><i class="ti ti-chart-histogram me-2"></i>{{ __('Assessment vs. loss history (last %d years)', 'erm')|format(window) }}</h3></div>

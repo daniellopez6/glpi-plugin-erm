@@ -7,6 +7,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.1.0] - 2026-11-22
+### Added
+- Guidance for users who do not know the methodology:
+  - plain-language help with examples on every field of the risk form; the impact help shows the economic criteria
+    of the entity;
+  - collapsible "What is this for?" boxes on the risk form, treatment plan, KRIs, loss events, reviews, related
+    items, AI impact assessments and dashboard;
+  - empty states that explain what to add.
+- Methodology quality checks (13 rules, ISO 31000): suggestions on the risk form (risk not written as an event,
+  missing causes or consequences, no owner, not assessed, residual above inherent, residual reduced without
+  controls, target above residual, mitigation without actions, acceptance without justification, outside appetite
+  without decision, review missing or overdue) and "With quality suggestions" on the dashboard with drill-down.
+- Unit tests for the quality checks (89 tests).
+
+### Changed
+- The AI root category is identified by an internal key instead of a marker in its comment (which was visible to
+  users); existing installations are migrated.
+
 ## [2.0.3] - 2026-11-22
 ### Changed
 - Without GLPI GRC Manager, the plugin's own top-level menu is called "Corporate GRC"; its first entry opens the

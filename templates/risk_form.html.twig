@@ -15,33 +15,50 @@
 {# Corporate risk form #}
 {% extends 'generic_show_form.html.twig' %}
 {% import 'components/form/fields_macros.html.twig' as fields %}
+{% import '@erm/_help.html.twig' as help %}
 
 {% block form_fields %}
+   <div class="col-12">
+   {{ help.box(__('How to fill in a risk', 'erm'), [
+      __('1. Identify: describe what could happen (the event), why (causes) and what it would cause (consequences).', 'erm'),
+      __('2. Inherent risk: how likely and how serious it would be if there were no controls at all.', 'erm'),
+      __('3. Residual risk: the same, but considering the controls that work today. It is the level compared with the appetite.', 'erm'),
+      __('4. Target: the level you want to reach with the treatment plan.', 'erm'),
+      __('5. Decide: mitigate (add actions), transfer (insurance, contracts), avoid (stop the activity) or accept (with justification, by the Committee).', 'erm'),
+      __('6. Follow up: actions, indicators (KRIs), loss events and a review at least once a year.', 'erm')
+   ], __('Tip: if you do not know a value, choose your best estimate and write why in the description; the review will refine it.', 'erm')) }}
+   </div>
+   {% if quality|length %}
+   <div class="alert alert-warning col-12">
+      <div class="fw-bold mb-1"><i class="ti ti-checklist me-1"></i>{{ __('Suggestions to improve this risk', 'erm') }}</div>
+      <ul class="mb-0 small">{% for q in quality %}<li>{{ q }}</li>{% endfor %}</ul>
+   </div>
+   {% endif %}
    {% if acceptance_only %}
    <div class="alert alert-info col-12"><i class="ti ti-gavel me-2"></i>{{ __('Your profile (Risk Committee) can only record the treatment decision, the status and the justification. The assessment is maintained by the risk owner.', 'erm') }}</div>
    {% endif %}
    <fieldset {{ acceptance_only ? 'disabled' }} style="display:contents">
    {{ fields.smallTitle(__('Identification', 'erm'), 'ti ti-id') }}
    {{ fields.textField('code', item.fields['code'], __('Code', 'erm'), {'helper': __('Assigned automatically (RC-001...) when left empty.', 'erm')}) }}
-   {{ fields.textField('name', item.fields['name'], __('Risk', 'erm'), {'required': true}) }}
-   {{ fields.dropdownField('GlpiPlugin\\Erm\\Category', 'plugin_erm_categories_id', item.fields['plugin_erm_categories_id'], __('Category', 'erm'), {'entity': item.fields['entities_id']}) }}
-   {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], __('Risk owner', 'erm'), {'right': 'all', 'entity': item.fields['entities_id']}) }}
+   {{ fields.textField('name', item.fields['name'], __('Risk', 'erm'), {'required': true, 'helper': __('Write it as an event: what could happen and to what. Example: "Fraud with stolen identities in digital loan origination".', 'erm')}) }}
+   {{ fields.dropdownField('GlpiPlugin\\Erm\\Category', 'plugin_erm_categories_id', item.fields['plugin_erm_categories_id'], __('Category', 'erm'), {'entity': item.fields['entities_id'], 'helper': __('The category defines the appetite and tolerance the risk is compared with.', 'erm')}) }}
+   {{ fields.dropdownField('User', 'users_id', item.fields['users_id'], __('Risk owner', 'erm'), {'right': 'all', 'entity': item.fields['entities_id'], 'helper': __('Person accountable for managing the risk, usually the manager of the affected process.', 'erm')}) }}
    {{ fields.dropdownField('Group', 'groups_id', item.fields['groups_id'], __('Responsible group', 'erm'), {'entity': item.fields['entities_id']}) }}
    {{ fields.textareaField('description', item.fields['description'], __('Risk event description', 'erm'), {'full_width': true}) }}
-   {{ fields.textareaField('causes', item.fields['causes'], __('Causes', 'erm'), {'full_width': true}) }}
-   {{ fields.textareaField('consequences', item.fields['consequences'], __('Consequences', 'erm'), {'full_width': true}) }}
+   {{ fields.textareaField('causes', item.fields['causes'], __('Causes', 'erm'), {'full_width': true, 'helper': __('Why could it happen? Example: identity validation without biometrics, single supplier, staff turnover.', 'erm')}) }}
+   {{ fields.textareaField('consequences', item.fields['consequences'], __('Consequences', 'erm'), {'full_width': true, 'helper': __('What would it cause? Losses, customer complaints, regulatory sanctions, service interruption, reputational damage.', 'erm')}) }}
 
    {{ fields.smallTitle(__('Inherent assessment (without controls)', 'erm'), 'ti ti-flame') }}
-   {{ fields.dropdownArrayField('inherent_probability', item.fields['inherent_probability'] ?? 0, probabilities, __('Probability', 'erm')) }}
-   {{ fields.dropdownArrayField('inherent_impact', item.fields['inherent_impact'] ?? 0, impacts, __('Impact', 'erm')) }}
+   {{ fields.dropdownArrayField('inherent_probability', item.fields['inherent_probability'] ?? 0, probabilities, __('Probability', 'erm'), {'helper': __('Chance of it happening in a year without controls. If it already happened recently, it is at least "Possible".', 'erm')}) }}
+   {{ fields.dropdownArrayField('inherent_impact', item.fields['inherent_impact'] ?? 0, impacts, __('Impact', 'erm'), {'helper': impact_help}) }}
    {{ fields.htmlField('', inherent_badge, __('Inherent level', 'erm')) }}
-   {{ fields.dropdownArrayField('velocity', item.fields['velocity'], velocities, __('Velocity', 'erm')) }}
+   {{ fields.dropdownArrayField('velocity', item.fields['velocity'], velocities, __('Velocity', 'erm'), {'helper': __('How fast the effects arrive once the event happens: it shows how much time there is to react.', 'erm')}) }}
    {{ fields.numberField('economic_impact_min', item.fields['economic_impact_min'], __('Minimum economic impact', 'erm'), {'step': 'any'}) }}
-   {{ fields.numberField('economic_impact_max', item.fields['economic_impact_max'], __('Maximum economic impact', 'erm'), {'step': 'any'}) }}
+   {{ fields.numberField('economic_impact_max', item.fields['economic_impact_max'], __('Maximum economic impact', 'erm'), {'step': 'any', 'helper': __('Reasonable worst case in money (losses, fines, recovery costs). It feeds the exposure and the expected annual loss.', 'erm')}) }}
 
    {{ fields.smallTitle(__('Existing controls and residual risk', 'erm'), 'ti ti-shield-check') }}
-   {{ fields.textareaField('existing_controls', item.fields['existing_controls'], __('Existing controls', 'erm'), {'full_width': true}) }}
-   {{ fields.dropdownArrayField('control_effectiveness', item.fields['control_effectiveness'], effectiveness, __('Control effectiveness', 'erm')) }}
+   {{ fields.textareaField('existing_controls', item.fields['existing_controls'], __('Existing controls', 'erm'), {'full_width': true, 'helper': __('Only what works today (not what is planned): procedures, approvals, systems, insurance, monitoring.', 'erm')}) }}
+   {{ fields.dropdownArrayField('control_effectiveness', item.fields['control_effectiveness'], effectiveness, __('Control effectiveness', 'erm'), {'helper': __('High only if the controls are tested and work; if they were never tested, choose Medium or Low.', 'erm')}) }}
    {% if grc_controls and controls %}
       {% set cbadge = {'failing': 'bg-red-lt', 'partial': 'bg-orange-lt', 'effective': 'bg-green-lt', 'untested': 'bg-secondary-lt', 'none': 'bg-secondary-lt'} %}
       {% set clabel = {'failing': __('Some controls failed their last test', 'erm'), 'partial': __('Some controls are partially effective', 'erm'), 'effective': __('All tested controls are effective', 'erm'), 'untested': __('Controls not tested yet', 'erm'), 'none': '-'} %}
@@ -53,7 +70,7 @@
       {{ fields.htmlField('', chtml, __('Tests of the ISMS controls (GRC Manager)', 'erm'), {'full_width': true}) }}
    {% endif %}
    {{ fields.dropdownArrayField('trend', item.fields['trend'], trends, __('Trend', 'erm')) }}
-   {{ fields.dropdownArrayField('residual_probability', item.fields['residual_probability'] ?? 0, probabilities, __('Residual probability', 'erm')) }}
+   {{ fields.dropdownArrayField('residual_probability', item.fields['residual_probability'] ?? 0, probabilities, __('Residual probability', 'erm'), {'helper': __('Probability considering today\'s controls. It cannot be higher than the inherent one.', 'erm')}) }}
    {{ fields.dropdownArrayField('residual_impact', item.fields['residual_impact'] ?? 0, impacts, __('Residual impact', 'erm')) }}
    {{ fields.htmlField('', residual_badge, __('Residual level', 'erm')) }}
    {% if appetite_badge %}
@@ -68,7 +85,7 @@
    </fieldset>
 
    {{ fields.smallTitle(__('Treatment and acceptance', 'erm'), 'ti ti-checklist') }}
-   {{ fields.dropdownArrayField('treatment', item.fields['treatment'], treatments, __('Treatment decision', 'erm')) }}
+   {{ fields.dropdownArrayField('treatment', item.fields['treatment'], treatments, __('Treatment decision', 'erm'), {'helper': __('Mitigate: actions that reduce probability or impact. Transfer: insurance or contracts. Avoid: stop the activity. Accept: live with it, with justification and approval of the Committee.', 'erm')}) }}
    {{ fields.dropdownArrayField('status', item.fields['status'] ?: 'identified', statuses, __('Status', 'erm')) }}
    {{ fields.textareaField('justification', item.fields['justification'], __('Decision justification', 'erm'), {'full_width': true}) }}
    {{ fields.htmlField('', acceptance, __('Formal acceptance', 'erm'), {
@@ -83,6 +100,6 @@
          'helper': (astate[acceptance_state][1] ? astate[acceptance_state][1] ~ '. ' : '') ~ __('Set by the Risk Committee when accepting (12 months by default). Extending it records a new acceptance.', 'erm')
       }) }}
    {% endif %}
-   {{ fields.dateField('review_date', item.fields['review_date'], __('Next review', 'erm')) }}
+   {{ fields.dateField('review_date', item.fields['review_date'], __('Next review', 'erm'), {'helper': __('At least once a year, and sooner for high or critical risks.', 'erm')}) }}
    {{ fields.dateField('last_review_date', item.fields['last_review_date'], __('Last review', 'erm')) }}
 {% endblock %}

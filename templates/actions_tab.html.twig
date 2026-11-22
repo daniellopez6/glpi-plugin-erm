@@ -12,6 +12,12 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
+{% import '@erm/_help.html.twig' as help %}
+{{ help.box(__('What is the treatment plan for?', 'erm'), [
+   __('Each action reduces the probability or the impact of the risk. It needs a responsible, a due date and, if possible, an estimated cost.', 'erm'),
+   __('The responsible receives an e-mail when the action is assigned and reminders before and after the due date.', 'erm'),
+   __('When all actions are done, update the residual risk in the main tab: the effectiveness panel shows if the target was reached.', 'erm')
+], __('Example: "Implement biometric identity validation in the app" - responsible: Head of Digital Channels - due: 30/06.', 'erm')) }}
 {% set eval_labels = {
    'reached': [__('Target reached', 'erm'), 'bg-green-lt'],
    'in_progress': [__('Treatment in progress', 'erm'), 'bg-blue-lt'],
@@ -73,7 +79,7 @@
                {% endif %}
             </tr>
          {% else %}
-            <tr><td colspan="7" class="text-muted">{{ __('No actions. A risk to be mitigated or transferred needs a treatment plan.', 'erm') }}</td></tr>
+            <tr><td colspan="7" class="text-muted">{{ __('No actions yet. Add what will be done to reduce the risk, who is responsible and by when. A risk to be mitigated or transferred needs at least one action.', 'erm') }}</td></tr>
          {% endfor %}
          </tbody>
       </table>

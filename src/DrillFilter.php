@@ -24,10 +24,10 @@ namespace GlpiPlugin\Erm;
 final class DrillFilter
 {
     /** Query parameters understood by the drill-down list. */
-    public const KEYS = ['level', 'heat', 'p', 'i', 'category', 'entity', 'outside', 'overdue', 'kri', 'history', 'treatment', 'acceptance'];
+    public const KEYS = ['level', 'heat', 'p', 'i', 'category', 'entity', 'outside', 'overdue', 'kri', 'history', 'treatment', 'acceptance', 'quality'];
 
     /** Filters that select risks from a precomputed list of ids. */
-    public const ID_FILTERS = ['overdue', 'kri', 'history', 'treatment', 'acceptance'];
+    public const ID_FILTERS = ['overdue', 'kri', 'history', 'treatment', 'acceptance', 'quality'];
 
     /**
      * Keeps only the known, well-formed parameters.

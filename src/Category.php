@@ -156,7 +156,7 @@ class Category extends CommonTreeDropdown
         self::createAiTaxonomy();
     }
 
-    /** Marker of the "Artificial intelligence" root category (recognised even if renamed). */
+    /** Marker used by 2.0.x in the comment of the AI root category (migrated to the erm_key field in 2.1.0). */
     public const AI_MARKER = '[erm:ai]';
 
     /**
@@ -171,7 +171,8 @@ class Category extends CommonTreeDropdown
             'name' => __('Artificial intelligence', 'erm'), 'plugin_erm_categories_id' => 0, 'entities_id' => 0, 'is_recursive' => 1,
             'appetite_level' => 'low', 'tolerance_level' => 'medium',
             'appetite_statement' => __('AI is adopted to improve services, but no AI system may discriminate, expose personal data, mislead customers or act without the human oversight its impact requires.', 'erm'),
-            'comment' => self::AI_MARKER,
+            'comment' => __('Risks of the AI systems of the organization (ISO/IEC 42001, AI Act).', 'erm'),
+            'erm_key' => 'ai',
         ]);
         foreach (
             [__('Bias and discrimination', 'erm'), __('Privacy and personal data', 'erm'), __('Reliability, accuracy and hallucinations', 'erm'),
@@ -186,7 +187,7 @@ class Category extends CommonTreeDropdown
     public static function aiRootId(): int
     {
         global $DB;
-        $row = $DB->request(['SELECT' => 'id', 'FROM' => self::getTable(), 'WHERE' => ['comment' => ['LIKE', '%' . self::AI_MARKER . '%']], 'LIMIT' => 1])->current();
+        $row = $DB->request(['SELECT' => 'id', 'FROM' => self::getTable(), 'WHERE' => ['erm_key' => 'ai'], 'LIMIT' => 1])->current();
         return (int) ($row['id'] ?? 0);
     }
 }

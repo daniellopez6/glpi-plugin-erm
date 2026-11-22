@@ -12,6 +12,12 @@
  # (at your option) any later version. See LICENSE for the full text.
  # -------------------------------------------------------------------------
  #}
+{% import '@erm/_help.html.twig' as help %}
+{{ help.box(__('Why record reviews?', 'erm'), [
+   __('A review is the periodic check of the risk (at least once a year): is the assessment still right, did the controls work, is the plan on track?', 'erm'),
+   __('If the assessment changed, update it first in the main tab; the review keeps a snapshot of it as evidence for auditors.', 'erm'),
+   __('Write who took part (workshop, committee) and the conclusion. Reviews cannot be modified afterwards.', 'erm')
+]) }}
 {% if chart %}
 <div class="card mb-3">
    <div class="card-header"><h3 class="card-title"><i class="ti ti-chart-line me-2"></i>{{ __('Evolution of the risk', 'erm') }}</h3></div>
