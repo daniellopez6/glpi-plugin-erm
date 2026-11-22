@@ -1,0 +1,302 @@
+{
+ "version": 1,
+ "roles": [
+  {
+   "key": "manager",
+   "title": "Gestor de riesgos (CRO)",
+   "who": "Quien administra el proceso de gestión de riesgos.",
+   "tasks": [
+    {
+     "text": "Mantener la taxonomía, el apetito y los criterios de impacto de cada empresa",
+     "link": "categories"
+    },
+    {
+     "text": "Revisar en el tablero los riesgos fuera del apetito, las sugerencias de calidad y la eficacia del tratamiento",
+     "link": "dashboard"
+    },
+    {
+     "text": "Revisar los reportes del personal y convertirlos en eventos o riesgos",
+     "link": "concern"
+    },
+    {
+     "text": "Tomar la foto trimestral y presentar el informe al Directorio",
+     "link": "report"
+    },
+    {
+     "text": "Mantener actualizada la metodología y compartirla",
+     "link": "methodology"
+    }
+   ],
+   "when": "Semanal: tablero y reportes recibidos. Trimestral: foto e informe. Anual: apetito y metodología."
+  },
+  {
+   "key": "owner",
+   "title": "Dueño de riesgo",
+   "who": "Gerentes responsables de un proceso y de sus riesgos.",
+   "tasks": [
+    {
+     "text": "Registrar los riesgos de tu área con el asistente o la biblioteca",
+     "link": "wizard"
+    },
+    {
+     "text": "Mantener la evaluación al día y atender las sugerencias de calidad",
+     "link": "myspace"
+    },
+    {
+     "text": "Definir el plan de tratamiento: acciones, responsables y vencimientos",
+     "link": "risks"
+    },
+    {
+     "text": "Registrar los eventos de pérdida que ocurran en tu área",
+     "link": "events"
+    },
+    {
+     "text": "Revisar cada riesgo al menos una vez al año y registrar la revisión",
+     "link": "myspace"
+    }
+   ],
+   "when": "Cuando llega un aviso por correo, y al menos una vez por trimestre en Mi espacio ERM."
+  },
+  {
+   "key": "treatment",
+   "title": "Responsable de acciones o indicadores",
+   "who": "Quien ejecuta una acción de tratamiento o mide un indicador.",
+   "tasks": [
+    {
+     "text": "Ver tus acciones pendientes y actualizar su estado",
+     "link": "myspace"
+    },
+    {
+     "text": "Registrar el valor de tus indicadores en la fecha que corresponde",
+     "link": "myspace"
+    },
+    {
+     "text": "Avisar si una acción no se va a poder cumplir a tiempo",
+     "link": "actions"
+    }
+   ],
+   "when": "Cuando se te asigna una acción y cuando llega un recordatorio."
+  },
+  {
+   "key": "committee",
+   "title": "Comité de riesgos o Directorio",
+   "who": "Quienes fijan el apetito y deciden sobre los riesgos más importantes.",
+   "tasks": [
+    {
+     "text": "Aprobar el apetito y la tolerancia de cada categoría",
+     "link": "categories"
+    },
+    {
+     "text": "Aceptar formalmente los riesgos que no se van a tratar (nunca los propios)",
+     "link": "risks"
+    },
+    {
+     "text": "Aprobar las evaluaciones de impacto de los sistemas de IA",
+     "link": "ai"
+    },
+    {
+     "text": "Analizar el informe trimestral y el mapa integral",
+     "link": "report"
+    }
+   ],
+   "when": "En cada reunión del Comité, con el informe trimestral."
+  },
+  {
+   "key": "audit",
+   "title": "Auditoría interna",
+   "who": "Tercera línea: verifica que el proceso funcione.",
+   "tasks": [
+    {
+     "text": "Consultar el registro, las revisiones y el historial de cambios",
+     "link": "risks"
+    },
+    {
+     "text": "Verificar aceptaciones vigentes, segregación de funciones y evidencia",
+     "link": "dashboard"
+    },
+    {
+     "text": "Descargar la metodología y el informe trimestral como evidencia",
+     "link": "methodology"
+    }
+   ],
+   "when": "Según el plan anual de auditoría."
+  },
+  {
+   "key": "ai",
+   "title": "Responsable de IA",
+   "who": "Quien mantiene el inventario de sistemas de IA y sus evaluaciones.",
+   "tasks": [
+    {
+     "text": "Registrar cada sistema de IA con su propósito, datos y clase según el AI Act",
+     "link": "ai"
+    },
+    {
+     "text": "Hacer la evaluación de impacto y enviarla a aprobación",
+     "link": "ai"
+    },
+    {
+     "text": "Crear el riesgo corporativo cuando el impacto es significativo",
+     "link": "ai"
+    }
+   ],
+   "when": "Antes de poner en producción un sistema de IA y una vez al año."
+  },
+  {
+   "key": "staff",
+   "title": "Todo el personal",
+   "who": "Cualquier persona de la organización.",
+   "tasks": [
+    {
+     "text": "Reportar algo que pasó, que casi pasa o que podría pasar",
+     "link": "concern"
+    },
+    {
+     "text": "Seguir el estado de tus reportes en Mis reportes",
+     "link": "concern"
+    }
+   ],
+   "when": "Cada vez que veas un riesgo o un incidente. Reportar de buena fe nunca se sanciona."
+  }
+ ],
+ "glossary": [
+  {
+   "term": "Riesgo",
+   "definition": "Efecto de la incertidumbre sobre los objetivos: algo que podría pasar y afectaría a la organización.",
+   "example": "Fraude con identidades robadas en la originación digital."
+  },
+  {
+   "term": "Evento",
+   "definition": "Lo que podría pasar, descripto en una oración: qué y a qué.",
+   "example": "\"Caída del proveedor de telefonía que detiene la atención\" (no \"Proveedores\")."
+  },
+  {
+   "term": "Causa",
+   "definition": "Por qué podría pasar el evento.",
+   "example": "Proveedor único sin redundancia."
+  },
+  {
+   "term": "Consecuencia",
+   "definition": "Qué provocaría el evento si ocurre.",
+   "example": "Penalidades por incumplir el nivel de servicio."
+  },
+  {
+   "term": "Probabilidad",
+   "definition": "Qué tan seguido podría pasar en un año (escala 1 a 5).",
+   "example": "3 - Posible: una vez cada 2 a 4 años."
+  },
+  {
+   "term": "Impacto",
+   "definition": "Qué tan grave sería: dinero, clientes, reguladores, reputación y personas (escala 1 a 5).",
+   "example": "4 - Mayor: sanción regulatoria o pérdida de un cliente importante."
+  },
+  {
+   "term": "Riesgo inherente",
+   "definition": "El riesgo si no hubiera ningún control.",
+   "example": "Sin validación de identidad, el fraude sería probable y grave."
+  },
+  {
+   "term": "Control",
+   "definition": "Lo que hoy reduce la probabilidad o el impacto: procedimientos, sistemas, aprobaciones, seguros.",
+   "example": "Validación biométrica contra el registro de personas."
+  },
+  {
+   "term": "Riesgo residual",
+   "definition": "El riesgo considerando los controles que funcionan hoy. Es el que se compara con el apetito.",
+   "example": "Con la biometría, el fraude pasa a ser poco probable."
+  },
+  {
+   "term": "Riesgo objetivo",
+   "definition": "El nivel que se quiere alcanzar con el plan de tratamiento.",
+   "example": "Bajar de Alto a Medio antes de junio."
+  },
+  {
+   "term": "Apetito",
+   "definition": "Nivel de riesgo que la organización está dispuesta a asumir en una categoría para lograr sus objetivos.",
+   "example": "Fraude: apetito Bajo."
+  },
+  {
+   "term": "Tolerancia",
+   "definition": "Nivel máximo admisible; superarlo exige actuar de inmediato.",
+   "example": "Fraude: tolerancia Medio."
+  },
+  {
+   "term": "Tratamiento",
+   "definition": "La decisión sobre el riesgo: mitigar, transferir, evitar o aceptar.",
+   "example": "Mitigar con un plan de acciones."
+  },
+  {
+   "term": "Aceptación formal",
+   "definition": "Decisión del Comité de convivir con un riesgo, con justificación y por un plazo; nunca la toma el dueño del riesgo.",
+   "example": "Aceptado por 12 meses por el bajo costo de la exposición."
+  },
+  {
+   "term": "Indicador clave de riesgo (KRI)",
+   "definition": "Número que avisa antes de que el riesgo ocurra, con umbral de alerta y crítico.",
+   "example": "Días promedio de cobro: alerta 60, crítico 90."
+  },
+  {
+   "term": "Evento de pérdida",
+   "definition": "Algo que realmente pasó: pérdida, casi pérdida o ganancia inesperada. Es la evidencia del riesgo.",
+   "example": "Préstamo otorgado con DNI adulterado: pérdida neta 18.000.000."
+  },
+  {
+   "term": "Casi pérdida",
+   "definition": "Un evento que ocurrió pero no causó pérdida.",
+   "example": "Ransomware bloqueado por el antivirus."
+  },
+  {
+   "term": "Revisión",
+   "definition": "Control periódico del riesgo que deja una foto de la evaluación como evidencia.",
+   "example": "Revisión anual en el Comité."
+  },
+  {
+   "term": "Dueño del riesgo",
+   "definition": "Persona responsable de gestionar el riesgo, normalmente quien conduce el proceso.",
+   "example": "La gerente de Créditos para el riesgo de morosidad."
+  },
+  {
+   "term": "Pérdida esperada anual",
+   "definition": "Cuánto se perdería en promedio por año: frecuencia por pérdida promedio.",
+   "example": "1,3 eventos por año x 28 M = 37 M por año."
+  },
+  {
+   "term": "Mapa de calor",
+   "definition": "Matriz de probabilidad por impacto que muestra dónde se concentran los riesgos.",
+   "example": "Arriba a la derecha están los críticos."
+  }
+ ],
+ "faq": [
+  {
+   "q": "No sé qué probabilidad poner. ¿Qué hago?",
+   "a": "Elegí tu mejor estimación y explicá por qué en la descripción. Si ya pasó en los últimos años, es al menos Posible. Los eventos de pérdida y las revisiones la van a ajustar."
+  },
+  {
+   "q": "¿Qué diferencia hay entre inherente y residual?",
+   "a": "El inherente es sin controles; el residual, con los controles que funcionan hoy. La diferencia muestra cuánto aportan los controles."
+  },
+  {
+   "q": "Mi riesgo aparece fuera del apetito. ¿Está mal?",
+   "a": "No: significa que hay que decidir. Mitigalo con acciones hasta el objetivo, o pedí al Comité que lo acepte formalmente con una justificación."
+  },
+  {
+   "q": "¿Por qué no puedo aceptar mi propio riesgo?",
+   "a": "Por segregación de funciones: quien gestiona el riesgo no puede decidir por sí solo convivir con él. Lo acepta el Comité."
+  },
+  {
+   "q": "¿Qué hago con las sugerencias de calidad?",
+   "a": "Leelas en la ficha del riesgo y completá lo que falta. No bloquean nada: ayudan a que el registro sea consistente y auditable."
+  },
+  {
+   "q": "¿Cada cuánto hay que revisar un riesgo?",
+   "a": "Al menos una vez al año, y antes si es alto o crítico, si ocurre un evento o si cambian los controles."
+  },
+  {
+   "q": "No me llegan los avisos por correo.",
+   "a": "Las notificaciones dependen de la configuración de correo de GLPI. Consultá con el administrador."
+  },
+  {
+   "q": "¿Dónde veo lo que tengo que hacer?",
+   "a": "En Mi espacio ERM: tus acciones pendientes, tus indicadores y tus riesgos con la próxima revisión."
+  }
+ ]
+}

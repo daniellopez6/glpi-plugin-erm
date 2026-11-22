@@ -111,7 +111,7 @@ class Snapshot extends CommonGLPI
     {
         global $DB;
         $out = [];
-        $where = getEntitiesRestrictCriteria(self::TABLE, '', '', true);
+        $where = getEntitiesRestrictCriteria(self::TABLE, '', '', false);
         if (Rights::onlyOwn()) {
             // Users who only see own risks only count their own risks
             $own = array_map('intval', array_column(Risk::activeRisks(), 'id'));
@@ -145,7 +145,7 @@ class Snapshot extends CommonGLPI
         if (!Period::isValid($period)) {
             return [];
         }
-        $where = ['period' => $period] + getEntitiesRestrictCriteria(self::TABLE, '', '', true);
+        $where = ['period' => $period] + getEntitiesRestrictCriteria(self::TABLE, '', '', false);
         if ($onlyRiskIds !== null) {
             if (!$onlyRiskIds) {
                 return [];

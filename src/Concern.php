@@ -96,7 +96,7 @@ class Concern extends CommonDBTM
     /** Pending reports in the visible entities. */
     public static function countPending(): int
     {
-        return countElementsInTable(self::getTable(), ['status' => 'new'] + getEntitiesRestrictCriteria(self::getTable(), '', '', true));
+        return countElementsInTable(self::getTable(), ['status' => 'new'] + getEntitiesRestrictCriteria(self::getTable(), '', '', false));
     }
 
     /**
@@ -230,7 +230,7 @@ class Concern extends CommonDBTM
         }
         $inbox = [];
         if (self::canReview()) {
-            $iter = $DB->request(['FROM' => self::getTable(), 'WHERE' => ['status' => 'new'] + getEntitiesRestrictCriteria(self::getTable(), '', '', true),
+            $iter = $DB->request(['FROM' => self::getTable(), 'WHERE' => ['status' => 'new'] + getEntitiesRestrictCriteria(self::getTable(), '', '', false),
                                   'ORDER' => 'date_creation']);
             foreach ($iter as $r) {
                 $r['reporter'] = getUserName((int) $r['users_id']);

@@ -1,0 +1,51 @@
+{#
+ # -------------------------------------------------------------------------
+ # ERM - Enterprise Risk Management plugin for GLPI
+ # Copyright (C) 2026 daniellopez6
+ # https://github.com/daniellopez6/glpi-plugin-erm
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+<div class="container-fluid" style="max-width:1100px">
+   <h2 class="mb-1"><i class="ti ti-help me-2"></i>{{ __('Help and glossary', 'erm') }}</h2>
+   <p class="text-muted">{{ __('What each person has to do, the meaning of the terms and the most common questions. The complete method is in the methodology document.', 'erm') }}
+      <a href="{{ methodology_url }}"><i class="ti ti-file-type-pdf"></i> {{ __('Download the methodology (PDF)', 'erm') }}</a></p>
+   <div class="mb-3">
+      <a href="#roles" class="btn btn-sm btn-outline-primary">{{ __('What do I have to do?', 'erm') }}</a>
+      <a href="#glossary" class="btn btn-sm btn-outline-primary">{{ __('Glossary', 'erm') }}</a>
+      <a href="#faq" class="btn btn-sm btn-outline-primary">{{ __('Frequently asked questions', 'erm') }}</a>
+   </div>
+
+   <h3 id="roles">{{ __('What do I have to do?', 'erm') }}</h3>
+   <div class="row row-cards mb-4">
+   {% for r in roles %}
+      <div class="col-md-6" id="role-{{ r.key }}">
+         <div class="card h-100 {{ r.key == current_role ? 'border-primary' : '' }}">
+            <div class="card-header"><h4 class="card-title">{{ r.title }}{% if r.key == current_role %} <span class="badge bg-primary ms-2">{{ __('Your role', 'erm') }}</span>{% endif %}</h4></div>
+            <div class="card-body small">
+               <div class="text-muted mb-2">{{ r.who }}</div>
+               <ul class="mb-2">{% for t in r.tasks %}<li>{% if links[t.link] is defined %}<a href="{{ links[t.link] }}">{{ t.text }}</a>{% else %}{{ t.text }}{% endif %}</li>{% endfor %}</ul>
+               <div><i class="ti ti-calendar me-1"></i><b>{{ __('When', 'erm') }}:</b> {{ r.when }}</div>
+            </div>
+         </div>
+      </div>
+   {% endfor %}
+   </div>
+
+   <h3 id="glossary">{{ __('Glossary', 'erm') }}</h3>
+   <div class="card mb-4"><div class="table-responsive"><table class="table card-table table-sm">
+      <thead><tr><th style="width:22%">{{ __('Term', 'erm') }}</th><th>{{ __('Meaning', 'erm') }}</th><th style="width:30%">{{ __('Example', 'erm') }}</th></tr></thead>
+      <tbody>{% for g in glossary %}<tr><td><b>{{ g.term }}</b></td><td class="small">{{ g.definition }}</td><td class="small text-muted">{{ g.example }}</td></tr>{% endfor %}</tbody>
+   </table></div></div>
+
+   <h3 id="faq">{{ __('Frequently asked questions', 'erm') }}</h3>
+   {% for f in faq %}
+   <details class="card card-sm mb-2"><summary class="card-body py-2" style="cursor:pointer"><b>{{ f.q }}</b></summary><div class="card-body pt-0 small">{{ f.a }}</div></details>
+   {% endfor %}
+</div>

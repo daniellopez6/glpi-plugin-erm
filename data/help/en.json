@@ -1,0 +1,302 @@
+{
+ "version": 1,
+ "roles": [
+  {
+   "key": "manager",
+   "title": "Risk manager (CRO)",
+   "who": "Who runs the risk management process.",
+   "tasks": [
+    {
+     "text": "Keep the taxonomy, appetite and impact criteria of each company",
+     "link": "categories"
+    },
+    {
+     "text": "Check on the dashboard the risks outside appetite, the quality suggestions and the treatment effectiveness",
+     "link": "dashboard"
+    },
+    {
+     "text": "Review the staff reports and turn them into events or risks",
+     "link": "concern"
+    },
+    {
+     "text": "Take the quarterly snapshot and present the Board report",
+     "link": "report"
+    },
+    {
+     "text": "Keep the methodology up to date and share it",
+     "link": "methodology"
+    }
+   ],
+   "when": "Weekly: dashboard and reports received. Quarterly: snapshot and report. Yearly: appetite and methodology."
+  },
+  {
+   "key": "owner",
+   "title": "Risk owner",
+   "who": "Managers accountable for a process and its risks.",
+   "tasks": [
+    {
+     "text": "Register the risks of your area with the wizard or the library",
+     "link": "wizard"
+    },
+    {
+     "text": "Keep the assessment up to date and follow the quality suggestions",
+     "link": "myspace"
+    },
+    {
+     "text": "Define the treatment plan: actions, responsibles and due dates",
+     "link": "risks"
+    },
+    {
+     "text": "Record the loss events that happen in your area",
+     "link": "events"
+    },
+    {
+     "text": "Review each risk at least once a year and record the review",
+     "link": "myspace"
+    }
+   ],
+   "when": "When an e-mail alert arrives, and at least once a quarter in My ERM workspace."
+  },
+  {
+   "key": "treatment",
+   "title": "Action or KRI responsible",
+   "who": "Who carries out a treatment action or measures an indicator.",
+   "tasks": [
+    {
+     "text": "See your pending actions and update their status",
+     "link": "myspace"
+    },
+    {
+     "text": "Record the value of your indicators when due",
+     "link": "myspace"
+    },
+    {
+     "text": "Warn when an action will not be done on time",
+     "link": "actions"
+    }
+   ],
+   "when": "When an action is assigned and when a reminder arrives."
+  },
+  {
+   "key": "committee",
+   "title": "Risk Committee or Board",
+   "who": "Who set the appetite and decide on the most important risks.",
+   "tasks": [
+    {
+     "text": "Approve the appetite and tolerance of each category",
+     "link": "categories"
+    },
+    {
+     "text": "Formally accept the risks that will not be treated (never your own)",
+     "link": "risks"
+    },
+    {
+     "text": "Approve the impact assessments of the AI systems",
+     "link": "ai"
+    },
+    {
+     "text": "Analyse the quarterly report and the integrated map",
+     "link": "report"
+    }
+   ],
+   "when": "At every Committee meeting, with the quarterly report."
+  },
+  {
+   "key": "audit",
+   "title": "Internal audit",
+   "who": "Third line: checks that the process works.",
+   "tasks": [
+    {
+     "text": "Consult the register, the reviews and the change history",
+     "link": "risks"
+    },
+    {
+     "text": "Check current acceptances, segregation of duties and evidence",
+     "link": "dashboard"
+    },
+    {
+     "text": "Download the methodology and the quarterly report as evidence",
+     "link": "methodology"
+    }
+   ],
+   "when": "According to the annual audit plan."
+  },
+  {
+   "key": "ai",
+   "title": "AI officer",
+   "who": "Who keeps the inventory of AI systems and their assessments.",
+   "tasks": [
+    {
+     "text": "Register each AI system with its purpose, data and AI Act class",
+     "link": "ai"
+    },
+    {
+     "text": "Carry out the impact assessment and submit it for approval",
+     "link": "ai"
+    },
+    {
+     "text": "Create the corporate risk when the impact is significant",
+     "link": "ai"
+    }
+   ],
+   "when": "Before putting an AI system into production and once a year."
+  },
+  {
+   "key": "staff",
+   "title": "All staff",
+   "who": "Anyone in the organization.",
+   "tasks": [
+    {
+     "text": "Report something that happened, almost happened or could happen",
+     "link": "concern"
+    },
+    {
+     "text": "Follow the status of your reports in My reports",
+     "link": "concern"
+    }
+   ],
+   "when": "Whenever you see a risk or an incident. Reporting in good faith is never penalized."
+  }
+ ],
+ "glossary": [
+  {
+   "term": "Risk",
+   "definition": "Effect of uncertainty on objectives: something that could happen and would affect the organization.",
+   "example": "Fraud with stolen identities in digital origination."
+  },
+  {
+   "term": "Event",
+   "definition": "What could happen, described in one sentence: what and to what.",
+   "example": "\"Outage of the telephony provider that stops customer service\" (not \"Providers\")."
+  },
+  {
+   "term": "Cause",
+   "definition": "Why the event could happen.",
+   "example": "Single provider without redundancy."
+  },
+  {
+   "term": "Consequence",
+   "definition": "What the event would cause if it happens.",
+   "example": "Penalties for breaching the service level."
+  },
+  {
+   "term": "Probability",
+   "definition": "How often it could happen in a year (scale 1 to 5).",
+   "example": "3 - Possible: once every 2 to 4 years."
+  },
+  {
+   "term": "Impact",
+   "definition": "How serious it would be: money, customers, regulators, reputation and people (scale 1 to 5).",
+   "example": "4 - Major: regulatory sanction or loss of an important client."
+  },
+  {
+   "term": "Inherent risk",
+   "definition": "The risk if there were no controls at all.",
+   "example": "Without identity validation, fraud would be likely and serious."
+  },
+  {
+   "term": "Control",
+   "definition": "What reduces probability or impact today: procedures, systems, approvals, insurance.",
+   "example": "Biometric validation against the national registry."
+  },
+  {
+   "term": "Residual risk",
+   "definition": "The risk considering the controls that work today. It is compared with the appetite.",
+   "example": "With biometrics, fraud becomes unlikely."
+  },
+  {
+   "term": "Target risk",
+   "definition": "The level the treatment plan has to reach.",
+   "example": "Go down from High to Medium before June."
+  },
+  {
+   "term": "Appetite",
+   "definition": "Level of risk the organization is willing to take in a category to achieve its objectives.",
+   "example": "Fraud: Low appetite."
+  },
+  {
+   "term": "Tolerance",
+   "definition": "Maximum admissible level; above it, immediate action is required.",
+   "example": "Fraud: Medium tolerance."
+  },
+  {
+   "term": "Treatment",
+   "definition": "The decision on the risk: mitigate, transfer, avoid or accept.",
+   "example": "Mitigate with an action plan."
+  },
+  {
+   "term": "Formal acceptance",
+   "definition": "Committee decision to live with a risk, with a justification and for a period; never taken by the risk owner.",
+   "example": "Accepted for 12 months because of the low exposure."
+  },
+  {
+   "term": "Key risk indicator (KRI)",
+   "definition": "Number that warns before the risk happens, with warning and critical thresholds.",
+   "example": "Average days to collect: warning 60, critical 90."
+  },
+  {
+   "term": "Loss event",
+   "definition": "Something that actually happened: loss, near miss or unexpected gain. It is the evidence of the risk.",
+   "example": "Loan granted with a forged ID: net loss 18,000,000."
+  },
+  {
+   "term": "Near miss",
+   "definition": "An event that happened but caused no loss.",
+   "example": "Ransomware blocked by the antivirus."
+  },
+  {
+   "term": "Review",
+   "definition": "Periodic check of the risk that keeps a snapshot of the assessment as evidence.",
+   "example": "Yearly review at the Committee."
+  },
+  {
+   "term": "Risk owner",
+   "definition": "Person accountable for managing the risk, usually the manager of the process.",
+   "example": "The credit manager for the delinquency risk."
+  },
+  {
+   "term": "Expected annual loss",
+   "definition": "How much would be lost on average per year: frequency times average loss.",
+   "example": "1.3 events per year x 28 M = 37 M per year."
+  },
+  {
+   "term": "Heat map",
+   "definition": "Probability by impact matrix that shows where risks concentrate.",
+   "example": "Critical risks are at the top right."
+  }
+ ],
+ "faq": [
+  {
+   "q": "I do not know which probability to choose. What do I do?",
+   "a": "Choose your best estimate and explain why in the description. If it already happened in recent years, it is at least Possible. Loss events and reviews will refine it."
+  },
+  {
+   "q": "What is the difference between inherent and residual?",
+   "a": "Inherent is without controls; residual is with the controls that work today. The difference shows what the controls achieve."
+  },
+  {
+   "q": "My risk is outside the appetite. Is it wrong?",
+   "a": "No: it means a decision is needed. Mitigate it with actions down to the target, or ask the Committee to accept it formally with a justification."
+  },
+  {
+   "q": "Why can't I accept my own risk?",
+   "a": "Because of segregation of duties: who manages the risk cannot decide alone to live with it. The Committee accepts it."
+  },
+  {
+   "q": "What do I do with the quality suggestions?",
+   "a": "Read them on the risk form and complete what is missing. They block nothing: they help keep the register consistent and auditable."
+  },
+  {
+   "q": "How often must a risk be reviewed?",
+   "a": "At least once a year, and sooner if it is high or critical, if an event happens or if controls change."
+  },
+  {
+   "q": "I do not receive the e-mail alerts.",
+   "a": "Notifications depend on the GLPI e-mail configuration. Ask the administrator."
+  },
+  {
+   "q": "Where do I see what I have to do?",
+   "a": "In My ERM workspace: your pending actions, your indicators and your risks with their next review."
+  }
+ ]
+}

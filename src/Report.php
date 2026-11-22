@@ -80,6 +80,7 @@ class Report extends CommonGLPI
             'can_take' => self::canTakeSnapshot(),
             'action'   => self::getSearchURL(),
             'entity'   => \Dropdown::getDropdownName('glpi_entities', (int) ($_SESSION['glpiactive_entity'] ?? 0)),
+            'methodology_url' => Methodology::getURL(),
         ]);
     }
 

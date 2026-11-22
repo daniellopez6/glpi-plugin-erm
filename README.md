@@ -69,8 +69,8 @@ php ../bin/console cache:clear
 ```
 
 Logged-in users must log in again (or switch profile) to see the new menu entries.
-See the [administration guide](docs/guia-administracion.md) and the [user manual](docs/manual-usuario.md)
-(Spanish).
+See the [administration guide](docs/guia-administracion.md), the [user manual](docs/manual-usuario.md), the
+[quick guides by role](docs/guias-rapidas.md) and the [end-to-end case](docs/caso-completo.md) (Spanish).
 
 ## Development
 
@@ -106,4 +106,5 @@ Registro de riesgos corporativos para GLPI 12 (ISO 31000 / COSO ERM): taxonomía
 tolerancia, evaluación inherente y residual 5×5 con impacto económico, planes de tratamiento, indicadores clave
 de riesgo, aceptación formal con segregación de funciones, permisos por rol (todos / propios) y tablero con
 mapas de calor. Integración opcional con GLPI GRC Manager. Documentación:
-[manual de usuario](docs/manual-usuario.md) y [guía de administración](docs/guia-administracion.md).
+[manual de usuario](docs/manual-usuario.md), [guías rápidas por rol](docs/guias-rapidas.md),
+[caso de punta a punta](docs/caso-completo.md) y [guía de administración](docs/guia-administracion.md).

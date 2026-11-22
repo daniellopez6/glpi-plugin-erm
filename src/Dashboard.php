@@ -242,6 +242,67 @@ class Dashboard extends CommonGLPI
         return $out;
     }
 
+    /**
+     * "Getting started" checklist of the implementation (only for those who manage the ERM configuration), or null.
+     *
+     * @param list<array<string,mixed>> $risks
+     * @return array<string,mixed>|null
+     */
+    public static function onboarding(array $risks): ?array
+    {
+        global $DB, $CFG_GLPI;
+        if (!Session::haveRight(Rights::CONFIG, UPDATE)) {
+            return null;
+        }
+        $entityId = (int) ($_SESSION['glpiactive_entity'] ?? 0);
+        $roots = iterator_to_array($DB->request(['SELECT' => 'id', 'FROM' => Category::getTable(), 'WHERE' => ['plugin_erm_categories_id' => 0]]), false);
+        $withAppetite = 0;
+        foreach ($roots as $root) {
+            [$app, $tol] = Category::effectiveAppetite((int) $root['id'], $entityId);
+            $withAppetite += ($app !== '' && $tol !== '') ? 1 : 0;
+        }
+        $roleProfiles = [];
+        foreach (array_keys(Profile::roleProfiles()) as $key) {
+            $roleProfiles[] = ['glpi_profiles.comment' => ['LIKE', '%' . Profile::marker($key) . '%']];
+        }
+        $assignedRoles = count(iterator_to_array($DB->request([
+            'SELECT' => ['glpi_profiles.id'], 'DISTINCT' => true, 'FROM' => 'glpi_profiles_users',
+            'INNER JOIN' => ['glpi_profiles' => ['ON' => ['glpi_profiles_users' => 'profiles_id', 'glpi_profiles' => 'id']]],
+            'WHERE' => ['OR' => $roleProfiles],
+        ]), false));
+        $ids = array_map('intval', array_column($risks, 'id'));
+        $facts = [
+            'impact_criteria'        => (bool) array_filter(EntityConfig::impactThresholds($entityId), fn($v) => $v !== null),
+            'root_categories'        => count($roots),
+            'appetite_categories'    => $withAppetite,
+            'role_profiles_assigned' => $assignedRoles >= 2,
+            'risks'                  => count($risks),
+            'assessed_risks'         => count(array_filter($risks, fn($r) => (int) $r['inherent_score'] > 0 && (int) $r['residual_score'] > 0)),
+            'kris'                   => $ids ? countElementsInTable(Indicator::getTable(), ['plugin_erm_risks_id' => $ids]) : 0,
+            'reviews'                => $ids ? countElementsInTable(Review::getTable(), ['plugin_erm_risks_id' => $ids]) : 0,
+            'snapshots'              => count(Snapshot::periods()),
+            'notifications'          => !empty($CFG_GLPI['use_notifications']) && !empty($CFG_GLPI['notifications_mailing']),
+        ];
+        $labels = [
+            'impact_criteria' => [__('Define the economic impact criteria of the company', 'erm'), \Entity::getFormURLWithID($entityId) . '&forcetab=' . rawurlencode(EntityConfig::class . '$1')],
+            'appetite'        => [__('Review the risk appetite and tolerance of each category', 'erm'), Category::getSearchURL()],
+            'profiles'        => [__('Assign the ERM profiles to the people (owners, committee, manager)', 'erm'), \User::getSearchURL()],
+            'risks'           => [sprintf(__('Register the first %d risks (wizard or library)', 'erm'), Onboarding::MIN_RISKS), RiskWizard::getLibraryURL()],
+            'assessed'        => [__('Assess the inherent and residual risk of at least 80% of the risks', 'erm'), self::drillURL(['quality' => 1])],
+            'kris'            => [__('Define key risk indicators (KRIs) for the main risks', 'erm'), Risk::getSearchURL()],
+            'reviews'         => [__('Record the first risk review', 'erm'), Risk::getSearchURL()],
+            'snapshot'        => [__('Take the first quarterly snapshot and download the Board report', 'erm'), Report::getSearchURL()],
+            'notifications'   => [__('Enable GLPI e-mail notifications so that people receive the alerts', 'erm'), $CFG_GLPI['root_doc'] . '/front/setup.notification.php'],
+        ];
+        $steps = Onboarding::steps($facts);
+        foreach ($steps as &$s) {
+            [$s['label'], $s['url']] = $labels[$s['key']];
+        }
+        unset($s);
+        $progress = Onboarding::progress($steps);
+        return $progress === 100 ? null : ['steps' => $steps, 'progress' => $progress];
+    }
+
     public static function show(): void
     {
         $risks = Risk::activeRisks();
@@ -349,6 +410,8 @@ class Dashboard extends CommonGLPI
            'ai_form_url' => AiSystem::getFormURL(),
            'pending_reports' => Concern::canReview() ? Concern::countPending() : null,
            'reports_url' => Concern::getSearchURL(),
+           'onboarding'  => self::onboarding($risks),
+           'methodology_url' => Methodology::getURL(),
            'can_create_risk' => Risk::canCreate(),
            'wizard_url'  => RiskWizard::getWizardURL(),
            'library_url' => RiskWizard::getLibraryURL(),

@@ -29,6 +29,10 @@
                      </select></div>
                   <div class="col-md-5"><button type="submit" class="btn btn-primary w-100"><i class="ti ti-download me-1"></i>{{ __('Download PDF', 'erm') }}</button></div>
                </form>
+               <hr>
+               <p class="mb-1"><b>{{ __('Risk management methodology', 'erm') }}</b></p>
+               <p class="text-muted small">{{ __('Document generated from the current configuration (scales, economic criteria, appetite, roles, acceptance, monitoring). Auditors ask for it and it is the training material for new users.', 'erm') }}</p>
+               <a href="{{ methodology_url }}" class="btn btn-outline-primary"><i class="ti ti-file-type-pdf me-1"></i>{{ __('Download the methodology (PDF)', 'erm') }}</a>
             </div>
          </div>
       </div>

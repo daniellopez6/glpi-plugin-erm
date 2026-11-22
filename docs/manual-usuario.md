@@ -1,9 +1,16 @@
 # Manual de usuario - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 2.2.x · GLPI 12
+Versión del plugin: 2.3.x · GLPI 12
 
 Este manual explica cómo usar el registro de riesgos corporativos día a día. La instalación y los permisos
 están en la [guía de administración](guia-administracion.md).
+
+**¿Por dónde empiezo?**
+
+- Si sólo necesitás saber qué te toca: [guías rápidas por rol](guias-rapidas.md) (una página por rol).
+- Si querés ver cómo encaja todo: [caso completo de punta a punta](caso-completo.md).
+- Si tenés una duda puntual: [preguntas frecuentes](#19-preguntas-frecuentes) al final de este manual.
+- Dentro de la herramienta: **GRC Corporativo > Ayuda y glosario** (guía por rol, glosario y preguntas frecuentes).
 
 ## Ayuda dentro de la herramienta
 
@@ -28,6 +35,17 @@ lenguaje simple:
 5. ¿Qué vamos a hacer? (decisión, primera acción y fecha de revisión)
 
 El asistente completa la ficha del riesgo; después se puede ajustar todo en la ficha.
+
+### Primeros pasos y metodología
+
+Quien administra el ERM ve en el tablero la tarjeta **Primeros pasos**: criterios de impacto, apetito, perfiles
+asignados, primeros riesgos, evaluaciones, KRI, primera revisión, primera foto y notificaciones. Cada paso se marca
+solo cuando los datos lo cumplen, y la tarjeta desaparece al completarse.
+
+**Descargar la metodología (PDF)** (en el tablero, en Informes y en la ayuda) genera el documento de metodología
+con la configuración vigente: escalas con los montos de la empresa, matriz, apetito y tolerancia por categoría,
+roles, aceptación, seguimiento y criterios de calidad. Sirve como evidencia para auditoría y como material de
+capacitación.
 
 **Biblioteca de riesgos**: 25 riesgos típicos de un contact center con clientes financieros y servicios de IA, con
 causas, consecuencias, controles e indicadores habituales. **Usar esta plantilla** abre el asistente con los datos
@@ -330,3 +348,29 @@ Cambiar el apetito actualiza inmediatamente la posición de todos los riesgos de
 - Usá los KRI para anticipar: un indicador que se acerca al umbral de alerta es una señal para el dueño.
 - Los riesgos de seguridad de la información se gestionan en detalle en el SGSI (GRC Manager); en el ERM,
   vinculalos a un riesgo corporativo agregado (por ejemplo, "Ciberataque con paralización del negocio").
+
+## 19. Preguntas frecuentes
+
+**No sé qué probabilidad poner.** Elegí tu mejor estimación y explicá por qué en la descripción. Si ya pasó en los
+últimos años, es al menos Posible. Los eventos de pérdida y las revisiones la van a ajustar.
+
+**¿Qué diferencia hay entre inherente y residual?** El inherente es sin controles; el residual, con los controles que
+funcionan hoy. La diferencia muestra cuánto aportan los controles.
+
+**Mi riesgo aparece fuera del apetito. ¿Está mal?** No: significa que hay que decidir. Mitigalo con acciones hasta el
+objetivo, o pedí al Comité que lo acepte formalmente con una justificación.
+
+**¿Por qué no puedo aceptar mi propio riesgo?** Por segregación de funciones: quien gestiona el riesgo no puede
+decidir por sí solo convivir con él.
+
+**¿Qué hago con las sugerencias de calidad?** Leelas en la ficha y completá lo que falta. No bloquean nada.
+
+**¿Cada cuánto hay que revisar un riesgo?** Al menos una vez al año, y antes si es alto o crítico, si ocurre un evento
+o si cambian los controles.
+
+**No me llegan los avisos por correo.** Dependen de la configuración de correo de GLPI: consultá con el
+administrador.
+
+**¿Dónde veo lo que tengo que hacer?** En **Mi espacio ERM**.
+
+El glosario completo está en **Ayuda y glosario** dentro de la herramienta.

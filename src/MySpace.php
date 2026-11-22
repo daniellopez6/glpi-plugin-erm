@@ -152,6 +152,7 @@ class MySpace extends CommonGLPI
            'can_measure'  => Session::haveRight(Rights::TREATMENT, CREATE),
            'today'        => $today,
            'report_url'   => Concern::getSearchURL(),
+           'help_url'     => Help::getSearchURL() . (Help::currentRole() !== '' ? '#role-' . Help::currentRole() : '#roles'),
            'wizard_url'   => Risk::canCreate() ? RiskWizard::getWizardURL() : '',
         ]);
     }

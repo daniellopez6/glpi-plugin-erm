@@ -7,6 +7,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.3.0] - 2026-11-22
+### Added
+- "Getting started" checklist on the dashboard for ERM administrators (impact criteria, appetite, profiles assigned,
+  first risks, assessments, KRIs, first review, first snapshot, notifications), computed from the data; it disappears
+  when complete (pure Onboarding class).
+- Risk management methodology PDF generated from the configuration in force (scales with the economic criteria,
+  matrix, appetite and tolerance by category, roles, acceptance, monitoring, reporting, quality criteria), from the
+  dashboard, Reports and Help.
+- "Help and glossary" page: what to do by role (the active ERM role profile is highlighted, "Guide for my role" in
+  My ERM workspace), glossary in plain language with examples and FAQ; content in data/help/{es,en}.json.
+- Documentation: quick guides by role, end-to-end case and FAQ in the user manual.
+- 96 unit tests.
+### Fixed
+- Board report and staff reports failed when the active entity was a sub-entity (recursive entity restriction on
+  tables without is_recursive).
+
 ## [2.2.0] - 2026-11-22
 ### Added
 - Risk wizard: guided registration in five plain-language steps (what could happen, why and what it would cause, how

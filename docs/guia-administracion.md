@@ -1,6 +1,6 @@
 # Guía de administración - ERM (Gestión de Riesgos Corporativos)
 
-Versión del plugin: 2.2.x · GLPI 12.0.x · PHP 8.2+
+Versión del plugin: 2.3.x · GLPI 12.0.x · PHP 8.2+
 
 ## 1. Instalación
 
@@ -176,13 +176,18 @@ permisos y validaciones que la interfaz. Ejemplo:
 GET /api.php/v1/GlpiPlugin%5CErm%5CRisk?range=0-49
 ```
 
-## 9. Biblioteca de riesgos
+## 9. Biblioteca de riesgos y ayuda
 
 Las plantillas del asistente están en `data/risk-library/es.json` (español) y `en.json` (resto de los idiomas). Cada
 plantilla tiene una clave, la clave de su categoría (por ejemplo `operational.technology` o `ai.reliability`), la
 decisión de tratamiento sugerida, el nombre, la descripción, las causas, las consecuencias, los controles y los KRI.
 Se pueden editar o ampliar para la realidad de la organización (conviene versionar los cambios, porque una
 actualización del plugin reemplaza estos archivos).
+
+La ayuda (guías por rol, glosario y preguntas frecuentes) está en `data/help/es.json` y `en.json`, con el mismo
+criterio: se puede adaptar a la organización. Los enlaces de cada tarea usan claves fijas (`dashboard`, `myspace`,
+`wizard`, `library`, `risks`, `actions`, `events`, `concern`, `ai`, `consolidated`, `report`, `categories`,
+`methodology`).
 
 Las categorías estándar se reconocen por una clave interna, aunque se cambie su nombre. Si una categoría se creó o
 renombró antes de la versión 2.2, sus plantillas usan la categoría principal.

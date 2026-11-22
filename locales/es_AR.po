@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-22 05:53+0000\n"
+"POT-Creation-Date: 2026-11-22 06:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_AR\n"
@@ -35,7 +35,7 @@ msgstr "Gracias: tu reporte fue enviado al equipo de riesgos."
 msgid "Report closed."
 msgstr "Reporte cerrado."
 
-#: front/concern.php:48 front/concern.php:50 templates/concern.html.twig:19 templates/myspace.html.twig:21
+#: front/concern.php:48 front/concern.php:50 templates/concern.html.twig:19 templates/myspace.html.twig:22
 msgid "Report a risk or an incident"
 msgstr "Reportar un riesgo o un incidente"
 
@@ -59,7 +59,7 @@ msgstr "Foto de %1$s tomada (%2$d riesgos)."
 msgid "Review recorded."
 msgstr "Revisión registrada."
 
-#: front/risklibrary.php:25 templates/dashboard.html.twig:66 templates/risk_form.html.twig:35
+#: front/risklibrary.php:25 templates/dashboard.html.twig:84 templates/risk_form.html.twig:35
 #: templates/risk_library.html.twig:17
 msgid "Risk library"
 msgstr "Biblioteca de riesgos"
@@ -88,7 +88,7 @@ msgstr "Se cumplió una acción de tratamiento de tu riesgo"
 msgid "A treatment action has been assigned to you"
 msgstr "Se te asignó una acción de tratamiento"
 
-#: setup.php:93
+#: setup.php:94
 msgid "ERM - Enterprise Risk Management"
 msgstr "ERM - Gestión de Riesgos Corporativos"
 
@@ -115,7 +115,7 @@ msgid "Action plans"
 msgstr "Planes de acción"
 
 #: src/Action.php:89 templates/action_form.html.twig:23 templates/actions_tab.html.twig:48 templates/concern.html.twig:57
-#: templates/myspace.html.twig:40
+#: templates/myspace.html.twig:41
 msgid "Action"
 msgstr "Acción"
 
@@ -124,22 +124,22 @@ msgid "Risk code"
 msgstr "Código del riesgo"
 
 #: src/Action.php:92 templates/action_form.html.twig:25 templates/actions_tab.html.twig:48
-#: templates/actions_tab.html.twig:94 templates/myspace.html.twig:40 templates/risk_wizard.html.twig:90
+#: templates/actions_tab.html.twig:94 templates/myspace.html.twig:41 templates/risk_wizard.html.twig:90
 msgid "Due date"
 msgstr "Vencimiento"
 
 #: src/Action.php:93 src/AiSystem.php:244 src/Event.php:174 src/Risk.php:361 templates/action_form.html.twig:26
 #: templates/actions_tab.html.twig:48 templates/aiassessment_form.html.twig:25 templates/aiassessments_tab.html.twig:28
 #: templates/aisystem_form.html.twig:25 templates/concern.html.twig:42 templates/event_form.html.twig:33
-#: templates/events_tab.html.twig:81 templates/myspace.html.twig:40 templates/myspace.html.twig:95
+#: templates/events_tab.html.twig:81 templates/myspace.html.twig:41 templates/myspace.html.twig:96
 #: templates/risk_form.html.twig:96 templates/risk_list.html.twig:30
 msgid "Status"
 msgstr "Estado"
 
-#: src/Action.php:94 src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:350
-#: templates/action_form.html.twig:21 templates/consolidated.html.twig:74 templates/dashboard.html.twig:124
-#: templates/dashboard.html.twig:193 templates/dashboard.html.twig:209 templates/myspace.html.twig:40
-#: templates/myspace.html.twig:67 templates/myspace.html.twig:95 templates/risk_form.html.twig:50
+#: src/Action.php:94 src/NotificationTargetRisk.php:160 src/Report.php:242 src/Risk.php:350
+#: templates/action_form.html.twig:21 templates/consolidated.html.twig:74 templates/dashboard.html.twig:142
+#: templates/dashboard.html.twig:211 templates/dashboard.html.twig:227 templates/myspace.html.twig:41
+#: templates/myspace.html.twig:68 templates/myspace.html.twig:96 templates/risk_form.html.twig:50
 #: templates/risk_list.html.twig:26
 msgid "Risk"
 msgstr "Riesgo"
@@ -313,7 +313,7 @@ msgstr "Planificada"
 msgid "In development / pilot"
 msgstr "En desarrollo / piloto"
 
-#: src/AiSystem.php:117 templates/dashboard.html.twig:94
+#: src/AiSystem.php:117 templates/dashboard.html.twig:112
 msgid "In production"
 msgstr "En producción"
 
@@ -645,7 +645,7 @@ msgstr "Apetito de riesgo (nivel residual máximo deseado)"
 msgid "Risk tolerance (maximum acceptable residual level)"
 msgstr "Tolerancia (nivel residual máximo admisible)"
 
-#: src/Category.php:61 src/Category.php:79 templates/entity_config.html.twig:56
+#: src/Category.php:61 src/Category.php:79 src/Methodology.php:112 templates/entity_config.html.twig:56
 msgid "Appetite statement"
 msgstr "Declaración de apetito"
 
@@ -653,11 +653,11 @@ msgstr "Declaración de apetito"
 msgid "Inherited from parent category"
 msgstr "Hereda de la categoría superior"
 
-#: src/Category.php:77 templates/entity_config.html.twig:55
+#: src/Category.php:77 src/Methodology.php:111 templates/entity_config.html.twig:55
 msgid "Appetite"
 msgstr "Apetito"
 
-#: src/Category.php:78 templates/entity_config.html.twig:55
+#: src/Category.php:78 src/Methodology.php:111 templates/entity_config.html.twig:55
 msgid "Tolerance"
 msgstr "Tolerancia"
 
@@ -738,70 +738,109 @@ msgstr "Riesgos de proveedores"
 msgid "Integrated risk map"
 msgstr "Mapa integral de riesgos"
 
-#: src/Dashboard.php:278 src/Dashboard.php:409
-msgid "Uncategorized"
-msgstr "Sin categoría"
+#: src/Dashboard.php:287
+msgid "Define the economic impact criteria of the company"
+msgstr "Definir los criterios de impacto económico de la empresa"
+
+#: src/Dashboard.php:288
+msgid "Review the risk appetite and tolerance of each category"
+msgstr "Revisar el apetito y la tolerancia de cada categoría"
+
+#: src/Dashboard.php:289
+msgid "Assign the ERM profiles to the people (owners, committee, manager)"
+msgstr "Asignar los perfiles ERM a las personas (dueños, comité, gestor)"
+
+#: src/Dashboard.php:290
+#, python-format
+msgid "Register the first %d risks (wizard or library)"
+msgstr "Registrar los primeros %d riesgos (asistente o biblioteca)"
+
+#: src/Dashboard.php:291
+#, python-format
+msgid "Assess the inherent and residual risk of at least 80% of the risks"
+msgstr "Evaluar el riesgo inherente y residual de al menos el 80% de los riesgos"
+
+#: src/Dashboard.php:292
+msgid "Define key risk indicators (KRIs) for the main risks"
+msgstr "Definir indicadores clave de riesgo (KRI) para los riesgos principales"
+
+#: src/Dashboard.php:293
+msgid "Record the first risk review"
+msgstr "Registrar la primera revisión de un riesgo"
+
+#: src/Dashboard.php:294
+msgid "Take the first quarterly snapshot and download the Board report"
+msgstr "Tomar la primera foto trimestral y descargar el informe de Directorio"
+
+#: src/Dashboard.php:295
+msgid "Enable GLPI e-mail notifications so that people receive the alerts"
+msgstr "Activar las notificaciones por correo de GLPI para que las personas reciban los avisos"
 
 #: src/Dashboard.php:33 src/Risk_Item.php:154
 msgid "Corporate risks"
 msgstr "Riesgos corporativos"
 
-#: src/Dashboard.php:399 src/Notifier.php:173
+#: src/Dashboard.php:339 src/Dashboard.php:472
+msgid "Uncategorized"
+msgstr "Sin categoría"
+
+#: src/Dashboard.php:462 src/Notifier.php:173
 #, python-format
 msgid "Residual level: %s"
 msgstr "Nivel residual: %s"
 
-#: src/Dashboard.php:403
+#: src/Dashboard.php:466
 msgid "Inherent: probability %1$s × impact %2$s"
 msgstr "Inherente: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:403
+#: src/Dashboard.php:466
 msgid "Residual: probability %1$s × impact %2$s"
 msgstr "Residual: probabilidad %1$s × impacto %2$s"
 
-#: src/Dashboard.php:409
+#: src/Dashboard.php:472
 #, python-format
 msgid "Category: %s"
 msgstr "Categoría: %s"
 
-#: src/Dashboard.php:412 src/Report.php:170 templates/report.html.twig:22 templates/risk_wizard.html.twig:22
+#: src/Dashboard.php:475 src/Methodology.php:57 src/Report.php:171 templates/report.html.twig:22
+#: templates/risk_wizard.html.twig:22
 #, python-format
 msgid "Entity: %s"
 msgstr "Entidad: %s"
 
-#: src/Dashboard.php:416 src/Scale.php:257
+#: src/Dashboard.php:479 src/Scale.php:257
 msgid "Above tolerance"
 msgstr "Sobre la tolerancia"
 
-#: src/Dashboard.php:417 src/Scale.php:260
+#: src/Dashboard.php:480 src/Scale.php:260
 msgid "Above appetite"
 msgstr "Sobre el apetito"
 
-#: src/Dashboard.php:418 templates/dashboard.html.twig:144
+#: src/Dashboard.php:481 templates/dashboard.html.twig:162
 msgid "Outside appetite"
 msgstr "Fuera del apetito"
 
-#: src/Dashboard.php:422 templates/dashboard.html.twig:144
+#: src/Dashboard.php:485 templates/dashboard.html.twig:162
 msgid "With overdue actions"
 msgstr "Con acciones vencidas"
 
-#: src/Dashboard.php:425 templates/dashboard.html.twig:145
+#: src/Dashboard.php:488 templates/dashboard.html.twig:163
 msgid "With KRIs in alert"
 msgstr "Con KRI en alerta"
 
-#: src/Dashboard.php:428
+#: src/Dashboard.php:491
 msgid "Underestimated according to loss history"
 msgstr "Subestimados según el historial de pérdidas"
 
-#: src/Dashboard.php:431
+#: src/Dashboard.php:494
 msgid "Treatment not effective or without plan"
 msgstr "Tratamiento ineficaz o sin plan"
 
-#: src/Dashboard.php:434 templates/dashboard.html.twig:108
+#: src/Dashboard.php:497 templates/dashboard.html.twig:126
 msgid "With quality suggestions"
 msgstr "Con sugerencias de calidad"
 
-#: src/Dashboard.php:437
+#: src/Dashboard.php:500
 msgid "Acceptance expired or expiring"
 msgstr "Aceptación vencida o por vencer"
 
@@ -859,9 +898,9 @@ msgstr "Recuperos"
 msgid "Net loss"
 msgstr "Pérdida neta"
 
-#: src/Event.php:178 src/Risk.php:353 templates/dashboard.html.twig:193 templates/entity_config.html.twig:54
-#: templates/event_form.html.twig:32 templates/myspace.html.twig:95 templates/risk_form.html.twig:51
-#: templates/risk_list.html.twig:28
+#: src/Event.php:178 src/Methodology.php:110 src/Risk.php:353 templates/dashboard.html.twig:211
+#: templates/entity_config.html.twig:54 templates/event_form.html.twig:32 templates/myspace.html.twig:96
+#: templates/risk_form.html.twig:51 templates/risk_list.html.twig:28
 msgid "Category"
 msgstr "Categoría"
 
@@ -903,6 +942,10 @@ msgstr "Vínculo con %s"
 #: src/Event_Item.php:38
 msgid "Linked risks and items"
 msgstr "Riesgos y elementos vinculados"
+
+#: src/Help.php:30 templates/help.html.twig:16
+msgid "Help and glossary"
+msgstr "Ayuda y glosario"
 
 #: src/Indicator.php:149
 msgid "Indicators (KRI)"
@@ -1045,13 +1088,212 @@ msgstr ""
 "El riesgo residual está fuera del apetito y no hay decisión de tratamiento: decidí si mitigarlo, transferirlo, "
 "evitarlo o aceptarlo formalmente."
 
+#: src/Methodology.php:106
+msgid "Level = probability x impact: %1$s 1-4, %2$s 5-9, %3$s 10-16, %4$s 20-25."
+msgstr "Nivel = probabilidad x impacto: %1$s 1-4, %2$s 5-9, %3$s 10-16, %4$s 20-25."
+
+#: src/Methodology.php:108
+msgid "6. Risk appetite and tolerance"
+msgstr "6. Apetito y tolerancia al riesgo"
+
+#: src/Methodology.php:109
+msgid ""
+"Appetite: maximum residual level the organization wishes to take in each category. Tolerance: maximum admissible "
+"level; above it, immediate action is required."
+msgstr ""
+"Apetito: nivel residual máximo que la organización desea asumir en cada categoría. Tolerancia: nivel máximo "
+"admisible; superarlo exige acción inmediata."
+
+#: src/Methodology.php:127
+msgid "7. Roles and responsibilities"
+msgstr "7. Roles y responsabilidades"
+
+#: src/Methodology.php:134
+msgid "8. Treatment, acceptance and segregation of duties"
+msgstr "8. Tratamiento, aceptación y segregación de funciones"
+
+#: src/Methodology.php:136
+msgid "Every risk to be mitigated or transferred has a treatment plan with responsibles and due dates, and a target level."
+msgstr "Todo riesgo a mitigar o transferir tiene un plan de tratamiento con responsables y vencimientos, y un nivel objetivo."
+
+#: src/Methodology.php:137
+#, python-format
+msgid ""
+"A risk is accepted only by the Risk Committee or the Board, never by its owner, with a justification and for %d "
+"months; then it must be accepted again."
+msgstr ""
+"Un riesgo sólo lo acepta el Comité de riesgos o el Directorio, nunca su dueño, con justificación y por %d meses; "
+"después debe aceptarse nuevamente."
+
+#: src/Methodology.php:138
+msgid "AI impact assessments are approved by someone who did not write or edit them."
+msgstr "Las evaluaciones de impacto de IA las aprueba alguien que no las escribió ni editó."
+
+#: src/Methodology.php:139
+msgid "When all actions are closed, the residual risk is reassessed and compared with the target (treatment effectiveness)."
+msgstr ""
+"Cuando se cierran todas las acciones, el riesgo residual se vuelve a evaluar y se compara con el objetivo (eficacia "
+"del tratamiento)."
+
+#: src/Methodology.php:142
+msgid "9. Monitoring and review"
+msgstr "9. Seguimiento y revisión"
+
+#: src/Methodology.php:144
+msgid ""
+"Every risk is reviewed at least once a year (high and critical risks more often); each review keeps a snapshot of the"
+" assessment."
+msgstr ""
+"Todo riesgo se revisa al menos una vez al año (los altos y críticos con más frecuencia); cada revisión guarda una "
+"foto de la evaluación."
+
+#: src/Methodology.php:145
+msgid "Key risk indicators have warning and critical thresholds; automatic indicators are measured from GLPI saved searches."
+msgstr ""
+"Los indicadores clave de riesgo tienen umbrales de alerta y crítico; los automáticos se miden con búsquedas guardadas"
+" de GLPI."
+
+#: src/Methodology.php:146
+#, python-format
+msgid ""
+"Loss events (losses, near misses, gains) are recorded and linked to the risks; the history of the last %d years "
+"suggests probability and impact."
+msgstr ""
+"Los eventos de pérdida (pérdidas, casi pérdidas, ganancias) se registran y vinculan a los riesgos; el historial de "
+"los últimos %d años sugiere la probabilidad y el impacto."
+
+#: src/Methodology.php:147
+msgid ""
+"Owners and responsibles receive e-mail alerts: assignments, actions due or overdue, reviews, KRIs, risks above "
+"appetite or tolerance, expiring acceptances."
+msgstr ""
+"Los dueños y responsables reciben avisos por correo: asignaciones, acciones por vencer o vencidas, revisiones, KRI, "
+"riesgos sobre el apetito o la tolerancia, aceptaciones por vencer."
+
+#: src/Methodology.php:148
+msgid "Any person can report risks and incidents from the simplified interface; the risk team reviews every report."
+msgstr ""
+"Cualquier persona puede reportar riesgos e incidentes desde la interfaz simplificada; el equipo de riesgos revisa "
+"cada reporte."
+
+#: src/Methodology.php:151
+msgid "10. Reporting"
+msgstr "10. Reportes"
+
+#: src/Methodology.php:153
+msgid "Dashboard with heat maps, appetite, treatment effectiveness, loss history and AI governance."
+msgstr "Tablero con mapas de calor, apetito, eficacia del tratamiento, historial de pérdidas y gobierno de la IA."
+
+#: src/Methodology.php:154
+msgid "Integrated map with the information security and supplier risks."
+msgstr "Mapa integral con los riesgos de seguridad de la información y de proveedores."
+
+#: src/Methodology.php:155
+msgid "Quarterly snapshot and Board report comparing with the previous quarter."
+msgstr "Foto trimestral e informe de Directorio comparado con el trimestre anterior."
+
+#: src/Methodology.php:158
+msgid "11. Quality criteria of the register"
+msgstr "11. Criterios de calidad del registro"
+
+#: src/Methodology.php:37 src/Methodology.php:56 templates/report.html.twig:33
+msgid "Risk management methodology"
+msgstr "Metodología de gestión de riesgos"
+
+#: src/Methodology.php:58
+msgid "Generated on %1$s by %2$s from the configuration in force. Any change of the configuration updates this document."
+msgstr ""
+"Generado el %1$s por %2$s a partir de la configuración vigente. Cualquier cambio de la configuración actualiza este "
+"documento."
+
+#: src/Methodology.php:61
+msgid "1. Purpose and reference framework"
+msgstr "1. Objetivo y marco de referencia"
+
+#: src/Methodology.php:62
+msgid ""
+"This methodology describes how the organization identifies, analyses, evaluates, treats, monitors and reports its "
+"corporate risks, following ISO 31000 and COSO ERM. Information security risks are managed with the same criteria in "
+"the ISMS (ISO/IEC 27001) and AI risks according to ISO/IEC 42001."
+msgstr ""
+"Esta metodología describe cómo la organización identifica, analiza, evalúa, trata, sigue y reporta sus riesgos "
+"corporativos, según ISO 31000 y COSO ERM. Los riesgos de seguridad de la información se gestionan con los mismos "
+"criterios en el SGSI (ISO/IEC 27001) y los de IA según ISO/IEC 42001."
+
+#: src/Methodology.php:64
+msgid "2. Process"
+msgstr "2. Proceso"
+
+#: src/Methodology.php:66
+msgid "Identification: each risk is written as an event, with its causes and consequences, a category and an owner."
+msgstr "Identificación: cada riesgo se redacta como un evento, con sus causas y consecuencias, una categoría y un dueño."
+
+#: src/Methodology.php:67
+msgid ""
+"Analysis: probability and impact are assessed without controls (inherent risk) and with the existing controls "
+"(residual risk)."
+msgstr ""
+"Análisis: se evalúan la probabilidad y el impacto sin controles (riesgo inherente) y con los controles existentes "
+"(riesgo residual)."
+
+#: src/Methodology.php:68
+msgid "Evaluation: the residual level is compared with the appetite and tolerance of its category."
+msgstr "Evaluación: el nivel residual se compara con el apetito y la tolerancia de su categoría."
+
+#: src/Methodology.php:69
+msgid "Treatment: mitigate, transfer, avoid or accept; a target level and an action plan with responsibles and due dates."
+msgstr ""
+"Tratamiento: mitigar, transferir, evitar o aceptar; un nivel objetivo y un plan de acción con responsables y "
+"vencimientos."
+
+#: src/Methodology.php:70
+msgid "Monitoring: key risk indicators, loss events, periodic reviews and the effectiveness of the treatment."
+msgstr "Seguimiento: indicadores clave de riesgo, eventos de pérdida, revisiones periódicas y eficacia del tratamiento."
+
+#: src/Methodology.php:71
+msgid "Recording and reporting: register in the tool, dashboard, integrated map and quarterly Board report."
+msgstr "Registro e informe: registro en la herramienta, tablero, mapa integral e informe trimestral al Directorio."
+
+#: src/Methodology.php:74
+msgid "3. Probability scale"
+msgstr "3. Escala de probabilidad"
+
+#: src/Methodology.php:79 src/Methodology.php:87 templates/consolidated.html.twig:74 templates/event_items_tab.html.twig:18
+#: templates/items_tab.html.twig:23
+msgid "Level"
+msgstr "Nivel"
+
+#: src/Methodology.php:80 src/Methodology.php:88 templates/help.html.twig:43
+msgid "Meaning"
+msgstr "Significado"
+
+#: src/Methodology.php:82
+msgid "4. Impact scale and economic criteria"
+msgstr "4. Escala de impacto y criterios económicos"
+
+#: src/Methodology.php:89
+msgid "The worst consequence among money, customers, regulators, reputation and people determines the impact."
+msgstr "La peor consecuencia entre dinero, clientes, reguladores, reputación y personas determina el impacto."
+
+#: src/Methodology.php:91
+msgid "5. Risk matrix and levels"
+msgstr "5. Matriz de riesgo y niveles"
+
+#: src/Methodology.php:92 src/Report.php:225 templates/events_tab.html.twig:44 templates/risk_form.html.twig:59
+msgid "Probability"
+msgstr "Probabilidad"
+
+#: src/Methodology.php:92 src/Report.php:225 templates/events_tab.html.twig:46 templates/risk_form.html.twig:60
+msgid "Impact"
+msgstr "Impacto"
+
 #: src/MySpace.php:33 templates/myspace.html.twig:19
 msgid "My ERM workspace"
 msgstr "Mi espacio ERM"
 
-#: src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:352 templates/dashboard.html.twig:124
-#: templates/dashboard.html.twig:193 templates/dashboard.html.twig:209 templates/items_tab.html.twig:23
-#: templates/myspace.html.twig:95 templates/risk_form.html.twig:49 templates/risk_list.html.twig:26
+#: src/NotificationTargetRisk.php:160 src/Report.php:242 src/Risk.php:352 templates/dashboard.html.twig:142
+#: templates/dashboard.html.twig:211 templates/dashboard.html.twig:227 templates/items_tab.html.twig:23
+#: templates/myspace.html.twig:96 templates/risk_form.html.twig:49 templates/risk_list.html.twig:26
 msgid "Code"
 msgstr "Código"
 
@@ -1072,7 +1314,7 @@ msgid "Detail"
 msgstr "Detalle"
 
 #: src/NotificationTargetRisk.php:163 templates/aiassessments_tab.html.twig:28 templates/concern.html.twig:42
-#: templates/concern.html.twig:57 templates/indicators_tab.html.twig:61 templates/report.html.twig:41
+#: templates/concern.html.twig:57 templates/indicators_tab.html.twig:61 templates/report.html.twig:45
 #: templates/reviews_tab.html.twig:48 templates/reviews_tab.html.twig:71
 msgid "Date"
 msgstr "Fecha"
@@ -1153,7 +1395,7 @@ msgstr "La aceptación del riesgo venció"
 msgid "Linked ISMS control failed its last test"
 msgstr "Un control del SGSI vinculado falló su última prueba"
 
-#: src/NotificationTargetRisk.php:74 src/NotificationTargetRisk.php:161 src/Profile.php:127 src/Report.php:242
+#: src/NotificationTargetRisk.php:74 src/NotificationTargetRisk.php:161 src/Profile.php:127 src/Report.php:243
 #: src/Risk.php:354 templates/consolidated.html.twig:74 templates/risk_form.html.twig:52 templates/risk_list.html.twig:28
 msgid "Risk owner"
 msgstr "Dueño del riesgo"
@@ -1371,54 +1613,54 @@ msgstr "Aceptar riesgos"
 msgid "Accept or revoke the acceptance of a risk (never an own risk)"
 msgstr "Aceptar o revocar la aceptación de un riesgo (nunca el propio)"
 
-#: src/Report.php:134
+#: src/Report.php:135
 #, python-format
 msgid "Corporate risk report - %s"
 msgstr "Informe de riesgos corporativos - %s"
 
-#: src/Report.php:171
+#: src/Report.php:172
 msgid "Generated on %1$s by %2$s"
 msgstr "Generado el %1$s por %2$s"
 
-#: src/Report.php:172
+#: src/Report.php:173
 #, python-format
 msgid "Compared with the snapshot of %s"
 msgstr "Comparado con la foto de %s"
 
-#: src/Report.php:172
+#: src/Report.php:173
 msgid "No previous snapshot to compare with."
 msgstr "No hay una foto anterior para comparar."
 
-#: src/Report.php:176
+#: src/Report.php:177
 msgid "1. Executive summary"
 msgstr "1. Resumen ejecutivo"
 
-#: src/Report.php:178 templates/myspace.html.twig:67
+#: src/Report.php:179 templates/myspace.html.twig:68
 msgid "Indicator"
 msgstr "Indicador"
 
-#: src/Report.php:178
+#: src/Report.php:179
 msgid "Current"
 msgstr "Actual"
 
-#: src/Report.php:180 templates/dashboard.html.twig:74 templates/dashboard.html.twig:142
+#: src/Report.php:181 templates/dashboard.html.twig:92 templates/dashboard.html.twig:160
 msgid "Active risks"
 msgstr "Riesgos activos"
 
-#: src/Report.php:182 templates/dashboard.html.twig:76
+#: src/Report.php:183 templates/dashboard.html.twig:94
 #, python-format
 msgid "Residual %s"
 msgstr "Residual %s"
 
-#: src/Report.php:184 templates/dashboard.html.twig:191
+#: src/Report.php:185 templates/dashboard.html.twig:209
 msgid "Outside risk appetite"
 msgstr "Fuera del apetito de riesgo"
 
-#: src/Report.php:185 templates/dashboard.html.twig:78 templates/dashboard.html.twig:145 templates/risk_list.html.twig:20
+#: src/Report.php:186 templates/dashboard.html.twig:96 templates/dashboard.html.twig:163 templates/risk_list.html.twig:20
 msgid "Maximum economic exposure"
 msgstr "Exposición económica máxima"
 
-#: src/Report.php:193
+#: src/Report.php:194
 msgid ""
 "Treatment: %1$d at target, %2$d in progress, %3$d plans completed without reaching the target, %4$d above target "
 "without plan. Overdue actions: %5$d. KRIs in alert: %6$d."
@@ -1426,87 +1668,79 @@ msgstr ""
 "Tratamiento: %1$d en el objetivo, %2$d en curso, %3$d planes terminados sin alcanzar el objetivo, %4$d sobre el "
 "objetivo sin plan. Acciones vencidas: %5$d. KRI en alerta: %6$d."
 
-#: src/Report.php:202
+#: src/Report.php:203
 msgid "Net losses of the last 12 months: %1$s. Risks underestimated according to their loss history: %2$d."
 msgstr "Pérdidas netas de los últimos 12 meses: %1$s. Riesgos subestimados según su historial de pérdidas: %2$d."
 
-#: src/Report.php:208
+#: src/Report.php:209
 #, python-format
 msgid "2. Changes since %s"
 msgstr "2. Cambios desde %s"
 
-#: src/Report.php:209
+#: src/Report.php:210
 msgid "Risks that increased"
 msgstr "Riesgos que subieron"
 
-#: src/Report.php:209
+#: src/Report.php:210
 msgid "Risks that decreased"
 msgstr "Riesgos que bajaron"
 
-#: src/Report.php:209
+#: src/Report.php:210
 msgid "New risks"
 msgstr "Riesgos nuevos"
 
-#: src/Report.php:210
+#: src/Report.php:211
 msgid "Risks that went outside the appetite"
 msgstr "Riesgos que salieron del apetito"
 
-#: src/Report.php:210
+#: src/Report.php:211
 msgid "Risks back within the appetite"
 msgstr "Riesgos que volvieron al apetito"
 
-#: src/Report.php:211
+#: src/Report.php:212
 msgid "Closed or removed risks"
 msgstr "Riesgos cerrados o eliminados"
 
-#: src/Report.php:223
+#: src/Report.php:224
 msgid "3. Residual heat map"
 msgstr "3. Mapa de calor residual"
 
-#: src/Report.php:224 templates/events_tab.html.twig:44 templates/risk_form.html.twig:59
-msgid "Probability"
-msgstr "Probabilidad"
-
-#: src/Report.php:224 templates/events_tab.html.twig:46 templates/risk_form.html.twig:60
-msgid "Impact"
-msgstr "Impacto"
-
-#: src/Report.php:242 templates/actions_tab.html.twig:33 templates/aiassessments_tab.html.twig:28
-#: templates/dashboard.html.twig:209 templates/myspace.html.twig:95 templates/reviews_tab.html.twig:36
+#: src/Report.php:243 templates/actions_tab.html.twig:33 templates/aiassessments_tab.html.twig:28
+#: templates/dashboard.html.twig:227 templates/myspace.html.twig:96 templates/reviews_tab.html.twig:36
 #: templates/reviews_tab.html.twig:48 templates/risk_list.html.twig:29
 msgid "Residual"
 msgstr "Residual"
 
-#: src/Report.php:242 templates/dashboard.html.twig:193 templates/myspace.html.twig:95 templates/risk_list.html.twig:29
+#: src/Report.php:243 templates/dashboard.html.twig:211 templates/myspace.html.twig:96 templates/risk_list.html.twig:29
 msgid "Position"
 msgstr "Posición"
 
-#: src/Report.php:249
+#: src/Report.php:250
 msgid "4. Risks outside the appetite"
 msgstr "4. Riesgos fuera del apetito"
 
-#: src/Report.php:249 templates/dashboard.html.twig:198
+#: src/Report.php:250 templates/dashboard.html.twig:216
 msgid "All residual risks are within appetite."
 msgstr "Todos los riesgos residuales están dentro del apetito."
 
-#: src/Report.php:250
+#: src/Report.php:251
 msgid "5. Top 10 residual risks"
 msgstr "5. Diez principales riesgos residuales"
 
-#: src/Report.php:255
+#: src/Report.php:256
 msgid "6. Integrated view (corporate, information security and supplier risks)"
 msgstr "6. Visión integral (riesgos corporativos, de seguridad de la información y de proveedores)"
 
-#: src/Report.php:256 templates/consolidated.html.twig:25 templates/consolidated.html.twig:74
+#: src/Report.php:257 templates/consolidated.html.twig:25 templates/consolidated.html.twig:74
 #: templates/indicators_tab.html.twig:85
 msgid "Source"
 msgstr "Origen"
 
-#: src/Report.php:260 templates/consolidated.html.twig:27
+#: src/Report.php:261 templates/consolidated.html.twig:27
 msgid "Total"
 msgstr "Total"
 
-#: src/Report.php:270
+#: src/Report.php:271
 msgid "Corporate risks assessed below their linked risks"
 msgstr "Riesgos corporativos evaluados por debajo de sus riesgos vinculados"
 
@@ -1527,7 +1761,7 @@ msgstr "Describí la conclusión de la revisión."
 msgid "Review recorded: %s"
 msgstr "Revisión registrada: %s"
 
-#: src/Review.php:44 templates/dashboard.html.twig:84
+#: src/Review.php:44 templates/dashboard.html.twig:102
 msgid "Review"
 msgid_plural "Reviews"
 msgstr[0] "Revisión"
@@ -1622,7 +1856,7 @@ msgstr "Velocidad de materialización"
 msgid "Trend"
 msgstr "Tendencia"
 
-#: src/Risk.php:366 templates/myspace.html.twig:95 templates/reviews_tab.html.twig:48 templates/reviews_tab.html.twig:75
+#: src/Risk.php:366 templates/myspace.html.twig:96 templates/reviews_tab.html.twig:48 templates/reviews_tab.html.twig:75
 #: templates/risk_form.html.twig:110 templates/risk_list.html.twig:30
 msgid "Next review"
 msgstr "Próxima revisión"
@@ -1962,11 +2196,11 @@ msgstr ""
 "Ejemplo: \"Implementar validación biométrica de identidad en la app\" - responsable: Jefe de Canales Digitales - "
 "vencimiento: 30/06."
 
-#: templates/actions_tab.html.twig:22 templates/dashboard.html.twig:110
+#: templates/actions_tab.html.twig:22 templates/dashboard.html.twig:128
 msgid "Target reached"
 msgstr "Objetivo alcanzado"
 
-#: templates/actions_tab.html.twig:23 templates/dashboard.html.twig:110
+#: templates/actions_tab.html.twig:23 templates/dashboard.html.twig:128
 msgid "Treatment in progress"
 msgstr "Tratamiento en curso"
 
@@ -1974,7 +2208,7 @@ msgstr "Tratamiento en curso"
 msgid "Plan completed, target not reached: review the plan or the controls"
 msgstr "Plan terminado sin alcanzar el objetivo: revisá el plan o los controles"
 
-#: templates/actions_tab.html.twig:25 templates/dashboard.html.twig:110
+#: templates/actions_tab.html.twig:25 templates/dashboard.html.twig:128
 msgid "Above target without plan"
 msgstr "Sobre el objetivo sin plan"
 
@@ -1982,11 +2216,11 @@ msgstr "Sobre el objetivo sin plan"
 msgid "Define the target risk in the main tab to measure the effectiveness of the treatment."
 msgstr "Definí el riesgo objetivo en la pestaña principal para medir la eficacia del tratamiento."
 
-#: templates/actions_tab.html.twig:28 templates/dashboard.html.twig:105
+#: templates/actions_tab.html.twig:28 templates/dashboard.html.twig:123
 msgid "Treatment effectiveness"
 msgstr "Eficacia del tratamiento"
 
-#: templates/actions_tab.html.twig:32 templates/dashboard.html.twig:209 templates/reviews_tab.html.twig:35
+#: templates/actions_tab.html.twig:32 templates/dashboard.html.twig:227 templates/reviews_tab.html.twig:35
 #: templates/reviews_tab.html.twig:48 templates/risk_list.html.twig:29
 msgid "Inherent"
 msgstr "Inherente"
@@ -1999,11 +2233,11 @@ msgstr "Objetivo"
 msgid "%1$d of %2$d actions closed"
 msgstr "%1$d de %2$d acciones cerradas"
 
-#: templates/actions_tab.html.twig:54 templates/myspace.html.twig:46
+#: templates/actions_tab.html.twig:54 templates/myspace.html.twig:47
 msgid "overdue"
 msgstr "vencida"
 
-#: templates/actions_tab.html.twig:65 templates/entity_config.html.twig:82 templates/myspace.html.twig:55
+#: templates/actions_tab.html.twig:65 templates/entity_config.html.twig:82 templates/myspace.html.twig:56
 msgid "Save"
 msgstr "Guardar"
 
@@ -2347,11 +2581,7 @@ msgstr "Todos los riesgos corporativos están al menos al nivel de sus riesgos v
 msgid "High and critical risks of all sources"
 msgstr "Riesgos altos y críticos de todos los orígenes"
 
-#: templates/consolidated.html.twig:74 templates/event_items_tab.html.twig:18 templates/items_tab.html.twig:23
-msgid "Level"
-msgstr "Nivel"
-
-#: templates/consolidated.html.twig:74 templates/dashboard.html.twig:142 templates/risk_list.html.twig:27
+#: templates/consolidated.html.twig:74 templates/dashboard.html.twig:160 templates/risk_list.html.twig:27
 msgid "Entity"
 msgstr "Entidad"
 
@@ -2359,106 +2589,129 @@ msgstr "Entidad"
 msgid "No high or critical risks."
 msgstr "No hay riesgos altos ni críticos."
 
-#: templates/dashboard.html.twig:106
+#: templates/dashboard.html.twig:101
+#, python-format
+msgid "%d risk report from the staff is waiting for review."
+msgid_plural "%d risk reports from the staff are waiting for review."
+msgstr[0] "%d reporte de riesgo del personal espera revisión."
+msgstr[1] "%d reportes de riesgo del personal esperan revisión."
+
+#: templates/dashboard.html.twig:107
+msgid "AI governance (ISO/IEC 42001)"
+msgstr "Gobierno de la IA (ISO/IEC 42001)"
+
+#: templates/dashboard.html.twig:108 templates/dashboard.html.twig:111
+msgid "AI systems"
+msgstr "Sistemas de IA"
+
+#: templates/dashboard.html.twig:113
+msgid "Limited or high risk (AI Act)"
+msgstr "Riesgo limitado o alto (AI Act)"
+
+#: templates/dashboard.html.twig:114
+msgid "Governance gaps"
+msgstr "Brechas de gobierno"
+
+#: templates/dashboard.html.twig:124
 msgid "See risks to act on"
 msgstr "Ver riesgos a atender"
 
-#: templates/dashboard.html.twig:109
+#: templates/dashboard.html.twig:127
 msgid "Acceptances to renew"
 msgstr "Aceptaciones a renovar"
 
-#: templates/dashboard.html.twig:110
+#: templates/dashboard.html.twig:128
 msgid "Plan completed, target not reached"
 msgstr "Plan terminado sin alcanzar el objetivo"
 
-#: templates/dashboard.html.twig:110
+#: templates/dashboard.html.twig:128
 msgid "Without target"
 msgstr "Sin objetivo"
 
-#: templates/dashboard.html.twig:119
+#: templates/dashboard.html.twig:137
 msgid "Assessment vs. loss history"
 msgstr "Evaluación vs. historial de pérdidas"
 
-#: templates/dashboard.html.twig:121
+#: templates/dashboard.html.twig:139
 msgid "Net losses, last 12 months"
 msgstr "Pérdidas netas, últimos 12 meses"
 
-#: templates/dashboard.html.twig:121
+#: templates/dashboard.html.twig:139
 msgid "Loss event register"
 msgstr "Registro de eventos de pérdida"
 
-#: templates/dashboard.html.twig:124 templates/events_tab.html.twig:36 templates/events_tab.html.twig:76
+#: templates/dashboard.html.twig:142 templates/events_tab.html.twig:36 templates/events_tab.html.twig:76
 msgid "Loss events"
 msgstr "Eventos de pérdida"
 
-#: templates/dashboard.html.twig:124
+#: templates/dashboard.html.twig:142
 msgid "Probability (assessed → history)"
 msgstr "Probabilidad (evaluada → historial)"
 
-#: templates/dashboard.html.twig:124
+#: templates/dashboard.html.twig:142
 msgid "Impact (assessed → history)"
 msgstr "Impacto (evaluado → historial)"
 
-#: templates/dashboard.html.twig:132
+#: templates/dashboard.html.twig:150
 msgid "No risk is underestimated according to its loss history."
 msgstr "Ningún riesgo está subestimado según su historial de pérdidas."
 
-#: templates/dashboard.html.twig:139
+#: templates/dashboard.html.twig:157
 msgid "Risks by entity"
 msgstr "Riesgos por entidad"
 
-#: templates/dashboard.html.twig:168
+#: templates/dashboard.html.twig:186
 msgid "Heat map - inherent risk"
 msgstr "Mapa de calor - riesgo inherente"
 
-#: templates/dashboard.html.twig:169
+#: templates/dashboard.html.twig:187
 msgid "Heat map - residual risk"
 msgstr "Mapa de calor - riesgo residual"
 
-#: templates/dashboard.html.twig:175
+#: templates/dashboard.html.twig:193
 msgid "Risks and exposure by category"
 msgstr "Riesgos y exposición por categoría"
 
-#: templates/dashboard.html.twig:179 templates/report.html.twig:28 templates/risk_list.html.twig:18
+#: templates/dashboard.html.twig:197 templates/report.html.twig:28 templates/risk_list.html.twig:18
 #, python-format
 msgid "%d risk"
 msgid_plural "%d risks"
 msgstr[0] "%d riesgo"
 msgstr[1] "%d riesgos"
 
-#: templates/dashboard.html.twig:185
+#: templates/dashboard.html.twig:203
 msgid "Bar length is proportional to the maximum exposure of the category; colours show the residual level."
 msgstr "El largo de cada barra es proporcional a la exposición máxima de la categoría; los colores, al nivel residual."
 
-#: templates/dashboard.html.twig:207
+#: templates/dashboard.html.twig:225
 msgid "Top 10 residual risks"
 msgstr "Top 10 riesgos residuales"
 
-#: templates/dashboard.html.twig:207
+#: templates/dashboard.html.twig:225
 msgid "See full register"
 msgstr "Ver registro completo"
 
-#: templates/dashboard.html.twig:209 templates/risk_list.html.twig:30
+#: templates/dashboard.html.twig:227 templates/risk_list.html.twig:30
 msgid "Max. impact"
 msgstr "Impacto máx."
 
-#: templates/dashboard.html.twig:222
+#: templates/dashboard.html.twig:240
 msgid "Overdue treatment actions"
 msgstr "Acciones de tratamiento vencidas"
 
-#: templates/dashboard.html.twig:223
+#: templates/dashboard.html.twig:241
 msgid "See all action plans"
 msgstr "Ver todos los planes de acción"
 
-#: templates/dashboard.html.twig:228
+#: templates/dashboard.html.twig:246
 msgid "No overdue actions."
 msgstr "Sin acciones vencidas."
 
-#: templates/dashboard.html.twig:232
+#: templates/dashboard.html.twig:250
 msgid "KRIs in alert"
 msgstr "KRI en alerta"
 
-#: templates/dashboard.html.twig:238
+#: templates/dashboard.html.twig:256
 msgid "No KRI in alert."
 msgstr "Ningún KRI en alerta."
 
@@ -2514,11 +2767,23 @@ msgstr ""
 "Los riesgos de seguridad de la información se gestionan en detalle en el registro del SGSI (GRC Manager) y pueden "
 "vincularse desde la pestaña «Elementos relacionados»."
 
-#: templates/dashboard.html.twig:65 templates/myspace.html.twig:20 templates/risk_wizard.html.twig:19
+#: templates/dashboard.html.twig:65
+msgid "Getting started"
+msgstr "Primeros pasos"
+
+#: templates/dashboard.html.twig:70
+msgid "Steps to put the risk management process to work. This card disappears when all are done."
+msgstr "Pasos para poner en marcha el proceso de gestión de riesgos. Esta tarjeta desaparece cuando se completan todos."
+
+#: templates/dashboard.html.twig:71 templates/help.html.twig:18 templates/report.html.twig:35
+msgid "Download the methodology (PDF)"
+msgstr "Descargar la metodología (PDF)"
+
+#: templates/dashboard.html.twig:83 templates/myspace.html.twig:21 templates/risk_wizard.html.twig:19
 msgid "Register a risk step by step"
 msgstr "Registrar un riesgo paso a paso"
 
-#: templates/dashboard.html.twig:70
+#: templates/dashboard.html.twig:88
 msgid ""
 "Restricted view: only the risks you own, the risks of your groups and those where you have actions or indicators "
 "assigned are shown."
@@ -2526,36 +2791,13 @@ msgstr ""
 "Vista restringida: se muestran sólo los riesgos de los que sos dueño, los de tus grupos y aquellos donde tenés "
 "acciones o indicadores asignados."
 
-#: templates/dashboard.html.twig:78
+#: templates/dashboard.html.twig:96
 msgid "Sum of the expected annual loss of each risk according to its assessment"
 msgstr "Suma de la pérdida esperada anual de cada riesgo según su evaluación"
 
-#: templates/dashboard.html.twig:78
+#: templates/dashboard.html.twig:96
 msgid "Expected annual loss"
 msgstr "Pérdida esperada anual"
-
-#: templates/dashboard.html.twig:83
-#, python-format
-msgid "%d risk report from the staff is waiting for review."
-msgid_plural "%d risk reports from the staff are waiting for review."
-msgstr[0] "%d reporte de riesgo del personal espera revisión."
-msgstr[1] "%d reportes de riesgo del personal esperan revisión."
-
-#: templates/dashboard.html.twig:89
-msgid "AI governance (ISO/IEC 42001)"
-msgstr "Gobierno de la IA (ISO/IEC 42001)"
-
-#: templates/dashboard.html.twig:90 templates/dashboard.html.twig:93
-msgid "AI systems"
-msgstr "Sistemas de IA"
-
-#: templates/dashboard.html.twig:95
-msgid "Limited or high risk (AI Act)"
-msgstr "Riesgo limitado o alto (AI Act)"
-
-#: templates/dashboard.html.twig:96
-msgid "Governance gaps"
-msgstr "Brechas de gobierno"
 
 #: templates/entity_config.html.twig:19
 msgid "Risk numbering"
@@ -2826,6 +3068,42 @@ msgstr ""
 msgid "Record a loss event"
 msgstr "Registrar evento de pérdida"
 
+#: templates/help.html.twig:17
+msgid ""
+"What each person has to do, the meaning of the terms and the most common questions. The complete method is in the "
+"methodology document."
+msgstr ""
+"Qué tiene que hacer cada persona, el significado de los términos y las preguntas más comunes. El método completo está"
+" en el documento de metodología."
+
+#: templates/help.html.twig:20 templates/help.html.twig:25
+msgid "What do I have to do?"
+msgstr "¿Qué tengo que hacer?"
+
+#: templates/help.html.twig:21 templates/help.html.twig:41
+msgid "Glossary"
+msgstr "Glosario"
+
+#: templates/help.html.twig:22 templates/help.html.twig:47
+msgid "Frequently asked questions"
+msgstr "Preguntas frecuentes"
+
+#: templates/help.html.twig:30
+msgid "Your role"
+msgstr "Tu rol"
+
+#: templates/help.html.twig:34
+msgid "When"
+msgstr "Cuándo"
+
+#: templates/help.html.twig:43
+msgid "Term"
+msgstr "Término"
+
+#: templates/help.html.twig:43
+msgid "Example"
+msgstr "Ejemplo"
+
 #: templates/indicators_tab.html.twig:2
 msgid "What is a key risk indicator (KRI)?"
 msgstr "¿Qué es un indicador clave de riesgo (KRI)?"
@@ -2870,7 +3148,7 @@ msgstr "menor es peor"
 msgid "higher is worse"
 msgstr "mayor es peor"
 
-#: templates/indicators_tab.html.twig:34 templates/indicators_tab.html.twig:84 templates/myspace.html.twig:67
+#: templates/indicators_tab.html.twig:34 templates/indicators_tab.html.twig:84 templates/myspace.html.twig:68
 msgid "Frequency"
 msgstr "Frecuencia"
 
@@ -2911,7 +3189,7 @@ msgstr "Ejemplo: \"Días promedio de cobro de obras sociales\" - alerta 60, crí
 msgid "Value"
 msgstr "Valor"
 
-#: templates/indicators_tab.html.twig:64 templates/myspace.html.twig:67 templates/myspace.html.twig:83
+#: templates/indicators_tab.html.twig:64 templates/myspace.html.twig:68 templates/myspace.html.twig:84
 msgid "Record value"
 msgstr "Registrar valor"
 
@@ -2973,59 +3251,63 @@ msgstr ""
 msgid "No linked items."
 msgstr "Sin elementos vinculados."
 
-#: templates/myspace.html.twig:105
+#: templates/myspace.html.twig:106
 msgid "Not scheduled"
 msgstr "Sin programar"
 
-#: templates/myspace.html.twig:107
+#: templates/myspace.html.twig:108
 msgid "You do not own any risk."
 msgstr "No sos dueño de ningún riesgo."
 
-#: templates/myspace.html.twig:26
+#: templates/myspace.html.twig:20
+msgid "Guide for my role"
+msgstr "Guía de mi rol"
+
+#: templates/myspace.html.twig:27
 msgid "My risks"
 msgstr "Mis riesgos"
 
-#: templates/myspace.html.twig:26
+#: templates/myspace.html.twig:27
 msgid "Pending actions"
 msgstr "Acciones pendientes"
 
-#: templates/myspace.html.twig:26
+#: templates/myspace.html.twig:27
 msgid "Overdue actions"
 msgstr "Acciones vencidas"
 
-#: templates/myspace.html.twig:27
+#: templates/myspace.html.twig:28
 msgid "KRIs to measure"
 msgstr "KRI para medir"
 
-#: templates/myspace.html.twig:27
+#: templates/myspace.html.twig:28
 msgid "Reviews due"
 msgstr "Revisiones próximas"
 
-#: templates/myspace.html.twig:38
+#: templates/myspace.html.twig:39
 msgid "My pending actions"
 msgstr "Mis acciones pendientes"
 
-#: templates/myspace.html.twig:60
+#: templates/myspace.html.twig:61
 msgid "You have no pending actions."
 msgstr "No tenés acciones pendientes."
 
-#: templates/myspace.html.twig:65
+#: templates/myspace.html.twig:66
 msgid "KRIs I measure"
 msgstr "KRI a mi cargo"
 
-#: templates/myspace.html.twig:67
+#: templates/myspace.html.twig:68
 msgid "Last value"
 msgstr "Último valor"
 
-#: templates/myspace.html.twig:67
+#: templates/myspace.html.twig:68
 msgid "Next measurement"
 msgstr "Próxima medición"
 
-#: templates/myspace.html.twig:88
+#: templates/myspace.html.twig:89
 msgid "You are not responsible for any KRI."
 msgstr "No tenés indicadores a cargo."
 
-#: templates/myspace.html.twig:93
+#: templates/myspace.html.twig:94
 msgid "Risks I own"
 msgstr "Riesgos a mi cargo"
 
@@ -3055,11 +3337,19 @@ msgstr "Sin comparación"
 msgid "Download PDF"
 msgstr "Descargar PDF"
 
-#: templates/report.html.twig:37
+#: templates/report.html.twig:34
+msgid ""
+"Document generated from the current configuration (scales, economic criteria, appetite, roles, acceptance, "
+"monitoring). Auditors ask for it and it is the training material for new users."
+msgstr ""
+"Documento generado desde la configuración vigente (escalas, criterios económicos, apetito, roles, aceptación, "
+"seguimiento). Lo piden los auditores y es el material de capacitación para usuarios nuevos."
+
+#: templates/report.html.twig:41
 msgid "Quarterly snapshots"
 msgstr "Fotos trimestrales"
 
-#: templates/report.html.twig:39
+#: templates/report.html.twig:43
 msgid ""
 "A snapshot keeps the assessment of every active risk at a date. The automatic action \"ermsnapshot\" takes it at the "
 "beginning of each quarter; it can also be taken manually for the active entities (it replaces their snapshot of the "
@@ -3069,19 +3359,19 @@ msgstr ""
 "comienzo de cada trimestre; también se puede tomar a mano para las entidades activas (reemplaza su foto del trimestre"
 " actual)."
 
-#: templates/report.html.twig:41
+#: templates/report.html.twig:45
 msgid "Period"
 msgstr "Período"
 
-#: templates/report.html.twig:41
+#: templates/report.html.twig:45
 msgid "Risks"
 msgstr "Riesgos"
 
-#: templates/report.html.twig:44
+#: templates/report.html.twig:48
 msgid "No snapshots yet."
 msgstr "Todavía no hay fotos."
 
-#: templates/report.html.twig:50
+#: templates/report.html.twig:54
 #, python-format
 msgid "Take snapshot of %s now"
 msgstr "Tomar ahora la foto de %s"

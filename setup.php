@@ -34,13 +34,14 @@ use GlpiPlugin\Erm\Event;
 use GlpiPlugin\Erm\Event_Item;
 use GlpiPlugin\Erm\Indicator;
 use GlpiPlugin\Erm\MySpace;
+use GlpiPlugin\Erm\Help;
 use GlpiPlugin\Erm\Profile;
 use GlpiPlugin\Erm\Report;
 use GlpiPlugin\Erm\Review;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '2.2.0');
+define('PLUGIN_ERM_VERSION', '2.3.0');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -83,7 +84,7 @@ function plugin_init_erm(): void
     $PLUGIN_HOOKS[Hooks::HELPDESK_MENU_ENTRY_ICON]['erm'] = 'ti ti-speakerphone';
     $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [
         Dashboard::class, MySpace::class, Risk::class, Action::class, Event::class, Concern::class, AiSystem::class,
-        Consolidated::class, Report::class, Category::class,
+        Consolidated::class, Report::class, Category::class, Help::class,
     ]];
 }
 
