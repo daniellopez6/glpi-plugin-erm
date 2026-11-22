@@ -54,7 +54,7 @@ ISMS data, with optional integration with [GLPI GRC Manager](https://github.com/
 |---|---|
 | GLPI | 12.0.x |
 | PHP | 8.2 or later |
-| GLPI GRC Manager | **optional**: ERM works on its own. When GRC Manager is active, ERM places its menu next to it, links corporate risks with ISMS objects and adds ISMS and supplier risks to the integrated map and the Board report (read only) |
+| GLPI GRC Manager | **optional**: ERM works on its own with its own top-level menu. When GRC Manager is active, ERM places its entries in its menu, links corporate risks with ISMS objects and adds ISMS and supplier risks to the integrated map and the Board report (read only) |
 
 No third-party runtime libraries.
 

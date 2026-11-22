@@ -142,6 +142,9 @@ class AiSystem extends CommonDBTM
 
     public function prepareInputForUpdate($input)
     {
+        if (!Rights::entityChangeAllowed($input, $this->fields)) {
+            return false;
+        }
         return $this->clean($input);
     }
 

@@ -276,6 +276,9 @@ class Risk extends CommonDBTM
             $input = array_intersect_key($input, array_flip(self::ACCEPTANCE_FIELDS))
               + array_filter($input, fn($k) => str_starts_with((string) $k, '_'), ARRAY_FILTER_USE_KEY);
         }
+        if (!Rights::entityChangeAllowed($input, $this->fields)) {
+            return false;
+        }
         $input = $this->compute($input);
         $input = $this->applyAcceptance($input, $this->fields);
         if ($input === false) {

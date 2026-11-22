@@ -7,6 +7,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Planned
 - Notifications (review due, KRI alert, overdue actions) and PDF report for the Board.
 
+## [2.0.2] - 2026-11-22
+### Security
+- REST API lists of KRIs, measurements, reviews and links (tables without their own entity) only return the rows of
+  the risks and events the user can see, also for "see own" profiles.
+- Links between risks or loss events and other items: item-level rights follow the risk or the event (view, create,
+  update, delete) and only their comment can be changed.
+- A KRI or a measurement cannot be moved to another risk or KRI; risks, loss events, AI systems and entity settings
+  cannot be moved to an entity the user has no access to.
+- Staff risk reports can only be created and reviewed through their workflow (not with a generic API add/update).
+- The automatic KRI action never runs a saved search of a disabled or deleted user.
+- Security review document: docs/revision-seguridad.md.
+
+### Changed
+- Without GLPI GRC Manager, ERM has its own top-level menu "Corporate risks (ERM)" instead of adding its entries to
+  "Management".
+
 ## [2.0.1] - 2026-11-22
 ### Security
 - The list of editors of an AI impact assessment is stored in a TEXT column and an update that would exceed it is

@@ -93,6 +93,9 @@ class Event extends CommonDBTM
 
     public function prepareInputForUpdate($input)
     {
+        if (!Rights::entityChangeAllowed($input, $this->fields)) {
+            return false;
+        }
         return $this->clean($input, false);
     }
 
@@ -140,11 +143,13 @@ class Event extends CommonDBTM
     {
         // Created from a risk, ticket, problem or change: link it
         if (!empty($this->input['_link_itemtype']) && !empty($this->input['_link_items_id'])) {
+            Event_Item::$linkingOnEventCreation = true;
             (new Event_Item())->add([
                 'plugin_erm_events_id' => $this->getID(),
                 'itemtype'             => $this->input['_link_itemtype'],
                 'items_id'             => (int) $this->input['_link_items_id'],
             ]);
+            Event_Item::$linkingOnEventCreation = false;
         }
         parent::post_addItem();
     }

@@ -48,6 +48,39 @@ class Risk_Item extends CommonDBTM
         return __('Related items', 'erm');
     }
 
+    /** Item-level rights follow the corporate risk (also for the REST API). */
+    public function canViewItem(): bool
+    {
+        $risk = new Risk();
+        return $risk->getFromDB((int) ($this->fields['plugin_erm_risks_id'] ?? 0)) && $risk->canViewItem();
+    }
+
+    public function canCreateItem(): bool
+    {
+        return self::canEditRisk((int) ($this->input['plugin_erm_risks_id'] ?? 0));
+    }
+
+    public function canUpdateItem(): bool
+    {
+        return self::canEditRisk((int) ($this->fields['plugin_erm_risks_id'] ?? 0));
+    }
+
+    public function canDeleteItem(): bool
+    {
+        return $this->canUpdateItem();
+    }
+
+    public function canPurgeItem(): bool
+    {
+        return $this->canUpdateItem();
+    }
+
+    /** Only the comment of a link can change. */
+    public function prepareInputForUpdate($input)
+    {
+        return array_intersect_key($input, array_flip(['id', 'comment']));
+    }
+
     public static function getIcon()
     {
         return 'ti ti-link';
@@ -69,6 +102,10 @@ class Risk_Item extends CommonDBTM
 
     public function prepareInputForAdd($input)
     {
+        if (Session::getLoginUserID() !== false && !self::canEditRisk((int) ($input['plugin_erm_risks_id'] ?? 0))) {
+            Session::addMessageAfterRedirect(__('You are not allowed to update this risk.', 'erm'), false, ERROR);
+            return false;
+        }
         if (empty($input['itemtype']) || empty($input['items_id']) || !in_array($input['itemtype'], self::getLinkableItemtypes(), true)) {
             Session::addMessageAfterRedirect(__('Select an item to link.', 'erm'), false, ERROR);
             return false;

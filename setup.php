@@ -40,7 +40,7 @@ use GlpiPlugin\Erm\Review;
 use GlpiPlugin\Erm\Risk;
 use GlpiPlugin\Erm\Risk_Item;
 
-define('PLUGIN_ERM_VERSION', '2.0.1');
+define('PLUGIN_ERM_VERSION', '2.0.2');
 define('PLUGIN_ERM_MIN_GLPI', '12.0.0');
 define('PLUGIN_ERM_MAX_GLPI', '12.99.99');
 
@@ -69,8 +69,8 @@ function plugin_init_erm(): void
     $CFG_GLPI['document_types'][] = Risk::class;
     $CFG_GLPI['document_types'][] = Event::class;
 
-    // Same menu sector as GRC Manager when active; otherwise "Management".
-    $sector = Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'management';
+    // Same menu sector as GRC Manager when active; otherwise its own top-level menu "Corporate risks (ERM)"
+    $sector = plugin_erm_sector();
     // Remove the links to risks and loss events when a linked GLPI object is purged
     foreach (array_unique(array_merge(Risk_Item::getLinkableItemtypes(), Event_Item::getLinkableItemtypes())) as $itemtype) {
         if (!str_starts_with($itemtype, 'GlpiPlugin\\Erm\\')) {
@@ -81,7 +81,10 @@ function plugin_init_erm(): void
     // Simplified interface: report a risk or an incident
     $PLUGIN_HOOKS[Hooks::HELPDESK_MENU_ENTRY]['erm'] = '/front/concern.php';
     $PLUGIN_HOOKS[Hooks::HELPDESK_MENU_ENTRY_ICON]['erm'] = 'ti ti-speakerphone';
-    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [Dashboard::class, MySpace::class, Consolidated::class, Risk::class, Action::class, Event::class, Concern::class, AiSystem::class, Report::class, Category::class]];
+    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['erm'] = [$sector => [
+        Dashboard::class, MySpace::class, Risk::class, Action::class, Event::class, Concern::class, AiSystem::class,
+        Consolidated::class, Report::class, Category::class,
+    ]];
 }
 
 function plugin_version_erm(): array
@@ -126,8 +129,11 @@ function plugin_erm_url(string $path, bool $full = true): string
     return ($full ? $CFG_GLPI['root_doc'] : '') . '/plugins/erm/' . ltrim($path, '/');
 }
 
-/** Menu sector of the plugin pages (GRC Manager's one when active). */
+/**
+ * Menu sector of the plugin pages: GRC Manager's one when it is active, otherwise the plugin's own top-level menu
+ * (titled and iconed after its first entry, the ERM dashboard).
+ */
 function plugin_erm_sector(): string
 {
-    return Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'management';
+    return Plugin::isPluginActive('grcmanager') ? 'grcmanager' : 'erm';
 }

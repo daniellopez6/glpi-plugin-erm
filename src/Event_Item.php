@@ -43,6 +43,42 @@ class Event_Item extends CommonDBTM
         return 'ti ti-link';
     }
 
+    /** Set by Event while it links itself on creation (never taken from a request). */
+    public static bool $linkingOnEventCreation = false;
+
+    /** Item-level rights follow the loss event (also for the REST API). */
+    public function canViewItem(): bool
+    {
+        $event = new Event();
+        return $event->getFromDB((int) ($this->fields['plugin_erm_events_id'] ?? 0)) && $event->canViewItem();
+    }
+
+    public function canCreateItem(): bool
+    {
+        return self::canEditEvent((int) ($this->input['plugin_erm_events_id'] ?? 0));
+    }
+
+    public function canUpdateItem(): bool
+    {
+        return self::canEditEvent((int) ($this->fields['plugin_erm_events_id'] ?? 0));
+    }
+
+    public function canDeleteItem(): bool
+    {
+        return $this->canUpdateItem();
+    }
+
+    public function canPurgeItem(): bool
+    {
+        return $this->canUpdateItem();
+    }
+
+    /** Only the comment of a link can change. */
+    public function prepareInputForUpdate($input)
+    {
+        return array_intersect_key($input, array_flip(['id', 'comment']));
+    }
+
     /** @return list<string> */
     public static function getLinkableItemtypes(): array
     {
@@ -63,6 +99,11 @@ class Event_Item extends CommonDBTM
         $eventId = (int) ($input['plugin_erm_events_id'] ?? 0);
         $event = new Event();
         if (!in_array($itemtype, self::getLinkableItemtypes(), true) || $itemsId <= 0 || !$event->getFromDB($eventId)) {
+            Session::addMessageAfterRedirect(__('Select an item to link.', 'erm'), false, ERROR);
+            return false;
+        }
+        // The event creator links on creation (post_addItem); otherwise the right to update the event is required
+        if (Session::getLoginUserID() !== false && !self::$linkingOnEventCreation && !self::canEditEvent($eventId)) {
             Session::addMessageAfterRedirect(__('Select an item to link.', 'erm'), false, ERROR);
             return false;
         }

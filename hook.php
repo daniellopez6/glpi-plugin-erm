@@ -632,6 +632,22 @@ function plugin_erm_addDefaultWhere($itemtype)
     if ($itemtype === Risk::class && Rights::onlyOwn()) {
         return [Rights::ownCriteria(Risk::getTable())];
     }
+    // Tables without their own entity: only rows of the risks / events the user can see (API lists, search)
+    $byRisk = [GlpiPlugin\Erm\Indicator::class, GlpiPlugin\Erm\Review::class, GlpiPlugin\Erm\Risk_Item::class];
+    if (in_array($itemtype, $byRisk, true)) {
+        return [[$itemtype::getTable() . '.plugin_erm_risks_id' => Rights::visibleRisksSubQuery()]];
+    }
+    if ($itemtype === GlpiPlugin\Erm\IndicatorValue::class) {
+        return [[GlpiPlugin\Erm\IndicatorValue::getTable() . '.plugin_erm_indicators_id' => new QuerySubQuery([
+            'SELECT' => 'id', 'FROM' => GlpiPlugin\Erm\Indicator::getTable(), 'WHERE' => ['plugin_erm_risks_id' => Rights::visibleRisksSubQuery()],
+        ])]];
+    }
+    if ($itemtype === GlpiPlugin\Erm\Event_Item::class) {
+        $events = GlpiPlugin\Erm\Event::getTable();
+        return [[GlpiPlugin\Erm\Event_Item::getTable() . '.plugin_erm_events_id' => new QuerySubQuery([
+            'SELECT' => "$events.id", 'FROM' => $events, 'WHERE' => getEntitiesRestrictCriteria($events, '', '', true),
+        ])]];
+    }
     if ($itemtype === Action::class && Rights::onlyOwn()) {
         // Actions of own risks, plus the actions assigned to the user
         return [['OR' => [

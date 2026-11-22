@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  erm\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-21 23:41+0000\n"
+"POT-Creation-Date: 2026-11-22 02:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es_ES\n"
@@ -75,7 +75,7 @@ msgstr "Se cumplió una acción de tratamiento de tu riesgo"
 msgid "A treatment action has been assigned to you"
 msgstr "Se te asignó una acción de tratamiento"
 
-#: setup.php:90
+#: setup.php:93
 msgid "ERM - Enterprise Risk Management"
 msgstr "ERM - Gestión de Riesgos Corporativos"
 
@@ -115,7 +115,7 @@ msgstr "Código del riesgo"
 msgid "Due date"
 msgstr "Vencimiento"
 
-#: src/Action.php:93 src/AiSystem.php:241 src/Event.php:169 src/Risk.php:358 templates/action_form.html.twig:26
+#: src/Action.php:93 src/AiSystem.php:244 src/Event.php:174 src/Risk.php:361 templates/action_form.html.twig:26
 #: templates/actions_tab.html.twig:42 templates/aiassessment_form.html.twig:25 templates/aiassessments_tab.html.twig:22
 #: templates/aisystem_form.html.twig:25 templates/concern.html.twig:42 templates/event_form.html.twig:33
 #: templates/events_tab.html.twig:75 templates/myspace.html.twig:39 templates/myspace.html.twig:94
@@ -123,7 +123,7 @@ msgstr "Vencimiento"
 msgid "Status"
 msgstr "Estado"
 
-#: src/Action.php:94 src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:347
+#: src/Action.php:94 src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:350
 #: templates/action_form.html.twig:21 templates/consolidated.html.twig:74 templates/dashboard.html.twig:110
 #: templates/dashboard.html.twig:179 templates/dashboard.html.twig:195 templates/myspace.html.twig:39
 #: templates/myspace.html.twig:66 templates/myspace.html.twig:94 templates/risk_form.html.twig:26
@@ -328,59 +328,59 @@ msgstr "Público en general"
 msgid "Minors or vulnerable people"
 msgstr "Menores o personas vulnerables"
 
-#: src/AiSystem.php:155
+#: src/AiSystem.php:158
 msgid "The AI system must have a name."
 msgstr "El sistema de IA debe tener un nombre."
 
-#: src/AiSystem.php:205
+#: src/AiSystem.php:208
 msgid "Requires an approved impact assessment and has none"
 msgstr "Requiere una evaluación de impacto aprobada y no la tiene"
 
-#: src/AiSystem.php:206
+#: src/AiSystem.php:209
 msgid "The impact assessment must be renewed"
 msgstr "La evaluación de impacto debe renovarse"
 
-#: src/AiSystem.php:207
+#: src/AiSystem.php:210
 msgid "Classified as a prohibited practice: it must not be used"
 msgstr "Clasificado como práctica prohibida: no debe usarse"
 
-#: src/AiSystem.php:240 templates/aisystem_form.html.twig:27
+#: src/AiSystem.php:243 templates/aisystem_form.html.twig:27
 msgid "AI type"
 msgstr "Tipo de IA"
 
-#: src/AiSystem.php:242 templates/aisystem_form.html.twig:43
+#: src/AiSystem.php:245 templates/aisystem_form.html.twig:43
 msgid "AI Act class"
 msgstr "Clase según el AI Act"
 
-#: src/AiSystem.php:243 templates/aisystem_form.html.twig:29
+#: src/AiSystem.php:246 templates/aisystem_form.html.twig:29
 msgid "Provider"
 msgstr "Proveedor"
 
-#: src/AiSystem.php:244 templates/aisystem_form.html.twig:31
+#: src/AiSystem.php:247 templates/aisystem_form.html.twig:31
 msgid "Owner"
 msgstr "Dueño"
 
-#: src/AiSystem.php:245 templates/aisystem_form.html.twig:30
+#: src/AiSystem.php:248 templates/aisystem_form.html.twig:30
 msgid "Model"
 msgstr "Modelo"
 
-#: src/AiSystem.php:246 templates/aisystem_form.html.twig:28
+#: src/AiSystem.php:249 templates/aisystem_form.html.twig:28
 msgid "Deployment"
 msgstr "Despliegue"
 
-#: src/AiSystem.php:247
+#: src/AiSystem.php:250
 msgid "Personal data"
 msgstr "Datos personales"
 
-#: src/AiSystem.php:248 templates/aisystem_form.html.twig:38
+#: src/AiSystem.php:251 templates/aisystem_form.html.twig:38
 msgid "Human oversight"
 msgstr "Supervisión humana"
 
-#: src/AiSystem.php:249 templates/aisystem_form.html.twig:32 templates/risk_form.html.twig:29
+#: src/AiSystem.php:252 templates/aisystem_form.html.twig:32 templates/risk_form.html.twig:29
 msgid "Responsible group"
 msgstr "Área responsable"
 
-#: src/AiSystem.php:250
+#: src/AiSystem.php:253
 msgid "Purpose"
 msgstr "Propósito"
 
@@ -648,29 +648,29 @@ msgstr "Apetito"
 msgid "Tolerance"
 msgstr "Tolerancia"
 
-#: src/Concern.php:101
+#: src/Concern.php:112
 msgid "Describe briefly what you want to report."
 msgstr "Describe brevemente lo que querés reportar."
 
-#: src/Concern.php:169
+#: src/Concern.php:180
 msgid "Recorded as a loss event."
 msgstr "Registrado como evento de pérdida."
 
-#: src/Concern.php:181
+#: src/Concern.php:192
 #, python-format
 msgid "Area: %s"
 msgstr "Área: %s"
 
-#: src/Concern.php:182
+#: src/Concern.php:193
 #, python-format
 msgid "Reported by %s"
 msgstr "Reportado por %s"
 
-#: src/Concern.php:191
+#: src/Concern.php:202
 msgid "Registered as a corporate risk to be assessed."
 msgstr "Registrado como riesgo corporativo a evaluar."
 
-#: src/Concern.php:202
+#: src/Concern.php:213
 msgid "Explain to the reporter why the report is closed."
 msgstr "Explícale a quien reportó por qué se cierra el reporte."
 
@@ -684,31 +684,31 @@ msgstr[1] "Reportes de riesgo"
 msgid "Reports received"
 msgstr "Reportes recibidos"
 
-#: src/Concern.php:74
+#: src/Concern.php:85
 msgid "Something happened that caused a loss or damage"
 msgstr "Pasó algo que causó una pérdida o un daño"
 
-#: src/Concern.php:75
+#: src/Concern.php:86
 msgid "Something almost happened (near miss)"
 msgstr "Algo casi pasa (casi pérdida)"
 
-#: src/Concern.php:76
+#: src/Concern.php:87
 msgid "Something could happen (a risk I see)"
 msgstr "Algo podría pasar (un riesgo que veo)"
 
-#: src/Concern.php:82
+#: src/Concern.php:93
 msgid "Received"
 msgstr "Recibido"
 
-#: src/Concern.php:82
+#: src/Concern.php:93
 msgid "Taken into account"
 msgstr "Tomado en cuenta"
 
-#: src/Concern.php:82
+#: src/Concern.php:93
 msgid "Closed without action"
 msgstr "Cerrado sin acción"
 
-#: src/Consolidated.php:125 src/Dashboard.php:38 src/EntityConfig.php:57 src/Profile.php:36
+#: src/Consolidated.php:125 src/Dashboard.php:38 src/EntityConfig.php:64 src/Profile.php:36
 #: templates/profile_rights.html.twig:20
 msgid "Corporate risks (ERM)"
 msgstr "Riesgos corporativos (ERM)"
@@ -729,7 +729,7 @@ msgstr "Mapa integral de riesgos"
 msgid "Uncategorized"
 msgstr "Sin categoría"
 
-#: src/Dashboard.php:33 src/Risk_Item.php:117
+#: src/Dashboard.php:33 src/Risk_Item.php:154
 msgid "Corporate risks"
 msgstr "Riesgos corporativos"
 
@@ -788,12 +788,12 @@ msgstr "Tratamiento ineficaz o sin plan"
 msgid "Acceptance expired or expiring"
 msgstr "Aceptación vencida o por vencer"
 
-#: src/EntityConfig.php:268
+#: src/EntityConfig.php:275
 #, python-format
 msgid "Invalid amount for impact \"%s\"."
 msgstr "Importe inválido para el impacto \"%s\"."
 
-#: src/EntityConfig.php:273
+#: src/EntityConfig.php:280
 msgid "The minimum amounts must increase with the impact level."
 msgstr "Los importes mínimos deben crecer con el nivel de impacto."
 
@@ -801,58 +801,58 @@ msgstr "Los importes mínimos deben crecer con el nivel de impacto."
 msgid "ERM settings"
 msgstr "Configuración ERM"
 
-#: src/Event.php:113
+#: src/Event.php:116
 msgid "The occurrence date is required."
 msgstr "La fecha de ocurrencia es obligatoria."
 
-#: src/Event.php:125
+#: src/Event.php:128
 msgid "The detection date cannot be earlier than the occurrence date."
 msgstr "La fecha de detección no puede ser anterior a la de ocurrencia."
 
-#: src/Event.php:164 src/NotificationTargetRisk.php:160 templates/event_form.html.twig:27 templates/event_form.html.twig:28
+#: src/Event.php:169 src/NotificationTargetRisk.php:160 templates/event_form.html.twig:27 templates/event_form.html.twig:28
 #: templates/events_tab.html.twig:75
 msgid "Event"
 msgstr "Evento"
 
-#: src/Event.php:166 templates/event_form.html.twig:30 templates/events_tab.html.twig:75
+#: src/Event.php:171 templates/event_form.html.twig:30 templates/events_tab.html.twig:75
 msgid "Occurrence date"
 msgstr "Fecha de ocurrencia"
 
-#: src/Event.php:167 templates/event_form.html.twig:31
+#: src/Event.php:172 templates/event_form.html.twig:31
 msgid "Detection date"
 msgstr "Fecha de detección"
 
-#: src/Event.php:168 templates/event_form.html.twig:29 templates/events_tab.html.twig:75
+#: src/Event.php:173 templates/event_form.html.twig:29 templates/events_tab.html.twig:75
 msgid "Event type"
 msgstr "Tipo de evento"
 
-#: src/Event.php:170 templates/event_form.html.twig:39
+#: src/Event.php:175 templates/event_form.html.twig:39
 msgid "Gross loss"
 msgstr "Pérdida bruta"
 
-#: src/Event.php:171 templates/event_form.html.twig:40
+#: src/Event.php:176 templates/event_form.html.twig:40
 msgid "Recoveries"
 msgstr "Recuperos"
 
-#: src/Event.php:172 templates/event_form.html.twig:41 templates/events_tab.html.twig:75
+#: src/Event.php:177 templates/event_form.html.twig:41 templates/events_tab.html.twig:75
 msgid "Net loss"
 msgstr "Pérdida neta"
 
-#: src/Event.php:173 src/Risk.php:350 templates/dashboard.html.twig:179 templates/entity_config.html.twig:54
+#: src/Event.php:178 src/Risk.php:353 templates/dashboard.html.twig:179 templates/entity_config.html.twig:54
 #: templates/event_form.html.twig:32 templates/myspace.html.twig:94 templates/risk_form.html.twig:27
 #: templates/risk_list.html.twig:28
 msgid "Category"
 msgstr "Categoría"
 
-#: src/Event.php:174 templates/concern.html.twig:57 templates/event_form.html.twig:34
+#: src/Event.php:179 templates/concern.html.twig:57 templates/event_form.html.twig:34
 msgid "Reported by"
 msgstr "Reportado por"
 
-#: src/Event.php:175 templates/event_form.html.twig:36
+#: src/Event.php:180 templates/event_form.html.twig:36
 msgid "Root cause"
 msgstr "Causa raíz"
 
-#: src/Event.php:176 src/Risk.php:365
+#: src/Event.php:181 src/Risk.php:368
 msgid "Description"
 msgstr "Descripción"
 
@@ -862,40 +862,40 @@ msgid_plural "Loss events"
 msgstr[0] "Evento de pérdida"
 msgstr[1] "Eventos de pérdida"
 
-#: src/Event_Item.php:38
-msgid "Linked risks and items"
-msgstr "Riesgos y elementos vinculados"
-
-#: src/Event_Item.php:66 src/Risk_Item.php:73
+#: src/Event_Item.php:102 src/Event_Item.php:107 src/Risk_Item.php:110
 msgid "Select an item to link."
 msgstr "Elige un elemento para vincular."
 
-#: src/Event_Item.php:71 src/Risk_Item.php:78
+#: src/Event_Item.php:112 src/Risk_Item.php:115
 msgid "The item does not exist or you are not allowed to see it."
 msgstr "El elemento no existe o no tienes permiso para verlo."
 
-#: src/Event_Item.php:75 src/Risk_Item.php:85
+#: src/Event_Item.php:116 src/Risk_Item.php:122
 msgid "The item is already linked."
 msgstr "El elemento ya está vinculado."
 
-#: src/Event_Item.php:87 src/Risk_Item.php:96
+#: src/Event_Item.php:128 src/Risk_Item.php:133
 #, python-format
 msgid "Linked with %s"
 msgstr "Vínculo con %s"
 
-#: src/Indicator.php:145
+#: src/Event_Item.php:38
+msgid "Linked risks and items"
+msgstr "Riesgos y elementos vinculados"
+
+#: src/Indicator.php:149
 msgid "Indicators (KRI)"
 msgstr "Indicadores (KRI)"
 
-#: src/Indicator.php:195
+#: src/Indicator.php:199
 msgid "The indicator must have a name."
 msgstr "El indicador debe tener un nombre."
 
-#: src/Indicator.php:237
+#: src/Indicator.php:241
 msgid "Select a saved search you can see for an automatic KRI."
 msgstr "Elige una búsqueda guardada que puedas ver para el KRI automático."
 
-#: src/Indicator.php:243
+#: src/Indicator.php:247
 msgid "An automatic KRI can only use one of your own saved searches."
 msgstr "Un KRI automático sólo puede usar una de tus búsquedas guardadas."
 
@@ -944,11 +944,11 @@ msgid_plural "KRI measurements"
 msgstr[0] "Medición de KRI"
 msgstr[1] "Mediciones de KRI"
 
-#: src/IndicatorValue.php:45
+#: src/IndicatorValue.php:45 src/IndicatorValue.php:66
 msgid "The measurement must have a numeric value."
 msgstr "La medición debe tener un valor numérico."
 
-#: src/IndicatorValue.php:51
+#: src/IndicatorValue.php:51 src/IndicatorValue.php:74
 msgid "Invalid measurement date."
 msgstr "Fecha de medición inválida."
 
@@ -956,13 +956,13 @@ msgstr "Fecha de medición inválida."
 msgid "My ERM workspace"
 msgstr "Mi espacio ERM"
 
-#: src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:349 templates/dashboard.html.twig:110
+#: src/NotificationTargetRisk.php:160 src/Report.php:241 src/Risk.php:352 templates/dashboard.html.twig:110
 #: templates/dashboard.html.twig:179 templates/dashboard.html.twig:195 templates/items_tab.html.twig:18
 #: templates/myspace.html.twig:94 templates/risk_form.html.twig:25 templates/risk_list.html.twig:26
 msgid "Code"
 msgstr "Código"
 
-#: src/NotificationTargetRisk.php:162 src/Risk.php:354 templates/risk_form.html.twig:58
+#: src/NotificationTargetRisk.php:162 src/Risk.php:357 templates/risk_form.html.twig:58
 msgid "Residual level"
 msgstr "Nivel residual"
 
@@ -1061,7 +1061,7 @@ msgid "Linked ISMS control failed its last test"
 msgstr "Un control del SGSI vinculado falló su última prueba"
 
 #: src/NotificationTargetRisk.php:74 src/NotificationTargetRisk.php:161 src/Profile.php:127 src/Report.php:242
-#: src/Risk.php:351 templates/consolidated.html.twig:74 templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
+#: src/Risk.php:354 templates/consolidated.html.twig:74 templates/risk_form.html.twig:28 templates/risk_list.html.twig:28
 msgid "Risk owner"
 msgstr "Dueño del riesgo"
 
@@ -1456,6 +1456,10 @@ msgstr "Escalado al Comité de riesgos"
 msgid "Proposed for closure"
 msgstr "Propuesto para cierre"
 
+#: src/Rights.php:117
+msgid "You cannot move this item to an entity you have no access to."
+msgstr "No puedes mover este elemento a una entidad a la que no tienes acceso."
+
 #: src/Risk.php:144
 msgid "The risk must have a name."
 msgstr "El riesgo debe tener un nombre."
@@ -1485,79 +1489,83 @@ msgstr "Para aceptar el riesgo, la decisión de tratamiento debe ser \"Aceptar\"
 msgid "The code %s is already used in this entity."
 msgstr "El código %s ya se usa en esta entidad."
 
-#: src/Risk.php:297
+#: src/Risk.php:300
 msgid "A mitigated or transferred risk cannot be closed without a treatment plan."
 msgstr "No se puede cerrar un riesgo mitigado o transferido sin plan de tratamiento."
 
-#: src/Risk.php:352
+#: src/Risk.php:355
 msgid "Group"
 msgstr "Área"
 
-#: src/Risk.php:353 templates/risk_form.html.twig:37
+#: src/Risk.php:356 templates/risk_form.html.twig:37
 msgid "Inherent level"
 msgstr "Nivel inherente"
 
-#: src/Risk.php:355
+#: src/Risk.php:358
 msgid "Inherent score"
 msgstr "Puntaje inherente"
 
-#: src/Risk.php:356
+#: src/Risk.php:359
 msgid "Residual score"
 msgstr "Puntaje residual"
 
-#: src/Risk.php:357 templates/aiassessment_form.html.twig:42
+#: src/Risk.php:360 templates/aiassessment_form.html.twig:42
 msgid "Treatment"
 msgstr "Tratamiento"
 
-#: src/Risk.php:359 templates/risk_form.html.twig:40
+#: src/Risk.php:362 templates/risk_form.html.twig:40
 msgid "Maximum economic impact"
 msgstr "Impacto económico máximo"
 
-#: src/Risk.php:360 templates/risk_form.html.twig:39
+#: src/Risk.php:363 templates/risk_form.html.twig:39
 msgid "Minimum economic impact"
 msgstr "Impacto económico mínimo"
 
-#: src/Risk.php:361 templates/risk_form.html.twig:38
+#: src/Risk.php:364 templates/risk_form.html.twig:38
 msgid "Velocity"
 msgstr "Velocidad de materialización"
 
-#: src/Risk.php:362 templates/risk_form.html.twig:55
+#: src/Risk.php:365 templates/risk_form.html.twig:55
 msgid "Trend"
 msgstr "Tendencia"
 
-#: src/Risk.php:363 templates/myspace.html.twig:94 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:69
+#: src/Risk.php:366 templates/myspace.html.twig:94 templates/reviews_tab.html.twig:42 templates/reviews_tab.html.twig:69
 #: templates/risk_form.html.twig:86 templates/risk_list.html.twig:30
 msgid "Next review"
 msgstr "Próxima revisión"
 
-#: src/Risk.php:364 templates/risk_form.html.twig:44
+#: src/Risk.php:367 templates/risk_form.html.twig:44
 msgid "Control effectiveness"
 msgstr "Eficacia de los controles"
 
-#: src/Risk.php:38 src/Risk_Item.php:179 templates/consolidated.html.twig:57 templates/items_tab.html.twig:18
+#: src/Risk.php:38 src/Risk_Item.php:216 templates/consolidated.html.twig:57 templates/items_tab.html.twig:18
 msgid "Corporate risk"
 msgid_plural "Corporate risks"
 msgstr[0] "Riesgo corporativo"
 msgstr[1] "Riesgos corporativos"
 
-#: src/Risk.php:411
+#: src/Risk.php:414
 msgid "Pending"
 msgstr "Pendiente"
 
-#: src/Risk_Item.php:146 templates/event_items_tab.html.twig:48
+#: src/Risk_Item.php:106
+msgid "You are not allowed to update this risk."
+msgstr "No tienes permiso para actualizar este riesgo."
+
+#: src/Risk_Item.php:183 templates/event_items_tab.html.twig:48
 msgid "Link with"
 msgstr "Vincular con"
 
-#: src/Risk_Item.php:148 src/Risk_Item.php:182 templates/event_items_tab.html.twig:18
+#: src/Risk_Item.php:185 src/Risk_Item.php:219 templates/event_items_tab.html.twig:18
 #: templates/event_items_tab.html.twig:49 templates/indicators_tab.html.twig:57 templates/items_tab.html.twig:18
 msgid "Comment"
 msgstr "Comentario"
 
-#: src/Risk_Item.php:149 src/Risk_Item.php:183 templates/event_items_tab.html.twig:50 templates/events_tab.html.twig:107
+#: src/Risk_Item.php:186 src/Risk_Item.php:220 templates/event_items_tab.html.twig:50 templates/events_tab.html.twig:107
 msgid "Link"
 msgstr "Vincular"
 
-#: src/Risk_Item.php:48 src/Risk_Item.php:113
+#: src/Risk_Item.php:48 src/Risk_Item.php:150
 msgid "Related items"
 msgstr "Elementos relacionados"
 

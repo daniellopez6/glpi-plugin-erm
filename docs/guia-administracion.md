@@ -148,10 +148,10 @@ tienen el permiso de crear eventos de pérdida o riesgos.
 
 ## 7. Integración con GLPI GRC Manager (opcional)
 
-ERM es **independiente**: se instala y funciona sin GRC Manager (su menú aparece en **Gestión**). Si GRC Manager
-está activo:
+ERM es **independiente**: se instala y funciona sin GRC Manager, con su propio menú **Riesgos corporativos (ERM)**.
+Si GRC Manager está activo:
 
-- el menú se ubica en "GRC y cumplimiento";
+- las entradas de ERM se ubican dentro del menú "GRC y cumplimiento";
 - los riesgos corporativos se pueden vincular con riesgos, procesos de negocio, controles, objetivos, obligaciones y
   riesgos de proveedores del SGSI;
 - el **mapa integral** y el **informe de Directorio** suman los riesgos del SGSI y de proveedores, sólo lectura y

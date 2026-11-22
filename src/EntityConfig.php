@@ -51,6 +51,13 @@ class EntityConfig extends CommonDBTM
         return Session::haveRight(self::$rightname, READ);
     }
 
+    /** The settings of an entity stay attached to it. */
+    public function prepareInputForUpdate($input)
+    {
+        unset($input['entities_id']);
+        return $input;
+    }
+
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item instanceof Entity && self::canView()) {

@@ -68,6 +68,17 @@ class Concern extends CommonDBTM
         return ['title' => self::getMenuName(), 'page' => self::getSearchURL(false), 'icon' => self::getIcon()];
     }
 
+    /** Reports are created and reviewed only through their workflow (never with a generic add or update, e.g. the API). */
+    public function prepareInputForAdd($input)
+    {
+        return false;
+    }
+
+    public function prepareInputForUpdate($input)
+    {
+        return false;
+    }
+
     public static function reportTypes(): array
     {
         return [

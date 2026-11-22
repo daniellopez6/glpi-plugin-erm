@@ -55,4 +55,27 @@ class IndicatorValue extends CommonDBChild
         $input['date_creation'] = $_SESSION['glpi_currenttime'] ?? date('Y-m-d H:i:s');
         return $input;
     }
+
+    public function prepareInputForUpdate($input)
+    {
+        // A measurement cannot be moved to another KRI
+        unset($input['plugin_erm_indicators_id']);
+        if (array_key_exists('value', $input)) {
+            $value = Validator::decimal((string) $input['value']);
+            if ($value === false || $value === 'NULL') {
+                \Session::addMessageAfterRedirect(__('The measurement must have a numeric value.', 'erm'), false, ERROR);
+                return false;
+            }
+            $input['value'] = $value;
+        }
+        if (array_key_exists('value_date', $input)) {
+            $date = Validator::date((string) $input['value_date']);
+            if ($date === false || $date === 'NULL') {
+                \Session::addMessageAfterRedirect(__('Invalid measurement date.', 'erm'), false, ERROR);
+                return false;
+            }
+            $input['value_date'] = $date;
+        }
+        return $input;
+    }
 }

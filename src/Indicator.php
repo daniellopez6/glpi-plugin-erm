@@ -116,6 +116,10 @@ class Indicator extends CommonDBChild
             if (!$search->getFromDB((int) $kri['savedsearches_id']) || !$owner->getFromDB((int) $search->fields['users_id'])) {
                 continue;
             }
+            // Never run a search with the rights of a disabled or deleted user
+            if (!$owner->fields['is_active'] || $owner->fields['is_deleted']) {
+                continue;
+            }
             $auth = new \Auth();
             $auth->user = $owner;
             $auth->auth_succeded = true;
@@ -248,6 +252,8 @@ class Indicator extends CommonDBChild
 
     public function prepareInputForUpdate($input)
     {
+        // A KRI cannot be moved to another risk
+        unset($input['plugin_erm_risks_id']);
         $input = $this->checkSource($input);
         if ($input === false) {
             return false;

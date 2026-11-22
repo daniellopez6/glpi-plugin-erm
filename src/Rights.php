@@ -89,6 +89,35 @@ final class Rights
         return ['OR' => $or];
     }
 
+    /** Sub-query of the ids of the risks the user can see (active entities and, for "see own" profiles, own risks). */
+    public static function visibleRisksSubQuery(): QuerySubQuery
+    {
+        $table = Risk::getTable();
+        $where = getEntitiesRestrictCriteria($table, '', '', true);
+        if (self::onlyOwn()) {
+            $where[] = self::ownCriteria($table);
+        }
+        return new QuerySubQuery(['SELECT' => "$table.id", 'FROM' => $table, 'WHERE' => $where]);
+    }
+
+    /**
+     * An item may only be moved to an entity the user has access to.
+     *
+     * @param array<string,mixed> $input
+     * @param array<string,mixed> $fields
+     */
+    public static function entityChangeAllowed(array $input, array $fields): bool
+    {
+        if (!array_key_exists('entities_id', $input) || (int) $input['entities_id'] === (int) ($fields['entities_id'] ?? -1)) {
+            return true;
+        }
+        if (Session::getLoginUserID() === false || Session::haveAccessToEntity((int) $input['entities_id'])) {
+            return true;
+        }
+        Session::addMessageAfterRedirect(__('You cannot move this item to an entity you have no access to.', 'erm'), false, ERROR);
+        return false;
+    }
+
     public static function isOwn(array $fields): bool
     {
         $uid = (int) Session::getLoginUserID();

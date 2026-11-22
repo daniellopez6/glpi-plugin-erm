@@ -14,3 +14,5 @@ You will get an answer within 7 days; a fix and an advisory will be published on
 - Formal risk acceptance enforces segregation of duties (owner cannot accept; acceptor and date are recorded
   by the server, never taken from the request).
 - Input validation for dates, decimals, scales and linked items; queries through the GLPI DB iterator.
+
+The latest security review of the code (method, findings and fixes) is in [docs/revision-seguridad.md](docs/revision-seguridad.md).
